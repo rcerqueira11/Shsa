@@ -5,7 +5,8 @@
 ###########################################################
 
 export pg_user='postgres'
-export pg_password='postgres'
+export pg_password='123456'
+# export pg_password='postgres'
 export pg_db='shsa_db'
 export pg_host='127.0.0.1'
 
