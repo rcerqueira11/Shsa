@@ -1,0 +1,12 @@
+.keeptogether {
+  page-break-inside:avoid;
+}
+
+/*rcerqueira*/
+/*Agregar esto para que el pdf se vea correctamente en el servidor*/
+.content{
+  /*Styling for any element with the id="container" */
+           width:822px; /* The width is fixed by pixels */
+           height:595px; /* The height is fixed by pixels*/
+    }
+

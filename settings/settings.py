@@ -55,7 +55,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
-ROOT_URLCONF = 'Shsa.urls'
+ROOT_URLCONF = 'settings.urls'
 
 TEMPLATES = [
     {
@@ -78,7 +78,7 @@ TEMPLATES = [
     
 ]
 
-WSGI_APPLICATION = 'Shsa.wsgi.application'
+WSGI_APPLICATION = 'settings.wsgi.application'
 
 
 # Database
@@ -124,6 +124,8 @@ WKHTMLTOPDF_CMD_OPTIONS = {
 }
 
 STATIC_PDF = os.path.join(BASE_DIR, './static')
+
+SECURE_SSL_REDIRECT = False
 
 # si decido instarlo por pip 
 # STATIC_ROOT = os.path.join(BASE_DIR, './static')

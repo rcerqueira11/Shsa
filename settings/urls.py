@@ -7,7 +7,7 @@ from apps.wkhtmltopdf.views import PDFTemplateView
 
 urlpatterns = [
     # Examples:
-    # url(r'^$', 'Shsa.views.home', name='home'),
+    # url(r'^$', 'settings.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
     
     url(

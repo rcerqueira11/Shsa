@@ -87,8 +87,6 @@ class Login(View):
                                    show_content_in_browser=True,
                                    cmd_options={'margin-top': 10,'page-size': 'A4','quiet': True},
                                    # current_app= rcs,
-                                   header_template='hf.html', 
-                                   footer_template='hf.html',
                                    )
         return response
     	# return render(request, 'index.html',context)
