@@ -3,6 +3,7 @@ from apps.registro import views
 from django.views.generic import TemplateView
 
 urlpatterns = [
+
     url(
         r'^login',
         views.Login.as_view(),
