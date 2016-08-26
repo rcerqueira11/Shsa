@@ -8,6 +8,8 @@ from django.template import RequestContext, loader
 from django.http import HttpResponse
 from django.utils import timezone
 from django.conf import settings
+
+from apps.wkhtmltopdf.views import PDFTemplateResponse
 # from utils.HelpMethods.aes_cipher import encode as secure_value_encode
 # from utils.HelpMethods.aes_cipher import decode as secure_value_decode
 import json
@@ -69,8 +71,27 @@ class Login(View):
 
     def get(self, request, *args, **kwargs):
     	# print "Hello World"
-    	context = {}
-    	return render(request, 'index.html',context)
+        context={}
+        if settings.SECURE_SSL_REDIRECT == True:
+                media_url = 'https://'
+        else:
+            media_url = 'http://'
+        data={}
+        media_url = media_url+request.META['HTTP_HOST']
+
+        context['http_host']= media_url
+        response = PDFTemplateResponse(request=request,
+                                   template='index.html',
+                                   filename="planilla_registro_carro.pdf",
+                                   context= context,
+                                   show_content_in_browser=True,
+                                   cmd_options={'margin-top': 10,'page-size': 'A4','quiet': True},
+                                   # current_app= rcs,
+                                   header_template='hf.html', 
+                                   footer_template='hf.html',
+                                   )
+        return response
+    	# return render(request, 'index.html',context)
 
 
 class Logout(View):

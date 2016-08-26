@@ -1,7 +1,9 @@
 from django.conf.urls import include, url
 from django.contrib import admin
+from apps.rcs import views
 from apps.registro import views
 from django.conf import settings
+from apps.wkhtmltopdf.views import PDFTemplateView
 
 urlpatterns = [
     # Examples:

@@ -39,8 +39,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.registro',
     'apps.rcs',
+    'apps.registro',
+    'apps.wkhtmltopdf',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -118,3 +119,13 @@ STATIC_URL = '/static/'
 
 SERVER_URI = u'http://127.0.0.1:8000'
 
+WKHTMLTOPDF_CMD_OPTIONS = {
+   'quiet':True,
+}
+
+STATIC_PDF = os.path.join(BASE_DIR, './static')
+
+# si decido instarlo por pip 
+# STATIC_ROOT = os.path.join(BASE_DIR, './static')
+WKHTMLTOPDF_CMD = '/usr/bin/wkhtmltopdf'
+WKHTMLTOPDF_ENV = {'FONTCONFIG_PATH': '/etc/fonts'}
