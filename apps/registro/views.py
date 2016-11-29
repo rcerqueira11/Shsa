@@ -72,24 +72,24 @@ class Login(View):
     def get(self, request, *args, **kwargs):
     	# print "Hello World"
         context={}
-        if settings.SECURE_SSL_REDIRECT == True:
-                media_url = 'https://'
-        else:
-            media_url = 'http://'
-        data={}
-        media_url = media_url+request.META['HTTP_HOST']
+        # if settings.SECURE_SSL_REDIRECT == True:
+        #         media_url = 'https://'
+        # else:
+        #     media_url = 'http://'
+        # data={}
+        # media_url = media_url+request.META['HTTP_HOST']
 
-        context['http_host']= media_url
-        response = PDFTemplateResponse(request=request,
-                                   template='index.html',
-                                   filename="planilla_registro_carro.pdf",
-                                   context= context,
-                                   show_content_in_browser=True,
-                                   cmd_options={'margin-top': 10,'page-size': 'A4','quiet': True},
-                                   # current_app= rcs,
-                                   )
-        return response
-    	# return render(request, 'index.html',context)
+        # context['http_host']= media_url
+        # response = PDFTemplateResponse(request=request,
+        #                            template='index.html',
+        #                            filename="planilla_registro_carro.pdf",
+        #                            context= context,
+        #                            show_content_in_browser=True,
+        #                            cmd_options={'margin-top': 10,'page-size': 'A4','quiet': True},
+        #                            # current_app= rcs,
+        #                            )
+        # return response
+    	return render(request, 'index.html',context)
 
 
 class Logout(View):
