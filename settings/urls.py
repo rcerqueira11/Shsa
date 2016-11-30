@@ -4,6 +4,7 @@ from apps.rcs import views
 from apps.registro import views
 from django.conf import settings
 from apps.wkhtmltopdf.views import PDFTemplateView
+from django.conf import settings
 
 urlpatterns = [
     # Examples:

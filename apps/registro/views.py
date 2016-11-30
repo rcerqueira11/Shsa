@@ -71,7 +71,10 @@ class Login(View):
 
     def get(self, request, *args, **kwargs):
     	# print "Hello World"
-        context={}
+        context={
+
+            'STATIC_URL' : settings.STATIC_URL,
+        }
         # if settings.SECURE_SSL_REDIRECT == True:
         #         media_url = 'https://'
         # else:
