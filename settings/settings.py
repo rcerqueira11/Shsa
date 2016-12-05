@@ -126,6 +126,7 @@ WKHTMLTOPDF_CMD_OPTIONS = {
 STATIC_PDF = os.path.join(BASE_DIR, './static')
 
 SECURE_SSL_REDIRECT = False
+STATICFILES_DIRS = ( os.path.join(BASE_DIR, "static"), )
 
 # si decido instarlo por pip 
 # STATIC_ROOT = os.path.join(BASE_DIR, './static')
