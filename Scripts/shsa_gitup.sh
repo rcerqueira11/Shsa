@@ -1,6 +1,10 @@
  #!/usr/bin/env bash
 
-Comentario="$1"
+echo "Comentario para el Git"
+
+read -r line || [[ -n "$line" ]]
+
+Comentario="$line"
 
 echo "Git status"
 git status
@@ -13,3 +17,9 @@ git commit -m "$Comentario"
 
 echo "PUSH!"
 git push
+
+echo "All ヾ(⌐■_■)ノ♪  Up"
+
+sleep 2s
+~                                                                                                                                                                       
+~                     
