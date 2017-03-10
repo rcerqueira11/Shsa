@@ -25,7 +25,7 @@ class Usuario(AbstractBaseUser):
 	apellido = models.CharField(max_length=255, null=False)
 	correo_electronico = models.EmailField(max_length=255, blank=True, unique=True)
 	intentos_login = models.IntegerField(default=0)
-
+	#hello
 
 	USERNAME_FIELD = 'nombre_usuario'
 	REQUIRED_FIELDS = ['correo_electronico']
