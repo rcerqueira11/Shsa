@@ -22,6 +22,9 @@
       <link href="{{STATIC_URL}}css/plugins/bootstrap-datepicker.min.css"  rel="stylesheet" type="text/css"/>
       <link href="{{STATIC_URL}}css/plugins/bootstrap-datepicker.min.css.map"  rel="stylesheet" type="application/octet-stream"/>
 
+      {% block extra_css %}
+      {% endblock extra_css %}
+
       <title>Sistema de Gesti&oacute;n de Solicitudes de Inspecci&oacute;n</title>
 
 
@@ -46,5 +49,8 @@
 
           <script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
       {% endblock javascripts %}
+
+      {% block extra_script %}
+      {% endblock extra_script%}
 </body>
 </html>

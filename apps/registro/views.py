@@ -94,6 +94,9 @@ class Login(View):
         # return response
     	return render(request, 'index.html',context)
 
+    def post(self,request,*args,**kwargs):
+        return redirect(reverse_lazy(''))
+
 
 class Logout(View):
     def get(self, request, *args, **kwargs):

@@ -1,9 +1,78 @@
 {% extends "base.html" %}
 
+
+{% block extra_css %}
+
+<link href="/static/css/registro/login.css"  rel="stylesheet" type="text/css"/>
+    
+{% endblock extra_css %}
+
 {% block main_content %}
 
 
 
-<p>Hello Worldo</p>
+<div class="container">
+	
+<div class="row">
+	
+<div class="col-xs-4"></div>
+
+<div class="col-xs-4">
+	
+<section class="login-form jumbotron">
+	<form method="post" action="{% url 'registro_login' %}">
+
+
+		<input type="email" name="email" placeholder="email" class="form-control input-lg" required/>
+		<input type="password" name="password" placeholder="contraseña" class="form-control input-lg" id="password" required/>
+
+		<button type="submit" name="submit" class="btn btn-lg btn-primary btn-block">Iniciar sesión</button>
+		 <div >
+		 	<center><a href="#">Registrarse</a> o <a href="#">Recuperar contraseña</a></center>
+		 	
+		 </div>
+		 
+	</form>
+
+
+</section>
+
+
+
+
+</div>
+
+<div class="col-xs-4"></div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 {% endblock %}
+
+{% block extra_script %}
+
+<script src="{{STATIC_URL}}js/registro/login.js"></script>
+
+{% endblock extra_script%}
