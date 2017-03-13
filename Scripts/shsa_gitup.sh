@@ -21,5 +21,5 @@ git push
 echo "All ヾ(⌐■_■)ノ♪  Up"
 
 sleep 2s
-~                                                                                                                                                                       
-~                     
+                                                                                                                                                                       
+                     
