@@ -95,7 +95,18 @@ class Login(View):
     	return render(request, 'index.html',context)
 
     def post(self,request,*args,**kwargs):
-        return redirect(reverse_lazy(''))
+        # import pudb; pu.db
+        context={
+            'correo': request.POST['email'],
+            'nombre' : 'Galactus',
+        }
+        # if request.user.is_authenticated():
+        #     mensaje = u'¡Ha cerrado sesión correctamente!'
+        #     messages.info(self.request, mensaje)
+        # return redirect(reverse_lazy('registro_login'))
+        return render(request, 'rcs/dashboard.html',context)
+
+        # return redirect(reverse_lazy(''))
 
 
 class Logout(View):
