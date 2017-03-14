@@ -1,0 +1,29 @@
+[
+  {
+    "model": "registro.status",
+    "pk": 1,
+    "fields": {
+      "nombre": "ACTIVO",
+      "codigo": "ACT",
+      "descripcion": "EL USUARIO SE ENCUENTRA ACTIVO EN EL SISTEMA"
+    }
+  },
+  {
+    "model": "registro.status",
+    "pk": 2,
+    "fields": {
+      "nombre": "BLOQUEADO",
+      "codigo": "BLOQ",
+      "descripcion": "EL USUARIO SE ENCUENTRA BLOQUEADO EN EL SISTEMA"
+    }
+  },
+  {
+    "model": "registro.status",
+    "pk": 3,
+    "fields": {
+      "nombre": "INACTIVO",
+      "codigo": "INACT",
+      "descripcion": "EL USUARIO SE ENCUENTRA INACTIVO EN EL SISTEMA"
+    }
+  }
+]
