@@ -1,9 +1,124 @@
 {% extends "base.html" %}
 
+
+{% block extra_css %}
+
+<link href="/static/css/registro/common_style.css"  rel="stylesheet" type="text/css"/>
+    
+{% endblock extra_css %}
+
 {% block main_content %}
 
 
 
-<p>Aqui se registran las persona</p>
+<div class="container">
+	
+<div class="row">
+	
+<div class="col-xs-1"></div>
+
+<div class="col-xs-10">
+	
+<section class="registro-form jumbotron">
+	<center><i class="fa fa-car fa-2x" aria-hidden="true"></i><h2>Registro</h2><i class="fa fa-shield fa-2x" aria-hidden="true"></i></center>
+
+
+
+	<form method="post" action="{% url 'registro_usuario' %}">
+	{%csrf_token%}
+	<div class="row">
+		<div class="col-xs-6">
+			<label>Usuario</label>
+			<input type="text" name="username" placeholder="nombre de usuario" class="form-control input-lg" required/>
+		</div>
+
+		<div class="col-xs-6">
+			<label>C&eacute;dula</label>	
+			<input type="text" name="cedula" placeholder="12345678" class="input-mask-n form-control input-lg" id="cedula_id" required/>
+		</div>
+		
+	</div>
+
+	<div class="row">
+
+		<div class="col-xs-6">
+			<label>Correo</label>
+			<input type="email" name="email" placeholder="email" id="email" class="form-control input-lg" required/>
+		</div>
+
+		<div class="col-xs-6">
+			<label>Verificar Correo</label>
+			<input type="email" name="email2" placeholder="verificar email" id="email2" class="form-control input-lg" required/>
+		</div>
+		
+		
+	</div>
+
+	<div class="row">
+		<div class="col-xs-6">
+			<label>Contraseña</label>
+			<input type="password" name="password" placeholder="contraseña" class="form-control input-lg" id="password" required/>
+
+		</div>
+		<div class="col-xs-6">
+			
+			<label>Verificar contraseña</label>
+			<input type="password" name="password2" placeholder="verificar contraseña" class="form-control input-lg" id="password2" required/>	
+
+		</div>
+		
+		
+	</div>
+
+		<button type="submit" name="submit" class="btn btn-lg btn-success btn-block letter" >Registrarse</button>
+		<!--  <div >
+		 	<div align="right"><a href="{%  url 'registro_usuario' %}">Registrarse</a> <br> <a href="{% url 'recuperar_contrasena' %}">Recuperar contraseña</a></div>
+		 	
+		 </div> -->
+		 
+	</form>
+
+
+</section>
+
+
+
+
+</div>
+
+<div class="col-xs-1"></div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<footer class="footer">
+	<center><a href="#" style="color:white;">www.webtobe.com</a></center>
+</footer>
+
+
+
 
 {% endblock %}
+
+{% block extra_script %}
+
+<!-- <script src="{{STATIC_URL}}js/registro/login.js"></script> -->
+
+{% endblock extra_script%}

@@ -17,3 +17,7 @@ dropdb -U$pg_user $pg_db
 echo -e "\n\n~~~~ Recreate database ~~~~"
 export PGPASSWORD=$pg_password
 createdb -U$pg_user -E'UTF-8' $pg_db
+
+
+python manage.py syncdb	
+python manage.py migrate

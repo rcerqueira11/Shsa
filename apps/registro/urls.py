@@ -15,5 +15,15 @@ urlpatterns = [
         views.Logout.as_view(),
         name="registro_logout"
     ),
+    url(
+        r'^registro',
+        views.RegistroUsuario.as_view(),
+        name="registro_usuario"
+    ),
+    url(
+        r'^registro_recuperar_contrasena',
+        views.RecuperarContrasena.as_view(),
+        name="recuperar_contrasena"
+    ),
     
 ]

@@ -73,7 +73,7 @@ class Login(View):
     	# print "Hello World"
         context={
 
-            'STATIC_URL' : settings.STATIC_URL,
+            # 'STATIC_URL' : settings.STATIC_URL,
         }
         # if settings.SECURE_SSL_REDIRECT == True:
         #         media_url = 'https://'
@@ -115,3 +115,52 @@ class Logout(View):
         #     mensaje = u'¡Ha cerrado sesión correctamente!'
         #     messages.info(self.request, mensaje)
         return redirect(reverse_lazy('registro_login'))
+
+
+class RegistroUsuario(View):
+    def dispatch(self, request, *args, **kwargs):
+        # if request.user.username == '' or request.user.is_authenticated() == False:
+        #     return redirect(reverse_lazy('registro_logout'))
+        # else:
+        return super(RegistroUsuario, self).dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        context = {}
+        # if request.user.is_authenticated():
+        #     mensaje = u'¡Ha cerrado sesión correctamente!'
+        #     messages.info(self.request, mensaje)
+
+        return render(request, 'registro/registro.html',context)
+
+        # return redirect(reverse_lazy('registro_login'))
+    def post(self, request, *args, **kwargs):
+        data = request.POST
+
+        context = {}
+        # if request.user.is_authenticated():
+        #     mensaje = u'¡Ha cerrado sesión correctamente!'
+        #     messages.info(self.request, mensaje)
+
+        # return render(request, 'registro/registro.html',context)
+
+        # response
+        return redirect(reverse_lazy('dashboard'))
+
+class RecuperarContrasena(View):
+    def dispatch(self, request, *args, **kwargs):
+    
+        return super(RecuperarContrasena, self).dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        data = request.POST
+        correo = data['correo']
+        cedula = data['cedula']
+
+        if Usuario.objects.get(correo = correo, cedula = cedula).exists():
+            user = Usuario.objects.get(correo = correo, cedula = cedula)
+            nueva_password = 'generar_nuevo_password()'
+            with transaction.atomic():
+                user.set_password(nueva_password)
+                #Enviar password por mail
+                user.send_mail()
+        return redirect(reverse_lazy('recuperar_contrasena'))
