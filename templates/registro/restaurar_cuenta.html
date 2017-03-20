@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link href="/static/css/registro/recover.css"  rel="stylesheet" type="text/css"/>
+{% endblock extra_css %}
+
+{% block main_content %}
+
+<div class="container">
+<div class="row">
+	
+<div class="col-xs-3"></div>
+
+<div class="col-xs-6">
+	<section class="recuperar_contrasena-form jumbotron">
+		<center><h2>Recuperar Contraseña</h2></center>
+
+		<ul class="nav nav-tabs">
+		  <li class="active"><a href="#password">Contraseña</a></li>
+		  <li><a href="#password_user">Usuario y Contraseña</a></li>
+		</ul>
+
+		<div id="password">
+			<form method="post" action="{% url 'restaurar_cuenta' %}">
+			{%csrf_token%}
+				<div class="row">
+					<div class="col-xs-6">
+						<input type="email" name="email" placeholder="email" class="form-control input-lg" required/>
+					</div>
+					<div class="col-xs-6">
+						<input type="text" name="cedula" placeholder="cedula" class="form-control input-lg" id="cedula" required/>
+					</div>
+				</div>
+				<button type="submit" name="submit" class="btn btn-lg btn-danger btn-block letter" >Recuperar Contraseña</button>
+			</form>
+		</div>
+
+		<div id="password_user">
+			<form method="post" action="{% url 'restaurar_cuenta' %}">
+			{%csrf_token%}
+				<div class="row">
+					<div class="col-xs-6">
+						<input type="email" name="email" placeholder="email" class="form-control input-lg" required/>
+					</div>
+					<div class="col-xs-6">
+						<input type="text" name="cedula" placeholder="cedula" class="form-control input-lg" id="cedula" required/>
+					</div>
+				</div>
+				<button type="submit" name="submit" class="btn btn-lg btn-danger btn-block letter" >Recuperar Usuario y Contraseña</button>
+			</form>
+		</div>
+	</section>
+</div>
+
+<div class="col-xs-3"></div>
+
+</div>
+</div>
+
+
+<footer class="footer">
+	<center><a href="#" style="color:white;">www.webtobe.com</a></center>
+</footer>
+
+
+{% endblock %}
+
+{% block extra_script %}
+<script src="{{STATIC_URL}}js/registro/login.js"></script>
+{% endblock extra_script%}

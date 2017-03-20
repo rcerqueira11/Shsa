@@ -10,5 +10,10 @@ urlpatterns = [
         views.VerPlanillaSeguroCarro.as_view(),
         name="planilla_seguro_carro"
     ),
+    url(
+        r'^dashboard',
+        views.Dashboard.as_view(),
+        name="dashboard"
+    ),
     
 ]

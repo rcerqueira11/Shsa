@@ -72,3 +72,13 @@ class VerPlanillaSeguroCarro(View):
 		# data['pdf_dir'] = 'planilla_multa_omision'
 		# return HttpResponse(json.dumps(data), content_type = "application/json")
 		# return render(request,"solo_visualizar_planilla_registro_carro_seguro.html",context)
+
+
+class Dashboard(View):
+	"""docstring for Dashboard"""
+	def dispatch(self, request, *args, **kwargs):
+		print "holis2"
+		return super(Dashboard, self).dispatch(request, *args, **kwargs)
+
+	def get(self, request, *args, **kwargs):
+		return render(request, 'registro/recuperar_contrasena.html')

@@ -117,6 +117,9 @@ class Logout(View):
         return redirect(reverse_lazy('registro_login'))
 
 
+
+
+
 class RegistroUsuario(View):
     def dispatch(self, request, *args, **kwargs):
         # if request.user.username == '' or request.user.is_authenticated() == False:
@@ -146,21 +149,14 @@ class RegistroUsuario(View):
         # response
         return redirect(reverse_lazy('dashboard'))
 
-class RecuperarContrasena(View):
-    def dispatch(self, request, *args, **kwargs):
-    
-        return super(RecuperarContrasena, self).dispatch(request, *args, **kwargs)
 
+class RestaurarCuenta(View):
     def get(self, request, *args, **kwargs):
-        data = request.POST
-        correo = data['correo']
-        cedula = data['cedula']
+        # if request.user.is_authenticated():
+        #     mensaje = u'¡Ha cerrado sesión correctamente!'
+        #     messages.info(self.request, mensaje)
+        return render (request, 'registro/restaurar_cuenta.html')
 
-        if Usuario.objects.get(correo = correo, cedula = cedula).exists():
-            user = Usuario.objects.get(correo = correo, cedula = cedula)
-            nueva_password = 'generar_nuevo_password()'
-            with transaction.atomic():
-                user.set_password(nueva_password)
-                #Enviar password por mail
-                user.send_mail()
-        return redirect(reverse_lazy('recuperar_contrasena'))
+# return HttpResponse(json.dumps(data), content_type = "application/json")
+
+

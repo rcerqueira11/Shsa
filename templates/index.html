@@ -31,12 +31,13 @@
 		<input type="password" name="password" placeholder="contraseña" class="form-control input-lg" id="password" required/>
 
 		<button type="submit" name="submit" class="btn btn-lg btn-primary btn-block letter" >Iniciar sesión</button>
-		 <div >
-		 	<div align="right"><a href="{%  url 'registro_usuario' %}">Registrarse</a> <br> <a href="{% url 'recuperar_contrasena' %}">Recuperar contraseña</a></div>
-		 	
-		 </div>
 		 
 	</form>
+	 <div >
+	 	<div align="right"><a href="{%  url 'registro_usuario' %}">Registrarse</a> </div>
+	 	<div align="right"> <a href="{% url 'restaurar_cuenta' %}">Recuperar contraseña</a></div>
+	 	
+	 </div>
 
 
 </section>

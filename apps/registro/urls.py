@@ -21,9 +21,9 @@ urlpatterns = [
         name="registro_usuario"
     ),
     url(
-        r'^registro_recuperar_contrasena',
-        views.RecuperarContrasena.as_view(),
-        name="recuperar_contrasena"
+        r'^restaurar_cuenta',
+        views.RestaurarCuenta.as_view(),
+        name="restaurar_cuenta"
     ),
     
 ]
