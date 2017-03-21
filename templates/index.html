@@ -27,7 +27,7 @@
 	<form method="post" action="{% url 'registro_login' %}">
 	{%csrf_token%}
 
-		<input type="email" name="email" placeholder="email" class="form-control input-lg" required/>
+		<input type="text" name="usuario" placeholder="usuario" class="form-control input-lg" required/>
 		<input type="password" name="password" placeholder="contraseña" class="form-control input-lg" id="password" required/>
 
 		<button type="submit" name="submit" class="btn btn-lg btn-primary btn-block letter" >Iniciar sesión</button>
