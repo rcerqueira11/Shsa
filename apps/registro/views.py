@@ -10,6 +10,7 @@ from django.utils import timezone
 from django.conf import settings
 
 from apps.wkhtmltopdf.views import PDFTemplateResponse
+from apps.registro.models import *
 # from utils.HelpMethods.aes_cipher import encode as secure_value_encode
 # from utils.HelpMethods.aes_cipher import decode as secure_value_decode
 import json
@@ -21,6 +22,19 @@ import os
 import sys
 
 # Create your views here.
+
+def consulta_nombre_usuario(request):
+    username = request.POST['username']
+    data={}
+
+    if Usuario.objects.filter(nombre_usuario = username).exists():
+        data['Result'] = 'success'
+    else:
+        data['Result'] = 'error'
+
+    return HttpResponse(json.dumps(data), content_type = "application/json")
+
+
 
 class DetectarUsuario(View):
     def dispatch(self, request, *args, **kwargs):
@@ -95,7 +109,6 @@ class Login(View):
     	return render(request, 'index.html',context)
 
     def post(self,request,*args,**kwargs):
-        # import pudb; pu.db
         context={
             'correo': request.POST['email'],
             'nombre' : 'Galactus',

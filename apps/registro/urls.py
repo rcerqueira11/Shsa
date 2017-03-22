@@ -26,4 +26,11 @@ urlpatterns = [
         name="restaurar_cuenta"
     ),
     
+    url(
+        r'^verificar_nombre_usuario',
+        views.consulta_nombre_usuario,
+        name="verificar_nombre_usuario"
+    ),
+
+    
 ]

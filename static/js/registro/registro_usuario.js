@@ -1,4 +1,3 @@
-/*@as*/
 function consulta_nombre_usuario(usuario){
     // console.log('username: '+usuario);
     $('.ajax_loader').remove();
@@ -31,6 +30,8 @@ function consulta_nombre_usuario(usuario){
 
     }
 }
+
+
 
 function imprimir_error(msj){
      return '<p class="error-center-mensaje" style="color:#CE4744;">'+msj+' <i style="color:#CE4744;" class="fa fa-times-circle-o fa-lg"></i></p>'
