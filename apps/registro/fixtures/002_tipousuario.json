@@ -1,1 +1,20 @@
-[{"model": "registro.tipousuario", "pk": 1, "fields": {"nombre": "INSPECTOR", "descripcion": "EL USUARIO ENCARGADO DEL PERITAJE ", "codigo": "INSP"}}, {"model": "registro.tipousuario", "pk": 2, "fields": {"nombre": "TAQUILLA", "descripcion": "EL USUARIO ENCARGADO EN GENERAR LOS TICKETS DE INSPECCION", "codigo": "TAQ"}}]
+[
+  {
+    "model": "registro.tipousuario",
+    "pk": 1,
+    "fields": {
+      "nombre": "INSPECTOR",
+      "descripcion": "EL USUARIO ENCARGADO DEL PERITAJE ",
+      "codigo": "INSP"
+    }
+  },
+  {
+    "model": "registro.tipousuario",
+    "pk": 2,
+    "fields": {
+      "nombre": "TAQUILLA",
+      "descripcion": "EL USUARIO ENCARGADO EN GENERAR LOS TICKETS DE INSPECCION",
+      "codigo": "TAQ"
+    }
+  }
+]

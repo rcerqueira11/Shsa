@@ -1,37 +1,74 @@
+$("#id_username").focus();
+// alert('asdasd');
 function consulta_nombre_usuario(usuario){
     // console.log('username: '+usuario);
-    $('.ajax_loader').remove();
+    // $('.ajax_loader').remove();
+    // if(usuario.length){
+    //     $('<i class="ajax_loader fa fa-spinner fa-pulse" style="color:#444444"></i>').insertAfter('#id_username');
+    //     $.ajax({
+    //         type:"POST",
+    //         url:"/registro/consulta_nombre_usuario",
+    //         data: {
+    //             'csrfmiddlewaretoken':$("#registro_form input[name=csrfmiddlewaretoken]").val(),
+    //             'username':usuario
+    //         },
+    //         success:function(results){
+    //             // console.log('results');
+    //             // console.log(results);
+    //             $('.ajax_loader').remove();
+    //             if(results.Result=='error'){
+    //                 $("#id-error-username").html('<p> El Nombre de Usuario ya se encuentra registrado. Por favor intente con otro Nombre de Usuario <i class="fa fa-times-circle-o fa-lg"></i> </p>');
+    //             }else
+    //                 $("#id-error-username").html('<i class="fa fa-check-circle-o fa-lg" style="color:#14D100"></i>');
+    //         },
+    //         error: function(results){
+    //             // console.log('ERROR');
+    //             $('.ajax_loader').remove();
+    //         }
+    //     });
+
+    // }else{
+    //       $("#id-error-username").html('<p> El Nombre de Usuario debe ser válido<i class="fa fa-times-circle-o fa-lg"></i> </p>');
+
+    // }
+
     if(usuario.length){
-        $('<i class="ajax_loader fa fa-spinner fa-pulse" style="color:#444444"></i>').insertAfter('#id_username');
         $.ajax({
-            type:"POST",
-            url:"/registro/consulta_nombre_usuario",
-            data: {
-                'csrfmiddlewaretoken':$("#registro_form input[name=csrfmiddlewaretoken]").val(),
-                'username':usuario
-            },
-            success:function(results){
-                // console.log('results');
-                // console.log(results);
-                $('.ajax_loader').remove();
-                if(results.Result=='error'){
-                    $("#id-error-username").html('<p> El Nombre de Usuario ya se encuentra registrado. Por favor intente con otro Nombre de Usuario <i class="fa fa-times-circle-o fa-lg"></i> </p>');
-                }else
-                    $("#id-error-username").html('<i class="fa fa-check-circle-o fa-lg" style="color:#14D100"></i>');
-            },
-            error: function(results){
-                // console.log('ERROR');
-                $('.ajax_loader').remove();
-            }
-        });
+                type: 'GET' ,
+                url: '/registro/verificar_nombre_usuario' , // <= Providing the URL
+                data:{
+                    'username': usuario,
+                },
+                success: function(results){
+                    if(results.Result=='ocupado'){
+                        $("#id-error-username").html('<p> El Nombre de Usuario ya se encuentra registrado. Por favor intente con otro Nombre de Usuario <i class="fa fa-times-circle-o fa-lg"></i> </p>');
+                    }
+                    if (results.Result=='libre'){
+                        $("#id-error-username").html('<i class="fa fa-check-circle-o fa-lg" style="color:#14D100"></i>');
+                    }
+                    
+                },
+                error: function(results){
+                    console.log("ERROR");
+                }
+            });
+        
 
     }else{
-          $("#id-error-username").html('<p> El Nombre de Usuario debe ser válido<i class="fa fa-times-circle-o fa-lg"></i> </p>');
-
+        $("#id-error-username").html('<p> El Nombre de Usuario debe ser válido<i class="fa fa-times-circle-o fa-lg"></i> </p>');
     }
 }
 
 
+$('#id_username').focusout(function(){
+    usuario = $('#id_username').val()
+    if (usuario){
+        consulta_nombre_usuario(usuario)
+        
+    }else{
+        $("#id-error-username").html('<p> El Nombre de Usuario debe ser válido<i class="fa fa-times-circle-o"></i> </p>');
+    }
+})
 
 function imprimir_error(msj){
      return '<p class="error-center-mensaje" style="color:#CE4744;">'+msj+' <i style="color:#CE4744;" class="fa fa-times-circle-o fa-lg"></i></p>'
@@ -247,12 +284,12 @@ function processForm(e) {
 
 
 
-var form = document.getElementById('registro_form');
-if (form.attachEvent) {
-    form.attachEvent("submit", processForm);
-} else {
-    form.addEventListener("submit", processForm);
-}
+// var form = document.getElementById('registro_form');
+// if (form.attachEvent) {
+//     form.attachEvent("submit", processForm);
+// } else {
+//     form.addEventListener("submit", processForm);
+// }
 
 /***
  * fin

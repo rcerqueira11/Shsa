@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load static %}
 <!DOCTYPE html>
 
 <html lang="en">
@@ -15,9 +16,9 @@
       <link href="/static/css/style.css"  rel="stylesheet" type="text/css"/>
       <!-- custom style by leila -->
       <!-- <link href="css/AdminLTE.css" rel="stylesheet" type="text/css"/> -->
+      <!-- <p style="color: red;">static ={{STATIC_URL}}</p> -->                                        
 
-
-      <link href="{{STATIC_URL}}css/font-awesome.min.css"  rel="stylesheet" type="text/css"/>
+      <link href="/static/css/font-awesome.min.css"  rel="stylesheet" type="text/css"/>
       <link href="{{STATIC_URL}}css/plugins/chosen.min.css"  rel="stylesheet" type="text/css"/>
       <link href="{{STATIC_URL}}css/plugins/bootstrap-datepicker.min.css"  rel="stylesheet" type="text/css"/>
       <link href="{{STATIC_URL}}css/plugins/bootstrap-datepicker.min.css.map"  rel="stylesheet" type="application/octet-stream"/>
@@ -51,6 +52,9 @@
       {% endblock javascripts %}
 
       {% block extra_script %}
-      {% endblock extra_script%}
+      {% endblock extra_script %}
+
+
+
 </body>
 </html>

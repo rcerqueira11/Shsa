@@ -8,6 +8,7 @@ from django.template import RequestContext, loader
 from django.http import HttpResponse
 from django.utils import timezone
 from django.conf import settings
+from settings.settings import BASE_DIR, STATIC_URL
 
 from apps.wkhtmltopdf.views import PDFTemplateResponse
 from apps.registro.models import *
@@ -24,13 +25,13 @@ import sys
 # Create your views here.
 
 def consulta_nombre_usuario(request):
-    username = request.POST['username']
+    username = request.GET['username']
     data={}
 
     if Usuario.objects.filter(nombre_usuario = username).exists():
-        data['Result'] = 'success'
+        data['Result'] = 'ocupado'
     else:
-        data['Result'] = 'error'
+        data['Result'] = 'libre'
 
     return HttpResponse(json.dumps(data), content_type = "application/json")
 
