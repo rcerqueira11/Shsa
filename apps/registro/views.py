@@ -164,7 +164,12 @@ class RegistroUsuario(View):
         return super(RegistroUsuario, self).dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        context = {}
+
+        tipo_usuario = TipoUsuario.objects.all().order_by('nombre')
+
+        context = {
+            'tipos_de_usuario': tipo_usuario,
+        }
         # if request.user.is_authenticated():
         #     mensaje = u'¡Ha cerrado sesión correctamente!'
         #     messages.info(self.request, mensaje)
