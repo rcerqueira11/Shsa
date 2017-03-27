@@ -23,6 +23,7 @@ class Usuario(AbstractBaseUser):
 	fk_status = models.ForeignKey(Status, db_column='fk_status', default=1) 
 	nombre = models.CharField(max_length=255, null=False)
 	apellido = models.CharField(max_length=255, null=False)
+	cedula = models.CharField(max_length=255, null=False, unique=True)
 	correo_electronico = models.EmailField(max_length=255, blank=True, unique=True)
 	intentos_login = models.IntegerField(default=0)
 	#hello

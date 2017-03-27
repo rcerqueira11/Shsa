@@ -35,6 +35,28 @@ def consulta_nombre_usuario(request):
 
     return HttpResponse(json.dumps(data), content_type = "application/json")
 
+def consulta_cedula_usuario(request):
+    cedula = request.GET['cedula']
+    data={}
+
+    if Usuario.objects.filter(cedula = cedula).exists():
+        data['Result'] = 'ocupado'
+    else:
+        data['Result'] = 'libre'
+
+    return HttpResponse(json.dumps(data), content_type = "application/json")
+
+def consulta_correo_usuario(request):
+    email = request.GET['email']
+    data={}
+
+    if Usuario.objects.filter(correo_electronico = email).exists():
+        data['Result'] = 'ocupado'
+    else:
+        data['Result'] = 'libre'
+
+    return HttpResponse(json.dumps(data), content_type = "application/json")
+
 
 
 class DetectarUsuario(View):
