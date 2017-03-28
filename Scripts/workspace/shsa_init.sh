@@ -1,7 +1,7 @@
- #!/usr/bin/env bash
+#!/usr/bin/env bash
 
 
-sh firefox_shsa.sh 
+terminator -e  firefox_shsa.sh 
 
 echo "Tesis!!"
 
