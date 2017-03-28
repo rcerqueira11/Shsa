@@ -98,7 +98,7 @@ $('#id_username').focusout(function(){
 $('#id_correo_electronico').focusout(function(){
     correo = $('#id_correo_electronico').val()
     if (correo){
-        consulta_correo_usuario(correo)
+        // consulta_correo_usuario(correo)
         
     }else{
         $("#id-error-correo").html('<p class="small_error_letter"> El campo de correo no puede quedar vácio<i class="fa fa-times-circle-o"></i> </p>');
@@ -114,6 +114,16 @@ $('#id_cedula').focusout(function(){
         $("#id-error-cedula").html('<p class="small_error_letter"> El campo de correo no puede quedar vácio<i class="fa fa-times-circle-o"></i> </p>');
     }
 })
+
+
+
+
+
+
+
+
+
+
 
 function imprimir_error(msj){
      return '<p class="error-center-mensaje" style="color:#CE4744;">'+msj+' <i style="color:#CE4744;" class="fa fa-times-circle-o fa-lg"></i></p>'
@@ -195,7 +205,7 @@ function processForm(e) {
                                     form=JSON.parse(results.form)
                                     $("#id-error-confirm-email").html('');
                                     if(form.correo_electronico){
-                                        $("#id-mensaje-correo-importante").html(imprimir_error('El correo electronico ya ha sido registrado anteriormente'));
+                                        $("#id-error-correo").html(imprimir_error('El correo electronico ya ha sido registrado anteriormente'));
                                         $("#id_correo_electronico").css("border-bottom-color",'red');
                                         $("#id_correo_electronico").css("border-left-color",'red');
                                         $("#id_correo_electronico").css("border-right-color",'red');
@@ -343,132 +353,114 @@ function processForm(e) {
 
 
  //# TODO CAPTCHA decomentar
-$(function() {
+// $(function() {
 
-    // if ($('#captcha_engine').attr('value') == true){
-    //     console.log('captcha engine true');
-    // }else{
-    //     console.log('captcha engine false');
-    //     console.log($('#captcha_engine').attr('value'));
-    // }
+//     // if ($('#captcha_engine').attr('value') == true){
+//     //     console.log('captcha engine true');
+//     // }else{
+//     //     console.log('captcha engine false');
+//     //     console.log($('#captcha_engine').attr('value'));
+//     // }
 
-    // Add refresh button after field (this can be done in the template as well)
-    $('img.captcha').after(
-            $('<a href="#void" class="fa fa-refresh captcha-refresh" title="Da click para cambiar la imagen"></a><br><br>')
-            );
+//     // Add refresh button after field (this can be done in the template as well)
+//     $('img.captcha').after(
+//             $('<a href="#void" class="fa fa-refresh captcha-refresh" title="Da click para cambiar la imagen"></a><br><br>')
+//             );
 
-    // Click-handler for the refresh-link
-    $('.captcha-refresh').click(function(){
-        var $form = $(this).parents('form');
-        var url = location.protocol + "//" + window.location.hostname + ":"
-                  + location.port + "/captcha/refresh/";
+//     // Click-handler for the refresh-link
+//     $('.captcha-refresh').click(function(){
+//         var $form = $(this).parents('form');
+//         var url = location.protocol + "//" + window.location.hostname + ":"
+//                   + location.port + "/captcha/refresh/";
 
-        // Make the AJAX-call
-        $.getJSON(url, {}, function(json) {
-            $form.find('input[name="captcha_0"]').val(json.key);
-            $form.find('img.captcha').attr('src', json.image_url);
-        });
+//         // Make the AJAX-call
+//         $.getJSON(url, {}, function(json) {
+//             $form.find('input[name="captcha_0"]').val(json.key);
+//             $form.find('img.captcha').attr('src', json.image_url);
+//         });
 
-        return false;
-    });
-});
+//         return false;
+//     });
+// });
 /***
  * fin
  **/
 
 
-function correosDesiguales() {
+// function correosDesiguales() {
+//     var email = document.getElementById("id_correo_electronico").value;
+//     var email2 = document.getElementById("id_correo_secundario").value;
+
+//     if((email == email2) && ($("#id_correo_electronico").val().length) ) {
+
+//             document.getElementById("id_correo_secundario").style.borderColor = "#E34234";
+//             //id_correo2.focus();
+//             $("#id-correo2-error").html('<p> El correo secundario no puede ser igual al correo principal <i class="fa fa-times-circle-o fa-lg"></i> </p>');
+//             // alert('El correo de confirmacion no es igual al correo principal');
+
+
+//         }else{
+
+//             if(email2.length!=0){
+//                 if(!validarEmail(email2)){
+
+//                     document.getElementById("id_correo_secundario").style.borderColor = "#E34234";
+//                     //id_correo2.focus();
+//                     $("#id-correo2-error").html('<p> El correo debe ser válido <i class="fa fa-times-circle-o fa-lg"></i> </p>');
+//                     // alert('El correo de confirmacion no es igual al correo principal');
+//                 }else{
+//                         document.getElementById("id_correo_secundario").style.borderColor = "#14D100";
+//                         $("#id-correo2-error").empty();
+//                         $("#id-correo2-error").html('<i class="fa fa-check-circle-o fa-lg" style="color:#14D100"></i>');
+//                     }
+//                 }
+//             }else{
+//                  $("#id-correo2-error").empty();
+//             }
+//         }
+
+// }
+
+// traido de generic.js
+$("#id_correo_electronico").attr('onblur',"confirmEmail2();");
+// $("#id_correo2").attr('onblur',"confirmEmail();");
+
+function confirmEmail() {
     var email = document.getElementById("id_correo_electronico").value;
-    var email2 = document.getElementById("id_correo_secundario").value;
-    var rif = document.getElementById("id_rif").value;
+    var confemail = document.getElementById("id_correo2").value;
+    
+    consulta_correo_usuario(email)
+    
 
-    if((email == email2) && ($("#id_correo_electronico").val().length) ) {
+    if(!jQuery.isEmptyObject($('#id-error-correo').html())){
 
-            document.getElementById("id_correo_secundario").style.borderColor = "#E34234";
+        if(email != confemail) {
+
+            document.getElementById("id_correo_electronico").style.borderColor = "#E34234";
+            document.getElementById("id_correo2").style.borderColor = "#E34234";
             //id_correo2.focus();
-            $("#id-correo2-error").html('<p> El correo secundario no puede ser igual al correo principal <i class="fa fa-times-circle-o fa-lg"></i> </p>');
+            $("#id-error-confirm-email").html('<p class="small_error_letter"> El correo de confirmación no es igual al correo principal <i class="fa fa-times-circle-o fa-lg"></i> </p>');
             // alert('El correo de confirmacion no es igual al correo principal');
 
 
         }else{
 
-            if(email2.length!=0){
-                if(!validarEmail(email2)){
-
-                    document.getElementById("id_correo_secundario").style.borderColor = "#E34234";
+            if(confemail.length!=0){
+                if(!validarEmail(email)){
+                    document.getElementById("id_correo_electronico").style.borderColor = "#E34234";
+                    document.getElementById("id_correo2").style.borderColor = "#E34234";
                     //id_correo2.focus();
-                    $("#id-correo2-error").html('<p> El correo debe ser válido <i class="fa fa-times-circle-o fa-lg"></i> </p>');
+                    $("#id-error-confirm-email").html('<p class="small_error_letter"> El correo debe ser válido <i class="fa fa-times-circle-o fa-lg"></i> </p>');
                     // alert('El correo de confirmacion no es igual al correo principal');
                 }else{
-                    if ((rif[0]=='V')||(rif[0]=='P')||(rif[0]=='E')){
-                   //    console.log("SOY NATURAL EN correosDesiguales<<");
-                        if(validarEmailGob(email2)){
-                            document.getElementById("id_correo_secundario").style.borderColor = "#E34234";
-                            $("#id-correo2-error").html('<p> El correo no puede ser institucional <i class="fa fa-times-circle-o fa-lg"></i> </p>');
-
-                        }else{
-                            document.getElementById("id_correo_secundario").style.borderColor = "#14D100";
-                            $("#id-correo2-error").empty();
-                            $("#id-correo2-error").html('<i class="fa fa-check-circle-o fa-lg" style="color:#14D100"></i>');
-                        }
-                    }else{
-                   //     console.log("SOY JURIDICO EN correosDesiguales<<");
-                        document.getElementById("id_correo_secundario").style.borderColor = "#14D100";
-                        $("#id-correo2-error").empty();
-                        $("#id-correo2-error").html('<i class="fa fa-check-circle-o fa-lg" style="color:#14D100"></i>');
-                    }
+                        // console.log("SOY JURIDICO EN confirmEmail<<");
+                        document.getElementById("id_correo_electronico").style.borderColor = "#14D100";
+                        document.getElementById("id_correo2").style.borderColor = "#14D100";
+                        $("#id-error-confirm-email").empty();
+                        $("#id-error-correo").empty();
+                        $("#id-error-confirm-email").html('<i class="fa fa-check-circle-o fa-lg" style="color:#14D100"></i>');
+                    
                 }
-            }else{
-                 $("#id-correo2-error").empty();
-            }
-        }
-
-}
-
-// traido de generic.js
-$("#id_correo_electronico").attr('onblur',"confirmEmail2(); correosDesiguales(); mensajeImportante()");
-
-function validarEmailGob( email ) {
-    exprgob = /^([a-zA-Z0-9_\.\-])+(\@)+(([a-zA-Z0-9\.])?)+(g|G)+(o|O)+(b|B)+(\.)+(v|V)+(e|E)$/;
-    exprgov = /^([a-zA-Z0-9_\.\-])+(\@)+(([a-zA-Z0-9\.])?)+(g|G)+(o|O)+(v|V)+(\.)+(v|V)+(e|E)$/;
-    if ( exprgob.test(email) || exprgov.test(email)){
-        return 1;
-    }else{
-        return 0;
-    }
-}
-
-function confirmEmail() {
-    var email = document.getElementById("id_correo_electronico").value;
-    var confemail = document.getElementById("id_correo2").value;
-    var rif = document.getElementById("id_rif").value;
-
-    if(email != confemail) {
-
-        document.getElementById("id_correo_electronico").style.borderColor = "#E34234";
-        document.getElementById("id_correo2").style.borderColor = "#E34234";
-        //id_correo2.focus();
-        $("#id-error-confirm-email").html('<p> El correo de confirmación no es igual al correo principal <i class="fa fa-times-circle-o fa-lg"></i> </p>');
-        // alert('El correo de confirmacion no es igual al correo principal');
-
-
-    }else{
-
-        if(confemail.length!=0){
-            if(!validarEmail(email)){
-                document.getElementById("id_correo_electronico").style.borderColor = "#E34234";
-                document.getElementById("id_correo2").style.borderColor = "#E34234";
-                //id_correo2.focus();
-                $("#id-error-confirm-email").html('<p> El correo debe ser válido <i class="fa fa-times-circle-o fa-lg"></i> </p>');
-                // alert('El correo de confirmacion no es igual al correo principal');
-            }else{
-                    // console.log("SOY JURIDICO EN confirmEmail<<");
-                    document.getElementById("id_correo_electronico").style.borderColor = "#14D100";
-                    document.getElementById("id_correo2").style.borderColor = "#14D100";
-                    $("#id-error-confirm-email").empty();
-                    $("#id-mensaje-correo-importante").empty();
-                    $("#id-error-confirm-email").html('<i class="fa fa-check-circle-o fa-lg" style="color:#14D100"></i>');
-                
             }
         }
     }
@@ -477,40 +469,29 @@ function confirmEmail() {
 function confirmEmail2() {
     var email = document.getElementById("id_correo_electronico").value;
     var confemail = document.getElementById("id_correo2").value;
-    var rif = document.getElementById("id_rif").value;
 
+    // verificar si el correo ya esta siendo usado por otro usuario 
+    consulta_correo_usuario(email)
+    
+
+    if(!jQuery.isEmptyObject($('#id-error-correo').html())){
+    
     if(email == confemail) {
         if(confemail.length!=0){
             if(validarEmail(email)){
-                    if ((rif[0]=='V')||(rif[0]=='P')||(rif[0]=='E')){
-                       // console.log("SOY NATURAL EN confirmEmail2");
-                        if(!validarEmailGob(email)){
-
-                            document.getElementById("id_correo_electronico").style.borderColor = "#14D100";
-                            document.getElementById("id_correo2").style.borderColor = "#14D100";
-                            $("#id-error-confirm-email").empty();
-                             $("#id-mensaje-correo-importante").html('');
-                            $("#id-error-confirm-email").html('<i class="fa fa-check-circle-o fa-lg" style="color:#14D100"></i>');
-                        }else{
-
-                            document.getElementById("id_correo_electronico").style.borderColor = "#E34234";
-                            document.getElementById("id_correo2").style.borderColor = "#E34234";
-                            $("#id-error-confirm-email").html('<p> El correo no puede ser institucional <i class="fa fa-times-circle-o fa-lg"></i> </p>');
-                        }
-                    }else{
-                       // console.log("SOY JURIDICO EN confirmEmail2");
-                        document.getElementById("id_correo_electronico").style.borderColor = "#14D100";
-                        document.getElementById("id_correo2").style.borderColor = "#14D100";
-                        $("#id-error-confirm-email").html('<i class="fa fa-check-circle-o fa-lg" style="color:#14D100"></i>');
-                    }
-
+                    
+               // console.log("SOY JURIDICO EN confirmEmail2");
+                document.getElementById("id_correo_electronico").style.borderColor = "#14D100";
+                document.getElementById("id_correo2").style.borderColor = "#14D100";
+                $("#id-error-confirm-email").html('<i class="fa fa-check-circle-o fa-lg" style="color:#14D100"></i>');
+            
 
             }else{
 
                 document.getElementById("id_correo_electronico").style.borderColor = "#E34234";
                 document.getElementById("id_correo2").style.borderColor = "#E34234";
                 //id_correo2.focus();
-                $("#id-error-confirm-email").html('<p> El correo debe ser valido <i class="fa fa-times-circle-o fa-lg"></i> </p>');
+                $("#id-error-confirm-email").html('<p class="small_error_letter"> El correo debe ser valido <i class="fa fa-times-circle-o fa-lg"></i> </p>');
 
             }
         }else{
@@ -520,7 +501,7 @@ function confirmEmail2() {
                 document.getElementById("id_correo_electronico").style.borderColor = "#E34234";
                 document.getElementById("id_correo2").style.borderColor = "#E34234";
 
-                $("#id-mensaje-correo-importante").html('<p> El correo debe ser válido <i class="fa fa-times-circle-o fa-lg"></i> </p>');
+                $("#id-error-correo").html('<p class="small_error_letter"> El correo debe ser válido <i class="fa fa-times-circle-o fa-lg"></i> </p>');
             }
         }
 
@@ -529,23 +510,8 @@ function confirmEmail2() {
             document.getElementById("id_correo_electronico").style.borderColor = "#E34234";
             document.getElementById("id_correo2").style.borderColor = "#E34234";
             // id_correo2.focus();
-           $("#id-error-confirm-email").html('<p> El correo de confirmación no es igual al correo principal  <i class="fa fa-times-circle-o fa-lg"></i> </p>');
+           $("#id-error-confirm-email").html('<p class="small_error_letter"> El correo de confirmación no es igual al correo principal  <i class="fa fa-times-circle-o fa-lg"></i> </p>');
 
-        }else{
-            // Para que lo verifique al onblur del primer input del correo
-            if ((rif[0]=='V')||(rif[0]=='P')||(rif[0]=='E')){
-                   // console.log("SOY NATURAL EN confirmEmail2");
-                if(validarEmailGob(email)){
-                    document.getElementById("id_correo_electronico").style.borderColor = "#E34234";
-                    // document.getElementById("id_correo2").style.borderColor = "#E34234";
-                    $("#id-mensaje-correo-importante").html('<p> El correo no puede ser institucional <i class="fa fa-times-circle-o fa-lg"></i> </p>');
-                }else{
-                    document.getElementById("id_correo_electronico").style.borderColor = "";
-                    $("#id-mensaje-correo-importante").html('');
-
-
-                }
-            }
         }
     }
 
@@ -553,7 +519,9 @@ function confirmEmail2() {
         document.getElementById("id_correo_electronico").style.borderColor = "#E34234";
         // document.getElementById("id_correo2").style.borderColor = "#E34234";
 
-        $("#id-mensaje-correo-importante").html('<p> El correo debe ser válido <i class="fa fa-times-circle-o fa-lg"></i> </p>');
+        $("#id-error-correo").html('<p class="small_error_letter"> El correo debe ser válido <i class="fa fa-times-circle-o fa-lg"></i> </p>');
+    }
+
     }
 }
 

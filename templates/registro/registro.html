@@ -24,6 +24,7 @@
 	<br>
 
 
+
 	<form method="post" action="{% url 'registro_usuario' %}">
 	{%csrf_token%}
 	{# <div class="row"> #}
@@ -50,7 +51,6 @@
 			<label>C&eacute;dula</label>	
 			<input type="text" name="cedula" placeholder="12345678" class="input-mask-n form-control input-lg" id="id_cedula" required/>
 			<div class=" error" id="id-error-cedula" align="right" >
-
             </div>
 		</div>
 		
@@ -89,6 +89,10 @@
 		<div class="col-xs-6">
 			<label>Verificar Correo</label>
 			<input type="email" name="email2" placeholder="nombre@dominio.com" id="id_correo2" class="form-control input-lg" onblur="confirmEmail()" placeholder="Nombre@Dominio.com" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off required/>
+			<div class="error" id="id-error-confirm-email">
+				
+
+			</div>
 		</div>
 		
 		
@@ -159,9 +163,9 @@
 {% endblock %}
 
 {% block extra_script %}
-
+	{{ block.super }}
 <!-- <script src="{{STATIC_URL}}js/registro/login.js"></script> -->
-<script src="{{STATIC_URL}}js/registro/registro_usuario.js"></script>
+ 	<script src="{{STATIC_URL}}js/registro/registro_usuario.js"></script>
 
 {% endblock extra_script %}
 
