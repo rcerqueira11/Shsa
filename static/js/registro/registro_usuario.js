@@ -1,37 +1,6 @@
 $("#id_username").focus();
 // alert('asdasd');
 function consulta_nombre_usuario(usuario){
-    // console.log('username: '+usuario);
-    // $('.ajax_loader').remove();
-    // if(usuario.length){
-    //     $('<i class="ajax_loader fa fa-spinner fa-pulse" style="color:#444444"></i>').insertAfter('#id_username');
-    //     $.ajax({
-    //         type:"POST",
-    //         url:"/registro/consulta_nombre_usuario",
-    //         data: {
-    //             'csrfmiddlewaretoken':$("#registro_form input[name=csrfmiddlewaretoken]").val(),
-    //             'username':usuario
-    //         },
-    //         success:function(results){
-    //             // console.log('results');
-    //             // console.log(results);
-    //             $('.ajax_loader').remove();
-    //             if(results.Result=='error'){
-    //                 $("#id-error-username").html('<p> El Nombre de Usuario ya se encuentra registrado. Por favor intente con otro Nombre de Usuario <i class="fa fa-times-circle-o fa-lg"></i> </p>');
-    //             }else
-    //                 $("#id-error-username").html('<i class="fa fa-check-circle-o fa-lg" style="color:#14D100"></i>');
-    //         },
-    //         error: function(results){
-    //             // console.log('ERROR');
-    //             $('.ajax_loader').remove();
-    //         }
-    //     });
-
-    // }else{
-    //       $("#id-error-username").html('<p> El Nombre de Usuario debe ser válido<i class="fa fa-times-circle-o fa-lg"></i> </p>');
-
-    // }
-
     if(usuario.length){
         $.ajax({
                 type: 'GET' ,
@@ -41,7 +10,7 @@ function consulta_nombre_usuario(usuario){
                 },
                 success: function(results){
                     if(results.Result=='ocupado'){
-                        $("#id-error-username").html('<p> El Nombre de Usuario ya se encuentra registrado. Por favor intente con otro Nombre de Usuario <i class="fa fa-times-circle-o fa-lg"></i> </p>');
+                        $("#id-error-username").html('<p class="small_error_letter"> El nombre de usuario ya se encuentra registrado. Por favor intente con otro Nombre de Usuario <i class="fa fa-times-circle-o fa-lg"></i> </p>');
                     }
                     if (results.Result=='libre'){
                         $("#id-error-username").html('<i class="fa fa-check-circle-o fa-lg" style="color:#14D100"></i>');
@@ -55,7 +24,63 @@ function consulta_nombre_usuario(usuario){
         
 
     }else{
-        $("#id-error-username").html('<p> El Nombre de Usuario debe ser válido<i class="fa fa-times-circle-o fa-lg"></i> </p>');
+        $("#id-error-username").html('<p class="small_error_letter"> El nombre de usuario debe ser válido<i class="fa fa-times-circle-o fa-lg"></i> </p>');
+    }
+}
+
+function consulta_correo_usuario(correo){
+    if(correo.length){
+        $.ajax({
+                type: 'GET' ,
+                url: '/registro/verificar_correo_usuario' , // <= Providing the URL
+                data:{
+                    'email': correo,
+                },
+                success: function(results){
+                    if(results.Result=='ocupado'){
+                        $("#id-error-correo").html('<p class="small_error_letter"> El correo de usuario ya se encuentra registrado. Por favor intente con otro correo <i class="fa fa-times-circle-o fa-lg"></i> </p>');
+                    }
+                    if (results.Result=='libre'){
+                        $("#id-error-correo").html('<i class="fa fa-check-circle-o fa-lg" style="color:#14D100"></i>');
+                    }
+                    
+                },
+                error: function(results){
+                    console.log("ERROR");
+                }
+            });
+        
+
+    }else{
+        $("#id-error-correo").html('<p class="small_error_letter"> El correo del usuario debe ser válido<i class="fa fa-times-circle-o fa-lg"></i> </p>');
+    }
+}
+
+function consulta_cedula_usuario(cedula){
+    if(cedula.length){
+        $.ajax({
+                type: 'GET' ,
+                url: '/registro/verificar_cedula_usuario' , // <= Providing the URL
+                data:{
+                    'cedula': cedula,
+                },
+                success: function(results){
+                    if(results.Result=='ocupado'){
+                        $("#id-error-cedula").html('<p class="small_error_letter"> La cedula ya se encuentra registrada. Por favor verificarla. <i class="fa fa-times-circle-o fa-lg"></i> </p>');
+                    }
+                    if (results.Result=='libre'){
+                        $("#id-error-cedula").html('<i class="fa fa-check-circle-o fa-lg" style="color:#14D100"></i>');
+                    }
+                    
+                },
+                error: function(results){
+                    console.log("ERROR");
+                }
+            });
+        
+
+    }else{
+        $("#id-error-cedula").html('<p class="small_error_letter"> El campo de cedula no puede quedar vacio.<i class="fa fa-times-circle-o fa-lg"></i> </p>');
     }
 }
 
@@ -66,7 +91,27 @@ $('#id_username').focusout(function(){
         consulta_nombre_usuario(usuario)
         
     }else{
-        $("#id-error-username").html('<p> El Nombre de Usuario debe ser válido<i class="fa fa-times-circle-o"></i> </p>');
+        $("#id-error-username").html('<p class="small_error_letter"> El nombre de usuario debe ser válido<i class="fa fa-times-circle-o"></i> </p>');
+    }
+})
+
+$('#id_correo_electronico').focusout(function(){
+    correo = $('#id_correo_electronico').val()
+    if (correo){
+        consulta_correo_usuario(correo)
+        
+    }else{
+        $("#id-error-correo").html('<p class="small_error_letter"> El campo de correo no puede quedar vácio<i class="fa fa-times-circle-o"></i> </p>');
+    }
+})
+
+$('#id_cedula').focusout(function(){
+    cedula = $('#id_cedula').val()
+    if (cedula){
+        consulta_cedula_usuario(cedula)
+        
+    }else{
+        $("#id-error-cedula").html('<p class="small_error_letter"> El campo de correo no puede quedar vácio<i class="fa fa-times-circle-o"></i> </p>');
     }
 })
 
@@ -417,28 +462,13 @@ function confirmEmail() {
                 $("#id-error-confirm-email").html('<p> El correo debe ser válido <i class="fa fa-times-circle-o fa-lg"></i> </p>');
                 // alert('El correo de confirmacion no es igual al correo principal');
             }else{
-                if ((rif[0]=='V')||(rif[0]=='P')||(rif[0]=='E')){
-                   // console.log("SOY NATURAL EN confirmEmail<<");
-                    if(validarEmailGob(email)){
-                        document.getElementById("id_correo_electronico").style.borderColor = "#E34234";
-                        document.getElementById("id_correo2").style.borderColor = "#E34234";
-                        $("#id-error-confirm-email").html('<p> El correo no puede ser institucional <i class="fa fa-times-circle-o fa-lg"></i> </p>');
-
-                    }else{
-                        document.getElementById("id_correo_electronico").style.borderColor = "#14D100";
-                        document.getElementById("id_correo2").style.borderColor = "#14D100";
-                        $("#id-error-confirm-email").empty();
-                        $("#id-mensaje-correo-importante").empty();
-                        $("#id-error-confirm-email").html('<i class="fa fa-check-circle-o fa-lg" style="color:#14D100"></i>');
-                    }
-                }else{
-                   // console.log("SOY JURIDICO EN confirmEmail<<");
+                    // console.log("SOY JURIDICO EN confirmEmail<<");
                     document.getElementById("id_correo_electronico").style.borderColor = "#14D100";
                     document.getElementById("id_correo2").style.borderColor = "#14D100";
                     $("#id-error-confirm-email").empty();
                     $("#id-mensaje-correo-importante").empty();
                     $("#id-error-confirm-email").html('<i class="fa fa-check-circle-o fa-lg" style="color:#14D100"></i>');
-                }
+                
             }
         }
     }

@@ -31,6 +31,16 @@ urlpatterns = [
         views.consulta_nombre_usuario,
         name="verificar_nombre_usuario"
     ),
+    url(
+        r'^verificar_correo_usuario$',
+        views.consulta_correo_usuario,
+        name="verificar_correo_usuario"
+    ),
+    url(
+        r'^verificar_cedula_usuario$',
+        views.consulta_cedula_usuario,
+        name="verificar_cedula_usuario"
+    ),
 
     
 ]

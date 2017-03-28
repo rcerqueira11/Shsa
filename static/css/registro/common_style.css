@@ -42,3 +42,7 @@ form input{
 	  padding: 10px;
 	  margin-top: -5px;
 }
+
+.small_error_letter{
+	font-size: 14px !important;
+}
