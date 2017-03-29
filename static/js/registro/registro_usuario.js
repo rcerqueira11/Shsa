@@ -39,9 +39,11 @@ function consulta_correo_usuario(correo){
                 success: function(results){
                     if(results.Result=='ocupado'){
                         $("#id-error-correo").html('<p class="small_error_letter"> El correo de usuario ya se encuentra registrado. Por favor intente con otro correo <i class="fa fa-times-circle-o fa-lg"></i> </p>');
+                        $("#id_correo2").prop('readonly',true)
                     }
                     if (results.Result=='libre'){
                         $("#id-error-correo").html('<i class="fa fa-check-circle-o fa-lg" style="color:#14D100"></i>');
+                        $("#id_correo2").prop('readonly',false)
                     }
                     
                 },
