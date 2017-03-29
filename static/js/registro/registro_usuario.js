@@ -444,12 +444,6 @@ function processForm(e) {
 
 
 
-// var form = document.getElementById('registro_form');
-// if (form.attachEvent) {
-//     form.attachEvent("submit", processForm);
-// } else {
-//     form.addEventListener("submit", processForm);
-// }
 
 /***
  * fin
