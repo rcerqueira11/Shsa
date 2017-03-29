@@ -1,4 +1,6 @@
 $("#id_username").focus();
+$("#id_username").attr("autocomplete","off");
+
 // alert('asdasd');
 function consulta_nombre_usuario(usuario){
     if(usuario.length){
@@ -97,16 +99,6 @@ $('#id_username').focusout(function(){
     }
 })
 
-// $('#id_correo_electronico').focusout(function(){
-//     correo = $('#id_correo_electronico').val()
-//     if (correo){
-//         // consulta_correo_usuario(correo)
-        
-//     }else{
-//         $("#id-error-correo").html('<p class="small_error_letter"> El campo de correo no puede quedar vácio<i class="fa fa-times-circle-o"></i> </p>');
-//     }
-// })
-
 $('#id_cedula').focusout(function(){
     cedula = $('#id_cedula').val()
     if (cedula){
@@ -119,6 +111,9 @@ $('#id_cedula').focusout(function(){
 
 
 $("#id_correo_electronico").attr('onblur',"confirmEmail2();");
+$("#id_correo_electronico").attr("autocomplete","off");
+
+
 function confirmEmail() {
     var email = document.getElementById("id_correo_electronico").value;
     var confemail = document.getElementById("id_correo2").value;
@@ -225,21 +220,6 @@ function confirmEmail2() {
 
 
 
-
-
-
-
-
-function imprimir_error(msj){
-     return '<p class="error-center-mensaje" style="color:#CE4744;">'+msj+' <i style="color:#CE4744;" class="fa fa-times-circle-o fa-lg"></i></p>'
- }
-
- $("#id_correo_electronico").attr("autocomplete","off");
- $("#id_correo_secundario").attr("autocomplete","off");
- $("#id_username").attr("autocomplete","off");
- $("#id_form-0-respuesta").attr("autocomplete","off");
- $("#id_form-1-respuesta").attr("autocomplete","off");
- $("#id_form-2-respuesta").attr("autocomplete","off");
 
 
 function processForm(e) {
@@ -484,77 +464,3 @@ function processForm(e) {
 /***
  * fin
  **/
-
-
-// function correosDesiguales() {
-//     var email = document.getElementById("id_correo_electronico").value;
-//     var email2 = document.getElementById("id_correo_secundario").value;
-
-//     if((email == email2) && ($("#id_correo_electronico").val().length) ) {
-
-//             document.getElementById("id_correo_secundario").style.borderColor = "#E34234";
-//             //id_correo2.focus();
-//             $("#id-correo2-error").html('<p> El correo secundario no puede ser igual al correo principal <i class="fa fa-times-circle-o fa-lg"></i> </p>');
-//             // alert('El correo de confirmacion no es igual al correo principal');
-
-
-//         }else{
-
-//             if(email2.length!=0){
-//                 if(!validarEmail(email2)){
-
-//                     document.getElementById("id_correo_secundario").style.borderColor = "#E34234";
-//                     //id_correo2.focus();
-//                     $("#id-correo2-error").html('<p> El correo debe ser válido <i class="fa fa-times-circle-o fa-lg"></i> </p>');
-//                     // alert('El correo de confirmacion no es igual al correo principal');
-//                 }else{
-//                         document.getElementById("id_correo_secundario").style.borderColor = "#14D100";
-//                         $("#id-correo2-error").empty();
-//                         $("#id-correo2-error").html('<i class="fa fa-check-circle-o fa-lg" style="color:#14D100"></i>');
-//                     }
-//                 }
-//             }else{
-//                  $("#id-correo2-error").empty();
-//             }
-//         }
-
-// }
-
-// traido de generic.js
-
-// $("#id_correo2").attr('onblur',"confirmEmail();");
-
-
-
-
-
-// function preguntas_vacias() {
-
-//     if ($('#id_form-0-respuesta').val().length == 0) {
-//         // console.log($('#id_form-0-respuesta').val().length);
-//         return 'Debe responder todas las preguntas';
-//     }
-//     if ($('#id_form-1-respuesta').val().length == 0) {
-//         return 'Debe responder todas las preguntas';
-//     }
-//     if ($('#id_form-2-respuesta').val().length == 0) {
-//         return 'Debe responder todas las preguntas';
-//     }
-//     return false;
-// }
-// function validar_preguntas(n) {
-//     $('#id_form-'+n+'-respuesta').on('focusout',function(argument) {
-//         msj=preguntas_vacias();
-//         if(msj){
-//             $("#errores_pregunta").html(imprimir_error(msj))
-//             return false;
-//         }else{
-//             $("#errores_pregunta").html('');
-//             return true;
-//         }
-//     });
-// }
-// validar_preguntas(0);
-// validar_preguntas(1);
-// validar_preguntas(2);
-
