@@ -9,7 +9,8 @@ from django.http import HttpResponse
 from django.utils import timezone
 from django.conf import settings
 from settings.settings import BASE_DIR, STATIC_URL
-
+# from utils.HelpMethods.helpers import *
+from validate_email import validate_email
 from apps.wkhtmltopdf.views import PDFTemplateResponse
 from apps.registro.models import *
 # from utils.HelpMethods.aes_cipher import encode as secure_value_encode
@@ -178,9 +179,70 @@ class RegistroUsuario(View):
 
         # return redirect(reverse_lazy('registro_login'))
     def post(self, request, *args, **kwargs):
-        data = request.POST
 
+        #Convertir todo a minuscula y quitar los espacios en blanco
+        mutable = request.POST._mutable
+        request.POST._mutable = True
+
+        if request.POST.get('username') != None:
+            request.POST['username'] = request.POST['username'].strip()
+
+        if request.POST.get('nombre') != None:
+            request.POST['nombre'] = elimina_tildes(request.POST['nombre'].lower().strip())
+
+        if request.POST.get('apellido') != None:
+            request.POST['apellido'] = elimina_tildes(request.POST['apellido'].lower().strip())
+        
+        if request.POST.get('cedula') != None:
+            request.POST['cedula'] = request.POST['cedula'].strip()
+        
+        if request.POST.get('correo_electronico') != None:
+            request.POST['correo_electronico']= request.POST['correo_electronico'].lower().strip()
+
+        request.POST._mutable = mutable
+        #Fin convertir todo a minuscula y quitar los espacios en blanco
+
+
+        data = request.POST
         context = {}
+
+        if Usuario.objects.filter(nombre_usuario = data['username']).exists():
+            data['Result'] = 'ERROR_USERNAME'
+            data['error'] = '<p class="small_error_letter"> El nombre de usuario ya se encuentra registrado. Por favor intente con otro Nombre de Usuario <i class="fa fa-times-circle-o fa-lg"></i> </p>'
+            return HttpResponse(json.dumps(data), content_type = "application/json")
+
+        if Usuario.objects.filter(cedula = data['cedula']).exists():
+            data['Result'] = 'ERROR_CEDULA'
+            data['error'] = '<p class="small_error_letter"> La cedula ya se encuentra registrada. Por favor verificarla. <i class="fa fa-times-circle-o fa-lg"></i> </p>'
+            return HttpResponse(json.dumps(data), content_type = "application/json")
+
+        if Usuario.objects.filter(correo_electronico = data['email']).exists():
+            data['Result'] = 'ERROR_CORREO'
+            data['error'] = '<p class="small_error_letter"> El correo de usuario ya se encuentra registrado. Por favor intente con otro correo <i class="fa fa-times-circle-o fa-lg"></i> </p>'
+            return HttpResponse(json.dumps(data), content_type = "application/json")
+
+        existe_usuario =Usuario.objects.filter(nombre_usuario = username).exists()
+        existe_cedula =Usuario.objects.filter(cedula = cedula).exists()
+        existe_correo =Usuario.objects.filter(correo_electronico = email).exists()
+
+        email_invalido = False
+        ##### VALIDAR EL EMAIL
+
+        if((not existe_usuario) and (not existe_correo) and (not existe_cedula) and (not email_invalido)):
+            with transaction.atomic():
+
+                usuario_nuevo = Usuario()
+                usuario_nuevo.nombre_usuario = data['username']
+                usuario_nuevo.nombre = data['nombre']
+                usuario_nuevo.apellido = data['apellido']
+                usuario_nuevo.cedula = data['cedula']
+                usuario_nuevo.password = hashers.make_password(data['password'])
+                # usuario_nuevo.fk_tipo_usuario = TipoUsuario.objects.get(codigo = data['tipo_usuario'])
+                usuario_nuevo.fk_tipo_usuario = TipoUsuario.objects.get(codigo = 'INSP')
+
+                
+                usuario.save()
+
         # if request.user.is_authenticated():
         #     mensaje = u'¡Ha cerrado sesión correctamente!'
         #     messages.info(self.request, mensaje)
@@ -201,3 +263,20 @@ class RestaurarCuenta(View):
 # return HttpResponse(json.dumps(data), content_type = "application/json")
 
 
+###Va en utils
+
+import unicodedata
+
+def elimina_tildes(s):
+    """
+    Metodo para eliminar las tildes en cadenas de caracteres que se
+    reciben por el parametro s.
+    """
+    #pre_s = ''.join((c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn'))
+    #final = re.sub(ur'[_]|[^¿%?\w]+', u' ', pre_s)
+
+    nkfd_form = unicodedata.normalize('NFKD', unicode(s))
+    return u"".join([c for c in nkfd_form if not unicodedata.combining(c)])
+
+
+#### Fin va en utils
