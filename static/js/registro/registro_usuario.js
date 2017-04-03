@@ -215,7 +215,14 @@ function confirmEmail2() {
 }
 
 
+function guardar_usuario(){
 
+    correo = $('#id_correo_electronico').val()
+    conf_correo = $('#id_correo2').val()
+    password = $('#id_password').val()
+    conf_password = $('#id_password_confirm').val()
+
+}
 
 
 
