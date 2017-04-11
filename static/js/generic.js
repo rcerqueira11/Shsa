@@ -47,6 +47,14 @@ function tiene_mayusculas(texto){
    return 0;
 }
 
+function validarPassword(clave){
+  if (tiene_mayusculas(clave) && (clave.length>=8)){
+    return true
+  }
+ return false
+}
+
+
 
 function capfirst(val){
 
@@ -127,6 +135,10 @@ function confirmPasswordRecuperar2() {
                 document.getElementById("id_password_confirm").style.borderColor = "#E34234";
                 $("#id-error-confirm-pass-recover").html('<p class="small_error_letter"> Las contraseñas no son iguales! <i class="fa fa-times-circle-o fa-lg"></i> </p>');
 
+            }
+
+            if(pass1.length!=0){
+                $("#id-error-password").html('');
             }
 
         }

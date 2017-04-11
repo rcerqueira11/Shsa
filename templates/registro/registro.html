@@ -59,7 +59,7 @@
 	<div class="row">
 		<div class="col-xs-6">
 			<label>Nombre</label>
-			<input type="text" name="nombre" placeholder="nombre" id="id_nombre"class="form-control input-lg" required/>
+			<input type="text" name="nombre" placeholder="nombre" id="id_nombre" class="form-control input-lg" required/>
 			
 			<div class="error" id="id-error-nombre" >
 
@@ -120,8 +120,10 @@
 		
 	</div>
 
-		<button type="submit" name="submit" class="btn btn-lg btn-success btn-block letter" >Registrarse</button>
+		<button type="button" onclick="validar_campos()" name="submit" class="btn btn-lg btn-success btn-block letter" >Registrarse</button>
+		<div class="error" id="id_submit_registro" >
 
+        </div>
 	</form>
 
 
@@ -157,7 +159,25 @@
 	<center><a href="#" style="color:white;">www.webtobe.com</a></center>
 </footer>
 
+<!-- Modal Aviso-->
+  <div class="modal fade bs-example-modal-lg" id="modal-aviso" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg" style="width: 600px;">
+      <div class="modal-content">
+        <div class="modal-header bg-modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <h3 id="modal-confirmacion-titulo" class="modal-title" align="center">Aviso</h3>
+        </div>
+        <div id="modal-aviso-msj" class="modal-body" align="center" style="max-height: 450px;">asdasdasd</div>
+        <div class="modal-footer">
 
+          <div class="col-xs-6 col-xs-push-3">
+            <button type="button" class="btn btn-danger btn-flat btn-block" data-dismiss="modal" data-toggle="modal" data-backdrop="static">Aceptar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- FinModal-->
 
 
 {% endblock %}
