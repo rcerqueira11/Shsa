@@ -155,7 +155,7 @@ $('#id_cedula').focusout(function(){
         consulta_cedula_usuario(cedula)
         
     }else{
-        $("#id-error-cedula").html('<p class="small_error_letter"> El campo de correo no puede quedar vácio<i class="fa fa-times-circle-o"></i> </p>');
+       no_vacio_error("id-error-cedula")
     }
 })
 
@@ -326,8 +326,8 @@ function validar_campos_vacios_inspector(){
 // 
     if( (correo == "") || (conf_correo == "") || (password == "") || (conf_password == "") || (usuario == "") || (cedula == "") || (nombre == "") || (apellido == "")){
         console.log("Hay errores!");
-        $('#id_submit_registro').html('<center><p class="small_error_letter"> Hay errores en el formulario de registro, favor verificar información suministrada. <i class="fa fa-times-circle-o fa-lg"></i> </p></center>')
-
+        // $('#id_submit_registro').html('<center><p class="small_error_letter"> Hay errores en el formulario de registro, favor verificar información suministrada. <i class="fa fa-times-circle-o fa-lg"></i> </p></center>')
+        show_modal_errores()
         if(jQuery.isEmptyObject($('#id_nombre').val())){
             no_vacio_error("id-error-nombre")
         }
@@ -345,6 +345,10 @@ function validar_campos_vacios_inspector(){
             no_vacio_error("id-error-confirm-pass-recover")
         }
 
+        if(es_vacio("id_cedula")){
+            no_vacio_error("id-error-cedula")
+        }
+
 
 
 
@@ -357,7 +361,8 @@ function validar_campos_vacios_inspector(){
             
         }
         else {
-            $('#id_submit_registro').html('<center><p class="small_error_letter"> Hay errores en el formulario de registro, favor verificar información suministrada. <i class="fa fa-times-circle-o fa-lg"></i> </p></center>')
+            // $('#id_submit_registro').html('<center><p class="small_error_letter"> Hay errores en el formulario de registro, favor verificar información suministrada. <i class="fa fa-times-circle-o fa-lg"></i> </p></center>')
+            show_modal_errores()
         }
         // console.log("Yay!");
         
@@ -382,7 +387,8 @@ function guardar_usuario(){
 
 
     }else {
-        $('#id_submit_registro').html('<center><p class="small_error_letter"> Hay errores en el formulario de registro, favor verificar información suministrada. <i class="fa fa-times-circle-o fa-lg"></i> </p></center>')
+        // $('#id_submit_registro').html('<center><p class="small_error_letter"> Hay errores en el formulario de registro, favor verificar información suministrada. <i class="fa fa-times-circle-o fa-lg"></i> </p></center>')
+        show_modal_errores()
     }
 
     
