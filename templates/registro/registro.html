@@ -27,16 +27,16 @@
 
 	<form method="post" action="{% url 'registro_usuario' %}">
 	{%csrf_token%}
-	{# <div class="row"> #}
-		 {# <div class=" col-xs-6"> #}
-	        {# <label>Tipo de usuario</label> #}
-	        {# <select  data-placeholder="Seleccionar usuario"  class="form-control" name="tipo_usuario" id='id_tipo_usuario' > #}
-	        {# {% for e in tipos_de_usuario %} #}
-	              {# <option value="{{ e.codigo }}" >{{ e.nombre|title }}</option> #}
-	        {# {% endfor %} #}
-	        {# </select> #}
-	      {# </div> #}
-	{# </div> #}
+	<div class="row">
+		 <div class=" col-xs-3 col-xs-push-9">
+	        <label>Tipo de usuario</label>
+	        <select  data-placeholder="Seleccionar usuario"  class="form-control chosen-select" name="tipo_usuario" id='id_tipo_usuario' >
+	        {% for e in tipos_de_usuario %}
+	              <option value="{{ e.codigo }}" >{{ e.nombre|title }}</option>
+	        {% endfor %}
+	        </select>
+	      </div>
+	</div>
 
 	<div class="row">
 		<div class="col-xs-6">

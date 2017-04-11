@@ -19,6 +19,7 @@ $("#id_password_confirm").attr('onDrop','return false');
 
 $('.ci-mask').inputmask('[9]{8}', {placeholder: ''});
 
+$('.chosen-select').chosen();
 
 function validarEmail( email ) {
     expr = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9])+$/;
