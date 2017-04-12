@@ -114,8 +114,17 @@ USE_L10N = True
 USE_TZ = True
 
 
+#Session termina al cerrarse el browser
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
+
+AUTH_USER_MODEL = 'registro.Usuario'
+# Sesion de usuario dura 5min segundos
+SESSION_COOKIE_AGE = 30000
+SESSION_SAVE_EVERY_REQUEST = True
 
 STATIC_URL = '/static/'
 

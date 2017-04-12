@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import UserManager
 # Create your models here.
 
 class TipoUsuario(models.Model):
@@ -26,6 +27,7 @@ class Usuario(AbstractBaseUser):
 	cedula = models.CharField(max_length=255, null=False, unique=True)
 	correo_electronico = models.EmailField(max_length=255, blank=True, unique=True)
 	intentos_login = models.IntegerField(default=0)
+	objects = UserManager()
 	#hello
 
 	USERNAME_FIELD = 'username'

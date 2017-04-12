@@ -2,6 +2,7 @@
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, hashers
+from django.db import transaction
 from django.contrib import messages
 from django.views.generic import View, FormView,TemplateView,DeleteView
 from django.template import RequestContext, loader
@@ -12,6 +13,8 @@ from django.db import transaction
 from django.contrib.auth.decorators import login_required
 # from django.apps import apps
 from apps.wkhtmltopdf.views import PDFTemplateResponse
+from apps.registro.models import *
+from apps.rcs.models import *
 # from utils.HelpMethods.aes_cipher import encode as secure_value_encode
 # from utils.HelpMethods.aes_cipher import decode as secure_value_decode
 import json
@@ -83,5 +86,11 @@ class Dashboard(View):
 		return super(Dashboard, self).dispatch(request, *args, **kwargs)
 
 	def get(self, request, *args, **kwargs):
-		import pudb; pu.db
-		return render(request, 'rcs/dashboard.html')
+		nombre = request.user.nombre
+		username = request.username
+		context = {
+			'nombre': nombre,
+			'username': username,
+		}
+		# import pudb; pu.db
+		return render(request, 'rcs/dashboard.html',context)

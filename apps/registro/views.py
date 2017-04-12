@@ -117,12 +117,18 @@ class Login(View):
     """
 
     def dispatch(self, request, *args, **kwargs):
+        # import pudb; pu.db
         # if request.user.username == '' or request.user.is_authenticated() == False:
         #     return redirect(reverse_lazy('registro_logout'))
         # else:
+        # import pudb; pu.db
+        if request.user.is_authenticated():
+            return redirect(reverse_lazy('dashboard'))
     	return super(Login, self).dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
+        # if request.user.is_authenticated():
+
        
     	return render(request, 'index.html')
 
@@ -130,24 +136,25 @@ class Login(View):
         # import pudb; pu.db
         username = request.POST['usuario']
         password = request.POST['password']
-        user  = authenticate_2(username,password)
+        user  = authenticate(username=username,password=password)
         if user is not None:
             
-            context={
-                'username': username,
-                'nombre' : user.nombre,
-            }
+            # context={
+            #     'username': username,
+            #     'nombre' : user.nombre,
+            # }
 
             if user.is_active:
-                request.session.set_expiry(86400) #sets the exp. value of the session 
+                request.session['usuario'] = user.id #sets the exp. value of the session 
                 login(request, user) #the user is now logged in
             # if request.user.is_authenticated():
             #     mensaje = u'¡Ha cerrado sesión correctamente!'
             #     messages.info(self.request, mensaje)
             # return redirect(reverse_lazy('registro_login'))
-                return render(request, 'rcs/dashboard.html',context)
+                # return render(request, 'rcs/dashboard.html',context)
+                return redirect(reverse_lazy('dashboard'))
             else:
-                return render(reverse_lazy('registro_login'))
+                return redirect(reverse_lazy('registro_login'))
 
         else :
             mensaje_error= 'ocurrio un error'
