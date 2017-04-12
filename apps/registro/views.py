@@ -2,6 +2,7 @@
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, hashers
+from django.db import transaction
 from django.contrib import messages
 from django.views.generic import View, FormView,TemplateView,DeleteView
 from django.template import RequestContext, loader
@@ -58,7 +59,8 @@ def consulta_correo_usuario(request):
 
     return HttpResponse(json.dumps(data), content_type = "application/json")
 
-
+def son_iguales(valor1, valor2):
+    return True if str(valor1) == str(valor2) else False
 
 class DetectarUsuario(View):
     def dispatch(self, request, *args, **kwargs):
@@ -216,33 +218,52 @@ class RegistroUsuario(View):
             data['error'] = '<p class="small_error_letter"> La cedula ya se encuentra registrada. Por favor verificarla. <i class="fa fa-times-circle-o fa-lg"></i> </p>'
             return HttpResponse(json.dumps(data), content_type = "application/json")
 
-        if Usuario.objects.filter(correo_electronico = data['email']).exists():
+        if Usuario.objects.filter(correo_electronico = data['correo_electronico']).exists():
             data['Result'] = 'ERROR_CORREO'
             data['error'] = '<p class="small_error_letter"> El correo de usuario ya se encuentra registrado. Por favor intente con otro correo <i class="fa fa-times-circle-o fa-lg"></i> </p>'
             return HttpResponse(json.dumps(data), content_type = "application/json")
+
+        username = data['username']
+        cedula = data['cedula']
+        email = data['correo_electronico']
 
         existe_usuario =Usuario.objects.filter(nombre_usuario = username).exists()
         existe_cedula =Usuario.objects.filter(cedula = cedula).exists()
         existe_correo =Usuario.objects.filter(correo_electronico = email).exists()
 
-        email_invalido = False
+        ### Validando email
+        email_valido = validate_email(email)
+
+        ### Validando que los correos del form son iguales y que las contrase;as tambien son iguales
+        email_son_iguales = son_iguales(data['correo_electronico'],data['email2'])
+        passwords_son_iguales = son_iguales(data['password'],data['password2'])
+
+
         ##### VALIDAR EL EMAIL
 
-        if((not existe_usuario) and (not existe_correo) and (not existe_cedula) and (not email_invalido)):
+        if((not existe_usuario) and (not existe_correo) and (not existe_cedula) and (email_valido) and email_son_iguales and passwords_son_iguales):
             with transaction.atomic():
 
                 usuario_nuevo = Usuario()
-                usuario_nuevo.nombre_usuario = data['username']
+                usuario_nuevo.nombre_usuario = username
                 usuario_nuevo.nombre = data['nombre']
                 usuario_nuevo.apellido = data['apellido']
-                usuario_nuevo.cedula = data['cedula']
+                usuario_nuevo.cedula = cedula
+                usuario_nuevo.correo_electronico = email
                 usuario_nuevo.password = hashers.make_password(data['password'])
                 # usuario_nuevo.fk_tipo_usuario = TipoUsuario.objects.get(codigo = data['tipo_usuario'])
-                usuario_nuevo.fk_tipo_usuario = TipoUsuario.objects.get(codigo = 'INSP')
+                usuario_nuevo.fk_tipo_usuario = TipoUsuario.objects.get(codigo = data['tipo_usuario'])
 
                 
-                usuario.save()
-
+                # usuario.save()
+                data['Result'] = 'success'
+                data['msj'] = ''
+                return HttpResponse(json.dumps(data), content_type = "application/json")
+        # if
+        else:
+            data['Result'] = 'error'
+            data['msj'] = ''
+            return HttpResponse(json.dumps(data), content_type = "application/json")
         # if request.user.is_authenticated():
         #     mensaje = u'¡Ha cerrado sesión correctamente!'
         #     messages.info(self.request, mensaje)
@@ -250,7 +271,7 @@ class RegistroUsuario(View):
         # return render(request, 'registro/registro.html',context)
 
         # response
-        return redirect(reverse_lazy('dashboard'))
+        # return redirect(reverse_lazy('dashboard'))
 
 
 class RestaurarCuenta(View):

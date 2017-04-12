@@ -104,7 +104,7 @@ function confirmPasswordRecuperar() {
             }
 
         }
-    };
+};
 
 
 function confirmPasswordRecuperar2() {
@@ -143,4 +143,12 @@ function confirmPasswordRecuperar2() {
             }
 
         }
+};
+
+
+function show_modal_exito(titulo,subtitulo,mensaje){
+  $("#modal-exito-titulo").html(titulo)
+  $("#modal-exito-subtitulo").html(subtitulo)
+  $("#modal-exito-msj").html(mensaje)
+  $("#modal-exito").modal('show')
 };

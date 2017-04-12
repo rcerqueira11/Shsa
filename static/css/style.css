@@ -3,3 +3,57 @@
 .error{
 	color: red;
 }
+
+/*estilos para los modales*/
+.modal-registro{
+    background-color: #e8e8e8;
+    border-radius: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    border-style: solid;
+    border-width: 4px;
+    border-color: #2E8AC1;
+}
+
+
+@media screen and (max-width: 768px) {
+    .modal-registro{
+        background-color: #e8e8e8;
+        border-radius: 15px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        border-style: solid;
+        border-width: 4px;
+        border-color: #2E8AC1;
+    }
+}
+
+.modal-registro-header, .modal-edicion-header{
+    background-color: #CE4744;
+    height: 60px;
+    text-align: center;
+    padding-top: 20px;
+    color: #E8E8E8;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.modal-times{
+    color: #CE4744;
+    float: right;
+    font-size: 40px;
+}
+
+.modal-dialog{
+    height: auto !important;
+    padding-bottom: 3%;
+}
+
+.modal-check {
+    color: #39b54a;
+    float: right;
+    font-size: 40px !important;
+}
+/*fin estilos para los modales*/

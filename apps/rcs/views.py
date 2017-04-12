@@ -8,6 +8,7 @@ from django.template import RequestContext, loader
 from django.http import HttpResponse
 from django.utils import timezone
 from django.conf import settings
+from django.db import transaction
 # from django.apps import apps
 from apps.wkhtmltopdf.views import PDFTemplateResponse
 # from utils.HelpMethods.aes_cipher import encode as secure_value_encode
@@ -81,4 +82,4 @@ class Dashboard(View):
 		return super(Dashboard, self).dispatch(request, *args, **kwargs)
 
 	def get(self, request, *args, **kwargs):
-		return render(request, 'registro/recuperar_contrasena.html')
+		return render(request, 'rcs/dashboard.html')

@@ -358,6 +358,7 @@ function validar_campos_vacios_inspector(){
     } else {
         if(validar_email1 && validar_email2 && validar_password){
             console.log("a guardar");
+            guardar_usuario()
             
         }
         else {
@@ -384,6 +385,32 @@ function guardar_usuario(){
     passwords_iguales = password == conf_password ? true : false;
 
     if(correos_iguales && passwords_iguales) {
+
+
+        $(document).ajaxStop($.unblockUI);
+        $.blockUI({ message: '<i class="fa fa-spinner fa-pulse" style="color:#444444"></i> Espere por favor...' });
+        var theData = $("#id_form_registro_usuario").serializeArray();
+        // theData.push({name: 'pregunta_id', value: id});
+        $.ajax({
+                type: 'POST' ,
+                url: 'registro/registro' , // <= Providing the URL
+                data: theData , // <= Providing the form data, serialized above
+                success: function(results){
+                 if(results.Result == 'success'){
+
+                        show_modal_exito()
+        
+                    }
+                    if(results.Result == 'error'){
+                        show_modal_errores()
+                    }
+                },
+                error: function(results){
+                    console.log("ERROR");
+                    show_modal_errores()
+                }
+            });
+        
 
 
     }else {
