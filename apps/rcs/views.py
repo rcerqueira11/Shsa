@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from django.utils import timezone
 from django.conf import settings
 from django.db import transaction
+from django.contrib.auth.decorators import login_required
 # from django.apps import apps
 from apps.wkhtmltopdf.views import PDFTemplateResponse
 # from utils.HelpMethods.aes_cipher import encode as secure_value_encode
@@ -74,7 +75,7 @@ class VerPlanillaSeguroCarro(View):
 		# return HttpResponse(json.dumps(data), content_type = "application/json")
 		# return render(request,"solo_visualizar_planilla_registro_carro_seguro.html",context)
 
-
+# @login_required
 class Dashboard(View):
 	"""docstring for Dashboard"""
 	def dispatch(self, request, *args, **kwargs):
@@ -82,4 +83,5 @@ class Dashboard(View):
 		return super(Dashboard, self).dispatch(request, *args, **kwargs)
 
 	def get(self, request, *args, **kwargs):
+		import pudb; pu.db
 		return render(request, 'rcs/dashboard.html')

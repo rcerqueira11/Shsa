@@ -14,6 +14,8 @@ from settings.settings import BASE_DIR, STATIC_URL
 from validate_email import validate_email
 from apps.wkhtmltopdf.views import PDFTemplateResponse
 from apps.registro.models import *
+
+# from django.contrib.auth.models import 
 # from utils.HelpMethods.aes_cipher import encode as secure_value_encode
 # from utils.HelpMethods.aes_cipher import decode as secure_value_decode
 import json
@@ -26,11 +28,22 @@ import sys
 
 # Create your views here.
 
+def authenticate_2(username , password):
+    
+    if Usuario.objects.filter(username = username).exists():
+        usuario = Usuario.objects.get(username = username)
+        pwd_valid = hashers.check_password(password, usuario.password)
+
+        if pwd_valid:
+            return usuario
+
+    return None   
+
 def consulta_nombre_usuario(request):
     username = request.GET['username']
     data={}
 
-    if Usuario.objects.filter(nombre_usuario = username).exists():
+    if Usuario.objects.filter(username = username).exists():
         data['Result'] = 'ocupado'
     else:
         data['Result'] = 'libre'
@@ -114,21 +127,27 @@ class Login(View):
     	return render(request, 'index.html')
 
     def post(self,request,*args,**kwargs):
-        import pudb; pu.db
+        # import pudb; pu.db
         username = request.POST['usuario']
         password = request.POST['password']
-        user  = authenticate(nombre_usuario=username, password=password)
+        user  = authenticate_2(username,password)
         if user is not None:
-            usuario = Usuario.objects.get(username=username)
+            
             context={
                 'username': username,
-                'nombre' : usuario.nombre,
+                'nombre' : user.nombre,
             }
+
+            if user.is_active:
+                request.session.set_expiry(86400) #sets the exp. value of the session 
+                login(request, user) #the user is now logged in
             # if request.user.is_authenticated():
             #     mensaje = u'¡Ha cerrado sesión correctamente!'
             #     messages.info(self.request, mensaje)
             # return redirect(reverse_lazy('registro_login'))
-            return render(request, 'rcs/dashboard.html',context)
+                return render(request, 'rcs/dashboard.html',context)
+            else:
+                return render(reverse_lazy('registro_login'))
 
         else :
             mensaje_error= 'ocurrio un error'
@@ -201,7 +220,7 @@ class RegistroUsuario(View):
         # import pudb; pu.db
         response = {}
 
-        if Usuario.objects.filter(nombre_usuario = data['username']).exists():
+        if Usuario.objects.filter(username = data['username']).exists():
             data['Result'] = 'ERROR_USERNAME'
             data['error'] = '<p class="small_error_letter"> El nombre de usuario ya se encuentra registrado. Por favor intente con otro Nombre de Usuario <i class="fa fa-times-circle-o fa-lg"></i> </p>'
             return HttpResponse(json.dumps(data), content_type = "application/json")
@@ -220,7 +239,7 @@ class RegistroUsuario(View):
         cedula = data['cedula']
         email = data['correo_electronico']
 
-        existe_usuario =Usuario.objects.filter(nombre_usuario = username).exists()
+        existe_usuario =Usuario.objects.filter(username = username).exists()
         existe_cedula =Usuario.objects.filter(cedula = cedula).exists()
         existe_correo =Usuario.objects.filter(correo_electronico = email).exists()
 
@@ -238,7 +257,7 @@ class RegistroUsuario(View):
             with transaction.atomic():
 
                 usuario_nuevo = Usuario()
-                usuario_nuevo.nombre_usuario = username
+                usuario_nuevo.username = username
                 usuario_nuevo.nombre = data['nombre']
                 usuario_nuevo.apellido = data['apellido']
                 usuario_nuevo.cedula = cedula

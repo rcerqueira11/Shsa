@@ -17,7 +17,7 @@ class Status(models.Model):
 	descripcion = models.TextField(blank=True)
 
 class Usuario(AbstractBaseUser):
-	nombre_usuario = models.CharField(max_length=255,unique=True)
+	username = models.CharField(max_length=255,unique=True)
 	fk_tipo_usuario = models.ForeignKey(TipoUsuario)
 	#chequear esto
 	fk_status = models.ForeignKey(Status, db_column='fk_status', default=1) 
@@ -28,7 +28,7 @@ class Usuario(AbstractBaseUser):
 	intentos_login = models.IntegerField(default=0)
 	#hello
 
-	USERNAME_FIELD = 'nombre_usuario'
+	USERNAME_FIELD = 'username'
 	REQUIRED_FIELDS = ['correo_electronico']
 	is_active = models.BooleanField(default=True)
 
