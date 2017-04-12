@@ -24,11 +24,11 @@
 
 
 
-	<form method="post" action="{% url 'registro_login' %}">
+	<form method="post" id="id_form_login" action="{% url 'registro_login' %}">
 	{%csrf_token%}
 
-		<input type="text" name="usuario" placeholder="usuario" class="form-control input-lg" required/>
-		<input type="password" name="password" placeholder="contraseña" class="form-control input-lg" id="password" required/>
+		<input type="text" name="usuario" placeholder="usuario" id="id_usuario_login" class="form-control input-lg" required/>
+		<input type="password" name="password" placeholder="contraseña" class="form-control input-lg" id="id_password_login" required/>
 
 		<button type="submit" name="submit" class="btn btn-lg btn-primary btn-block letter" >Iniciar sesión</button>
 		 

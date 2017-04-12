@@ -397,8 +397,10 @@ function guardar_usuario(){
                 data: theData , // <= Providing the form data, serialized above
                 success: function(results){
                  if(results.Result == 'success'){
-
-                        show_modal_exito()
+                        titulo = ' REGISTRO DE USUARIO'
+                        subtitulo = 'Registro creado exitosamente'
+                        mensaje = 'Ha sido registrado en el sistema, le enviamos un correo<br> con información importante.'
+                        show_modal_exito(titulo,subtitulo,mensaje)
         
                     }
                     if(results.Result == 'error'){

@@ -110,40 +110,32 @@ class Login(View):
     	return super(Login, self).dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-    	# print "Hello World"
-        context={
-
-            # 'STATIC_URL' : settings.STATIC_URL,
-        }
-        # if settings.SECURE_SSL_REDIRECT == True:
-        #         media_url = 'https://'
-        # else:
-        #     media_url = 'http://'
-        # data={}
-        # media_url = media_url+request.META['HTTP_HOST']
-
-        # context['http_host']= media_url
-        # response = PDFTemplateResponse(request=request,
-        #                            template='index.html',
-        #                            filename="planilla_registro_carro.pdf",
-        #                            context= context,
-        #                            show_content_in_browser=True,
-        #                            cmd_options={'margin-top': 10,'page-size': 'A4','quiet': True},
-        #                            # current_app= rcs,
-        #                            )
-        # return response
-    	return render(request, 'index.html',context)
+       
+    	return render(request, 'index.html')
 
     def post(self,request,*args,**kwargs):
-        context={
-            'correo': request.POST['email'],
-            'nombre' : 'Galactus',
-        }
-        # if request.user.is_authenticated():
-        #     mensaje = u'¡Ha cerrado sesión correctamente!'
-        #     messages.info(self.request, mensaje)
-        # return redirect(reverse_lazy('registro_login'))
-        return render(request, 'rcs/dashboard.html',context)
+        import pudb; pu.db
+        username = request.POST['usuario']
+        password = request.POST['password']
+        user  = authenticate(nombre_usuario=username, password=password)
+        if user is not None:
+            usuario = Usuario.objects.get(username=username)
+            context={
+                'username': username,
+                'nombre' : usuario.nombre,
+            }
+            # if request.user.is_authenticated():
+            #     mensaje = u'¡Ha cerrado sesión correctamente!'
+            #     messages.info(self.request, mensaje)
+            # return redirect(reverse_lazy('registro_login'))
+            return render(request, 'rcs/dashboard.html',context)
+
+        else :
+            mensaje_error= 'ocurrio un error'
+            errors = {
+                'mensaje_error': mensaje_error,
+            }
+            return render(request, 'index.html')
 
         # return redirect(reverse_lazy(''))
 
@@ -206,7 +198,8 @@ class RegistroUsuario(View):
 
 
         data = request.POST
-        context = {}
+        # import pudb; pu.db
+        response = {}
 
         if Usuario.objects.filter(nombre_usuario = data['username']).exists():
             data['Result'] = 'ERROR_USERNAME'
@@ -254,16 +247,16 @@ class RegistroUsuario(View):
                 # usuario_nuevo.fk_tipo_usuario = TipoUsuario.objects.get(codigo = data['tipo_usuario'])
                 usuario_nuevo.fk_tipo_usuario = TipoUsuario.objects.get(codigo = data['tipo_usuario'])
 
-                
-                # usuario.save()
-                data['Result'] = 'success'
-                data['msj'] = ''
-                return HttpResponse(json.dumps(data), content_type = "application/json")
+                ##Falta envia el mail
+                usuario_nuevo.save()
+                response['Result'] = 'success'
+                response['msj'] = ''
+                return HttpResponse(json.dumps(response), content_type = "application/json")
         # if
         else:
-            data['Result'] = 'error'
-            data['msj'] = ''
-            return HttpResponse(json.dumps(data), content_type = "application/json")
+            response['Result'] = 'error'
+            response['msj'] = ''
+            return HttpResponse(json.dumps(response), content_type = "application/json")
         # if request.user.is_authenticated():
         #     mensaje = u'¡Ha cerrado sesión correctamente!'
         #     messages.info(self.request, mensaje)

@@ -31,7 +31,7 @@
 }
 
 .modal-registro-header, .modal-edicion-header{
-    background-color: #CE4744;
+    background-color: #0069AA;
     height: 60px;
     text-align: center;
     padding-top: 20px;
@@ -41,7 +41,7 @@
 }
 
 .modal-times{
-    color: #CE4744;
+    color: #0069AA;
     float: right;
     font-size: 40px;
 }
