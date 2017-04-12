@@ -87,7 +87,7 @@ class Dashboard(View):
 
 	def get(self, request, *args, **kwargs):
 		nombre = request.user.nombre
-		username = request.username
+		username = request.user.username
 		context = {
 			'nombre': nombre,
 			'username': username,
