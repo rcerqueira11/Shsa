@@ -119,7 +119,7 @@ class Login(View):
     def dispatch(self, request, *args, **kwargs):
         # import pudb; pu.db
         # if request.user.username == '' or request.user.is_authenticated() == False:
-        #     return redirect(reverse_lazy('registro_logout'))
+        #     return redirect(reverse_lazy('logout'))
         # else:
         # import pudb; pu.db
         if request.user.is_authenticated():
@@ -139,11 +139,6 @@ class Login(View):
         user  = authenticate(username=username,password=password)
         if user is not None:
             
-            # context={
-            #     'username': username,
-            #     'nombre' : user.nombre,
-            # }
-
             if user.is_active:
                 request.session['usuario'] = user.id #sets the exp. value of the session 
                 login(request, user) #the user is now logged in
@@ -168,9 +163,10 @@ class Login(View):
 
 class Logout(View):
     def get(self, request, *args, **kwargs):
-        # if request.user.is_authenticated():
-        #     mensaje = u'¡Ha cerrado sesión correctamente!'
-        #     messages.info(self.request, mensaje)
+        if request.user.is_authenticated():
+            mensaje = u'¡Ha cerrado sesión correctamente!'
+            messages.info(self.request, mensaje)
+            logout(request)
         return redirect(reverse_lazy('registro_login'))
 
 
@@ -180,7 +176,7 @@ class Logout(View):
 class RegistroUsuario(View):
     def dispatch(self, request, *args, **kwargs):
         # if request.user.username == '' or request.user.is_authenticated() == False:
-        #     return redirect(reverse_lazy('registro_logout'))
+        #     return redirect(reverse_lazy('logout'))
         # else:
         return super(RegistroUsuario, self).dispatch(request, *args, **kwargs)
 

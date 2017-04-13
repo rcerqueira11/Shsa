@@ -81,10 +81,12 @@ class VerPlanillaSeguroCarro(View):
 # @login_required
 class Dashboard(View):
 	"""docstring for Dashboard"""
+	# @login_required
 	def dispatch(self, request, *args, **kwargs):
-		print "holis2"
+		# print "holis2"
 		return super(Dashboard, self).dispatch(request, *args, **kwargs)
 
+		
 	def get(self, request, *args, **kwargs):
 		nombre = request.user.nombre
 		username = request.user.username

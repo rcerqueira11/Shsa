@@ -13,7 +13,7 @@ urlpatterns = [
     url(
         r'^logout',
         views.Logout.as_view(),
-        name="registro_logout"
+        name="logout"
     ),
     url(
         r'^registro',
