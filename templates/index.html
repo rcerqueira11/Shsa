@@ -24,7 +24,7 @@
 
 
 
-	<form method="post" id="id_form_login" action="{% url 'registro_login' %}">
+	<form method="post" id="id_form_login" action="{% url 'login' %}">
 	{%csrf_token%}
 
 		<input type="text" name="usuario" placeholder="usuario" id="id_usuario_login" class="form-control input-lg" required/>

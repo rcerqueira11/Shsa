@@ -106,7 +106,7 @@ class DetectarUsuario(View):
         #         return redirect('dashboard')
 
         # else:
-        return redirect(reverse_lazy('registro_login'))
+        return redirect(reverse_lazy('login'))
 
 
 class Login(View):
@@ -145,11 +145,11 @@ class Login(View):
             # if request.user.is_authenticated():
             #     mensaje = u'¡Ha cerrado sesión correctamente!'
             #     messages.info(self.request, mensaje)
-            # return redirect(reverse_lazy('registro_login'))
+            # return redirect(reverse_lazy('login'))
                 # return render(request, 'rcs/dashboard.html',context)
                 return redirect(reverse_lazy('dashboard'))
             else:
-                return redirect(reverse_lazy('registro_login'))
+                return redirect(reverse_lazy('login'))
 
         else :
             mensaje_error= 'ocurrio un error'
@@ -167,7 +167,7 @@ class Logout(View):
             mensaje = u'¡Ha cerrado sesión correctamente!'
             messages.info(self.request, mensaje)
             logout(request)
-        return redirect(reverse_lazy('registro_login'))
+        return redirect(reverse_lazy('login'))
 
 
 class RegistroUsuario(View):
@@ -190,7 +190,7 @@ class RegistroUsuario(View):
 
         return render(request, 'registro/registro.html',context)
 
-        # return redirect(reverse_lazy('registro_login'))
+        # return redirect(reverse_lazy('login'))
     def post(self, request, *args, **kwargs):
 
         #Convertir todo a minuscula y quitar los espacios en blanco
@@ -324,12 +324,16 @@ class EditarCuenta(View):
     """
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated():
-            return redirect(reverse_lazy('dashboard'))
+        if request.user.is_anonymous():
+            return redirect(reverse_lazy('login'))
         return super(EditarCuenta, self).dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
+
+
         context = {
+            'username': request.user.username,
+            'usuario': request.user,
 
         }
 
@@ -348,6 +352,8 @@ class EditarCuenta(View):
         #    response['Result'] = 'error'
         #    response['msj'] = ''
         #    return HttpResponse(json.dumps(response), content_type = "application/json")
+        # return redirect
 
-
-        return redirect(reverse_lazy('dashboard'))
+        response['Result'] = 'error'
+        response['msj'] = ''
+        return HttpResponse(json.dumps(response), content_type = "application/json")

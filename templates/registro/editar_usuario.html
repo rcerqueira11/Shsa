@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+
+{% block main_content %}
+{% include "menu_base.html" %}
+
+    <h1>Editar_usuariooooo</h1>
+
+<form method="post" id="id_form_editar_usuario" action="{% url 'editar_cuenta' %}">
+	{%csrf_token%}
+	        <label>Tipo de usuario</label>
+	        <p class="form-control" name="tipo_usuario" id='id_tipo_usuario' > {{usuario.fk_tipo_usuario.nombre|title}} </p>
+	<br>
+
+	<div class="row">
+		<div class="col-xs-6">
+			<label>Usuario</label>
+			<input type="text" class="form-control input-lg" readonly="true" value="{{usuario.username}}" />
+			<div class=" small_error_letter error" id="id-error-username" >
+
+         </div>
+		</div>
+
+		<div class="col-xs-6">
+			<label>C&eacute;dula</label>	
+			<input type="text" class="ci-mask form-control input-lg" readonly="true" value="{{usuario.cedula}}" />
+			<div class=" error" id="id-error-cedula" >
+            </div>
+		</div>
+		
+	</div>
+
+	<div class="row">
+		<div class="col-xs-6">
+			<label>Nombre</label>
+			<input type="text" class="form-control input-lg" readonly="true" value="{{usuario.nombre}}"/>
+			
+			<div class="error" id="id-error-nombre" >
+
+            </div>
+		</div>
+
+		<div class="col-xs-6">
+			<label>Apellido</label>	
+			<input type="text" class="input-mask-n form-control input-lg" readonly="true" value="{{usuario.apellido}}">
+			<div class="error" id="id-error-apellido" >
+
+            </div>
+		</div>
+		
+	</div>
+
+	<div class="row">
+
+		<div class="col-xs-6">
+			<label>Correo</label>
+			<input type="email" name="correo_electronico" placeholder="{{usuario.correo_electronico}}"  id="id_correo_electronico" class="form-control input-lg" placeholder="Nombre@Dominio.com" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off value="{{usuario.correo_electronico}}" required/>
+			<div class="error" id="id-error-correo" >
+
+            </div>
+		</div>
+
+		<div class="col-xs-6">
+			<label>Verificar Correo</label>
+			<input type="email" name="email2" id="id_correo2" class="form-control input-lg" onblur="confirmEmail()" placeholder="{{usuario.correo_electronico}}" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off value="{{usuario.correo_electronico}}" required/>
+			<div class="error" id="id-error-confirm-email">
+				
+
+			</div>
+		</div>
+		
+		
+	</div>
+
+	<div class="row">
+		<div class="col-xs-6">
+			<label>Contraseña</label>
+			<input type="password" name="password" placeholder="contraseña" class="form-control input-lg" id="id_password" required/>
+			<div class="error" id="id-error-password" >
+
+            </div>
+
+		</div>
+		<div class="col-xs-6">
+			
+			<label>Verificar contraseña</label>
+			<input type="password" name="password2" placeholder="verificar contraseña" class="form-control input-lg" id="id_password_confirm" required/>	
+			<div class="error" id="id-error-confirm-pass-recover" >
+
+            </div>
+
+		</div>
+		
+		
+	</div>
+
+		<div class="row">
+		<div class="col-xs-6">
+			<button type="button" onclick="validar_campos()" name="submit" class="btn btn-lg btn-warning btn-block letter" >Cancelar</button>
+		</div>	
+		<div class="col-xs-6">
+			<button type="button" onclick="validar_campos()" name="submit" class="btn btn-lg btn-success btn-block letter" >Guardar cambios</button>
+		</div>	
+
+		
+		</div>
+		<div class="error" id="id_submit_registro" >
+
+        </div>
+	</form>
+
+
+{% endblock main_content %}

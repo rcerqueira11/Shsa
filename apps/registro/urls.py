@@ -7,7 +7,7 @@ urlpatterns = [
     url(
         r'^login',
         views.Login.as_view(),
-        name="registro_login"
+        name="login"
     ),
     
     url(
