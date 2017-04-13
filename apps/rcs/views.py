@@ -84,6 +84,8 @@ class Dashboard(View):
 	# @login_required
 	def dispatch(self, request, *args, **kwargs):
 		# print "holis2"
+		if not request.user.is_authenticated():
+			return redirect(reverse_lazy('registro_login'))
 		return super(Dashboard, self).dispatch(request, *args, **kwargs)
 
 		
