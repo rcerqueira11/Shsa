@@ -170,9 +170,6 @@ class Logout(View):
         return redirect(reverse_lazy('registro_login'))
 
 
-
-
-
 class RegistroUsuario(View):
     def dispatch(self, request, *args, **kwargs):
         # if request.user.username == '' or request.user.is_authenticated() == False:
@@ -316,3 +313,41 @@ def elimina_tildes(s):
 
 
 #### Fin va en utils
+
+
+class EditarCuenta(View):
+    """
+    EditarCuenta
+    -------------------------------------------
+    Este views es para editar la informacion del usuario solo email y contrase;a
+
+    """
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated():
+            return redirect(reverse_lazy('dashboard'))
+        return super(EditarCuenta, self).dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        context = {
+
+        }
+
+        return render(request, 'registro/editar_usuario.html',context)
+
+    def post(self,request,*args,**kwargs):
+        data = request.POST
+        response = {}
+
+
+        #if data: 
+        #    response['Result'] = 'success'
+        #    response['msj'] = ''
+        #    return HttpResponse(json.dumps(response), content_type = "application/json")
+        #else:
+        #    response['Result'] = 'error'
+        #    response['msj'] = ''
+        #    return HttpResponse(json.dumps(response), content_type = "application/json")
+
+
+        return redirect(reverse_lazy('dashboard'))

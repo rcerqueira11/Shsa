@@ -41,6 +41,11 @@ urlpatterns = [
         views.consulta_cedula_usuario,
         name="verificar_cedula_usuario"
     ),
+    url(
+        r'^editar_cuenta',
+        views.EditarCuenta.as_view(),
+        name="editar_cuenta"
+    ),
 
     
 ]
