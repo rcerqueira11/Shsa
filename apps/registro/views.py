@@ -329,7 +329,7 @@ class EditarCuenta(View):
         return super(EditarCuenta, self).dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-
+        # import pudb; pu.db
 
         context = {
             'username': request.user.username,

@@ -68,6 +68,14 @@ function isEmpty( el ){
   }
 
 
+function es_vacio(id){
+    return jQuery.isEmptyObject($("#"+id).val())
+}
+
+function show_modal_errores(){
+  $("#modal-aviso-msj").html("Hay errores en el formulario de registro, favor verificar información suministrada.")
+  $("#modal-aviso").modal('show')
+}
 
 function confirmPasswordRecuperar() {
         var pass1 = document.getElementById("id_password").value;

@@ -1,19 +1,4 @@
-$("#id_username").focus();
-$("#id_username").attr("autocomplete","off");
 $("#id_correo2").prop('readonly',true)
-
-function no_vacio_error(id){
-    $("#"+id).html('<p class="small_error_letter"> Este campo no puede estar vacio <i class="fa fa-times-circle-o fa-lg"></i> </p>');
-}
-
-function es_vacio(id){
-    return jQuery.isEmptyObject($("#"+id).val())
-}
-
-function show_modal_errores(){
-  $("#modal-aviso-msj").html("Hay errores en el formulario de registro, favor verificar información suministrada.")
-  $("#modal-aviso").modal('show')
-}
 
 function block_correo2(){
     $("#id_correo2").prop('readonly',true)
@@ -21,36 +6,7 @@ function block_correo2(){
     document.getElementById("id_correo2").style.borderColor = "";
     $("#id-error-confirm-email").html('');
 }
-// funciones retornan true si el valor del campo esta disponible en caso contrario false
-function consulta_nombre_usuario(usuario){
-    if(usuario.length){
-        $.ajax({
-                type: 'GET' ,
-                url: '/registro/verificar_nombre_usuario' , // <= Providing the URL
-                data:{
-                    'username': usuario,
-                },
-                success: function(results){
-                    if(results.Result=='ocupado'){
-                        $("#id-error-username").html('<p class="small_error_letter"> El nombre de usuario ya se encuentra registrado. Por favor intente con otro Nombre de Usuario <i class="fa fa-times-circle-o fa-lg"></i> </p>');
-                        return false
-                    }
-                    if (results.Result=='libre'){
-                        $("#id-error-username").html('<i class="fa fa-check-circle-o fa-lg" style="color:#14D100"></i>');
-                        return true
-                    }
-                    
-                },
-                error: function(results){
-                    console.log("ERROR");
-                }
-            });
-        
 
-    }else{
-        $("#id-error-username").html('<p class="small_error_letter"> El nombre de usuario debe ser válido<i class="fa fa-times-circle-o fa-lg"></i> </p>');
-    }
-}
 
 function consulta_correo_usuario(correo){
 
@@ -107,58 +63,6 @@ function consulta_correo_usuario(correo){
     }
 
 }
-
-function consulta_cedula_usuario(cedula){
-    if(cedula.length){
-        $.ajax({
-                type: 'GET' ,
-                url: '/registro/verificar_cedula_usuario' , // <= Providing the URL
-                data:{
-                    'cedula': cedula,
-                },
-                success: function(results){
-                    if(results.Result=='ocupado'){
-                        $("#id-error-cedula").html('<p class="small_error_letter"> La cedula ya se encuentra registrada. Por favor verificarla. <i class="fa fa-times-circle-o fa-lg"></i> </p>');
-                        return false
-                    }
-                    if (results.Result=='libre'){
-                        $("#id-error-cedula").html('<i class="fa fa-check-circle-o fa-lg" style="color:#14D100"></i>');
-                        return true
-                    }
-                    
-                },
-                error: function(results){
-                    console.log("ERROR");
-                }
-            });
-        
-
-    }else{
-        $("#id-error-cedula").html('<p class="small_error_letter"> El campo de cedula no puede quedar vacio.<i class="fa fa-times-circle-o fa-lg"></i> </p>');
-    }
-}
-
-
-$('#id_username').focusout(function(){
-    usuario = $('#id_username').val()
-    if (usuario){
-        consulta_nombre_usuario(usuario)
-        
-    }else{
-        $("#id-error-username").html('<p class="small_error_letter"> El nombre de usuario debe ser válido<i class="fa fa-times-circle-o"></i> </p>');
-    }
-})
-
-$('#id_cedula').focusout(function(){
-    cedula = $('#id_cedula').val()
-    if (cedula){
-        consulta_cedula_usuario(cedula)
-        
-    }else{
-       no_vacio_error("id-error-cedula")
-    }
-})
-
 
 $("#id_correo_electronico").attr('onblur',"confirmEmail2();");
 $("#id_correo_electronico").attr("autocomplete","off");
@@ -294,24 +198,15 @@ function confirmEmail2() {
     return valido
 }
 
+
+
+
 function validar_campos(){
-
-    // if inspector{
-        validar_campos_vacios_inspector()
-    // }
-}
-
-
-function validar_campos_vacios_inspector(){
 
     correo = $('#id_correo_electronico').val()
     conf_correo = $('#id_correo2').val()
     password = $('#id_password').val()
     conf_password = $('#id_password_confirm').val()
-    usuario = $('#id_username').val()
-    cedula = $('#id_cedula').val()
-    nombre = $('#id_nombre').val()
-    apellido = $('#id_apellido').val()
     validar_email1 = confirmEmail2()
     validar_email2 = confirmEmail()
     validar_password = validarPassword(password)
@@ -321,22 +216,38 @@ function validar_campos_vacios_inspector(){
     console.log("validar_email2");
     console.log(validar_email2);
     
+    correos_iguales = correo == conf_correo ? true : false;
 
+    passwords_iguales = password == conf_password ? true : false;
+
+	correo_vacio = es_vacio('id_correo_electronico')
+
+	password_vacio = es_vacio('id_password')
+
+
+    if(correos_iguales || passwords_iguales) {
+
+    	correo_vacio = es_vacio('id_correo_electronico')
+    	
+		password_vacio = es_vacio('id_password')
+
+		if(!password_vacio || !correo_vacio){    	
+
+
+		} else {
+			
+
+		}
+    }
     // 
 // 
-    if( (correo == "") || (conf_correo == "") || (password == "") || (conf_password == "") || (usuario == "") || (cedula == "") || (nombre == "") || (apellido == "")){
+    if( ){
         console.log("Hay errores!");
         // $('#id_submit_registro').html('<center><p class="small_error_letter"> Hay errores en el formulario de registro, favor verificar información suministrada. <i class="fa fa-times-circle-o fa-lg"></i> </p></center>')
         show_modal_errores()
-        if(jQuery.isEmptyObject($('#id_nombre').val())){
-            no_vacio_error("id-error-nombre")
-        }
-
-        if(jQuery.isEmptyObject($('#id_apellido').val())){
-            no_vacio_error("id-error-apellido")
-        }
 
 
+        if
         if(es_vacio("id_password")){
             no_vacio_error("id-error-password")
         }
@@ -345,10 +256,7 @@ function validar_campos_vacios_inspector(){
             no_vacio_error("id-error-confirm-pass-recover")
         }
 
-        if(es_vacio("id_cedula")){
-            no_vacio_error("id-error-cedula")
-        }
-
+        
 
 
 
@@ -373,7 +281,6 @@ function validar_campos_vacios_inspector(){
 
 
 }
-
 function guardar_usuario(){
 
     correo = $('#id_correo_electronico').val()
@@ -384,35 +291,51 @@ function guardar_usuario(){
     correos_iguales = correo == conf_correo ? true : false;
     passwords_iguales = password == conf_password ? true : false;
 
-    if(correos_iguales && passwords_iguales) {
+
+    if () {} else {}
+
+    if(correos_iguales || passwords_iguales) {
+
+		correo_vacio = es_vacio('id_correo_electronico')
+    	
+		password_vacio = es_vacio('id_password')
+
+		if(!password_vacio || !correo_vacio){
+
+	        $(document).ajaxStop($.unblockUI);
+	        $.blockUI({ message: '<i class="fa fa-spinner fa-pulse" style="color:#444444"></i> Espere por favor...' });
+	        var theData = $("#id_form_editar_usuario").serializeArray();
+
+	        $.ajax({
+	                type: 'POST' ,
+	                url: 'registro/editar_cuenta' , // <= Providing the URL
+	                data: theData , // <= Providing the form data, serialized above
+	                success: function(results){
+	                 if(results.Result == 'success'){
+	                        titulo = ' EDICIÓN DE USUARIO'
+	                        subtitulo = 'Edición de usuario realizado exitosamente'
+	                        mensaje = results.mensaje
+	                        show_modal_exito(titulo,subtitulo,mensaje)
+	        
+	                    }
+	                    if(results.Result == 'error'){
+	                        show_modal_errores()
+	                    }
+	                },
+	                error: function(results){
+	                    console.log("ERROR");
+	                    show_modal_errores()
+	                }
+	            });
 
 
-        $(document).ajaxStop($.unblockUI);
-        $.blockUI({ message: '<i class="fa fa-spinner fa-pulse" style="color:#444444"></i> Espere por favor...' });
-        var theData = $("#id_form_registro_usuario").serializeArray();
-        // theData.push({name: 'pregunta_id', value: id});
-        $.ajax({
-                type: 'POST' ,
-                url: 'registro/registro' , // <= Providing the URL
-                data: theData , // <= Providing the form data, serialized above
-                success: function(results){
-                 if(results.Result == 'success'){
-                        titulo = ' REGISTRO DE USUARIO'
-                        subtitulo = 'Registro creado exitosamente'
-                        mensaje = 'Ha sido registrado en el sistema, le enviamos un correo<br> con información importante.'
-                        show_modal_exito(titulo,subtitulo,mensaje)
-        
-                    }
-                    if(results.Result == 'error'){
-                        show_modal_errores()
-                    }
-                },
-                error: function(results){
-                    console.log("ERROR");
-                    show_modal_errores()
-                }
-            });
-        
+		}
+		else{
+        	show_modal_errores()
+        	console.log("No hay nada que guardar");
+        	
+			
+		}	        
 
 
     }else {
@@ -424,41 +347,3 @@ function guardar_usuario(){
 
 }
 
-
-
-
-
-
- //# TODO CAPTCHA decomentar
-// $(function() {
-
-//     // if ($('#captcha_engine').attr('value') == true){
-//     //     console.log('captcha engine true');
-//     // }else{
-//     //     console.log('captcha engine false');
-//     //     console.log($('#captcha_engine').attr('value'));
-//     // }
-
-//     // Add refresh button after field (this can be done in the template as well)
-//     $('img.captcha').after(
-//             $('<a href="#void" class="fa fa-refresh captcha-refresh" title="Da click para cambiar la imagen"></a><br><br>')
-//             );
-
-//     // Click-handler for the refresh-link
-//     $('.captcha-refresh').click(function(){
-//         var $form = $(this).parents('form');
-//         var url = location.protocol + "//" + window.location.hostname + ":"
-//                   + location.port + "/captcha/refresh/";
-
-//         // Make the AJAX-call
-//         $.getJSON(url, {}, function(json) {
-//             $form.find('input[name="captcha_0"]').val(json.key);
-//             $form.find('img.captcha').attr('src', json.image_url);
-//         });
-
-//         return false;
-//     });
-// });
-/***
- * fin
- **/

@@ -83,7 +83,7 @@
 
 			<div class="col-xs-6">
 				<label>Nuevo correo</label>
-				<input type="email" name="correo_electronico" placeholder="{{usuario.correo_electronico}}"  id="id_correo_electronico" class="form-control" placeholder="Nombre@Dominio.com" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off value="{{usuario.correo_electronico}}" required/>
+				<input type="email" name="correo_electronico" placeholder="{{usuario.correo_electronico}}"  id="id_correo_electronico" class="form-control" placeholder="Nombre@Dominio.com" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off required/>
 				<div class="error" id="id-error-correo" >
 
 	            </div>
@@ -91,7 +91,7 @@
 
 			<div class="col-xs-6">
 				<label>Verificar nuevo correo</label>
-				<input type="email" name="email2" id="id_correo2" class="form-control" onblur="confirmEmail()" placeholder="{{usuario.correo_electronico}}" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off value="{{usuario.correo_electronico}}" required/>
+				<input type="email" name="email2" id="id_correo2" class="form-control" onblur="confirmEmail()" placeholder="{{usuario.correo_electronico}}" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off required/>
 				<div class="error" id="id-error-confirm-email">
 					
 
@@ -128,7 +128,8 @@
 	</section>	
 		<div class="row">
 		<div class="col-xs-6">
-			<button type="button" onclick="validar_campos()" name="submit" class="btn  btn-warning btn-block letter" >Cancelar</button>
+			<!-- <button type="button" onclick="validar_campos()" name="submit"  ></button> -->
+			<a type="button "href="{% url "dashboard" %}" class="btn  btn-warning btn-block letter">Cancelar</a>
 		</div>	
 		<div class="col-xs-6">
 			<button type="button" onclick="validar_campos()" name="submit" class="btn  btn-success btn-block letter" >Guardar cambios</button>
@@ -145,3 +146,8 @@
 <div class="col-xs-1"></div>
 </div>
 {% endblock main_content %}
+
+{% block extra_script %}
+ 	<script src="{{STATIC_URL}}js/registro/editar_usuario.js"></script>
+
+{% endblock extra_script %}
