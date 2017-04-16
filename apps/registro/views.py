@@ -350,9 +350,7 @@ class EditarCuenta(View):
         request.POST._mutable = mutable
         #Fin convertir todo a minuscula y quitar los espacios en blanco
 
-
         data = request.POST
-        # import pudb; pu.db
         response = {}
 
         usuario_existe = Usuario.objects.filter(id = request.user.id).exists()
@@ -362,8 +360,8 @@ class EditarCuenta(View):
             response['msj'] = ''
             return HttpResponse(json.dumps(response), content_type = "application/json")
 
+        ### Validando Antiguo usuario y ver que se esta modificando
         usuario_viejo = Usuario.objects.get(id=request.user.id)
-
         cambiando_correo = True if not usuario_viejo.correo_electronico == data['correo_electronico'] and data['correo_electronico'] != "" else False
         cambiando_password = True if not data['password'] == "" else False
 
@@ -373,21 +371,16 @@ class EditarCuenta(View):
             return HttpResponse(json.dumps(data), content_type = "application/json")
 
 
-        email = data['correo_electronico']
-
-        existe_correo =Usuario.objects.filter(correo_electronico = email).exists()
-
         ### Validando email
-
+        email = data['correo_electronico']
+        existe_correo =Usuario.objects.filter(correo_electronico = email).exists()
         email_valido = validate_email(email) if email != "" else True
+
 
         ### Validando que los correos del form son iguales y que las contrase;as tambien son iguales
         email_son_iguales = son_iguales(data['correo_electronico'],data['email2'])
         passwords_son_iguales = son_iguales(data['password'],data['password2'])
 
-
-        ##### VALIDAR EL EMAIL
-        usuario_existe = Usuario.objects.filter(id = request.user.id).exists()
         if((not existe_correo) and (email_valido) and email_son_iguales and passwords_son_iguales and usuario_existe):
             with transaction.atomic():
 
@@ -403,23 +396,9 @@ class EditarCuenta(View):
                 response['Result'] = 'success'
                 response['msj'] = ''
                 return HttpResponse(json.dumps(response), content_type = "application/json")
-        # if
         else:
             response['Result'] = 'error'
             response['msj'] = ''
             return HttpResponse(json.dumps(response), content_type = "application/json")
 
 
-        #if data: 
-        #    response['Result'] = 'success'
-        #    response['msj'] = ''
-        #    return HttpResponse(json.dumps(response), content_type = "application/json")
-        #else:
-        #    response['Result'] = 'error'
-        #    response['msj'] = ''
-        #    return HttpResponse(json.dumps(response), content_type = "application/json")
-        # return redirect
-
-        response['Result'] = 'error'
-        response['msj'] = ''
-        return HttpResponse(json.dumps(response), content_type = "application/json")
