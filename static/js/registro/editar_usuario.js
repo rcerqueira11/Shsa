@@ -377,7 +377,7 @@ function validar_campos(){
 					} else {
 
 						console.log("No paso nada 1");
-						show_modal_errores()
+						show_modal_errores_personalizado('Hay errores en el formulario, favor verificar información suministrada.')
 					}
 
 				} else {
@@ -389,7 +389,7 @@ function validar_campos(){
 						}else {
 
 							console.log("No paso nada 2");
-							show_modal_errores()
+							show_modal_errores_personalizado('Hay errores en el formulario, favor verificar información suministrada.')
 						}
 					}
 
@@ -402,12 +402,13 @@ function validar_campos(){
 		} else {
 			// no se modifico ningun dato
 			console.log("No se modifico ningun dato! Mostrar modal de nada cambiado");
+			show_modal_errores_personalizado('No hay información nueva para guardar.')
 			
 
 		}
     } else {
     	console.log("Nada bien!");
-		show_modal_errores()
+		show_modal_errores_personalizado('Hay errores en el formulario, favor verificar información suministrada.')
 
     }
 }
@@ -450,19 +451,19 @@ function guardar_usuario(){
 	        
 	                    }
 	                    if(results.Result == 'error'){
-	                        show_modal_errores()
+	                        show_modal_errores_personalizado('Hay errores en el formulario, favor verificar información suministrada.')
 	                    }
 	                },
 	                error: function(results){
 	                    console.log("ERROR");
-	                    show_modal_errores()
+	                    show_modal_errores_personalizado('Hay errores en el formulario, favor verificar información suministrada.')
 	                }
 	            });
 
 
 		}
 		else{
-        	show_modal_errores()
+        	show_modal_errores_personalizado('No hay información nueva para guardar.')
         	console.log("No hay nada que guardar");
         	
 			
@@ -471,7 +472,7 @@ function guardar_usuario(){
 
     }else {
         // $('#id_submit_registro').html('<center><p class="small_error_letter"> Hay errores en el formulario de registro, favor verificar información suministrada. <i class="fa fa-times-circle-o fa-lg"></i> </p></center>')
-        show_modal_errores()
+        show_modal_errores_personalizado('Hay errores en el formulario, favor verificar información suministrada.')
     }
 
     

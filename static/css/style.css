@@ -30,6 +30,7 @@
     }
 }
 
+
 .modal-registro-header, .modal-edicion-header{
     background-color: #0069AA;
     height: 60px;
@@ -49,6 +50,12 @@
 .modal-dialog{
     height: auto !important;
     padding-bottom: 3%;
+}
+
+.modal-aviso{
+
+    background-color: #EC971F;
+    color: #E8E8E8;
 }
 
 .modal-check {

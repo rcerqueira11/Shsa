@@ -77,6 +77,11 @@ function show_modal_errores(){
   $("#modal-aviso").modal('show')
 }
 
+function show_modal_errores_personalizado(mensaje){
+  $("#modal-aviso-msj").html(mensaje)
+  $("#modal-aviso").modal('show')
+}
+
 function confirmPasswordRecuperar() {
         var pass1 = document.getElementById("id_password").value;
         var pass2 = document.getElementById("id_password_confirm").value;
