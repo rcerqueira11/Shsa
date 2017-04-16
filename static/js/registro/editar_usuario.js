@@ -7,6 +7,11 @@ function block_correo2(){
     $("#id-error-confirm-email").html('');
 }
 
+function reset_password_validations(){
+	document.getElementById("id_password").style.borderColor = "";
+	            document.getElementById("id_password_confirm").style.borderColor = "";
+	            $("#id-error-confirm-pass-recover").html('');
+}
 
 function consulta_correo_usuario(correo){
 
@@ -209,6 +214,97 @@ function confirmEmail2() {
     return valido
 }
 
+
+
+function confirmPasswordRecuperar() {
+        var pass1 = document.getElementById("id_password").value;
+        var pass2 = document.getElementById("id_password_confirm").value;
+
+        if(!es_vacio('id_password')){
+
+	        if (pass1 != pass2) {
+	            document.getElementById("id_password").style.borderColor = "#E34234";
+	            document.getElementById("id_password_confirm").style.borderColor = "#E34234";
+	            $("#id-error-confirm-pass-recover").html('<p class="small_error_letter"> Las contraseñas no son iguales! <i class="fa fa-times-circle-o fa-lg"></i> </p>');
+
+
+	        } else {
+
+	            if (pass1.length<8) {
+	                document.getElementById("id_password").style.borderColor = "#E34234";
+	                document.getElementById("id_password_confirm").style.borderColor = "#E34234";
+	                $("#id-error-confirm-pass-recover").html('<p class="small_error_letter"> Las contraseñas deben tener al menos 8 caracteres! <i class="fa fa-times-circle-o fa-lg"></i> </p>');
+	            }else{
+
+	                if(!tiene_mayusculas(pass1)){
+
+	                    document.getElementById("id_password").style.borderColor = "#E34234";
+	                    document.getElementById("id_password_confirm").style.borderColor = "#E34234";
+	                    $("#id-error-confirm-pass-recover").html('<p class="small_error_letter"> Las contraseñas deben tener al menos una letra mayúscula! <i class="fa fa-times-circle-o fa-lg"></i> </p>');
+
+	                }else{
+
+	                    document.getElementById("id_password").style.borderColor = "#14D100";
+	                    document.getElementById("id_password_confirm").style.borderColor = "#14D100";
+	                    $("#id-error-confirm-pass-recover").empty();
+	                    $("#id-error-confirm-pass-recover").html('<i class="fa fa-check-circle-o fa-lg" style="color:#14D100"></i>');
+	                }
+
+	            }
+
+	        }
+        }
+
+        if(es_vacio('id_password') && es_vacio('id_password_confirm')){
+        	reset_password_validations()
+        }
+};
+
+
+function confirmPasswordRecuperar2() {
+        var pass1 = document.getElementById("id_password").value;
+        var pass2 = document.getElementById("id_password_confirm").value;
+
+        if(!es_vacio('id_password') || !es_vacio('id_password_confirm')){
+
+	        if (pass1 == pass2) {
+	            if(pass2.length>=8){
+	                if(tiene_mayusculas(pass2)){
+	                    document.getElementById("id_password").style.borderColor = "#14D100";
+	                    document.getElementById("id_password_confirm").style.borderColor = "#14D100";
+	                    $("#id-error-confirm-pass-recover").empty();
+	                    $("#id-error-confirm-pass-recover").html('<i class="fa fa-check-circle-o fa-lg" style="color:#14D100"></i>');
+
+	                }else{
+	                    document.getElementById("id_password").style.borderColor = "#E34234";
+	                    document.getElementById("id_password_confirm").style.borderColor = "#E34234";
+	                    $("#id-error-confirm-pass-recover").html('<p class="small_error_letter"> Las contraseñas deben tener al menos una letra mayúscula! <i class="fa fa-times-circle-o fa-lg"></i> </p>');
+	                }
+	            }else{
+	                document.getElementById("id_password").style.borderColor = "#E34234";
+	                document.getElementById("id_password_confirm").style.borderColor = "#E34234";
+	                $("#id-error-confirm-pass-recover").html('<p class="small_error_letter"> Las contraseñas deben tener al menos 8 caracteres! <i class="fa fa-times-circle-o fa-lg"></i> </p>');
+	            }
+	        } else {
+
+	            if(pass2.length!=0){
+	                document.getElementById("id_password").style.borderColor = "#E34234";
+	                document.getElementById("id_password_confirm").style.borderColor = "#E34234";
+	                $("#id-error-confirm-pass-recover").html('<p class="small_error_letter"> Las contraseñas no son iguales! <i class="fa fa-times-circle-o fa-lg"></i> </p>');
+
+	            }
+
+	            if(pass1.length!=0){
+	                $("#id-error-password").html('');
+	            }
+
+	        }
+        }
+        if(es_vacio('id_password') && es_vacio('id_password_confirm')){
+        	reset_password_validations()
+        }
+
+};
 
 
 
