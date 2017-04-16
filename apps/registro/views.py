@@ -340,8 +340,74 @@ class EditarCuenta(View):
         return render(request, 'registro/editar_usuario.html',context)
 
     def post(self,request,*args,**kwargs):
+        #Convertir todo a minuscula y quitar los espacios en blanco
+        mutable = request.POST._mutable
+        request.POST._mutable = True
+       
+        if request.POST.get('correo_electronico') != None:
+            request.POST['correo_electronico']= request.POST['correo_electronico'].lower().strip()
+
+        request.POST._mutable = mutable
+        #Fin convertir todo a minuscula y quitar los espacios en blanco
+
+
         data = request.POST
+        # import pudb; pu.db
         response = {}
+
+        usuario_existe = Usuario.objects.filter(id = request.user.id).exists()
+
+        if not usuario_existe:
+            response['Result'] = 'error'
+            response['msj'] = ''
+            return HttpResponse(json.dumps(response), content_type = "application/json")
+
+        usuario_viejo = Usuario.objects.get(id=request.user.id)
+
+        cambiando_correo = True if not usuario_viejo.correo_electronico == data['correo_electronico'] and data['correo_electronico'] != "" else False
+        cambiando_password = True if not data['password'] == "" else False
+
+        if Usuario.objects.filter(correo_electronico = data['correo_electronico']).exists():
+            data['Result'] = 'ERROR_CORREO'
+            data['error'] = '<p class="small_error_letter"> El correo de usuario ya se encuentra registrado. Por favor intente con otro correo <i class="fa fa-times-circle-o fa-lg"></i> </p>'
+            return HttpResponse(json.dumps(data), content_type = "application/json")
+
+
+        email = data['correo_electronico']
+
+        existe_correo =Usuario.objects.filter(correo_electronico = email).exists()
+
+        ### Validando email
+
+        email_valido = validate_email(email) if email != "" else True
+
+        ### Validando que los correos del form son iguales y que las contrase;as tambien son iguales
+        email_son_iguales = son_iguales(data['correo_electronico'],data['email2'])
+        passwords_son_iguales = son_iguales(data['password'],data['password2'])
+
+
+        ##### VALIDAR EL EMAIL
+        usuario_existe = Usuario.objects.filter(id = request.user.id).exists()
+        if((not existe_correo) and (email_valido) and email_son_iguales and passwords_son_iguales and usuario_existe):
+            with transaction.atomic():
+
+                usuario_modificado = Usuario.objects.get(id = request.user.id)
+                if cambiando_correo:
+                    usuario_modificado.correo_electronico = email
+                if cambiando_password:
+                    usuario_modificado.password = hashers.make_password(data['password'])
+
+                ##Falta envia el mail
+
+                # usuario_modificado.save()
+                response['Result'] = 'success'
+                response['msj'] = ''
+                return HttpResponse(json.dumps(response), content_type = "application/json")
+        # if
+        else:
+            response['Result'] = 'error'
+            response['msj'] = ''
+            return HttpResponse(json.dumps(response), content_type = "application/json")
 
 
         #if data: 

@@ -365,11 +365,9 @@ function validar_campos(){
 					}
 
 				} 
-				console.log("blue");
 
 			} else {
 
-				console.log("yellow");
 
 				if (!correo_vacio){
 					correos_validos = validar_email1 && validar_email2
@@ -435,31 +433,31 @@ function guardar_usuario(){
 		if(!password_vacio || !correo_vacio){
 			console.log("Guardando :) ");
 			
-	        // $(document).ajaxStop($.unblockUI);
-	        // $.blockUI({ message: '<i class="fa fa-spinner fa-pulse" style="color:#444444"></i> Espere por favor...' });
-	        // var theData = $("#id_form_editar_usuario").serializeArray();
+	        $(document).ajaxStop($.unblockUI);
+	        $.blockUI({ message: '<i class="fa fa-spinner fa-pulse" style="color:#444444"></i> Espere por favor...' });
+	        var theData = $("#id_form_editar_usuario").serializeArray();
 
-	        // $.ajax({
-	        //         type: 'POST' ,
-	        //         url: 'registro/editar_cuenta' , // <= Providing the URL
-	        //         data: theData , // <= Providing the form data, serialized above
-	        //         success: function(results){
-	        //          if(results.Result == 'success'){
-	        //                 titulo = ' EDICIÓN DE USUARIO'
-	        //                 subtitulo = 'Edición de usuario realizado exitosamente'
-	        //                 mensaje = results.mensaje
-	        //                 show_modal_exito(titulo,subtitulo,mensaje)
+	        $.ajax({
+	                type: 'POST' ,
+	                url: '/registro/editar_cuenta' , // <= Providing the URL
+	                data: theData , // <= Providing the form data, serialized above
+	                success: function(results){
+	                 if(results.Result == 'success'){
+	                        titulo = ' EDICIÓN DE USUARIO'
+	                        subtitulo = 'Edición de usuario realizado exitosamente'
+	                        mensaje = results.mensaje
+	                        show_modal_exito(titulo,subtitulo,mensaje)
 	        
-	        //             }
-	        //             if(results.Result == 'error'){
-	        //                 show_modal_errores()
-	        //             }
-	        //         },
-	        //         error: function(results){
-	        //             console.log("ERROR");
-	        //             show_modal_errores()
-	        //         }
-	        //     });
+	                    }
+	                    if(results.Result == 'error'){
+	                        show_modal_errores()
+	                    }
+	                },
+	                error: function(results){
+	                    console.log("ERROR");
+	                    show_modal_errores()
+	                }
+	            });
 
 
 		}
