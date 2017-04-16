@@ -391,7 +391,7 @@ class EditarCuenta(View):
                     usuario_modificado.password = hashers.make_password(data['password'])
 
                 ##Falta envia el mail
-
+                ## PENDIENTEEEEE
                 # usuario_modificado.save()
                 response['Result'] = 'success'
                 response['msj'] = ''
