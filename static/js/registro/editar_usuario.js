@@ -50,16 +50,16 @@ function consulta_correo_usuario(correo){
         
 
     }else{
-        document.getElementById("id_correo_electronico").style.borderColor = "#E34234";
+        // document.getElementById("id_correo_electronico").style.borderColor = "#E34234";
 
-        if (jQuery.isEmptyObject($('#id_correo_electronico').val())){
-            $("#id-error-correo").html('<p class="small_error_letter"> Este campo no puede estar vacio <i class="fa fa-times-circle-o fa-lg"></i> </p>');
-            block_correo2()
-        } else{
-            if(!validarEmail(correo)){
-                $("#id-error-correo").html('<p class="small_error_letter"> El correo del usuario debe ser válido<i class="fa fa-times-circle-o fa-lg"></i> </p>');
-            } 
-        }
+        // if (jQuery.isEmptyObject($('#id_correo_electronico').val())){
+        //     $("#id-error-correo").html('<p class="small_error_letter"> Este campo no puede estar vacio <i class="fa fa-times-circle-o fa-lg"></i> </p>');
+        //     block_correo2()
+        // } else{
+        //     if(!validarEmail(correo)){
+        //         $("#id-error-correo").html('<p class="small_error_letter"> El correo del usuario debe ser válido<i class="fa fa-times-circle-o fa-lg"></i> </p>');
+        //     } 
+        // }
     }
 
 }
@@ -109,17 +109,22 @@ function confirmEmail() {
         }
     }
     else {
-        document.getElementById("id_correo2").style.borderColor = "#E34234";
-        if (jQuery.isEmptyObject($('#id_correo2').val())){
-            $("#id-error-confirm-email").html('<p class="small_error_letter"> Este campo no puede estar vacio <i class="fa fa-times-circle-o fa-lg"></i> </p>');
-            
-        } else{
-            if(!validarEmail(confemail)){
-                $("#id-error-confirm-email").html('<p class="small_error_letter"> El correo del usuario debe ser válido<i class="fa fa-times-circle-o fa-lg"></i> </p>');
-            } 
-        }
-        // $("#id-error-confirm-email").html('<p class="small_error_letter"> Este campo no puede estar vacio <i class="fa fa-times-circle-o fa-lg"></i> </p>');
+    	if(!es_vacio('id_correo_electronico')){
 
+	        document.getElementById("id_correo2").style.borderColor = "#E34234";
+	        if (jQuery.isEmptyObject($('#id_correo2').val())){
+	            $("#id-error-confirm-email").html('<p class="small_error_letter"> Este campo no puede estar vacio <i class="fa fa-times-circle-o fa-lg"></i> </p>');
+	            
+	        } else{
+	            if(!validarEmail(confemail)){
+	                $("#id-error-confirm-email").html('<p class="small_error_letter"> El correo del usuario debe ser válido<i class="fa fa-times-circle-o fa-lg"></i> </p>');
+	            } 
+	        }
+	        $("#id-error-confirm-email").html('<p class="small_error_letter"> Este campo no puede estar vacio <i class="fa fa-times-circle-o fa-lg"></i> </p>');
+    	} else {
+
+        	valido = true
+    	}
     }
     return valido
 }
@@ -182,15 +187,21 @@ function confirmEmail2() {
         }
 
     } else {
-        document.getElementById("id_correo2").style.borderColor = "#E34234";
-        if (jQuery.isEmptyObject($('#id_correo_electronico').val())){
-            $("#id-error-correo").html('<p class="small_error_letter"> Este campo no puede estar vacio <i class="fa fa-times-circle-o fa-lg"></i> </p>');
+    	block_correo2()
+        document.getElementById("id_correo_electronico").style.borderColor = "";
+
+      	$("#id-error-confirm-email").html('');
+
+        // document.getElementById("id_correo2").style.borderColor = "#E34234";
+        // if (jQuery.isEmptyObject($('#id_correo_electronico').val())){
+        //     $("#id-error-correo").html('<p class="small_error_letter"> Este campo no puede estar vacio <i class="fa fa-times-circle-o fa-lg"></i> </p>');
             
-        } else{
-            if(!validarEmail(email)){
-                $("#id-error-correo").html('<p class="small_error_letter"> El correo del usuario debe ser válido<i class="fa fa-times-circle-o fa-lg"></i> </p>');
-            } 
-        }
+        // } else{
+        //     if(!validarEmail(email)){
+        //         $("#id-error-correo").html('<p class="small_error_letter"> El correo del usuario debe ser válido<i class="fa fa-times-circle-o fa-lg"></i> </p>');
+        //     } 
+        // }
+        valido = true
         // document.getElementById("id_correo_electronico").style.borderColor = "#E34234";
         // $("#id-error-correo").html('<p class="small_error_letter"> Este asdasdcampo no puede estar vacio <i class="fa fa-times-circle-o fa-lg"></i> </p>');
 
@@ -232,55 +243,58 @@ function validar_campos(){
 		password_vacio = es_vacio('id_password')
 
 		if(!password_vacio || !correo_vacio){    	
+			// se modifico password o el correo
+			if (!password_vacio && !correo_vacio) {
+				if(validar_password && validar_email1 && validar_email2){
+					console.log("Guardar usuario por correo y constraseña cambiada");
+					
+					guardar_usuario()
+
+				}
+
+			} else {
+
+
+				if (!correo_vacio){
+					correos_validos = validar_email1 && validar_email2
+					if(correos_validos){
+						console.log("Guardar usuario por correo cambiado");
+						guardar_usuario()
+					} else {
+
+						console.log("No paso nada 1");
+						show_modal_errores()
+					}
+
+				} else {
+					if(!password_vacio){
+						if(validar_password){
+						console.log("Guardar usuario por constraseña cambiado");
+						guardar_usuario()
+						}
+					}else {
+
+						console.log("No paso nada 2");
+						show_modal_errores()
+					}
+					
+
+				}
+
+			}
+
 
 
 		} else {
+			// no se modifico ningun dato
+			console.log("No se modifico ningun dato! Mostrar modal de nada cambiado");
 			
 
 		}
     }
-    // 
-// 
-    if( ){
-        console.log("Hay errores!");
-        // $('#id_submit_registro').html('<center><p class="small_error_letter"> Hay errores en el formulario de registro, favor verificar información suministrada. <i class="fa fa-times-circle-o fa-lg"></i> </p></center>')
-        show_modal_errores()
-
-
-        if
-        if(es_vacio("id_password")){
-            no_vacio_error("id-error-password")
-        }
-
-        if(es_vacio("id_password_confirm")){
-            no_vacio_error("id-error-confirm-pass-recover")
-        }
-
-        
-
-
-
-
-
-
-    } else {
-        if(validar_email1 && validar_email2 && validar_password){
-            console.log("a guardar");
-            guardar_usuario()
-            
-        }
-        else {
-            // $('#id_submit_registro').html('<center><p class="small_error_letter"> Hay errores en el formulario de registro, favor verificar información suministrada. <i class="fa fa-times-circle-o fa-lg"></i> </p></center>')
-            show_modal_errores()
-        }
-        // console.log("Yay!");
-        
-    }
-
-
-
-
 }
+
+
 function guardar_usuario(){
 
     correo = $('#id_correo_electronico').val()
@@ -292,8 +306,6 @@ function guardar_usuario(){
     passwords_iguales = password == conf_password ? true : false;
 
 
-    if () {} else {}
-
     if(correos_iguales || passwords_iguales) {
 
 		correo_vacio = es_vacio('id_correo_electronico')
@@ -301,32 +313,33 @@ function guardar_usuario(){
 		password_vacio = es_vacio('id_password')
 
 		if(!password_vacio || !correo_vacio){
+			console.log("Guardando :) ");
+			
+	        // $(document).ajaxStop($.unblockUI);
+	        // $.blockUI({ message: '<i class="fa fa-spinner fa-pulse" style="color:#444444"></i> Espere por favor...' });
+	        // var theData = $("#id_form_editar_usuario").serializeArray();
 
-	        $(document).ajaxStop($.unblockUI);
-	        $.blockUI({ message: '<i class="fa fa-spinner fa-pulse" style="color:#444444"></i> Espere por favor...' });
-	        var theData = $("#id_form_editar_usuario").serializeArray();
-
-	        $.ajax({
-	                type: 'POST' ,
-	                url: 'registro/editar_cuenta' , // <= Providing the URL
-	                data: theData , // <= Providing the form data, serialized above
-	                success: function(results){
-	                 if(results.Result == 'success'){
-	                        titulo = ' EDICIÓN DE USUARIO'
-	                        subtitulo = 'Edición de usuario realizado exitosamente'
-	                        mensaje = results.mensaje
-	                        show_modal_exito(titulo,subtitulo,mensaje)
+	        // $.ajax({
+	        //         type: 'POST' ,
+	        //         url: 'registro/editar_cuenta' , // <= Providing the URL
+	        //         data: theData , // <= Providing the form data, serialized above
+	        //         success: function(results){
+	        //          if(results.Result == 'success'){
+	        //                 titulo = ' EDICIÓN DE USUARIO'
+	        //                 subtitulo = 'Edición de usuario realizado exitosamente'
+	        //                 mensaje = results.mensaje
+	        //                 show_modal_exito(titulo,subtitulo,mensaje)
 	        
-	                    }
-	                    if(results.Result == 'error'){
-	                        show_modal_errores()
-	                    }
-	                },
-	                error: function(results){
-	                    console.log("ERROR");
-	                    show_modal_errores()
-	                }
-	            });
+	        //             }
+	        //             if(results.Result == 'error'){
+	        //                 show_modal_errores()
+	        //             }
+	        //         },
+	        //         error: function(results){
+	        //             console.log("ERROR");
+	        //             show_modal_errores()
+	        //         }
+	        //     });
 
 
 		}
