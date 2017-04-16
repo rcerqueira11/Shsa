@@ -5,6 +5,7 @@ function block_correo2(){
     $("#id_correo2").val("")
     document.getElementById("id_correo2").style.borderColor = "";
     $("#id-error-confirm-email").html('');
+    $("#id-error-correo").empty();
 }
 
 function reset_password_validations(){
@@ -341,19 +342,38 @@ function validar_campos(){
 		if(!password_vacio || !correo_vacio){    	
 			// se modifico password o el correo
 			if (!password_vacio && !correo_vacio) {
-				if(validar_password && validar_email1 && validar_email2){
+				if(validar_password && validar_email1 && validar_email2 && passwords_iguales && correos_iguales){
 					console.log("Guardar usuario por correo y constraseña cambiada");
 					
 					guardar_usuario()
 
-				}
+				} else {
+					console.log("red");
+					
+					if(!correos_iguales || !passwords_iguales){
+						console.log('error de campos invalidos');
+						
+					} 
+					correos_validos = validar_email1 && validar_email2
+					if(!correos_validos){
+						console.log('correo invalido');
+					}
+
+					if(!validar_password){
+						console.log('Clave invalida');
+
+					}
+
+				} 
+				console.log("blue");
 
 			} else {
 
+				console.log("yellow");
 
 				if (!correo_vacio){
 					correos_validos = validar_email1 && validar_email2
-					if(correos_validos){
+					if(correos_validos && correos_iguales){
 						console.log("Guardar usuario por correo cambiado");
 						guardar_usuario()
 					} else {
@@ -364,16 +384,16 @@ function validar_campos(){
 
 				} else {
 					if(!password_vacio){
-						if(validar_password){
-						console.log("Guardar usuario por constraseña cambiado");
-						guardar_usuario()
-						}
-					}else {
+						if(validar_password && passwords_iguales){
+							console.log("Guardar usuario por constraseña cambiado");
+							guardar_usuario()
+						 
+						}else {
 
-						console.log("No paso nada 2");
-						show_modal_errores()
+							console.log("No paso nada 2");
+							show_modal_errores()
+						}
 					}
-					
 
 				}
 
@@ -387,6 +407,10 @@ function validar_campos(){
 			
 
 		}
+    } else {
+    	console.log("Nada bien!");
+		show_modal_errores()
+
     }
 }
 
