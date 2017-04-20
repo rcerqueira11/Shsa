@@ -123,8 +123,16 @@
 		
 		
 	</div>
-
-		<button type="button" onclick="validar_campos()" name="submit" class="btn btn-lg btn-success btn-block letter" >Registrarse</button>
+		<div class="row">
+			
+			<div class="col-xs-6">
+					<!-- <button type="button" onclick="validar_campos()" name="submit"  ></button> -->
+				<a type="button "href="{% url "login" %}" class="btn  btn-warning btn-block letter">Cancelar</a>
+			</div>	
+			<div class="col-xs-6">
+				<button type="button" onclick="validar_campos()" name="submit" class="btn btn-success btn-block letter" >Registrarse</button>
+			</div>
+		</div>
 		<div class="error" id="id_submit_registro" >
 
         </div>

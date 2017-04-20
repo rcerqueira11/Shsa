@@ -4,13 +4,18 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, hashers
 from django.db import transaction
 from django.contrib import messages
+from django.core.mail import EmailMessage
+from email.MIMEImage import MIMEImage
 from django.views.generic import View, FormView,TemplateView,DeleteView
 from django.template import RequestContext, loader
 from django.http import HttpResponse
 from django.utils import timezone
 from django.conf import settings
 from settings.settings import BASE_DIR, STATIC_URL
-# from utils.HelpMethods.helpers import *
+from django.template.loader import get_template
+from django.template import Context
+
+# from utils import *
 from validate_email import validate_email
 from apps.wkhtmltopdf.views import PDFTemplateResponse
 from apps.registro.models import *
@@ -25,6 +30,7 @@ import logging
 import datetime
 import os
 import sys
+from os import path
 
 # Create your views here.
 
@@ -293,7 +299,97 @@ class RestaurarCuenta(View):
         #     messages.info(self.request, mensaje)
         return render (request, 'registro/restaurar_cuenta.html')
 
+    def post(self, request, *args, **kwargs):
+        data = request.POST
+        respuesta = {}
+        correo =  data['email']
+        cedula = data['cedula']
+
+        if Usuario.objects.filter(correo_electronico = correo, cedula=cedula).exists():
+            usuario = Usuario.objects.get(correo_electronico = correo, cedula=cedula)
+            clave_nueva = create_new_password()
+            usuario.set_password(hashers.make_password(clave_nueva))
+            print clave_nueva
+
+        
+            correoTemplate = get_template('correo/usuario_recuperar_clave.html')
+            context_email = Context({
+                    'usuario': usuario,
+                    'clave': clave_nueva,
+                })
+            contenidoHtmlCorreo = correoTemplate.render(context_email)
+
+            email_enviado = enviar_correo(asunto="Recuperar Cuenta",contenido=contenidoHtmlCorreo, correo=[correo] ,custom_filename='seguros_horizontes_logo.png')
+            # import pudb; pu.db
+
+            if not email_enviado:
+                respuesta['Result'] = 'error'
+                respuesta['ERROR_CODE'] = 'NO_MAIL_SEND'
+                respuesta['mensaje'] = 'El correo no pudo ser enviado, favor intentar mas tarde.'
+                return HttpResponse(json.dumps(respuesta), content_type = "application/json")
+            
+            # usuario.save()
+            respuesta = {}
+            respuesta['Result'] = 'success'
+            return HttpResponse(json.dumps(respuesta), content_type = "application/json")
+
+        else:
+            respuesta['Result'] = 'error'
+            respuesta['ERROR_CODE'] = 'DATOS_INVALIDOS'
+            respuesta['mensaje'] = 'El correo o la cedula esta incorrecto, verifique los datos y vuelva a intentar.'
+            return HttpResponse(json.dumps(respuesta), content_type = "application/json")
 # return HttpResponse(json.dumps(data), content_type = "application/json")
+
+def create_new_password():
+    serial=[random.choice(string.ascii_letters + string.digits) for n in xrange(8)]
+    serial.append(random.choice(string.ascii_uppercase))
+    clave=''.join(serial)
+
+    return clave
+
+def enviar_correo(asunto, contenido, correo, custom_filename, adjuntos=[]):
+    if not type(custom_filename) is list:
+        custom_filename = [custom_filename]
+
+    try:
+        msg = EmailMessage(asunto, contenido, to=correo)
+        msg.content_subtype = "html"
+        # msg.attach_alternative(contenido, "text/html")
+        # msg.mixed_subtype = 'related'
+
+        for f in custom_filename:
+            fp = open(path.join(BASE_DIR, 'static', 'img', f), 'rb')
+            msg_img = MIMEImage(fp.read())
+            fp.close()
+            msg_img.add_header('Content-ID', '<{}>'.format(f))
+            msg.attach(msg_img)
+
+        if adjuntos:
+            for ad in adjuntos:
+                try:
+                    msg.attach_file(ad)
+                except Exception as e:
+                    msg.attach_file(ad[1:])
+
+        msg.send()
+        # if not es_firma:
+        #     try:
+        #         enviado = msg.send()
+        #         if enviado < 1:
+        #             from utils.HelpMethods.pagos_util import guardar_correo
+        #             guardar_correo(mail=msg, error='NO_ENVIADO')
+        #     except Exception as e:
+        #         from utils.HelpMethods.pagos_util import guardar_correo
+        #         guardar_correo(mail=msg, error=repr(e))
+        # else:
+        #     from utils.HelpMethods.pagos_util import guardar_correo
+        #     guardar_correo(mail=msg, error='GUARDADO_PREVENTIVO_FIRMA')
+
+    except Exception as e:
+        print '=======>Error al enviar correo<=========', e
+        # raise e
+        return False
+    return True
 
 
 ###Va en utils
@@ -392,9 +488,9 @@ class EditarCuenta(View):
 
                 ##Falta envia el mail
                 ## PENDIENTEEEEE
-                # usuario_modificado.save()
+                usuario_modificado.save()
                 response['Result'] = 'success'
-                response['msj'] = ''
+                response['mensaje'] = 'El usuario ha sido modificado correctamente, se le envio información a su correo electronico.'
                 return HttpResponse(json.dumps(response), content_type = "application/json")
         else:
             response['Result'] = 'error'

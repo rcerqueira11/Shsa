@@ -15,40 +15,44 @@
 	<section class="recuperar_contrasena-form jumbotron">
 		<center><h2>Recuperar Contraseña</h2></center>
 
-		<ul class="nav nav-tabs">
+		<!-- <ul class="nav nav-tabs">
 		  <li class="active"><a href="#password">Contraseña</a></li>
 		  <li><a href="#password_user">Usuario y Contraseña</a></li>
-		</ul>
+		</ul> -->
+			
+			
+
 
 		<div id="password">
-			<form method="post" action="{% url 'restaurar_cuenta' %}">
+			<form id="id_post_recuperar_cuenta" method="post" action="{% url 'restaurar_cuenta' %}">
 			{%csrf_token%}
 				<div class="row">
 					<div class="col-xs-6">
+						<label>Correo</label>
 						<input type="email" name="email" placeholder="email" class="form-control input-lg" required/>
 					</div>
 					<div class="col-xs-6">
-						<input type="text" name="cedula" placeholder="cedula" class="form-control input-lg" id="cedula" required/>
+						<label>C&eacute;dula</label>	
+						<input type="text" name="cedula" placeholder="cedula" class="form-control input-lg ci-mask" id="cedula" required/>
 					</div>
 				</div>
-				<button type="submit" name="submit" class="btn btn-lg btn-danger btn-block letter" >Recuperar Contraseña</button>
+
+				<div class="row">
+					<div class="col-xs-6">
+						<!-- <button type="button" onclick="validar_campos()" name="submit"  ></button> -->
+						<a type="button "href="{% url "login" %}" class="btn  btn-warning btn-block letter">Cancelar</a>
+					</div>	
+					<div class="col-xs-6">
+						<button type="button" onclick="recuperar_cuenta()"  name="submit" class="btn btn-danger btn-block letter" >Recuperar Contraseña</button>
+					</div>	
+
+				
+				</div>
+				
 			</form>
 		</div>
 
-		<div id="password_user">
-			<form method="post" action="{% url 'restaurar_cuenta' %}">
-			{%csrf_token%}
-				<div class="row">
-					<div class="col-xs-6">
-						<input type="email" name="email" placeholder="email" class="form-control input-lg" required/>
-					</div>
-					<div class="col-xs-6">
-						<input type="text" name="cedula" placeholder="cedula" class="form-control input-lg" id="cedula" required/>
-					</div>
-				</div>
-				<button type="submit" name="submit" class="btn btn-lg btn-danger btn-block letter" >Recuperar Usuario y Contraseña</button>
-			</form>
-		</div>
+		
 	</section>
 </div>
 
@@ -66,5 +70,5 @@
 {% endblock %}
 
 {% block extra_script %}
-<script src="{{STATIC_URL}}js/registro/login.js"></script>
+<script src="{{STATIC_URL}}js/registro/recuperar_cuenta.js"></script>
 {% endblock extra_script %}

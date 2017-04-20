@@ -143,3 +143,13 @@ STATICFILES_DIRS = ( os.path.join(BASE_DIR, "static"), )
 # STATIC_ROOT = os.path.join(BASE_DIR, './static')
 WKHTMLTOPDF_CMD = '/usr/bin/wkhtmltopdf'
 WKHTMLTOPDF_ENV = {'FONTCONFIG_PATH': '/etc/fonts'}
+
+#Email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+ENABLE_EMAIL = True
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'tesis.shsa@gmail.com'
+EMAIL_HOST_PASSWORD = '!123123123'
+DEFAULT_FROM_EMAIL = 'tesis.shsa@gmail.com'
