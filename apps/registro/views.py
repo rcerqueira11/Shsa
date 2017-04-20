@@ -273,6 +273,17 @@ class RegistroUsuario(View):
                 usuario_nuevo.fk_tipo_usuario = TipoUsuario.objects.get(codigo = data['tipo_usuario'])
 
                 ##Falta envia el mail
+
+                correoTemplate = get_template('correo/usuario_registrado.html')
+                context_email = Context({
+                        'usuario': usuario,
+                        'clave': data['password'],
+                    })
+                contenidoHtmlCorreo = correoTemplate.render(context_email)
+
+                email_enviado = enviar_correo(asunto="Registro de Usuario",contenido=contenidoHtmlCorreo, correo=[email] ,custom_filename='seguros_horizontes_logo.png')
+
+
                 usuario_nuevo.save()
                 response['Result'] = 'success'
                 response['msj'] = ''
@@ -486,6 +497,18 @@ class EditarCuenta(View):
 
                 ##Falta envia el mail
                 ## PENDIENTEEEEE
+
+
+                correoTemplate = get_template('correo/usuario_modificado.html')
+                context_email = Context({
+                        'usuario': usuario,
+                        'clave': data['password'],
+                    })
+                contenidoHtmlCorreo = correoTemplate.render(context_email)
+
+                email_enviado = enviar_correo(asunto="Actualización de datos de usuario",contenido=contenidoHtmlCorreo, correo=[usuario_modificado.correo_electronico] ,custom_filename='seguros_horizontes_logo.png')
+
+
                 usuario_modificado.save()
                 response['Result'] = 'success'
                 response['mensaje'] = 'El usuario ha sido modificado correctamente, se le envio información a su correo electronico.'
