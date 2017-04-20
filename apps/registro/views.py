@@ -305,12 +305,11 @@ class RestaurarCuenta(View):
         correo =  data['email']
         cedula = data['cedula']
 
+
         if Usuario.objects.filter(correo_electronico = correo, cedula=cedula).exists():
             usuario = Usuario.objects.get(correo_electronico = correo, cedula=cedula)
             clave_nueva = create_new_password()
-            usuario.set_password(hashers.make_password(clave_nueva))
-            print clave_nueva
-
+            usuario.set_password(clave_nueva)
         
             correoTemplate = get_template('correo/usuario_recuperar_clave.html')
             context_email = Context({
@@ -320,7 +319,6 @@ class RestaurarCuenta(View):
             contenidoHtmlCorreo = correoTemplate.render(context_email)
 
             email_enviado = enviar_correo(asunto="Recuperar Cuenta",contenido=contenidoHtmlCorreo, correo=[correo] ,custom_filename='seguros_horizontes_logo.png')
-            # import pudb; pu.db
 
             if not email_enviado:
                 respuesta['Result'] = 'error'
@@ -328,7 +326,7 @@ class RestaurarCuenta(View):
                 respuesta['mensaje'] = 'El correo no pudo ser enviado, favor intentar mas tarde.'
                 return HttpResponse(json.dumps(respuesta), content_type = "application/json")
             
-            # usuario.save()
+            usuario.save()
             respuesta = {}
             respuesta['Result'] = 'success'
             return HttpResponse(json.dumps(respuesta), content_type = "application/json")
@@ -494,7 +492,7 @@ class EditarCuenta(View):
                 return HttpResponse(json.dumps(response), content_type = "application/json")
         else:
             response['Result'] = 'error'
-            response['msj'] = ''
+            response['mensaje'] = ''
             return HttpResponse(json.dumps(response), content_type = "application/json")
 
 

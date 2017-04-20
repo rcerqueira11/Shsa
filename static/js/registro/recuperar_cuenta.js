@@ -7,18 +7,28 @@ function recuperar_cuenta(){
 	dataForm = $("#id_post_recuperar_cuenta").serializeArray();
 	$.ajax({
 	        type: 'POST' ,
-	        url: 'registro/recuperar_cuenta' , // <= Providing the URL
+	        url: '/registro/restaurar_cuenta' , // <= Providing the URL
 	        data: dataForm , // <= Providing the form data, serialized above
 	        success: function(results){
 	         if(results.Result == 'success'){
+	         	titulo = 'RECUPERAR CONTRASEÑA'
+                subtitulo = 'Recuperación de contraseña realizada exitosamente'
+                mensaje = "La información de usuario y contraseña fue enviada a su correo."
+                show_modal_exito(titulo,subtitulo,mensaje)
 					
-						
+
 	            }
+	        else {
 	            if(results.Result == 'error'){
-	                if(results.codigo_error == "SESSION_EXPIRE")
-	                        $('#expireModal').modal('show');
-	                else{
-	                    console.log('error');
+                	console.log("results.mensaje");
+                	console.log(results.mensaje);
+	                if(results.ERROR_CODE == "NO_MAIL_SEND")
+	                    show_modal_errores_personalizado(results.mensaje)
+	                    
+	                }
+
+	                if(results.ERROR_CODE == "DATOS_INVALIDOS"){
+	                   	show_modal_errores_personalizado(results.mensaje)
 	                    
 	                }
 	            }
