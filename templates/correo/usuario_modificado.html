@@ -1,0 +1,27 @@
+<html>
+	<head><title>Modificaci&oacute;n de Informaci&oacute;n de Usuario</title></head>
+	<body>
+		<article>
+			<header>
+				<table style="width:100%; text-align:center;">
+					<tr>
+					    <td><img src="cid:seguros_horizontes_logo.png" alt="..."style="width:100%";></td>
+					</tr>
+				</table> 
+			</header>
+			<br>
+			<p><b>Se&ntilde;or(a)</b></p>
+			<p>{{usuario.nombre}} {{usuario.apellido}}</p>
+			<br>
+			<p>El Sistema de inscripci&oacute;n de veh&iacute;culos (SHSA), cumple con informarle que su registro ha sido modificado con &eacute;xito y su informaci&oacute;n de acceso es:</p>
+			<p>Usuario: <strong>{{ usuario.username }}</strong></p>
+			{% if cambio_clave %}
+				<p>Y su nueva clave de acceso es:</p>
+				<p>Clave: <strong>{{ clave }}</strong></p>
+			{% endif %}
+			<br>
+			<p style="font-style: italic; font-weight: bold; font-size: 11px;"><center><strong>Recuerde tambi&eacute;n mantener actualizada la direcci&oacute;n de correo, ya que <u>es la &uacute;nica v&iacute;a para tenerle informado.</u></strong></center></p>
+			<br>
+		</article>
+	</body>
+</html>

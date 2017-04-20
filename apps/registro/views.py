@@ -276,7 +276,7 @@ class RegistroUsuario(View):
 
                 correoTemplate = get_template('correo/usuario_registrado.html')
                 context_email = Context({
-                        'usuario': usuario,
+                        'usuario': usuario_nuevo,
                         'clave': data['password'],
                     })
                 contenidoHtmlCorreo = correoTemplate.render(context_email)
@@ -285,6 +285,7 @@ class RegistroUsuario(View):
 
 
                 usuario_nuevo.save()
+                login(request,usuario_nuevo)
                 response['Result'] = 'success'
                 response['msj'] = ''
                 return HttpResponse(json.dumps(response), content_type = "application/json")
@@ -495,13 +496,11 @@ class EditarCuenta(View):
                 if cambiando_password:
                     usuario_modificado.password = hashers.make_password(data['password'])
 
-                ##Falta envia el mail
-                ## PENDIENTEEEEE
-
-
+          
                 correoTemplate = get_template('correo/usuario_modificado.html')
                 context_email = Context({
-                        'usuario': usuario,
+                        'usuario': usuario_modificado,
+                        'cambio_clave' : cambiando_password,
                         'clave': data['password'],
                     })
                 contenidoHtmlCorreo = correoTemplate.render(context_email)
@@ -510,6 +509,7 @@ class EditarCuenta(View):
 
 
                 usuario_modificado.save()
+                login(request, usuario_modificado) 
                 response['Result'] = 'success'
                 response['mensaje'] = 'El usuario ha sido modificado correctamente, se le envio información a su correo electronico.'
                 return HttpResponse(json.dumps(response), content_type = "application/json")
