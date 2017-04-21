@@ -96,5 +96,4 @@ class Dashboard(View):
 			'nombre': nombre,
 			'username': username,
 		}
-		# import pudb; pu.db
 		return render(request, 'rcs/dashboard.html',context)

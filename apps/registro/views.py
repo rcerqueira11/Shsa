@@ -123,11 +123,6 @@ class Login(View):
     """
 
     def dispatch(self, request, *args, **kwargs):
-        # import pudb; pu.db
-        # if request.user.username == '' or request.user.is_authenticated() == False:
-        #     return redirect(reverse_lazy('logout'))
-        # else:
-        # import pudb; pu.db
         if request.user.is_authenticated():
             return redirect(reverse_lazy('dashboard'))
     	return super(Login, self).dispatch(request, *args, **kwargs)
@@ -139,7 +134,7 @@ class Login(View):
     	return render(request, 'index.html')
 
     def post(self,request,*args,**kwargs):
-        # import pudb; pu.db
+        
         username = request.POST['usuario']
         password = request.POST['password']
         user  = authenticate(username=username,password=password)
@@ -157,12 +152,12 @@ class Login(View):
             else:
                 return redirect(reverse_lazy('login'))
 
-        else :
-            mensaje_error= 'ocurrio un error'
+        else:
+            mensaje_error= 'El usuario o contraseña es invalido.'
             errors = {
                 'mensaje_error': mensaje_error,
             }
-            return render(request, 'index.html')
+            return render(request, 'index.html', errors)
 
         # return redirect(reverse_lazy(''))
 
@@ -223,7 +218,7 @@ class RegistroUsuario(View):
 
 
         data = request.POST
-        # import pudb; pu.db
+        
         response = {}
 
         if Usuario.objects.filter(username = data['username']).exists():
@@ -271,8 +266,6 @@ class RegistroUsuario(View):
                 usuario_nuevo.password = hashers.make_password(data['password'])
                 # usuario_nuevo.fk_tipo_usuario = TipoUsuario.objects.get(codigo = data['tipo_usuario'])
                 usuario_nuevo.fk_tipo_usuario = TipoUsuario.objects.get(codigo = data['tipo_usuario'])
-
-                ##Falta envia el mail
 
                 correoTemplate = get_template('correo/usuario_registrado.html')
                 context_email = Context({
@@ -435,7 +428,6 @@ class EditarCuenta(View):
         return super(EditarCuenta, self).dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        # import pudb; pu.db
 
         context = {
             'username': request.user.username,

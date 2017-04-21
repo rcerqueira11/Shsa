@@ -29,6 +29,9 @@
 
 		<input type="text" name="usuario" placeholder="usuario" id="id_usuario_login" class="form-control input-lg" required/>
 		<input type="password" name="password" placeholder="contraseña" class="form-control input-lg" id="id_password_login" required/>
+		<div class="error" align="right" id="id_error_login" >
+			{{mensaje_error |default:""}}
+        </div>
 
 		<button type="submit" name="submit" class="btn btn-lg btn-primary btn-block letter" >Iniciar sesión</button>
 		 
