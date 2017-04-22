@@ -1,7 +1,18 @@
 from django.db import models
 from apps.registro.models import *
 from decimal import *
+from datetime import datetime
+from datetime import date
 # Create your models here.
+
+
+class EstadoSolicitud(models.Model):
+	nombre = models.CharField(max_length=255)
+	descripcion = models.TextField(blank=True)
+	codigo = models.CharField(max_length=255,unique=True)
+
+	def __unicode__(self):
+		return self.descripcion
 
 
 ## Estado B R M
@@ -75,9 +86,9 @@ class DocumentosPresentados(models.Model):
 		return self.nombre
 
 class TitularVehiculo(models.Model):
-	nombre = models.CharField(max_length=255, null=False)
-	apellido = models.CharField(max_length=255, null=False)
-	cedula = models.CharField(max_length=255, null=False, unique=True)
+	nombre = models.CharField(max_length=255)
+	apellido = models.CharField(max_length=255)
+	cedula = models.CharField(max_length=255, , unique=True)
 	telefono = models.CharField(max_length=255, blank=True)
 	
 	def __unicode__(self):
@@ -85,9 +96,9 @@ class TitularVehiculo(models.Model):
 
 
 class TrajoVehiculo(models.Model):
-	nombre = models.CharField(max_length=255, null=False)
-	apellido = models.CharField(max_length=255, null=False)
-	cedula = models.CharField(max_length=255, null=False, unique=True)
+	nombre = models.CharField(max_length=255)
+	apellido = models.CharField(max_length=255)
+	cedula = models.CharField(max_length=255, , unique=True)
 	parentesco = models.CharField(max_length=255, blank=True)
 	
 	def __unicode__(self):
@@ -97,22 +108,46 @@ class TrajoVehiculo(models.Model):
 
 
 class Vehiculo(models.Model):
-	placa = models.CharField(max_length=255, unique=True, null=False)
+	placa = models.CharField(max_length=255, unique=True)
 	fk_titular_vehiculo = models.ForeignKey(TitularVehiculo)
-	fk_trajo_vehiculo = models.ForeignKey(TrajoVehiculo, blank=True)
-	cilindros = models.CharField(max_length=255, null=False)
-	color = models.CharField(max_length=255, null=False)
-	kilometraje = models.CharField(max_length=255, null=False)
-	serial_carroceria = models.CharField(max_length=255, null=False)
-	serial_motor = models.CharField(max_length=255, null=False)
-	modelo = models.CharField(max_length=255, null=False)
-	marca = models.CharField(max_length=255, null=False)
+	fk_trajo_vehiculo = models.ForeignKey(TrajoVehiculo, blank=True, null=True)
+	cap_puestos = models.IntegerField()
+	cilindros = models.CharField(max_length=255)
+	peso = models.DecimalField(max_digits=21, decimal_places=2)
+	color = models.CharField(max_length=255)
+	kilometraje = models.CharField(max_length=255)
+	serial_carroceria = models.CharField(max_length=255)
+	serial_motor = models.CharField(max_length=255)
+	valor_estimado = models.DecimalField(max_digits=21, decimal_places=2)
+	modelo = models.CharField(max_length=255)
+	marca = models.CharField(max_length=255)
 	fk_inspector = models.ForeignKey(Usuario)
-
-
+	fk_tipo_vehiculo = models.ForeignKey(TipoVehiculo)
+	anho = models.IntegerField()
+	condiciones_generales_vehiculo = models.ManyToManyField(CondicionesGeneralesVehiculo)
+	mecanica_vehiculo = models.ManyToManyField(MecanicaVehiculo)
+	accesorios_vehiculo = models.ManyToManyField(AccesoriosVehiculo)
+	detalles_datos = models.ManyToManyField(DetallesDatos)
+	documentos_presentados = models.ManyToManyField(DocumentosPresentados)
 
 	def __unicode__(self):
 		return self.placa + "" + self.fk_titular_vehiculo.cedula
+
+
+class SolicitudInspeccion(models.Model):
+	fk_vehiculo = models.ForeignKey(Vehiculo, unique=True)
+	fk_titular_vehiculo = models.ForeignKey(TitularVehiculo)
+	fk_inspector = models.ForeignKey(Usuario)
+	siendo_verificada = models.IntegerField() #numero id del inspector verificando la solicitud
+	editable = models.BooleanField(default=False)
+	fecha_creacion = models.DateTimeField(['%d/%m/%Y'], blank=True, null=True, auto_now=True)
+	fk_estado_solicitud = models.ForeignKey(EstadoSolicitud)
+
+	# fecha_creacion = models.DateTimeField(['%d/%m/%Y'], blank=True, null=True, auto_now=True)
+
+	def __unicode__(self):
+		return self.placa + "" + self.fk_titular_vehiculo.cedula
+
 
 
 
