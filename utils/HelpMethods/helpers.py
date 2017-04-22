@@ -36,3 +36,22 @@ def elimina_tildes(s):
 
     nkfd_form = unicodedata.normalize('NFKD', unicode(s))
     return u"".join([c for c in nkfd_form if not unicodedata.combining(c)])
+
+
+def get_file_path_documentos_presentados(instance, filename):
+    return path.join(
+        gen_path_str_from_key_str(
+            str(instance.cedula_titular)
+        ),
+        str(instance.placa),'documentos_presentados_inspeccion',
+        normalize_filename(filename.lower())
+    )
+
+def get_file_path_solicitud(instance, filename):
+    return path.join(
+        gen_path_str_from_key_str(
+            str(instance.cedula_titular)
+        ),
+        str(instance.placa),
+        normalize_filename(filename.lower())
+    )

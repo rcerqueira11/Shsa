@@ -3,6 +3,10 @@ from apps.registro.models import *
 from decimal import *
 from datetime import datetime
 from datetime import date
+from utils.validate_files import ContentTypeRestrictedFileField
+from utils.HelpMethods.helpers import *
+
+TAMANO_MAXIMO_ARCHIVO = 10485760  # 10 megas
 # Create your models here.
 
 
@@ -88,7 +92,7 @@ class DocumentosPresentados(models.Model):
 class TitularVehiculo(models.Model):
 	nombre = models.CharField(max_length=255)
 	apellido = models.CharField(max_length=255)
-	cedula = models.CharField(max_length=255, , unique=True)
+	cedula = models.CharField(max_length=255, unique=True)
 	telefono = models.CharField(max_length=255, blank=True)
 	
 	def __unicode__(self):
@@ -98,7 +102,7 @@ class TitularVehiculo(models.Model):
 class TrajoVehiculo(models.Model):
 	nombre = models.CharField(max_length=255)
 	apellido = models.CharField(max_length=255)
-	cedula = models.CharField(max_length=255, , unique=True)
+	cedula = models.CharField(max_length=255, unique=True)
 	parentesco = models.CharField(max_length=255, blank=True)
 	
 	def __unicode__(self):
@@ -142,6 +146,14 @@ class SolicitudInspeccion(models.Model):
 	editable = models.BooleanField(default=False)
 	fecha_creacion = models.DateTimeField(['%d/%m/%Y'], blank=True, null=True, auto_now=True)
 	fk_estado_solicitud = models.ForeignKey(EstadoSolicitud)
+	ruta=ContentTypeRestrictedFileField(
+        upload_to=get_file_path_solicitud,
+        max_length=500,
+        content_types='application/pdf',
+        blank=True,
+        max_upload_size=TAMANO_MAXIMO_ARCHIVO,
+        null=True,
+    )
 
 	# fecha_creacion = models.DateTimeField(['%d/%m/%Y'], blank=True, null=True, auto_now=True)
 
