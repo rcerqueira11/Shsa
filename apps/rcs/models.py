@@ -39,8 +39,8 @@ class TipoVehiculo(models.Model):
 ##23-55
 class CondicionesGeneralesVehiculo(models.Model):
 	parte = models.CharField(max_length=255)
-	fk_estado_vehiculo = models.ForeignKey(EstadoVehiculo, blank=True)
-	comentario = models.TextField(blank=True)
+	fk_estado_vehiculo = models.ForeignKey(EstadoVehiculo, blank=True, null=True)
+	comentario = models.TextField(blank=True,null=True)
 	codigo = models.CharField(max_length=255,unique=True)
 
 	def __unicode__(self):
@@ -49,8 +49,8 @@ class CondicionesGeneralesVehiculo(models.Model):
 ##56-61 3 otros
 class MecanicaVehiculo(models.Model):
 	parte = models.CharField(max_length=255)
-	fk_estado_vehiculo = models.ForeignKey(EstadoVehiculo, blank=True)
-	comentario = models.TextField(blank=True)
+	fk_estado_vehiculo = models.ForeignKey(EstadoVehiculo, blank=True, null=True)
+	comentario = models.TextField(blank=True, null=True)
 	codigo = models.CharField(max_length=255,unique=True)
 	# otro = models.CharField(max_length=255, blank=True)
 	def __unicode__(self):
@@ -60,7 +60,7 @@ class MecanicaVehiculo(models.Model):
 class AccesoriosVehiculo(models.Model):
 	accesorio = models.CharField(max_length=255)
 	existe = models.BooleanField(default=True)
-	comentario = models.TextField(blank=True)
+	comentario = models.TextField(blank=True, null=True)
 	codigo = models.CharField(max_length=255,unique=True)
 	# otro = models.CharField(max_length=255, blank=True)
 	def __unicode__(self):
@@ -139,7 +139,7 @@ class Vehiculo(models.Model):
 
 
 class SolicitudInspeccion(models.Model):
-	fk_vehiculo = models.ForeignKey(Vehiculo, unique=True)
+	fk_vehiculo = models.OneToOneField(Vehiculo)
 	fk_titular_vehiculo = models.ForeignKey(TitularVehiculo)
 	fk_inspector = models.ForeignKey(Usuario)
 	siendo_verificada = models.IntegerField() #numero id del inspector verificando la solicitud

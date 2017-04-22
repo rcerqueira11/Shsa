@@ -22,3 +22,7 @@ python manage.py migrate
 echo "Cargando Fixtures de Registro"
 
 python manage.py loaddata apps/registro/fixtures/0*
+python manage.py loaddata apps/rcs/fixtures/0*
+
+
+python manage.py loaddata helps/registro.json
