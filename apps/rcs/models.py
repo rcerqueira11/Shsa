@@ -153,7 +153,7 @@ class SolicitudInspeccion(models.Model):
 	siendo_verificada = models.IntegerField() #numero id del inspector verificando la solicitud
 	editable = models.BooleanField(default=False)
 	fecha_creacion = models.DateTimeField(['%d/%m/%Y'], blank=True, null=True, auto_now=True)
-	fk_estado_solicitud = models.ForeignKey(EstadoSolicitud)
+	fk_estado_solicitud = models.ForeignKey(EstadoSolicitud, default=1)
 	fk_motivo_solicitud = models.ForeignKey(MotivoSolicitud)
 	observaciones = models.TextField(blank=True,null=True)
 	ruta=ContentTypeRestrictedFileField(
