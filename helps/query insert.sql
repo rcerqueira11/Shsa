@@ -234,3 +234,75 @@ INSERT INTO rcs_mecanicavehiculo(parte,codigo)
 VALUES ('60. Otros', 'OTRO2_MV');
 INSERT INTO rcs_mecanicavehiculo(parte,codigo)
 VALUES ('61. Otros', 'OTRO3_MV');
+
+
+
+documentospresentados
+
+INSERT INTO rcs_documentospresentados(nombre, recibido, codigo)
+VALUES ('95. Registro Automotor Permanente (R.P.A)','FALSE','RAP');
+INSERT INTO rcs_documentospresentados(nombre, recibido, codigo)
+VALUES ('96. Carnet De Circulacion','FALSE','CAR_CIRC');
+INSERT INTO rcs_documentospresentados(nombre, recibido, codigo)
+VALUES ('97. Documento De Propiedad (Original/Copia)','FALSE','DOC_PRO');
+INSERT INTO rcs_documentospresentados(nombre, recibido, codigo)
+VALUES ('98. Facutura De Compra','FALSE','FACT_COMP');
+INSERT INTO rcs_documentospresentados(nombre, recibido, codigo)
+VALUES ('99. Planilla Del Senial De Exoneracion De Impuestos','FALSE','PLA_SEN_EX');
+INSERT INTO rcs_documentospresentados(nombre, recibido, codigo)
+VALUES ('100. Certificado De Origen','FALSE','CERT_ORI');
+
+
+
+detallesdatos
+INSERT INTO rcs_detallesdatos(pieza, codigo)
+VALUES ('92. Pieza','PIEZA');
+INSERT INTO rcs_detallesdatos(pieza, codigo)
+VALUES ('93. Tipo de Daño','TIP_DAM');
+INSERT INTO rcs_detallesdatos(pieza, codigo)
+VALUES ('94. Costo Aprox.','COST_APRX');
+
+
+Cobertura Amplia
+Perdida Total
+Inclusion del Casco
+Reparacion
+Aumento de la suma asegurada
+Plazo de gracia vencido
+Inclusion de accesorios
+Cambio de vehiculo
+
+motivosolicitud
+INSERT INTO rcs_motivosolicitud(motivo, codigo)
+VALUES ('Cobertura Amplia','COB_AMP');
+
+INSERT INTO rcs_motivosolicitud(motivo, codigo)
+VALUES ('Perdida Total','PERD_TOT');
+
+INSERT INTO rcs_motivosolicitud(motivo, codigo)
+VALUES ('Inclusion del Casco','INCL_CAS');
+
+INSERT INTO rcs_motivosolicitud(motivo, codigo)
+VALUES ('Reparacion','REP');
+
+INSERT INTO rcs_motivosolicitud(motivo, codigo)
+VALUES ('Aumento de la suma asegurada','AUM_SUM_ASEG');
+
+INSERT INTO rcs_motivosolicitud(motivo, codigo)
+VALUES ('Plazo de gracia vencido','PLA_GRA_VENC');
+
+INSERT INTO rcs_motivosolicitud(motivo, codigo)
+VALUES ('Inclusion de accesorios','INCL_ACCS');
+
+INSERT INTO rcs_motivosolicitud(motivo, codigo)
+VALUES ('Cambio de vehiculo','CAMB_VEHI');
+
+
+estadosolicitud
+
+INSERT INTO rcs_estadosolicitud(nombre, descripcion, codigo)
+VALUES ('Abierta','Solicitud en estado abierta, pendiente por inspeccionar el vehiculo','PEND_INSP',);
+INSERT INTO rcs_estadosolicitud(nombre, descripcion, codigo)
+VALUES ('Por revisar','Solicitud luego de ser inspeccionado el vehiculo, pendiente por gestionar','PEND_GEST',);
+INSERT INTO rcs_estadosolicitud(nombre, descripcion, codigo)
+VALUES ('Cerrada','Solicitud en estado abierta, pendiente por inspeccionar el vehiculo','CERRADA',);

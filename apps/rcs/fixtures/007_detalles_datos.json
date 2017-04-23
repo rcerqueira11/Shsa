@@ -1,0 +1,32 @@
+[
+  {
+    "model": "rcs.detallesdatos",
+    "pk": 1,
+    "fields": {
+      "pieza": "92. Pieza",
+      "tipo_dano": null,
+      "costo_aproximado": null,
+      "codigo": "PIEZA"
+    }
+  },
+  {
+    "model": "rcs.detallesdatos",
+    "pk": 2,
+    "fields": {
+      "pieza": "93. Tipo de Daño",
+      "tipo_dano": null,
+      "costo_aproximado": null,
+      "codigo": "TIP_DAM"
+    }
+  },
+  {
+    "model": "rcs.detallesdatos",
+    "pk": 3,
+    "fields": {
+      "pieza": "94. Costo Aprox.",
+      "tipo_dano": null,
+      "costo_aproximado": null,
+      "codigo": "COST_APRX"
+    }
+  }
+]

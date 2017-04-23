@@ -1,0 +1,29 @@
+[
+  {
+    "model": "rcs.estadosolicitud",
+    "pk": 1,
+    "fields": {
+      "nombre": "Abierta",
+      "descripcion": "Solicitud en estado abierta, pendiente por inspeccionar el vehiculo",
+      "codigo": "PEND_INSP"
+    }
+  },
+  {
+    "model": "rcs.estadosolicitud",
+    "pk": 2,
+    "fields": {
+      "nombre": "Por revisar",
+      "descripcion": "Solicitud luego de ser inspeccionado el vehiculo, pendiente por gestionar",
+      "codigo": "PEND_GEST"
+    }
+  },
+  {
+    "model": "rcs.estadosolicitud",
+    "pk": 3,
+    "fields": {
+      "nombre": "Cerrada",
+      "descripcion": "Solicitud en estado cerrada, luego de haber sido gestionada la solicitud",
+      "codigo": "CERRADA"
+    }
+  }
+]

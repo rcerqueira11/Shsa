@@ -29,24 +29,6 @@ from os import path
 
 # Create your views here.
 
-def get_file_path_documentos_presentados(instance, filename):
-    return path.join(
-        gen_path_str_from_key_str(
-            str(instance.cedula_titular)
-        ),
-        str(instance.placa),'documentos_presentados_inspeccion',
-        normalize_filename(filename.lower())
-    )
-
-def get_file_path_solicitud(instance, filename):
-    return path.join(
-        gen_path_str_from_key_str(
-            str(instance.cedula_titular)
-        ),
-        str(instance.placa),
-        normalize_filename(filename.lower())
-    )
-
 class VerPlanillaSeguroCarro(View):
 
 	def dispatch(self, request, *args, **kwargs):

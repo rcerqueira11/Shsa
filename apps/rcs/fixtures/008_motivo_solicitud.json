@@ -1,0 +1,66 @@
+[
+  {
+    "model": "rcs.motivosolicitud",
+    "pk": 1,
+    "fields": {
+      "motivo": "Cobertura Amplia",
+      "codigo": "COB_AMP"
+    }
+  },
+  {
+    "model": "rcs.motivosolicitud",
+    "pk": 2,
+    "fields": {
+      "motivo": "Perdida Total",
+      "codigo": "PERD_TOT"
+    }
+  },
+  {
+    "model": "rcs.motivosolicitud",
+    "pk": 3,
+    "fields": {
+      "motivo": "Inclusion del Casco",
+      "codigo": "INCL_CAS"
+    }
+  },
+  {
+    "model": "rcs.motivosolicitud",
+    "pk": 4,
+    "fields": {
+      "motivo": "Reparacion",
+      "codigo": "REP"
+    }
+  },
+  {
+    "model": "rcs.motivosolicitud",
+    "pk": 5,
+    "fields": {
+      "motivo": "Aumento de la suma asegurada",
+      "codigo": "AUM_SUM_ASEG"
+    }
+  },
+  {
+    "model": "rcs.motivosolicitud",
+    "pk": 6,
+    "fields": {
+      "motivo": "Plazo de gracia vencido",
+      "codigo": "PLA_GRA_VENC"
+    }
+  },
+  {
+    "model": "rcs.motivosolicitud",
+    "pk": 7,
+    "fields": {
+      "motivo": "Inclusion de accesorios",
+      "codigo": "INCL_ACCS"
+    }
+  },
+  {
+    "model": "rcs.motivosolicitud",
+    "pk": 8,
+    "fields": {
+      "motivo": "Cambio de vehiculo",
+      "codigo": "CAMB_VEHI"
+    }
+  }
+]

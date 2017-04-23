@@ -69,9 +69,9 @@ class AccesoriosVehiculo(models.Model):
 ## 92
 class DetallesDatos(models.Model):
 	pieza = models.CharField(max_length=255)
-	tipo_dano = models.BooleanField(default=True)
-	costo_aproximado = models.DecimalField(max_digits=21, decimal_places=2)
-	# codigo = models.CharField(max_length=255,unique=True)
+	tipo_dano = models.CharField(max_length=255, null=True)
+	costo_aproximado = models.DecimalField(max_digits=21, decimal_places=2, null=True)
+	codigo = models.CharField(max_length=255,unique=True)
 	# otro = models.CharField(max_length=255, blank=True)
 	def __unicode__(self):
 		return self.pieza
@@ -138,6 +138,14 @@ class Vehiculo(models.Model):
 		return self.placa + "" + self.fk_titular_vehiculo.cedula
 
 
+class MotivoSolicitud(models.Model):
+	motivo = models.CharField(max_length=255)
+	codigo = models.CharField(max_length=255, unique=True )
+
+	def __unicode__(self):
+		return self.motivo + "" + self.codigo
+
+
 class SolicitudInspeccion(models.Model):
 	fk_vehiculo = models.OneToOneField(Vehiculo)
 	fk_titular_vehiculo = models.ForeignKey(TitularVehiculo)
@@ -146,6 +154,8 @@ class SolicitudInspeccion(models.Model):
 	editable = models.BooleanField(default=False)
 	fecha_creacion = models.DateTimeField(['%d/%m/%Y'], blank=True, null=True, auto_now=True)
 	fk_estado_solicitud = models.ForeignKey(EstadoSolicitud)
+	fk_motivo_solicitud = models.ForeignKey(MotivoSolicitud)
+	observaciones = models.TextField(blank=True,null=True)
 	ruta=ContentTypeRestrictedFileField(
         upload_to=get_file_path_solicitud,
         max_length=500,
