@@ -1,1 +1,29 @@
-[{"model": "rcs.estadovehiculo", "pk": 1, "fields": {"nombre": "BUENO", "descripcion": "El vehiculo esta en buen estado ", "codigo": "B"}}, {"model": "rcs.estadovehiculo", "pk": 2, "fields": {"nombre": "REGULAR", "descripcion": "El vehiculo esta en estado regular", "codigo": "R"}}, {"model": "rcs.estadovehiculo", "pk": 3, "fields": {"nombre": "MALO", "descripcion": "El vehiculo esta en mal estado ", "codigo": "M"}}]
+[
+  {
+    "model": "rcs.estadovehiculo",
+    "pk": 1,
+    "fields": {
+      "nombre": "BUENO",
+      "descripcion": "El vehiculo esta en buen estado ",
+      "codigo": "B"
+    }
+  },
+  {
+    "model": "rcs.estadovehiculo",
+    "pk": 2,
+    "fields": {
+      "nombre": "REGULAR",
+      "descripcion": "El vehiculo esta en estado regular",
+      "codigo": "R"
+    }
+  },
+  {
+    "model": "rcs.estadovehiculo",
+    "pk": 3,
+    "fields": {
+      "nombre": "MALO",
+      "descripcion": "El vehiculo esta en mal estado ",
+      "codigo": "M"
+    }
+  }
+]

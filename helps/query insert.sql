@@ -103,122 +103,134 @@ VALUES ('23. Latoneria', 'LAT');
 
 
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('24. Planilla O Rejilla Frontal', 'LAT');
+VALUES ('24. Planilla O Rejilla Frontal', 'PLA_REJ_FRO');
 
 
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('25. Techo ', 'LAT');
+VALUES ('25. Techo ', 'TECH');
 
 
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('26. Pintura', 'LAT');
+VALUES ('26. Pintura', 'PINT');
 
 
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('27. Sop O Focos Traseros', 'LAT');
+VALUES ('27. Sop O Focos Traseros', 'SOP_FOC_TRAS');
 
 
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('28. Compuesta Trasera', 'LAT');
+VALUES ('28. Compuesta Trasera', 'COMP_TRAS');
 
 
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('29. Tapiceria', 'LAT');
+VALUES ('29. Tapiceria', 'TAPI');
 
 
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('30. Cocuyos Frontales', 'LAT');
+VALUES ('30. Cocuyos Frontales', 'COC_FRON');
 
 
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('31. Parabrisas', 'LAT');
+VALUES ('31. Parabrisas', 'PARABR');
 
 
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('32. Cauchos', 'LAT');
+VALUES ('32. Cauchos', 'CAUCH');
 
 
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('33. Retrovisor Interno', 'LAT');
+VALUES ('33. Retrovisor Interno', 'RET_INT');
 
 
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('34. Parachoques', 'LAT');
+VALUES ('34. Parachoques', 'PAR_CHOQ');
 
 
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('35. Platinas ', 'LAT');
+VALUES ('35. Platinas ', 'PLAT');
 
 
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('36. Manillas Y Cerraduras', 'LAT');
+VALUES ('36. Manillas Y Cerraduras', 'MANI_CERR');
 
 
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('37. Cometa', 'LAT');
+VALUES ('37. Cometa', 'COMT');
 
 
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('38. Tableros ', 'LAT');
+VALUES ('38. Tableros ', 'TAB');
 
 
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('39. Lipia Parabrisas', 'LAT');
+VALUES ('39. Limpia Parabrisas', 'LIMP_PAR');
 
 
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('40. Butacas Y Asientos', 'LAT');
+VALUES ('40. Butacas Y Asientos', 'BUT_ASI');
 
 
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('41. Faros Y Sus Aros', 'LAT');
+VALUES ('41. Faros Y Sus Aros', 'FAR_ARO');
 
 
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('42. Retrovisores Externos ', 'LAT');
+VALUES ('42. Retrovisores Externos ', 'RET_EXT');
 
 
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('43. Volantes', 'LAT');
+VALUES ('43. Volantes', 'VOL');
 
 
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('44. Emblema De Modelo', 'LAT');
+VALUES ('44. Emblema De Modelo', 'EMB_MOD');
 
 
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('45. Guardafangos ', 'LAT');
+VALUES ('45. Guardafangos ', 'GURD_FANG');
 
 
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('46. Cinturones De Seguridad', 'LAT');
+VALUES ('46. Cinturones De Seguridad', 'CINT_SEG');
 
 
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('47. Estribos', 'LAT');
+VALUES ('47. Estribos', 'ESTR');
 
 
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('48. Puertas ', 'LAT');
+VALUES ('48. Puertas ', 'PUERT');
 
 
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('49. Ventanas', 'LAT');
+VALUES ('49. Ventanas', 'VENT');
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('50. Frontal', 'LAT');
+VALUES ('50. Frontal', 'FRONT');
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('51. Capot ', 'LAT');
+VALUES ('51. Capot ', 'CAPT');
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('52. Maleta Y Tapa Maleta', 'LAT');
+VALUES ('52. Maleta Y Tapa Maleta', 'MALE_TAPA_MALE');
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('53. Modific. Del Modelo', 'LAT');
+VALUES ('53. Modific. Del Modelo', 'MOD_MODELO');
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('54. Carter Trasero', 'LAT');
+VALUES ('54. Carter Trasero', 'CAR_TRAS');
 INSERT INTO rcs_condicionesgeneralesvehiculo(parte,codigo)
-VALUES ('55. Otro:', 'LAT');
+VALUES ('55. Otro:', 'OTRO');
 
 
 
 
+mecanicavehiculo
 
-
+INSERT INTO rcs_mecanicavehiculo(parte,codigo)
+VALUES ('56. Encenddo', 'ENC');
+INSERT INTO rcs_mecanicavehiculo(parte,codigo)
+VALUES ('57. Embraque O Crocht', 'EMB_CROCH');
+INSERT INTO rcs_mecanicavehiculo(parte,codigo)
+VALUES ('58. Sistema Electrico', 'SIS_ELEC');
+INSERT INTO rcs_mecanicavehiculo(parte,codigo)
+VALUES ('59. Otros', 'OTRO1_MV');
+INSERT INTO rcs_mecanicavehiculo(parte,codigo)
+VALUES ('60. Otros', 'OTRO2_MV');
+INSERT INTO rcs_mecanicavehiculo(parte,codigo)
+VALUES ('61. Otros', 'OTRO3_MV');

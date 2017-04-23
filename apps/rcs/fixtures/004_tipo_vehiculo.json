@@ -1,0 +1,26 @@
+[
+  {
+    "model": "rcs.tipovehiculo",
+    "pk": 1,
+    "fields": {
+      "nombre": "Sedan",
+      "codigo": "SED"
+    }
+  },
+  {
+    "model": "rcs.tipovehiculo",
+    "pk": 2,
+    "fields": {
+      "nombre": "Carga",
+      "codigo": "CARG"
+    }
+  },
+  {
+    "model": "rcs.tipovehiculo",
+    "pk": 3,
+    "fields": {
+      "nombre": "Coupe",
+      "codigo": "COUP"
+    }
+  }
+]

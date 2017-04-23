@@ -20,8 +20,9 @@ python manage.py makemigrations
 python manage.py migrate 
 
 echo "Cargando Fixtures de Registro"
-
 python manage.py loaddata apps/registro/fixtures/0*
+
+echo "Cargando Fixtures de Gestion de Solicitud"
 python manage.py loaddata apps/rcs/fixtures/0*
 
 

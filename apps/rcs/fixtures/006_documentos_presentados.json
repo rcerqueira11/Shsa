@@ -1,0 +1,56 @@
+[
+  {
+    "model": "rcs.documentospresentados",
+    "pk": 1,
+    "fields": {
+      "nombre": "95. Registro Automotor Permanente (R.P.A)",
+      "recibido": false,
+      "codigo": "RAP"
+    }
+  },
+  {
+    "model": "rcs.documentospresentados",
+    "pk": 2,
+    "fields": {
+      "nombre": "96. Carnet De Circulacion",
+      "recibido": false,
+      "codigo": "CAR_CIRC"
+    }
+  },
+  {
+    "model": "rcs.documentospresentados",
+    "pk": 3,
+    "fields": {
+      "nombre": "97. Documento De Propiedad (Original/Copia)",
+      "recibido": false,
+      "codigo": "DOC_PRO"
+    }
+  },
+  {
+    "model": "rcs.documentospresentados",
+    "pk": 4,
+    "fields": {
+      "nombre": "98. Facutura De Compra",
+      "recibido": false,
+      "codigo": "FACT_COMP"
+    }
+  },
+  {
+    "model": "rcs.documentospresentados",
+    "pk": 5,
+    "fields": {
+      "nombre": "99. Planilla Del Senial De Exoneracion De Impuestos",
+      "recibido": false,
+      "codigo": "PLA_SEN_EX"
+    }
+  },
+  {
+    "model": "rcs.documentospresentados",
+    "pk": 6,
+    "fields": {
+      "nombre": "100. Certificado De Origen",
+      "recibido": false,
+      "codigo": "CERT_ORI"
+    }
+  }
+]

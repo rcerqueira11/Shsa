@@ -1,0 +1,62 @@
+[
+  {
+    "model": "rcs.mecanicavehiculo",
+    "pk": 1,
+    "fields": {
+      "parte": "56. Encenddo",
+      "fk_estado_vehiculo": null,
+      "comentario": null,
+      "codigo": "ENC"
+    }
+  },
+  {
+    "model": "rcs.mecanicavehiculo",
+    "pk": 2,
+    "fields": {
+      "parte": "57. Embraque O Crocht",
+      "fk_estado_vehiculo": null,
+      "comentario": null,
+      "codigo": "EMB_CROCH"
+    }
+  },
+  {
+    "model": "rcs.mecanicavehiculo",
+    "pk": 3,
+    "fields": {
+      "parte": "58. Sistema Electrico",
+      "fk_estado_vehiculo": null,
+      "comentario": null,
+      "codigo": "SIS_ELEC"
+    }
+  },
+  {
+    "model": "rcs.mecanicavehiculo",
+    "pk": 4,
+    "fields": {
+      "parte": "59. Otros",
+      "fk_estado_vehiculo": null,
+      "comentario": null,
+      "codigo": "OTRO1_MV"
+    }
+  },
+  {
+    "model": "rcs.mecanicavehiculo",
+    "pk": 5,
+    "fields": {
+      "parte": "60. Otros",
+      "fk_estado_vehiculo": null,
+      "comentario": null,
+      "codigo": "OTRO2_MV"
+    }
+  },
+  {
+    "model": "rcs.mecanicavehiculo",
+    "pk": 6,
+    "fields": {
+      "parte": "61. Otros",
+      "fk_estado_vehiculo": null,
+      "comentario": null,
+      "codigo": "OTRO3_MV"
+    }
+  }
+]
