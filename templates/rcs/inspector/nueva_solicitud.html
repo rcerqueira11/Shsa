@@ -17,50 +17,73 @@
         <div class="title">Condiciones Generales del Veh&iacute;culo</div>
 	</section>
 </center>
+	
+	<div class="col-xs-6">
+		<table class="table table-bordered">
+			<thead>
+			{# style="width:14%" #}
+				<th style="width:33%"><center>PARTE</center></th>
+				<th style="width:33%"><center>ESTADO</center></th>
+				<th style="width:33%"><center>OBSERVACI&Oacute;N</center></th>
+			</thead>
+			<tbody>
+				{% for condicion in condiciones  %}
+					{% if forloop.counter0|divisibleby:2 %}
+						<tr>
+							<td><h4 >{{condicion.parte}}</h4></td>
+							<td>
+									{% for estado in estados_vehiculo %}
+									  <input type="radio" name="radio_{{condicion.codigo}}" value="{{estado.codigo}}" /> {{estado.nombre}} 
+									  <br>
+										
+									{% endfor %}
+								<div class="error" id="error_estado_{{condicion.codigo}}"></div>
+							</td>
+							<td>
+								<textarea rows="2" cols="17" name="observacion_{{condicion.codigo}}"></textarea>
+								<div class="error" id="error_observacion_{{condicion.codigo}}"></div>
+							</td>
+						</tr>
+					{% endif %}
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<div class="col-xs-6">
+		<table class="table table-bordered">
+			<thead>
+			{# style="width:24%" #}
+				<th style="width:33%"><center>PARTE</center></th>
+				<th style="width:33%"><center>ESTADO</center></th>
+				<th style="width:33%"><center>OBSERVACI&Oacute;N</center></th>
+			</thead>
+			<tbody>
+				{% for condicion in condiciones  %}
+					{% if not forloop.counter0|divisibleby:2 %}
+						<tr>
+							<td><h4 >{{condicion.parte}}</h4></td>
+							<td>
+									{% for estado in estados_vehiculo %}
+									  <input type="radio" name="radio_{{condicion.codigo}}" value="{{estado.codigo}}" /> {{estado.nombre}} 
+									  <br>
+										
+									{% endfor %}
+								<div class="error" id="error_estado_{{condicion.codigo}}"></div>
+							</td>
+							<td>
+								<textarea rows="2" cols="17" name="observacion_{{condicion.codigo}}"></textarea>
+								<div class="error" id="error_observacion_{{condicion.codigo}}"></div>
+							</td>
+						</tr>
+					{% endif %}
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	
+	
 
-
-	<table class="table table-bordered">
-		<thead>
-		{# style="width:14%" #}
-			<th style="width:33%"><center>PARTE</center></th>
-			<th style="width:33%"><center>ESTADO</center></th>
-			<th style="width:33%"><center>OBSERVACI&Oacute;N</center></th>
-		</thead>
-		<tbody>
-			{% for condicion in condiciones  %}
-			<tr>
-				<td><label >{{condicion.parte}}</label></td>
-				<td>
-					{# <div class="btn-group btn-group-justified" role="group_{{condicion.codigo}}" aria-label="..."> #}
-					<div class="row">
-						
-					{% for estado in estados_vehiculo %}
-					  {# <div class="btn-group" role="group_{{condicion.codigo}}"> #}
-					    {# <button type="button" class="btn btn-{{estado.clase}}" id="{{estado.codigo}}" name="{{estado.codigo}}">{{estado.nombre}}</button> #}
-					  {# </div> #}
-					  <div class="col-xs-4">
-						  <input type="radio" name="radio_{{condicion.codigo}}" value="{{estado.codigo}}" /> {{estado.nombre}} 
-					  </div>
-						
-					{% endfor %}
-					</div>
-					<div class="error" id="error_estado_{{condicion.codigo}}">
-				
-					</div>
-
-
-				</td>
-				<td><textarea rows="1" cols="45" name="observacion_{{condicion.codigo}}"></textarea>
-					<div class="error" id="error_observacion_{{condicion.codigo}}"></div>
-
-				</td>
-
-			</tr>
-			{% endfor %}
-
-		</tbody>
-
-	</table>	
+		
 </div>
 
 <div class="row">
