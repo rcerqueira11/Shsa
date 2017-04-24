@@ -1,312 +1,302 @@
 [
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 1,
     "fields": {
-      "accesorio": "62. Radio",
       "existe": false,
-      "comentario": null,
-      "codigo": "RADIO"
-    }
+      "accesorio": "62. Radio / Antena  ",
+      "codigo": "RADIO_ANT",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 1
   },
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 2,
     "fields": {
-      "accesorio": "Anteana",
       "existe": false,
-      "comentario": null,
-      "codigo": "ANTEN"
-    }
-  },
-  {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 3,
-    "fields": {
       "accesorio": "63. Foco De Posicion",
-      "existe": false,
-      "comentario": null,
-      "codigo": "FOC_POS"
-    }
+      "codigo": "FOC_POS",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 2
   },
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 4,
     "fields": {
+      "existe": false,
       "accesorio": "64. Rines Especiales",
-      "existe": false,
-      "comentario": null,
-      "codigo": "RIN_ESP"
-    }
+      "codigo": "RIN_ESP",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 3
   },
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 5,
     "fields": {
+      "existe": false,
       "accesorio": "65. Radio Reproductor",
-      "existe": false,
-      "comentario": null,
-      "codigo": "RAD_REP"
-    }
+      "codigo": "RAD_REP",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 4
   },
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 6,
     "fields": {
+      "existe": false,
       "accesorio": "66. Aire Acondicionado",
-      "existe": false,
-      "comentario": null,
-      "codigo": "AIR_ACON"
-    }
+      "codigo": "AIR_ACON",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 5
   },
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 7,
     "fields": {
+      "existe": false,
       "accesorio": "67. Caucho Respuesto",
-      "existe": false,
-      "comentario": null,
-      "codigo": "CAUC_RESP"
-    }
+      "codigo": "CAUC_RESP",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 6
   },
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 8,
     "fields": {
+      "existe": false,
       "accesorio": "68. Reproductor de Antena",
-      "existe": false,
-      "comentario": null,
-      "codigo": "REP_ANT"
-    }
+      "codigo": "REP_ANT",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 7
   },
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 9,
     "fields": {
+      "existe": false,
       "accesorio": "69. Spoiler ",
-      "existe": false,
-      "comentario": null,
-      "codigo": "SPOIL"
-    }
+      "codigo": "SPOIL",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 8
   },
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 10,
     "fields": {
+      "existe": false,
       "accesorio": "70. Parachoque Espec. (Mataburro)",
-      "existe": false,
-      "comentario": null,
-      "codigo": "PAR_ESP"
-    }
+      "codigo": "PAR_ESP",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 9
   },
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 11,
     "fields": {
+      "existe": false,
       "accesorio": "71. Cornetas Especiales ",
-      "existe": false,
-      "comentario": null,
-      "codigo": "CORN_ESP"
-    }
+      "codigo": "CORN_ESP",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 10
   },
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 12,
     "fields": {
+      "existe": false,
       "accesorio": "72. Llave De Cruz ",
-      "existe": false,
-      "comentario": null,
-      "codigo": "LLAV_CRUZ"
-    }
+      "codigo": "LLAV_CRUZ",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 11
   },
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 13,
     "fields": {
+      "existe": false,
       "accesorio": "73. Rayas Decativas",
-      "existe": false,
-      "comentario": null,
-      "codigo": "RAY_DEC"
-    }
+      "codigo": "RAY_DEC",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 12
   },
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 14,
     "fields": {
+      "existe": false,
       "accesorio": "74. Compact Disc",
-      "existe": false,
-      "comentario": null,
-      "codigo": "COMP_DISC"
-    }
+      "codigo": "COMP_DISC",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 13
   },
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 15,
     "fields": {
+      "existe": false,
       "accesorio": "75. Triangulo De Seguridad",
-      "existe": false,
-      "comentario": null,
-      "codigo": "TRI_SEG"
-    }
+      "codigo": "TRI_SEG",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 14
   },
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 16,
     "fields": {
+      "existe": false,
       "accesorio": "76. Tazas De Los Cauchos ",
-      "existe": false,
-      "comentario": null,
-      "codigo": "TAZ_CAUCH"
-    }
+      "codigo": "TAZ_CAUCH",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 15
   },
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 17,
     "fields": {
+      "existe": false,
       "accesorio": "77. Ecualizados",
-      "existe": false,
-      "comentario": null,
-      "codigo": "ECUAL"
-    }
+      "codigo": "ECUAL",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 16
   },
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 18,
     "fields": {
+      "existe": false,
       "accesorio": "78. Parrilla Techo",
-      "existe": false,
-      "comentario": null,
-      "codigo": "PARR_TECH"
-    }
+      "codigo": "PARR_TECH",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 17
   },
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 19,
     "fields": {
+      "existe": false,
       "accesorio": "79. Volante Especial",
-      "existe": false,
-      "comentario": null,
-      "codigo": "VOL_ESP"
-    }
+      "codigo": "VOL_ESP",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 18
   },
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 20,
     "fields": {
+      "existe": false,
       "accesorio": "80. Televizor",
-      "existe": false,
-      "comentario": null,
-      "codigo": "TV"
-    }
+      "codigo": "TV",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 19
   },
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 21,
     "fields": {
+      "existe": false,
       "accesorio": "81. Cabina",
-      "existe": false,
-      "comentario": null,
-      "codigo": "CABI"
-    }
+      "codigo": "CABI",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 20
   },
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 22,
     "fields": {
+      "existe": false,
       "accesorio": "82. Gato ",
-      "existe": false,
-      "comentario": null,
-      "codigo": "GATO"
-    }
+      "codigo": "GATO",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 21
   },
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 23,
     "fields": {
+      "existe": false,
       "accesorio": "83. Planta",
-      "existe": false,
-      "comentario": null,
-      "codigo": "PLANT"
-    }
+      "codigo": "PLANT",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 22
   },
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 24,
     "fields": {
+      "existe": false,
       "accesorio": "84. Faros Especiales",
-      "existe": false,
-      "comentario": null,
-      "codigo": "FAR_ESP"
-    }
+      "codigo": "FAR_ESP",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 23
   },
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 25,
     "fields": {
+      "existe": false,
       "accesorio": "85. Anti-Robo",
-      "existe": false,
-      "comentario": null,
-      "codigo": "ANT_ROB"
-    }
+      "codigo": "ANT_ROB",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 24
   },
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 26,
     "fields": {
+      "existe": false,
       "accesorio": "86. Tranca Pedal",
-      "existe": false,
-      "comentario": null,
-      "codigo": "TRAN_PED"
-    }
+      "codigo": "TRAN_PED",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 25
   },
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 27,
     "fields": {
+      "existe": false,
       "accesorio": "87. Themo King",
-      "existe": false,
-      "comentario": null,
-      "codigo": "THE_KING"
-    }
+      "codigo": "THE_KING",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 26
   },
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 28,
     "fields": {
+      "existe": false,
       "accesorio": "88. Otro ",
-      "existe": false,
-      "comentario": null,
-      "codigo": "OTRO1"
-    }
+      "codigo": "OTRO1",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 27
   },
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 29,
     "fields": {
+      "existe": false,
       "accesorio": "89. Cortacorreinte",
-      "existe": false,
-      "comentario": null,
-      "codigo": "CORT_COR"
-    }
+      "codigo": "CORT_COR",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 28
   },
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 30,
     "fields": {
+      "existe": false,
       "accesorio": "90. Tranca Palanca",
-      "existe": false,
-      "comentario": null,
-      "codigo": "TRANC_PALNC"
-    }
+      "codigo": "TRANC_PALNC",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 29
   },
   {
-    "model": "rcs.accesoriosvehiculo",
-    "pk": 31,
     "fields": {
-      "accesorio": "91. Otro ",
       "existe": false,
-      "comentario": null,
-      "codigo": "OTRO2"
-    }
+      "accesorio": "91. Otro ",
+      "codigo": "OTRO2",
+      "comentario": null
+    },
+    "model": "rcs.accesoriosvehiculo",
+    "pk": 30
   }
 ]
