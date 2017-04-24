@@ -15,5 +15,11 @@ urlpatterns = [
         views.Dashboard.as_view(),
         name="dashboard"
     ),
+
+    url(
+        r'^gestion_ticket',
+        views.GestionSolicitudAbierta.as_view(),
+        name="gestion_ticket"
+    ),
     
 ]

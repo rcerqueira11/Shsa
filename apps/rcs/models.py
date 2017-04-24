@@ -24,6 +24,7 @@ class EstadoVehiculo(models.Model):
 	nombre = models.CharField(max_length=255)
 	descripcion = models.TextField(blank=True)
 	codigo = models.CharField(max_length=255,unique=True)
+	clase = models.CharField(max_length=255, null=True)
 
 	def __unicode__(self):
 		return self.descripcion

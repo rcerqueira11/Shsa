@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+    <link href="/static/css/rcs/common_style.css"  rel="stylesheet" type="text/css"/>
+{% endblock extra_css %}
+
+{% block main_content %}
+{% include "menu_base.html" %}
+
+
+<center>Ticket Abierto :D</center>
+<div class="container">
+<div class="row">
+<center>
+    <section>
+        <div class="title">Condiciones Generales del Veh&iacute;culo</div>
+	</section>
+</center>
+
+
+	<table class="table table-bordered">
+		<thead>
+		{# style="width:14%" #}
+			<th style="width:30%">Parte</th>
+			<th style="width:30%">Estado</th>
+			<th style="width:40%">Observacion</th>
+		</thead>
+		<tbody>
+			{% for condicion in condiciones  %}
+			<tr>
+				<td><label >{{condicion.parte}}</label></td>
+				<td>
+					<div class="btn-group btn-group-justified" role="group_{{condicion.codigo}}" aria-label="...">
+					{% for estado in estados_vehiculo %}
+					  <div class="btn-group" role="group_{{condicion.codigo}}">
+					    <button type="button" class="btn btn-{{estado.clase}}" id="{{estado.codigo}}" name="{{estado.codigo}}">{{estado.nombre}}</button>
+					  </div>
+						
+					{% endfor %}
+					</div>
+					<div class="error" id="error_estado_{{condicion.codigo}}">
+				
+					</div>
+
+
+				</td>
+				<td><textarea name="observacion_{{condicion.codigo}}"></textarea>
+					<div class="error" id="error_observacion_{{condicion.codigo}}"></div>
+
+				</td>
+
+			</tr>
+			{% endfor %}
+
+		</tbody>
+
+	</table>	
+</div>
+
+<div class="row">
+<center>
+    <section>
+        <div class="title">Mec&aacute;nica del Veh&iacute;culo</div>
+
+
+	{% for mecanica in mecanicas  %}
+		<div class="col-xs-4">
+			<label >{{mecanica.parte}}</label>
+			<br>
+			<input type="text" name="comentario_{{mecanica.codigo}}">
+			<div class="error" id="error_{{mecanica.codigo}}">
+				
+			</div>
+
+		</div>
+	{% endfor %}
+	</section>
+</center>
+</div>
+
+
+<div class="row">
+<center>
+    <section>
+        <div class="title">Accesorios del Veh&iacute;culo</div>
+
+
+	{% for accesorio in accesorios  %}
+		<div class="col-xs-4">
+			<label >{{accesorio.accesorio}}</label>
+			<br>
+			<input type="text" name="comentario_{{accesorio.codigo}}">
+			<div class="error" id="error_{{accesorio.codigo}}">
+				
+			</div>
+
+		</div>
+	{% endfor %}
+	</section>
+</center>
+</div>
+</div>
+{% endblock main_content %}
+
+{% block extra_script %}
+ 	<!-- <script src="{{STATIC_URL}}js/registro/editar_usuario.js"></script> -->
+
+{% endblock extra_script %}

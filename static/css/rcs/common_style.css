@@ -1,0 +1,39 @@
+.registro-form{
+	margin-top: 60px;
+}
+
+.recuperar_contrasena-form{
+	margin-top: 60px;
+}
+
+form input{
+	font-size: 18px;
+	margin: 16px 0;
+}
+
+.letter {
+	font-size: 18px;
+	margin: 16px 0;
+}
+
+
+.form-control {
+	  position: relative;
+	  font-size: 16px;
+	  height: auto;
+	  padding: 10px;
+	  margin-top: -5px;
+}
+
+.small_error_letter{
+	font-size: 14px !important;
+}
+
+.title {
+    font-weight: bold;
+    width: 100%;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #999;
+    margin: 15px 0;
+    font-size: 16px;
+}
