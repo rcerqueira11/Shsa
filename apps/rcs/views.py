@@ -195,16 +195,20 @@ class CondicionVehiculoSolicitud(View):
     def post(self,request,*args,**kwargs):
         data = request.POST
         response = {}
-
-
-        #if data: 
-        #    response['Result'] = 'success'
-        #    response['msj'] = ''
-        #    return HttpResponse(json.dumps(response), content_type = "application/json")
-        #else:
-        #    response['Result'] = 'error'
-        #    response['msj'] = ''
-        #    return HttpResponse(json.dumps(response), content_type = "application/json")
+        observacion = "observacion_"
+        radio = "radio_"
+        condiciones = CondicionesGeneralesVehiculo.objects.all()
+        vehiculo = Vehiculo.objects.get(id=1)
+        # mecanica_vehiculo
+        with transaction.atomic():
+            for condicion in condiciones:
+                # mec_sol
+                condicion.observacion = data[observacion+condicion.codigo]
+                condicion.fk_estado_vehiculo_id = EstadoVehiculo.objects.get(codigo = data[radio+condicion.codigo])
+                condicion.save()
+                ##Agregando condicion a many to many field de vehiculo
+                vehiculo.condiciones_generales_vehiculo.add(condicion)
+            vehiculo.save()
 
 
         return redirect(reverse_lazy('mecanica_vehiculo'))
@@ -238,16 +242,20 @@ class MecanicaVehiculoSolicitud(View):
     def post(self,request,*args,**kwargs):
         data = request.POST
         response = {}
-
-
-        #if data: 
-        #    response['Result'] = 'success'
-        #    response['msj'] = ''
-        #    return HttpResponse(json.dumps(response), content_type = "application/json")
-        #else:
-        #    response['Result'] = 'error'
-        #    response['msj'] = ''
-        #    return HttpResponse(json.dumps(response), content_type = "application/json")
+        observacion = "observacion_"
+        radio = "radio_"
+        mecanicas = MecanicaVehiculo.objects.all()
+        vehiculo = Vehiculo.objects.get(id=1)
+        # mecanica_vehiculo
+        with transaction.atomic():
+            for mecanica in mecanicas:
+                # mec_sol
+                mecanica.observacion = data[observacion+mecanica.codigo]
+                mecanica.fk_estado_vehiculo_id = EstadoVehiculo.objects.get(codigo = data[radio+mecanica.codigo])
+                mecanica.save()
+                ##Agregando mecanica a many to many field de vehiculo
+                vehiculo.mecanica_vehiculo.add(mecanica)
+            vehiculo.save()
 
 
         return redirect(reverse_lazy('accesorios_vehiculo'))
@@ -279,16 +287,23 @@ class AccesoriosVehiculoSolicitud(View):
     def post(self,request,*args,**kwargs):
         data = request.POST
         response = {}
+        observacion = "observacion_"
+        radio = "radio_"
+        accesorios = AccesoriosVehiculo.objects.all()
+        vehiculo = Vehiculo.objects.get(id=1)
+        # mecanica_vehiculo
+        import pudb; pu.db
+        with transaction.atomic():
+            for accesorio in accesorios:
+                # mec_sol
+                # import pudb; pu.db
+                accesorio.observacion = data[observacion+accesorio.codigo]
+                accesorio.existe = True if data[radio+accesorio.codigo] == 'true' else False
+                accesorio.save()
+                ##Agregando accesorio a many to many field de vehiculo
+                vehiculo.accesorios_vehiculo.add(accesorio)
+            vehiculo.save()
 
-
-        #if data: 
-        #    response['Result'] = 'success'
-        #    response['msj'] = ''
-        #    return HttpResponse(json.dumps(response), content_type = "application/json")
-        #else:
-        #    response['Result'] = 'error'
-        #    response['msj'] = ''
-        #    return HttpResponse(json.dumps(response), content_type = "application/json")
 
 
         return redirect(reverse_lazy('documentos_vehiculo'))
