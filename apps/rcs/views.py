@@ -129,11 +129,27 @@ class GestionSolicitudAbierta(View):
             'estados_vehiculo': estados_vehiculo,
         }
 
-        return render(request, 'rcs/inspector/nueva_solicitud.html',context)
+        return render(request, 'rcs/inspector/flujo_solicitud/nueva_solicitud.html',context)
 
     def post(self,request,*args,**kwargs):
         data = request.POST
         response = {}
+        observacion = "observacion_"
+        radio = "radio_"
+        mecanicas = MecanicaVehiculo.objects.all()
+        vehiculo = Vehiculo.objects.get(id=1)
+        # mecanica_vehiculo
+        import pudb; pu.db
+        with transaction.atomic():
+            for mecanica in mecanicas:
+                # mec_sol
+                mecanica.observacion = data[observacion+mecanica.codigo]
+                mecanica.fk_estado_vehiculo_id = EstadoVehiculo.objects.get(codigo = data[radio+mecanica.codigo])
+                mecanica.save()
+                ##Agregando mecanica a many to many field de vehiculo
+                vehiculo.mecanica_vehiculo.add(mecanica)
+            # print data[observacion+mecanica.codigo]
+            # print data[radio+mecanica.codigo]
 
 
         #if data: 
@@ -146,4 +162,210 @@ class GestionSolicitudAbierta(View):
         #    return HttpResponse(json.dumps(response), content_type = "application/json")
 
 
-        return redirect(reverse_lazy('nueva_solicitud'))
+        return redirect(reverse_lazy('condiciones_vehiculo'))
+
+
+
+
+
+
+
+class CondicionVehiculoSolicitud(View):
+    """
+    CondicionVehiculoSolicitud
+    -------------------------------------------
+    paso 2 inclusion de condiciones del vehiculo en vehiculo/solicitud
+    """
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_anonymous():
+            return redirect(reverse_lazy('login'))
+        return super(CondicionVehiculoSolicitud, self).dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        condiciones = CondicionesGeneralesVehiculo.objects.all()
+        estados_vehiculo = EstadoVehiculo.objects.all()
+        context = {
+            'condiciones': condiciones,
+            'estados_vehiculo': estados_vehiculo,
+        }
+
+        return render(request, 'rcs/inspector/flujo_solicitud/condiciones_solicitud.html',context)
+
+    def post(self,request,*args,**kwargs):
+        data = request.POST
+        response = {}
+
+
+        #if data: 
+        #    response['Result'] = 'success'
+        #    response['msj'] = ''
+        #    return HttpResponse(json.dumps(response), content_type = "application/json")
+        #else:
+        #    response['Result'] = 'error'
+        #    response['msj'] = ''
+        #    return HttpResponse(json.dumps(response), content_type = "application/json")
+
+
+        return redirect(reverse_lazy('mecanica_vehiculo'))
+
+
+
+class MecanicaVehiculoSolicitud(View):
+    """
+    MecanicaVehiculoSolicitud
+    -------------------------------------------
+    paso 3 inclusion de mecanica en vehiculo/solicitud
+    """
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_anonymous():
+            return redirect(reverse_lazy('login'))
+        return super(MecanicaVehiculoSolicitud, self).dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        
+        mecanicas = MecanicaVehiculo.objects.all()
+        estados_vehiculo = EstadoVehiculo.objects.all()
+        context = {
+            'mecanicas': mecanicas,
+            'estados_vehiculo': estados_vehiculo,
+        }
+
+
+        return render(request, 'rcs/inspector/flujo_solicitud/mecanica_solicitud.html',context)
+
+    def post(self,request,*args,**kwargs):
+        data = request.POST
+        response = {}
+
+
+        #if data: 
+        #    response['Result'] = 'success'
+        #    response['msj'] = ''
+        #    return HttpResponse(json.dumps(response), content_type = "application/json")
+        #else:
+        #    response['Result'] = 'error'
+        #    response['msj'] = ''
+        #    return HttpResponse(json.dumps(response), content_type = "application/json")
+
+
+        return redirect(reverse_lazy('accesorios_vehiculo'))
+
+class AccesoriosVehiculoSolicitud(View):
+    """
+    AccesoriosVehiculoSolicitud
+    -------------------------------------------
+    paso 4 colocan los accesorios dentro de vehiculo/solcitud
+    """
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_anonymous():
+            return redirect(reverse_lazy('login'))
+        return super(AccesoriosVehiculoSolicitud, self).dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        
+        accesorios = AccesoriosVehiculo.objects.all()
+        estados_vehiculo = EstadoVehiculo.objects.all()
+        context = {
+            'accesorios': accesorios,
+            'estados_vehiculo': estados_vehiculo,
+        }
+
+
+        return render(request, 'rcs/inspector/flujo_solicitud/accesorios_solicitud.html',context)
+
+    def post(self,request,*args,**kwargs):
+        data = request.POST
+        response = {}
+
+
+        #if data: 
+        #    response['Result'] = 'success'
+        #    response['msj'] = ''
+        #    return HttpResponse(json.dumps(response), content_type = "application/json")
+        #else:
+        #    response['Result'] = 'error'
+        #    response['msj'] = ''
+        #    return HttpResponse(json.dumps(response), content_type = "application/json")
+
+
+        return redirect(reverse_lazy('documentos_vehiculo'))
+
+
+class DetallesVehiculoSolicitud(View):
+    """
+    DetallesVehiculoSolicitud
+    -------------------------------------------
+    paso 5 Detalles que tenga el vehiculo/solicitud
+    """
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_anonymous():
+            return redirect(reverse_lazy('login'))
+        return super(DetallesVehiculoSolicitud, self).dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        context = {
+
+        }
+
+        return render(request, 'rcs/inspector/flujo_solicitud/detalles_solicitud.html',context)
+
+    def post(self,request,*args,**kwargs):
+        data = request.POST
+        response = {}
+
+
+        #if data: 
+        #    response['Result'] = 'success'
+        #    response['msj'] = ''
+        #    return HttpResponse(json.dumps(response), content_type = "application/json")
+        #else:
+        #    response['Result'] = 'error'
+        #    response['msj'] = ''
+        #    return HttpResponse(json.dumps(response), content_type = "application/json")
+
+
+        return redirect(reverse_lazy('template_dir'))
+
+class DocumentosVehiculoSolicitud(View):
+    """
+    DocumentosVehiculoSolicitud
+    -------------------------------------------
+    paso 6 donde se checkean los documentos que trajo para el vehiculo/solicitud
+    """
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_anonymous():
+            return redirect(reverse_lazy('login'))
+        return super(DocumentosVehiculoSolicitud, self).dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        
+        documentos = DocumentosPresentados.objects.all()
+        context = {
+            'documentos': documentos,
+        }
+
+
+        return render(request, 'rcs/inspector/flujo_solicitud/documentos_solicitud.html',context)
+
+    def post(self,request,*args,**kwargs):
+        data = request.POST
+        response = {}
+
+
+        #if data: 
+        #    response['Result'] = 'success'
+        #    response['msj'] = ''
+        #    return HttpResponse(json.dumps(response), content_type = "application/json")
+        #else:
+        #    response['Result'] = 'error'
+        #    response['msj'] = ''
+        #    return HttpResponse(json.dumps(response), content_type = "application/json")
+
+
+        # vista_previa_solicitud
+        return redirect(reverse_lazy('dashboard'))

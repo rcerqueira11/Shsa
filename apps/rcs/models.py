@@ -27,7 +27,7 @@ class EstadoVehiculo(models.Model):
 	clase = models.CharField(max_length=255, null=True)
 
 	def __unicode__(self):
-		return self.descripcion
+		return self.nombre + " " + "'" +self.codigo+ "'" 
 
 ##Tipo vehiculo sedan, cargar, coupe
 class TipoVehiculo(models.Model):
@@ -41,7 +41,7 @@ class TipoVehiculo(models.Model):
 class CondicionesGeneralesVehiculo(models.Model):
 	parte = models.CharField(max_length=255)
 	fk_estado_vehiculo = models.ForeignKey(EstadoVehiculo, blank=True, null=True)
-	comentario = models.TextField(blank=True,null=True)
+	observacion = models.TextField(blank=True,null=True)
 	codigo = models.CharField(max_length=255,unique=True)
 
 	def __unicode__(self):
@@ -51,7 +51,7 @@ class CondicionesGeneralesVehiculo(models.Model):
 class MecanicaVehiculo(models.Model):
 	parte = models.CharField(max_length=255)
 	fk_estado_vehiculo = models.ForeignKey(EstadoVehiculo, blank=True, null=True)
-	comentario = models.TextField(blank=True, null=True)
+	observacion = models.TextField(blank=True, null=True)
 	codigo = models.CharField(max_length=255,unique=True)
 	# otro = models.CharField(max_length=255, blank=True)
 	def __unicode__(self):
@@ -61,7 +61,7 @@ class MecanicaVehiculo(models.Model):
 class AccesoriosVehiculo(models.Model):
 	accesorio = models.CharField(max_length=255)
 	existe = models.BooleanField(default=True)
-	comentario = models.TextField(blank=True, null=True)
+	observacion = models.TextField(blank=True, null=True)
 	codigo = models.CharField(max_length=255,unique=True)
 	# otro = models.CharField(max_length=255, blank=True)
 	def __unicode__(self):
@@ -151,7 +151,7 @@ class SolicitudInspeccion(models.Model):
 	fk_vehiculo = models.OneToOneField(Vehiculo)
 	fk_titular_vehiculo = models.ForeignKey(TitularVehiculo)
 	fk_inspector = models.ForeignKey(Usuario)
-	siendo_verificada = models.IntegerField() #numero id del inspector verificando la solicitud
+	siendo_verificada = models.IntegerField(blank=True,null=True) #numero id del inspector verificando la solicitud
 	editable = models.BooleanField(default=False)
 	fecha_creacion = models.DateTimeField(['%d/%m/%Y'], blank=True, null=True, auto_now=True)
 	fk_estado_solicitud = models.ForeignKey(EstadoSolicitud, default=1)

@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load static %}
+{% load rcs_tags %}
+{% block extra_css %}
+    <link href="/static/css/rcs/common_style.css"  rel="stylesheet" type="text/css"/>
+{% endblock extra_css %}
+
+{% block main_content %}
+{% include "menu_base.html" %}
+
+
+<div class="container">
+
+{# Documentos del vehiculo #}
+<div class="row">
+	<center>
+	    <section>
+	        <div class="title">Documentos Presentados para Inspecci&oacute;n</div>
+		</section>
+	</center>
+	<form method="post" id="form_documentos_vehiculo" action="{% url 'gestion_ticket' %}">
+	{% csrf_token %}
+
+	<div class="col-xs-12">
+		<table class="table table-bordered">
+			<thead>
+			{# style="width:14%" #}
+				<th style="width:12.1%"><center>DOCUMENTO</center></th>
+				<th style="width:9.1%"><center>SI</center></th>
+				<th style="width:12.1%"><center>NO</center></th>
+				<th style="width:12.1%"><center>DOCUMENTO</center></th>
+				<th style="width:9.1%"><center>SI</center></th>
+				<th style="width:12.1%"><center>NO</center></th>
+				<th style="width:12.1%"><center>DOCUMENTO</center></th>
+				<th style="width:9.1%"><center>SI</center></th>
+				<th style="width:12.1%"><center>NO</center></th>
+			</thead>
+			<tbody>
+				<tr>
+							
+				{% for documento in documentos  %}
+					{% if forloop.counter|primera_col %}
+						<td><h4 >{{documento.nombre}}</h4></td>
+						<td><input type="radio" name="radio_{{documento.codigo}}" value="true" /></td>
+						<td><input type="radio" name="radio_{{documento.codigo}}" value="false" /></td>
+							
+					{% endif %}
+					{% if forloop.counter|segunda_col %}
+						<td><h4 >{{documento.nombre}}</h4></td>
+						<td><input type="radio" name="radio_{{documento.codigo}}" value="true" /></td>
+						<td><input type="radio" name="radio_{{documento.codigo}}" value="false" /></td>
+					{% endif %}
+					{% if forloop.counter|tercera_col %}
+						<td><h4 >{{documento.nombre}}</h4></td>
+						<td><input type="radio" name="radio_{{documento.codigo}}" value="true" /></td>
+						<td><input type="radio" name="radio_{{documento.codigo}}" value="false" /></td>
+					{% endif %}
+					{% if forloop.counter|divisibleby:3 %}
+						</tr>
+					{% endif %}
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<button type="submit">SEND</button>
+	</form>
+</div>
+</div>
+
+
+
+
+
+
+{% endblock main_content %}
+
+{% block extra_script %}
+ 	<!-- <script src="{{STATIC_URL}}js/registro/editar_usuario.js"></script> -->
+
+{% endblock extra_script %}

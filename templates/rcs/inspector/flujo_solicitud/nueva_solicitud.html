@@ -9,7 +9,6 @@
 {% include "menu_base.html" %}
 
 
-<center>Ticket Abierto :D</center>
 <div class="container">
 {# Condiciones Generales del vehiculo #}
 <div class="row">
@@ -99,6 +98,8 @@
 	        <div class="title">Mec&aacute;nica del Veh&iacute;culo</div>
 		</section>
 	</center>
+	<form method="post" id="form_mecanica_vehiculo" action="{% url 'gestion_ticket' %}">
+	{% csrf_token %}
 	<div class="col-xs-12">
 		<table class="table table-bordered">
 			<thead>
@@ -169,6 +170,8 @@
 			</tbody>
 		</table>
 	</div>
+	<button type="submit">SEND</button>
+	</form>
 </div>
 
 {# Accesorios del vehiculo #}

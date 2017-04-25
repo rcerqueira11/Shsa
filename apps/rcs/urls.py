@@ -21,5 +21,30 @@ urlpatterns = [
         views.GestionSolicitudAbierta.as_view(),
         name="gestion_ticket"
     ),
+    url(
+        r'^condiciones_vehiculo',
+        views.CondicionVehiculoSolicitud.as_view(),
+        name="condiciones_vehiculo"
+    ),
+    url(
+        r'^mecanica_vehiculo',
+        views.MecanicaVehiculoSolicitud.as_view(),
+        name="mecanica_vehiculo"
+    ),
+    url(
+        r'^accesorios_vehiculo',
+        views.AccesoriosVehiculoSolicitud.as_view(),
+        name="accesorios_vehiculo"
+    ),
+    url(
+        r'^detalles_vehiculo',
+        views.DetallesVehiculoSolicitud.as_view(),
+        name="detalles_vehiculo"
+    ),
+    url(
+        r'^documentos_vehiculo',
+        views.DocumentosVehiculoSolicitud.as_view(),
+        name="documentos_vehiculo"
+    ),
     
 ]

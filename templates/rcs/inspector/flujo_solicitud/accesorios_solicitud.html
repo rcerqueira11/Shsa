@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+{% load rcs_tags %}
+{% block extra_css %}
+    <link href="/static/css/rcs/common_style.css"  rel="stylesheet" type="text/css"/>
+{% endblock extra_css %}
+
+{% block main_content %}
+{% include "menu_base.html" %}
+
+
+<div class="container">
+
+{# Accesorios del vehiculo #}
+<div class="row">
+	<center>
+	    <section>
+	        <div class="title">Accesorios del Veh&iacute;culo</div>
+		</section>
+	</center>
+	<form method="post" id="form_accesorios_vehiculo" action="{% url 'gestion_ticket' %}">
+	{% csrf_token %}
+
+	<div class="col-xs-12">
+		<table class="table table-bordered">
+			<thead>
+			{# style="width:14%" #}
+				<th style="width:12.1%"><center>ACCESORIOS</center></th>
+				<th style="width:9.1%"><center>POSEE</center></th>
+				<th style="width:12.1%"><center>OBSERVACI&Oacute;NES</center></th>
+				<th style="width:12.1%"><center>ACCESORIOS</center></th>
+				<th style="width:9.1%"><center>POSEE</center></th>
+				<th style="width:12.1%"><center>OBSERVACI&Oacute;NES</center></th>
+				<th style="width:12.1%"><center>ACCESORIOS</center></th>
+				<th style="width:9.1%"><center>POSEE</center></th>
+				<th style="width:12.1%"><center>OBSERVACI&Oacute;NES</center></th>
+			</thead>
+			<tbody>
+				<tr>
+							
+				{% for accesorio in accesorios  %}
+					{% if forloop.counter|primera_col %}
+						<td><h4 >{{accesorio.accesorio}}</h4></td>
+							<td>
+							 	<input type="radio" name="radio_{{accesorio.codigo}}" value="true" />  Si
+						    	<br>
+								<input type="radio" name="radio_{{accesorio.codigo}}" value="false" /> No  
+								<div class="error" id="error_estado_{{accesorio.codigo}}"></div>
+							</td>
+							<td>
+								<textarea rows="2" cols="17" {% if accesorio.codigo == 'RADIO_ANT' %}
+								    placeholder="Especificar si es radio o antena" 
+								
+								{% endif %} name="observacion_{{accesorio.codigo}}"></textarea>
+								<div class="error" id="error_observacion_{{accesorio.codigo}}"></div>
+							</td>
+					{% endif %}
+					{% if forloop.counter|segunda_col %}
+						<td><h4 >{{accesorio.accesorio}}</h4></td>
+							<td>
+							 	<input type="radio" name="radio_{{accesorio.codigo}}" value="true" />  Si
+						    	<br>
+								<input type="radio" name="radio_{{accesorio.codigo}}" value="false" /> No  
+								<div class="error" id="error_estado_{{accesorio.codigo}}"></div>
+							</td>
+							<td>
+								<textarea rows="2" cols="17" name="observacion_{{accesorio.codigo}}"></textarea>
+								<div class="error" id="error_observacion_{{accesorio.codigo}}"></div>
+							</td>
+					{% endif %}
+					{% if forloop.counter|tercera_col %}
+						<td><h4 >{{accesorio.accesorio}}</h4></td>
+							<td>
+							 	<input type="radio" name="radio_{{accesorio.codigo}}" value="true" />  Si
+						    	<br>
+								<input type="radio" name="radio_{{accesorio.codigo}}" value="false" /> No  
+								<div class="error" id="error_estado_{{accesorio.codigo}}"></div>
+							</td>
+							<td>
+								<textarea rows="2" cols="17" name="observacion_{{accesorio.codigo}}"></textarea>
+								<div class="error" id="error_observacion_{{accesorio.codigo}}"></div>
+							</td>
+					{% endif %}
+					{% if forloop.counter|divisibleby:3 %}
+						</tr>
+					{% endif %}
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<button type="submit">SEND</button>
+	</form>
+</div>
+</div>
+
+
+
+
+
+
+{% endblock main_content %}
+
+{% block extra_script %}
+ 	<!-- <script src="{{STATIC_URL}}js/registro/editar_usuario.js"></script> -->
+
+{% endblock extra_script %}
