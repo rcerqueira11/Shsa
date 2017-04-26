@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+{% load rcs_tags %}
+{% block extra_css %}
+    <link href="/static/css/rcs/common_style.css"  rel="stylesheet" type="text/css"/>
+{% endblock extra_css %}
+
+{% block main_content %}
+{% include "menu_base.html" %}
+
+
+<div class="container">
+	<center>
+	    <section>
+	        <div class="title">Creaci&oacute;n de Ticket para inspecci&oacute;n</div>
+		</section>
+	</center>
+<!-- vehiculo
+tipo_vehiculo
+titular_vehiculo
+trajo_vehiculo
+ -->
+
+ <form method="post" id="form_crear_ticket" action="{% url 'crear_solicitud' %}">
+{% csrf_token %}
+ 	
+<div class="row">
+	<div class="col-xs-4">
+	<label>Nombre y Apellido del Titular:</label>
+		<input type="text"  class="form-control" value="{{titular_vehiculo.nombre}} {{titular_vehiculo.apellido}}" >
+	</div>
+	<div class="col-xs-4">
+		<label>Cedula de identidad:</label>
+		<input type="text" class="form-control"  value="{{titular_vehiculo.cedula}}" >
+	</div>
+	<div class="col-xs-4">
+	<label>Tel&eacute;fono</label>
+		<input type="text" class="form-control"  value="{{titular_vehiculo.telefono}}" >
+	</div>
+</div>
+
+
+    
+<div class="row" id="id_trajo_form">
+	<div class="col-xs-4">
+	<label>Persona que trajo el Veh&iacute;culo a inspecci&oacute;n:</label>
+		<input type="text"  class="form-control" value="{{trajo_vehiculo.nombre}} {{trajo_vehiculo.apellido}}" >
+	</div>
+	<div class="col-xs-4">
+	<label>Cedula de identidad:</label>
+		<input type="text"  class="form-control" value="{{trajo_vehiculo.cedula}}" >
+	</div>
+	<div class="col-xs-4">
+	<label>Parentesco con el Titular</label>
+		<input type="text"  class="form-control" value="{{trajo_vehiculo.parentesco}}" >
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<label>placa</label>
+<input type="text" class="form-control" name="placa">
+
+
+<label>Tipo Modelo</label>
+<select  data-placeholder="Seleccionar un tipo"  class="form-control chosen-select" name="tipo_vehiculo" id='id_tipo_vehiculo' >
+{% for e in motivos_de_visita %}
+      <option value="{{ e.codigo }}" >{{ e.motivo|title }}</option>
+{% endfor %}
+</select>
+
+
+<button type="submit"> Continuar</button>
+ </form> 
+
+
+{% endblock main_content %}
+
+{% block extra_script %}
+ 	<!-- <script src="{{STATIC_URL}}js/registro/editar_usuario.js"></script> -->
+
+{% endblock extra_script %}

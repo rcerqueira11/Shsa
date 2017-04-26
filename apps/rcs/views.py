@@ -102,6 +102,77 @@ class Dashboard(View):
 
 
 
+class SolicitudInspeccion(View):
+    """
+    SolicitudInspeccion
+    -------------------------------------------
+    Gestiona las solicitudes en estatus abierta, paso 1 datos del vehiculo
+    """
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_anonymous():
+            return redirect(reverse_lazy('login'))
+        return super(SolicitudInspeccion, self).dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        # tipo_vehiculo = TipoVehiculo.objects.all()
+        # titular_vehiculo = solicitud.fk_titular_vehiculo
+        # trajo_vehiculo = vehiculo.fk_trajo_vehiculo
+        # tipo_manejo = TipoManejo.objects.all()
+        motivo = MotivoSolicitud.objects.all()
+         
+        context = {
+            'motivos_de_visita': motivo,
+            # 'vehiculo': vehiculo,
+            # 'tipos_de_vehiculo': tipo_vehiculo,
+            # 'tipos_de_manejo': tipo_manejo,
+            # 'titular_vehiculo': titular_vehiculo,
+            # 'trajo_vehiculo': trajo_vehiculo,
+            # 'trajo_alguien_mas': False if trajo_vehiculo is None else True,
+        }
+
+        return render(request, 'rcs/taquilla/crear_ticket.html',context)
+
+    def post(self,request,*args,**kwargs):
+        data = request.POST
+        response = {}
+        solicitud = SolicitudInspeccion.objects.get(id= data['id_solicitud'])
+        vehiculo = solicitud.fk_vehiculo
+        with transaction.atomic():
+            vehiculo.cap_puestos = data['cap_puestos']
+            vehiculo.cilindros = data['cilindros']
+            vehiculo.peso = data['peso']
+            vehiculo.color = data['color']
+            vehiculo.kilometraje = data['kilometraje']
+            vehiculo.serial_carroceria = data['serial_carroceria']
+            vehiculo.serial_motor = data['serial_motor']
+            vehiculo.valor_estimado = data['valor_estimado']
+            vehiculo.modelo = data['modelo']
+            vehiculo.marca = data['marca']
+            vehiculo.anho = data['anho']
+
+            vehiculo.fk_inspector = Usuario.objects.get(id=request.user.id)
+            vehiculo.fk_tipo_vehiculo = TipoVehiculo.objects.get(codigo=data['tipo_vehiculo'])
+            vehiculo.fk_tipo_manejo = TipoManejo.objects.get(codigo=data['tipo_manejo'])
+
+            solicitud.fk_inspector = Usuario.objects.get(id=request.user.id)
+
+            # print data[observacion+mecanica.codigo]
+            # print data[radio+mecanica.codigo]
+
+
+        #if data: 
+        #   response['Result'] = 'success'
+        #    response['msj'] = ''
+        #    return HttpResponse(json.dumps(response), content_type = "application/json")
+        #else:
+        #    response['Result'] = 'error'
+        #    response['msj'] = ''
+        #    return HttpResponse(json.dumps(response), content_type = "application/json")
+
+
+        return redirect(reverse_lazy('dashboard'))
+
 class GestionSolicitudAbierta(View):
     """
     GestionSolicitudAbierta
