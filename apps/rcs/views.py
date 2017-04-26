@@ -106,7 +106,7 @@ class GestionSolicitudAbierta(View):
     """
     GestionSolicitudAbierta
     -------------------------------------------
-    Gestiona las solicitudes en estatus abierta
+    Gestiona las solicitudes en estatus abierta, paso 1 datos del vehiculo
     """
 
     def dispatch(self, request, *args, **kwargs):
@@ -115,18 +115,23 @@ class GestionSolicitudAbierta(View):
         return super(GestionSolicitudAbierta, self).dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
+        id_solicitud = 1
 
-        condiciones = CondicionesGeneralesVehiculo.objects.all()
-        mecanicas = MecanicaVehiculo.objects.all()
-        accesorios = AccesoriosVehiculo.objects.all()
-        detalles = DetallesDatos.objects.all()
-        estados_vehiculo = EstadoVehiculo.objects.all()
+        solicitud = SolicitudInspeccion.objects.get(id=id_solicitud)
+        # import pudb; pu.db
+        vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
+        tipo_vehiculo = TipoVehiculo.objects.all()
+        titular_vehiculo = solicitud.fk_titular_vehiculo
+        trajo_vehiculo = vehiculo.fk_trajo_vehiculo
+        tipo_manejo = TipoManejo.objects.all()
         context = {
-            'condiciones': condiciones,
-            'mecanicas': mecanicas,
-            'accesorios': accesorios,
-            'detalles': detalles,
-            'estados_vehiculo': estados_vehiculo,
+            'vehiculo': vehiculo,
+            'tipos_de_vehiculo': tipo_vehiculo,
+            'tipos_de_manejo': tipo_manejo,
+            'titular_vehiculo': titular_vehiculo,
+            'trajo_vehiculo': trajo_vehiculo,
+            'trajo_alguien_mas': False if trajo_vehiculo is None else True,
+            'solicitud': solicitud,
         }
 
         return render(request, 'rcs/inspector/flujo_solicitud/nueva_solicitud.html',context)
@@ -134,20 +139,27 @@ class GestionSolicitudAbierta(View):
     def post(self,request,*args,**kwargs):
         data = request.POST
         response = {}
-        observacion = "observacion_"
-        radio = "radio_"
-        mecanicas = MecanicaVehiculo.objects.all()
-        vehiculo = Vehiculo.objects.get(id=1)
-        # mecanica_vehiculo
-        import pudb; pu.db
+        solicitud = SolicitudInspeccion.objects.get(id= data['id_solicitud'])
+        vehiculo = solicitud.fk_vehiculo
         with transaction.atomic():
-            for mecanica in mecanicas:
-                # mec_sol
-                mecanica.observacion = data[observacion+mecanica.codigo]
-                mecanica.fk_estado_vehiculo_id = EstadoVehiculo.objects.get(codigo = data[radio+mecanica.codigo])
-                mecanica.save()
-                ##Agregando mecanica a many to many field de vehiculo
-                vehiculo.mecanica_vehiculo.add(mecanica)
+            vehiculo.cap_puestos = data['cap_puestos']
+            vehiculo.cilindros = data['cilindros']
+            vehiculo.peso = data['peso']
+            vehiculo.color = data['color']
+            vehiculo.kilometraje = data['kilometraje']
+            vehiculo.serial_carroceria = data['serial_carroceria']
+            vehiculo.serial_motor = data['serial_motor']
+            vehiculo.valor_estimado = data['valor_estimado']
+            vehiculo.modelo = data['modelo']
+            vehiculo.marca = data['marca']
+            vehiculo.anho = data['anho']
+
+            vehiculo.fk_inspector = Usuario.objects.get(id=request.user.id)
+            vehiculo.fk_tipo_vehiculo = TipoVehiculo.objects.get(codigo=data['tipo_vehiculo'])
+            vehiculo.fk_tipo_manejo = TipoManejo.objects.get(codigo=data['tipo_manejo'])
+
+            solicitud.fk_inspector = Usuario.objects.get(id=request.user.id)
+
             # print data[observacion+mecanica.codigo]
             # print data[radio+mecanica.codigo]
 

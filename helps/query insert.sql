@@ -1,10 +1,7 @@
-SELECT setval('table_id_seq', 0)
+SELECT setval('table_id_seq', 1)
 
 INSERT INTO rcs_accesoriosvehiculo(accesorio, existe,codigo)
-VALUES ('62. Radio ', 'False', 'RADIO');
-
-INSERT INTO rcs_accesoriosvehiculo(accesorio, existe,codigo)
-VALUES ('Anteana', 'False', 'ANTEN');
+VALUES ('62. Radio / Antena  ', 'False', 'RADIO_ANT');
 
 INSERT INTO rcs_accesoriosvehiculo(accesorio, existe,codigo)
 VALUES ('63. Foco De Posicion', 'False', 'FOC_POS');
