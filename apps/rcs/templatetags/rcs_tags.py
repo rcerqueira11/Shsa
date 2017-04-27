@@ -32,3 +32,11 @@ def input_content(form_data, key):
         content['error'] = form_data[key][1]
 
     return content
+
+
+@register.assignment_tag(name='create_name')
+def create_name(first, second):
+    nombre = first+"_"+second
+
+    return nombre
+

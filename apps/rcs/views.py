@@ -215,7 +215,7 @@ class GestionSolicitudAbierta(View):
             return redirect(reverse_lazy('login'))
         return super(GestionSolicitudAbierta, self).dispatch(request, *args, **kwargs)
 
-    def get(self, request, *args, **kwargs):
+    def get_context(self, data):
         id_solicitud = 1
 
         solicitud = SolicitudInspeccion.objects.get(id=id_solicitud)
@@ -226,8 +226,6 @@ class GestionSolicitudAbierta(View):
         trajo_vehiculo = vehiculo.fk_trajo_vehiculo
         tipo_manejo = TipoManejo.objects.all()
         context = {
-            'nombre': request.user.nombre,
-            'username': request.user.username,
             'vehiculo': vehiculo,
             'tipos_de_vehiculo': tipo_vehiculo,
             'tipos_de_manejo': tipo_manejo,
@@ -235,38 +233,88 @@ class GestionSolicitudAbierta(View):
             'trajo_vehiculo': trajo_vehiculo,
             'trajo_alguien_mas': False if trajo_vehiculo is None else True,
             'solicitud': solicitud,
+            'nombre': data.user.nombre if 'user' in data else "",
+            'username': data.user.username if 'user' in data else "",
         }
+        
+        return context
+
+    def validate(self, data):
+        errors = {}
+
+        #obtener errores y guardarlos en el diccionario "errors" en donde los "key" son los nombre de los inputs html
+        #Ejemplo: validar que los campos no estén vacios
+        for key in data:
+            value = data.get(key, None)
+            if not value:
+                errors[key] = 'El campo no debe estar vacío'
+
+        return errors
+
+    def get(self, request, *args, **kwargs):
+        data = request.GET
+
+        context = self.get_context(data)
+        
+        #obtener datos que requieran ser pre-cargados en el formulario (ejemplo: editar registro) y guardarlos en form_data
+        form_data = {}
+
+        #"form_data" representa un diccionario cuyas claves son los nombres de los inputs html del formulario y sus valores 
+        #son tuplas donde almacenan los valores y los errores de los inputs respectivamente
+
+        context['nombre'] = request.user.nombre
+        context['username'] = request.user.username
+        context['form_data'] = form_data
+
 
         return render(request, 'rcs/inspector/flujo_solicitud/nueva_solicitud.html',context)
 
     def post(self,request,*args,**kwargs):
         data = request.POST
         response = {}
-        solicitud = SolicitudInspeccion.objects.get(id= data['id_solicitud'])
-        vehiculo = solicitud.fk_vehiculo
-        with transaction.atomic():
-            vehiculo.cap_puestos = data['cap_puestos']
-            vehiculo.cilindros = data['cilindros']
-            vehiculo.peso = data['peso']
-            vehiculo.color = data['color']
-            vehiculo.kilometraje = data['kilometraje']
-            vehiculo.serial_carroceria = data['serial_carroceria']
-            vehiculo.serial_motor = data['serial_motor']
-            vehiculo.valor_estimado = data['valor_estimado']
-            vehiculo.modelo = data['modelo']
-            vehiculo.marca = data['marca']
-            vehiculo.anho = data['anho']
 
-            vehiculo.fk_inspector = Usuario.objects.get(id=request.user.id)
-            vehiculo.fk_tipo_vehiculo = TipoVehiculo.objects.get(codigo=data['tipo_vehiculo'])
-            vehiculo.fk_tipo_manejo = TipoManejo.objects.get(codigo=data['tipo_manejo'])
+        errors = self.validate(data)
 
-            solicitud.fk_inspector = Usuario.objects.get(id=request.user.id)
+        if not errors:
+            solicitud = SolicitudInspeccion.objects.get(id= data['id_solicitud'])
+            vehiculo = solicitud.fk_vehiculo
+            with transaction.atomic():
+                vehiculo.cap_puestos = data['cap_puestos']
+                vehiculo.cilindros = data['cilindros']
+                vehiculo.peso = data['peso']
+                vehiculo.color = data['color']
+                vehiculo.kilometraje = data['kilometraje']
+                vehiculo.serial_carroceria = data['serial_carroceria']
+                vehiculo.serial_motor = data['serial_motor']
+                vehiculo.valor_estimado = data['valor_estimado']
+                vehiculo.modelo = data['modelo']
+                vehiculo.marca = data['marca']
+                vehiculo.anho = data['anho']
 
-            # print data[observacion+mecanica.codigo]
-            # print data[radio+mecanica.codigo]
+                vehiculo.fk_inspector = Usuario.objects.get(id=request.user.id)
+                vehiculo.fk_tipo_vehiculo = TipoVehiculo.objects.get(codigo=data['tipo_vehiculo'])
+                vehiculo.fk_tipo_manejo = TipoManejo.objects.get(codigo=data['tipo_manejo'])
 
+                solicitud.fk_inspector = Usuario.objects.get(id=request.user.id)
 
+                # print data[observacion+mecanica.codigo]
+                # print data[radio+mecanica.codigo]
+
+            return redirect(reverse_lazy('condiciones_vehiculo'))
+
+        else:
+            context = self.get_context(request)
+
+            form_data = {}
+            for key, value in data.iteritems():
+                if key in errors.keys():
+                    form_data[key] = (value, errors[key])
+                else:
+                    form_data[key] = (value, '')
+
+            context['form_data'] = form_data
+
+            return render(request, 'rcs/inspector/flujo_solicitud/nueva_solicitud.html',context)
         #if data: 
         #   response['Result'] = 'success'
         #    response['msj'] = ''
@@ -275,9 +323,11 @@ class GestionSolicitudAbierta(View):
         #    response['Result'] = 'error'
         #    response['msj'] = ''
         #    return HttpResponse(json.dumps(response), content_type = "application/json")
+        
 
 
-        return redirect(reverse_lazy('condiciones_vehiculo'))
+        
+
 
 
 
@@ -297,15 +347,53 @@ class CondicionVehiculoSolicitud(View):
             return redirect(reverse_lazy('login'))
         return super(CondicionVehiculoSolicitud, self).dispatch(request, *args, **kwargs)
 
-    def get(self, request, *args, **kwargs):
+
+    def get_context(self, data):
+        id_solicitud = 1
+
+        solicitud = SolicitudInspeccion.objects.get(id=id_solicitud)
+        # import pudb; pu.db
+        vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
         condiciones = CondicionesGeneralesVehiculo.objects.all()
         estados_vehiculo = EstadoVehiculo.objects.all()
         context = {
             'condiciones': condiciones,
             'estados_vehiculo': estados_vehiculo,
-            'nombre': request.user.nombre,
-            'username': request.user.username,
+            'vehiculo': vehiculo,
+            'solicitud': solicitud,
+            'nombre': data.user.nombre if 'user' in data else "",
+            'username': data.user.username if 'user' in data else "",
         }
+        
+        return context
+
+    def validate(self, data):
+        errors = {}
+
+        #obtener errores y guardarlos en el diccionario "errors" en donde los "key" son los nombre de los inputs html
+        #Ejemplo: validar que los campos no estén vacios
+        for key in data:
+            value = data.get(key, None)
+            if not value:
+                errors[key] = 'El campo no debe estar vacío'
+
+        return errors
+
+    def get(self, request, *args, **kwargs):
+        data = request.GET
+
+        context = self.get_context(data)
+        
+        #obtener datos que requieran ser pre-cargados en el formulario (ejemplo: editar registro) y guardarlos en form_data
+        form_data = {}
+
+        #"form_data" representa un diccionario cuyas claves son los nombres de los inputs html del formulario y sus valores 
+        #son tuplas donde almacenan los valores y los errores de los inputs respectivamente
+
+        context['nombre'] = request.user.nombre
+        context['username'] = request.user.username
+        context['form_data'] = form_data
+
 
         return render(request, 'rcs/inspector/flujo_solicitud/condiciones_solicitud.html',context)
 
@@ -315,20 +403,36 @@ class CondicionVehiculoSolicitud(View):
         observacion = "observacion_"
         radio = "radio_"
         condiciones = CondicionesGeneralesVehiculo.objects.all()
-        vehiculo = Vehiculo.objects.get(id=1)
-        # mecanica_vehiculo
-        with transaction.atomic():
-            for condicion in condiciones:
-                # mec_sol
-                condicion.observacion = data[observacion+condicion.codigo]
-                condicion.fk_estado_vehiculo_id = EstadoVehiculo.objects.get(codigo = data[radio+condicion.codigo])
-                condicion.save()
-                ##Agregando condicion a many to many field de vehiculo
-                vehiculo.condiciones_generales_vehiculo.add(condicion)
-            vehiculo.save()
+        # import pudb; pu.db
+        errors = self.validate(data)
+
+        if not errors:
+            solicitud = SolicitudInspeccion.objects.get(id= data['id_solicitud'])
+            vehiculo = solicitud.fk_vehiculo
+            with transaction.atomic():
+                for condicion in condiciones:
+                    # mec_sol
+                    condicion.observacion = data[observacion+condicion.codigo]
+                    condicion.fk_estado_vehiculo_id = EstadoVehiculo.objects.get(codigo = data[radio+condicion.codigo])
+                    condicion.save()
+                    ##Agregando condicion a many to many field de vehiculo
+                    vehiculo.condiciones_generales_vehiculo.add(condicion)
+                vehiculo.save()
 
 
-        return redirect(reverse_lazy('mecanica_vehiculo'))
+            return redirect(reverse_lazy('mecanica_vehiculo'))
+        else:
+            context = self.get_context(request)
+
+            form_data = {}
+            for key, value in data.iteritems():
+                if key in errors.keys():
+                    form_data[key] = (value, errors[key])
+                else:
+                    form_data[key] = (value, '')
+
+            context['form_data'] = form_data
+            return render(request, 'rcs/inspector/flujo_solicitud/condiciones_solicitud.html',context)
 
 
 
