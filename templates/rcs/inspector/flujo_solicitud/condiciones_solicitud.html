@@ -19,6 +19,7 @@
 	</center>
 	<form method="post" id="form_condiciones_vehiculo" action="{% url 'condiciones_vehiculo' %}">
 	{% csrf_token %}
+	<input type="hidden" name="id_solicitud"  class="form-control"  value={{solicitud.id}} >
 	
 	<div class="col-xs-12">
 		<table class="table table-bordered">

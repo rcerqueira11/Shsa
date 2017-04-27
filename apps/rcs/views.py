@@ -448,17 +448,53 @@ class MecanicaVehiculoSolicitud(View):
             return redirect(reverse_lazy('login'))
         return super(MecanicaVehiculoSolicitud, self).dispatch(request, *args, **kwargs)
 
-    def get(self, request, *args, **kwargs):
+    def get_context(self, data):
+        id_solicitud = 1
+
+        solicitud = SolicitudInspeccion.objects.get(id=id_solicitud)
+        # import pudb; pu.db
+        vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
         
         mecanicas = MecanicaVehiculo.objects.all()
         estados_vehiculo = EstadoVehiculo.objects.all()
         context = {
             'mecanicas': mecanicas,
             'estados_vehiculo': estados_vehiculo,
-            'nombre': request.user.nombre,
-            'username': request.user.username,
-        }
+            'vehiculo': vehiculo,
+            'solicitud': solicitud,
+            'nombre': data.user.nombre if 'user' in data else "",
+            'username': data.user.username if 'user' in data else "",
 
+        }
+        
+        return context
+
+    def validate(self, data):
+        errors = {}
+
+        #obtener errores y guardarlos en el diccionario "errors" en donde los "key" son los nombre de los inputs html
+        #Ejemplo: validar que los campos no estén vacios
+        for key in data:
+           if 'observacion' not in key:
+                if not value:
+                    errors[key] = 'El campo no debe estar vacío'
+
+        return errors
+
+    def get(self, request, *args, **kwargs):
+        data = request.GET
+
+        context = self.get_context(data)
+        
+        #obtener datos que requieran ser pre-cargados en el formulario (ejemplo: editar registro) y guardarlos en form_data
+        form_data = {}
+
+        #"form_data" representa un diccionario cuyas claves son los nombres de los inputs html del formulario y sus valores 
+        #son tuplas donde almacenan los valores y los errores de los inputs respectivamente
+
+        context['nombre'] = request.user.nombre
+        context['username'] = request.user.username
+        context['form_data'] = form_data
 
         return render(request, 'rcs/inspector/flujo_solicitud/mecanica_solicitud.html',context)
 
@@ -468,20 +504,37 @@ class MecanicaVehiculoSolicitud(View):
         observacion = "observacion_"
         radio = "radio_"
         mecanicas = MecanicaVehiculo.objects.all()
-        vehiculo = Vehiculo.objects.get(id=1)
-        # mecanica_vehiculo
-        with transaction.atomic():
-            for mecanica in mecanicas:
-                # mec_sol
-                mecanica.observacion = data[observacion+mecanica.codigo]
-                mecanica.fk_estado_vehiculo_id = EstadoVehiculo.objects.get(codigo = data[radio+mecanica.codigo])
-                mecanica.save()
-                ##Agregando mecanica a many to many field de vehiculo
-                vehiculo.mecanica_vehiculo.add(mecanica)
-            vehiculo.save()
+        errors = self.validate(data)
+
+        if not errors:
+            solicitud = SolicitudInspeccion.objects.get(id= data['id_solicitud'])
+            vehiculo = solicitud.fk_vehiculo
+            # mecanica_vehiculo
+            with transaction.atomic():
+                for mecanica in mecanicas:
+                    # mec_sol
+                    mecanica.observacion = data[observacion+mecanica.codigo]
+                    mecanica.fk_estado_vehiculo_id = EstadoVehiculo.objects.get(codigo = data[radio+mecanica.codigo])
+                    mecanica.save()
+                    ##Agregando mecanica a many to many field de vehiculo
+                    vehiculo.mecanica_vehiculo.add(mecanica)
+                vehiculo.save()
 
 
-        return redirect(reverse_lazy('accesorios_vehiculo'))
+            return redirect(reverse_lazy('accesorios_vehiculo'))
+        else:
+            context = self.get_context(request)
+
+            form_data = {}
+            for key, value in data.iteritems():
+                if key in errors.keys():
+                    form_data[key] = (value, errors[key])
+                else:
+                    form_data[key] = (value, '')
+
+            context['form_data'] = form_data
+            return render(request, 'rcs/inspector/flujo_solicitud/mecanica_solicitud.html',context)
+
 
 class AccesoriosVehiculoSolicitud(View):
     """
@@ -495,16 +548,58 @@ class AccesoriosVehiculoSolicitud(View):
             return redirect(reverse_lazy('login'))
         return super(AccesoriosVehiculoSolicitud, self).dispatch(request, *args, **kwargs)
 
-    def get(self, request, *args, **kwargs):
+    def get_context(self, data):
+        id_solicitud = 1
+
+        solicitud = SolicitudInspeccion.objects.get(id=id_solicitud)
+        # import pudb; pu.db
+        vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
         
         accesorios = AccesoriosVehiculo.objects.all()
         estados_vehiculo = EstadoVehiculo.objects.all()
         context = {
             'accesorios': accesorios,
             'estados_vehiculo': estados_vehiculo,
-            'nombre': request.user.nombre,
-            'username': request.user.username,
+            'vehiculo': vehiculo,
+            'solicitud': solicitud,
+            'nombre': data.user.nombre if 'user' in data else "",
+            'username': data.user.username if 'user' in data else "",
+
         }
+        
+        return context
+
+    def validate(self, data):
+        errors = {}
+
+        #obtener errores y guardarlos en el diccionario "errors" en donde los "key" son los nombre de los inputs html
+        #Ejemplo: validar que los campos no estén vacios
+        # import pudb; pu.db
+        for key in data:
+            value = data.get(key, None)
+            if 'observacion' not in key:
+                if not value:
+                    errors[key] = 'El campo no debe estar vacío'
+            else:
+                if 'observacion_RADIO_ANT' in key:
+                    if not value:
+                        errors[key] = 'El campo no debe estar vacío'
+        return errors
+
+    def get(self, request, *args, **kwargs):
+        data = request.GET
+
+        context = self.get_context(data)
+        
+        #obtener datos que requieran ser pre-cargados en el formulario (ejemplo: editar registro) y guardarlos en form_data
+        form_data = {}
+
+        #"form_data" representa un diccionario cuyas claves son los nombres de los inputs html del formulario y sus valores 
+        #son tuplas donde almacenan los valores y los errores de los inputs respectivamente
+
+        context['nombre'] = request.user.nombre
+        context['username'] = request.user.username
+        context['form_data'] = form_data
 
 
         return render(request, 'rcs/inspector/flujo_solicitud/accesorios_solicitud.html',context)
@@ -515,23 +610,37 @@ class AccesoriosVehiculoSolicitud(View):
         observacion = "observacion_"
         radio = "radio_"
         accesorios = AccesoriosVehiculo.objects.all()
-        vehiculo = Vehiculo.objects.get(id=1)
-        # mecanica_vehiculo
-        import pudb; pu.db
-        with transaction.atomic():
-            for accesorio in accesorios:
-                # mec_sol
-                # import pudb; pu.db
-                accesorio.observacion = data[observacion+accesorio.codigo]
-                accesorio.existe = True if data[radio+accesorio.codigo] == 'true' else False
-                accesorio.save()
-                ##Agregando accesorio a many to many field de vehiculo
-                vehiculo.accesorios_vehiculo.add(accesorio)
-            vehiculo.save()
+        errors = self.validate(data)
+
+        # accesorios 
+        if not errors:
+            solicitud = SolicitudInspeccion.objects.get(id= data['id_solicitud'])
+            vehiculo = solicitud.fk_vehiculo
+            with transaction.atomic():
+                for accesorio in accesorios:
+                    # mec_sol
+                    # import pudb; pu.db
+                    accesorio.observacion = data[observacion+accesorio.codigo]
+                    accesorio.existe = True if data[radio+accesorio.codigo] == 'true' else False
+                    accesorio.save()
+                    ##Agregando accesorio a many to many field de vehiculo
+                    vehiculo.accesorios_vehiculo.add(accesorio)
+                vehiculo.save()
+            return redirect(reverse_lazy('documentos_vehiculo'))
+        else:
+            context = self.get_context(request)
+
+            form_data = {}
+            for key, value in data.iteritems():
+                if key in errors.keys():
+                    form_data[key] = (value, errors[key])
+                else:
+                    form_data[key] = (value, '')
+
+            context['form_data'] = form_data
+        return render(request, 'rcs/inspector/flujo_solicitud/accesorios_solicitud.html',context)
 
 
-
-        return redirect(reverse_lazy('documentos_vehiculo'))
 
 
 class DetallesVehiculoSolicitud(View):
