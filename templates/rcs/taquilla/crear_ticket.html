@@ -25,7 +25,15 @@ trajo_vehiculo
 {% csrf_token %}
  	
  	<div class="row">
- 		<div class="col-xs-3 col-xs-offset-9">
+
+ 		<div class="col-xs-3 col-xs-offset-6">
+	 		<label>Placa del Vehiculo</label>
+			{% input_content form_data 'placa' as input %}
+			<input type="text" class="form-control" name="placa" value="{{ input.value }}">
+			<div class="error" id="placa_error">{{ input.error }}</div>
+
+ 		</div>	
+ 		<div class="col-xs-3 ">
  			<label>Motivo de la visita</label>
 			<select  data-placeholder="Seleccionar un tipo"  class="form-control chosen-select" name="tipo_vehiculo" id='id_tipo_vehiculo' >
 				{% for e in motivos_de_visita %}
@@ -108,12 +116,6 @@ trajo_vehiculo
 
 
 
-<label>placa</label>
-	{% input_content form_data 'placa' as input %}
-<input type="text" class="form-control" name="placa" value="{{ input.value }}">
-<div class="error" id="placa_error">
-			
-</div>
 
 
 
