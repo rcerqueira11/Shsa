@@ -29,6 +29,13 @@ from os import path
 
 # Create your views here.
 
+def format_float(X):
+    X = X.replace(" ","")
+    X = X.replace(".","")
+    X = X.replace(",",".")
+
+    return float(X)
+
 class VerPlanillaSeguroCarro(View):
 
     def dispatch(self, request, *args, **kwargs):
@@ -102,9 +109,9 @@ class Dashboard(View):
 
 
 
-class SolicitudInspeccion(View):
+class SolicitarInspeccion   (View):
     """
-    SolicitudInspeccion
+    SolicitarInspeccion 
     -------------------------------------------
     Gestiona las solicitudes en estatus abierta, paso 1 datos del vehiculo
     """
@@ -112,66 +119,89 @@ class SolicitudInspeccion(View):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_anonymous():
             return redirect(reverse_lazy('login'))
-        return super(SolicitudInspeccion, self).dispatch(request, *args, **kwargs)
+        return super(SolicitarInspeccion    , self).dispatch(request, *args, **kwargs)
 
-    def get(self, request, *args, **kwargs):
-        # tipo_vehiculo = TipoVehiculo.objects.all()
-        # titular_vehiculo = solicitud.fk_titular_vehiculo
-        # trajo_vehiculo = vehiculo.fk_trajo_vehiculo
-        # tipo_manejo = TipoManejo.objects.all()
+
+    def get_context(self, data):
         motivo = MotivoSolicitud.objects.all()
          
         context = {
             'motivos_de_visita': motivo,
-            # 'vehiculo': vehiculo,
-            # 'tipos_de_vehiculo': tipo_vehiculo,
-            # 'tipos_de_manejo': tipo_manejo,
-            # 'titular_vehiculo': titular_vehiculo,
-            # 'trajo_vehiculo': trajo_vehiculo,
-            # 'trajo_alguien_mas': False if trajo_vehiculo is None else True,
+            'nombre': data.user.nombre,
+            'username': data.user.username,
         }
+        
+        return context
+
+    def validate(self, data):
+        errors = {}
+
+        #obtener errores y guardarlos en el diccionario "errors" en donde los "key" son los nombre de los inputs html
+        #Ejemplo: validar que los campos no estén vacios
+        for key in data:
+            value = data.get(key, None)
+            if not value:
+                errors[key] = 'El campo no debe estar vacío'
+
+        return errors
+
+    def get(self, request, *args, **kwargs):
+        data = {}
+        context = self.get_context(request)
+        
+        #obtener datos que requieran ser pre-cargados en el formulario (ejemplo: editar registro) y guardarlos en form_data
+        form_data = {}
+
+        #"form_data" representa un diccionario cuyas claves son los nombres de los inputs html del formulario y sus valores 
+        #son tuplas donde almacenan los valores y los errores de los inputs respectivamente
+
+        context['form_data'] = form_data
 
         return render(request, 'rcs/taquilla/crear_ticket.html',context)
 
     def post(self,request,*args,**kwargs):
+
+
         data = request.POST
         response = {}
-        solicitud = SolicitudInspeccion.objects.get(id= data['id_solicitud'])
-        vehiculo = solicitud.fk_vehiculo
-        with transaction.atomic():
-            vehiculo.cap_puestos = data['cap_puestos']
-            vehiculo.cilindros = data['cilindros']
-            vehiculo.peso = data['peso']
-            vehiculo.color = data['color']
-            vehiculo.kilometraje = data['kilometraje']
-            vehiculo.serial_carroceria = data['serial_carroceria']
-            vehiculo.serial_motor = data['serial_motor']
-            vehiculo.valor_estimado = data['valor_estimado']
-            vehiculo.modelo = data['modelo']
-            vehiculo.marca = data['marca']
-            vehiculo.anho = data['anho']
+        errors = self.validate(data)
 
-            vehiculo.fk_inspector = Usuario.objects.get(id=request.user.id)
-            vehiculo.fk_tipo_vehiculo = TipoVehiculo.objects.get(codigo=data['tipo_vehiculo'])
-            vehiculo.fk_tipo_manejo = TipoManejo.objects.get(codigo=data['tipo_manejo'])
+        if not errors:
 
-            solicitud.fk_inspector = Usuario.objects.get(id=request.user.id)
+            #procesar y guardar data del formulario en BD
+            import pudb; pu.db
+            solicitud = SolicitudInspeccion()
+            vehiculo = Vehiculo()
+            titular_vehiculo = TitularVehiculo()
+            trajo_vehiculo = TrajoVehiculo()
+            with transaction.atomic():
+                nombre_titular = data['nombre_titular']
+                apellido_titular = data['apellido_titular']
+                cedula_titular = data['cedula_titular']
+                telefono_titular = data['telefono_titular']
 
-            # print data[observacion+mecanica.codigo]
-            # print data[radio+mecanica.codigo]
+                nombre_trajo_vehiculo = data['nombre_trajo_vehiculo']
+                apellido_trajo_vehiculo = data['apellido_trajo_vehiculo']
+                cedula_trajo_vehiculo = data['cedula_trajo_vehiculo']
+                telefono_trajo_vehiculo = data['telefono_trajo_vehiculo']
+                placa = data['placa']
+                tipo_vehiculo = data['tipo_vehiculo']
 
+            return redirect('dashboard')
+        else:
+            context = self.get_context(request)
 
-        #if data: 
-        #   response['Result'] = 'success'
-        #    response['msj'] = ''
-        #    return HttpResponse(json.dumps(response), content_type = "application/json")
-        #else:
-        #    response['Result'] = 'error'
-        #    response['msj'] = ''
-        #    return HttpResponse(json.dumps(response), content_type = "application/json")
+            form_data = {}
+            for key, value in data.iteritems():
+                if key in errors.keys():
+                    form_data[key] = (value, errors[key])
+                else:
+                    form_data[key] = (value, '')
 
+            context['form_data'] = form_data
 
-        return redirect(reverse_lazy('dashboard'))
+            return render(request, 'rcs/taquilla/crear_ticket.html', context)
+            
 
 class GestionSolicitudAbierta(View):
     """
@@ -196,6 +226,8 @@ class GestionSolicitudAbierta(View):
         trajo_vehiculo = vehiculo.fk_trajo_vehiculo
         tipo_manejo = TipoManejo.objects.all()
         context = {
+            'nombre': request.user.nombre,
+            'username': request.user.username,
             'vehiculo': vehiculo,
             'tipos_de_vehiculo': tipo_vehiculo,
             'tipos_de_manejo': tipo_manejo,
@@ -271,6 +303,8 @@ class CondicionVehiculoSolicitud(View):
         context = {
             'condiciones': condiciones,
             'estados_vehiculo': estados_vehiculo,
+            'nombre': request.user.nombre,
+            'username': request.user.username,
         }
 
         return render(request, 'rcs/inspector/flujo_solicitud/condiciones_solicitud.html',context)
@@ -317,6 +351,8 @@ class MecanicaVehiculoSolicitud(View):
         context = {
             'mecanicas': mecanicas,
             'estados_vehiculo': estados_vehiculo,
+            'nombre': request.user.nombre,
+            'username': request.user.username,
         }
 
 
@@ -362,6 +398,8 @@ class AccesoriosVehiculoSolicitud(View):
         context = {
             'accesorios': accesorios,
             'estados_vehiculo': estados_vehiculo,
+            'nombre': request.user.nombre,
+            'username': request.user.username,
         }
 
 
@@ -406,6 +444,8 @@ class DetallesVehiculoSolicitud(View):
 
     def get(self, request, *args, **kwargs):
         context = {
+            'nombre': request.user.nombre,
+            'username': request.user.username,
 
         }
 
@@ -445,6 +485,8 @@ class DocumentosVehiculoSolicitud(View):
         documentos = DocumentosPresentados.objects.all()
         context = {
             'documentos': documentos,
+            'nombre': request.user.nombre,
+            'username': request.user.username,
         }
 
 

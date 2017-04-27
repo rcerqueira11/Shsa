@@ -20,3 +20,15 @@ def segunda_col(indice):
 def tercera_col(indice):
     return indice in tercera_colu
 
+@register.assignment_tag(name='input_content')
+def input_content(form_data, key):
+    content = {
+        'value': '',
+        'error': ''
+    }
+
+    if key in form_data.keys():
+        content['value'] = form_data[key][0]
+        content['error'] = form_data[key][1]
+
+    return content

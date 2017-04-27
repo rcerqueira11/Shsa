@@ -48,7 +48,7 @@ urlpatterns = [
     ),
     url(
         r'^crear_solicitud',
-        views.SolicitudInspeccion.as_view(),
+        views.SolicitarInspeccion.as_view(),
         name="crear_solicitud"
     ),
     

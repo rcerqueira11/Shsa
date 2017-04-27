@@ -63,6 +63,11 @@
     float: right;
     font-size: 40px !important;
 }
+.modal-quest {
+    color: #EC971F;
+    float: right;
+    font-size: 40px !important;
+}
 /*fin estilos para los modales*/
 
 .title {
