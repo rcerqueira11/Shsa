@@ -37,6 +37,14 @@ class TipoVehiculo(models.Model):
 	def __unicode__(self):
 		return self.nombre + " " + self.codigo
 
+##Tipo manejo automatico, sincronico
+class TipoManejo(models.Model):
+	nombre = models.CharField(max_length=255)
+	codigo = models.CharField(max_length=255,unique=True)
+
+	def __unicode__(self):
+		return self.nombre + " " + self.codigo
+
 ##23-55
 class CondicionesGeneralesVehiculo(models.Model):
 	parte = models.CharField(max_length=255)
@@ -128,6 +136,7 @@ class Vehiculo(models.Model):
 	marca = models.CharField(max_length=255, null=True)
 	fk_inspector = models.ForeignKey(Usuario, null=True)
 	fk_tipo_vehiculo = models.ForeignKey(TipoVehiculo, null=True)
+	fk_tipo_manejo = models.ForeignKey(TipoManejo, null=True)
 	anho = models.IntegerField(null=True)
 	condiciones_generales_vehiculo = models.ManyToManyField(CondicionesGeneralesVehiculo)
 	mecanica_vehiculo = models.ManyToManyField(MecanicaVehiculo)

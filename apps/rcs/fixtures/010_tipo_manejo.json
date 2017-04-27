@@ -1,0 +1,18 @@
+[
+  {
+    "model": "rcs.tipomanejo",
+    "pk": 1,
+    "fields": {
+      "nombre": "Automatico",
+      "codigo": "AUTO"
+    }
+  },
+  {
+    "model": "rcs.tipomanejo",
+    "pk": 2,
+    "fields": {
+      "nombre": "Sincronico",
+      "codigo": "SINC"
+    }
+  }
+]

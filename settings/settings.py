@@ -141,7 +141,7 @@ STATICFILES_DIRS = ( os.path.join(BASE_DIR, "static"), )
 
 # si decido instarlo por pip 
 # STATIC_ROOT = os.path.join(BASE_DIR, './static')
-WKHTMLTOPDF_CMD = '/usr/bin/wkhtmltopdf'
+WKHTMLTOPDF_CMD = '/usr/local/bin/wkhtmltopdf'
 WKHTMLTOPDF_ENV = {'FONTCONFIG_PATH': '/etc/fonts'}
 
 #Email

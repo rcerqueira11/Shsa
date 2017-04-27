@@ -20,6 +20,8 @@
 	</center>
 	<form method="post" id="form_accesorios_vehiculo" action="{% url 'accesorios_vehiculo' %}">
 	{% csrf_token %}
+	<input type="hidden" name="id_solicitud"  class="form-control"  value={{solicitud.id}} >
+	
 
 	<div class="col-xs-12">
 		<table class="table table-bordered">
@@ -41,45 +43,63 @@
 				{% for accesorio in accesorios  %}
 					{% if forloop.counter|primera_col %}
 						<td><h4 >{{accesorio.accesorio}}</h4></td>
-							<td>
-							 	<input type="radio" name="radio_{{accesorio.codigo}}" value="true" />  Si
-						    	<br>
-								<input type="radio" name="radio_{{accesorio.codigo}}" value="false" /> No  
-								<div class="error" id="error_estado_{{accesorio.codigo}}"></div>
-							</td>
-							<td>
-								<textarea rows="2" cols="17" {% if accesorio.codigo == 'RADIO_ANT' %}
-								    placeholder="Especificar si es radio o antena" 
-								
-								{% endif %} name="observacion_{{accesorio.codigo}}"></textarea>
-								<div class="error" id="error_observacion_{{accesorio.codigo}}"></div>
-							</td>
+						<td>
+							{% create_name "radio" accesorio.codigo as nambre %}
+							{% input_content form_data nambre as input %}
+						 	<input type="radio" name="radio_{{accesorio.codigo}}" value="true" {% if input.value == 'true' %} checked="checked"{% endif %} />  Si
+					    	<br>
+							<input type="radio" name="radio_{{accesorio.codigo}}" value="false" {% if input.value == 'false' %} checked="checked"{% endif %} /> No  
+							<div class="error" id="error_estado_{{accesorio.codigo}}">{{input.error}}</div>
+						</td>
+						<td>
+							{% create_name "observacion" accesorio.codigo as nambre %}
+							{% input_content form_data nambre as input %}	
+							<textarea rows="2" cols="17" {% if accesorio.codigo == 'RADIO_ANT' %}
+							    placeholder="Especificar si es radio o antena" 
+							
+							{% endif %} name="observacion_{{accesorio.codigo}}"></textarea>
+							<div class="error" id="error_observacion_{{accesorio.codigo}}">{{input.error}}</div>
+						</td>
 					{% endif %}
 					{% if forloop.counter|segunda_col %}
 						<td><h4 >{{accesorio.accesorio}}</h4></td>
-							<td>
-							 	<input type="radio" name="radio_{{accesorio.codigo}}" value="true" />  Si
-						    	<br>
-								<input type="radio" name="radio_{{accesorio.codigo}}" value="false" /> No  
-								<div class="error" id="error_estado_{{accesorio.codigo}}"></div>
-							</td>
-							<td>
-								<textarea rows="2" cols="17" name="observacion_{{accesorio.codigo}}"></textarea>
-								<div class="error" id="error_observacion_{{accesorio.codigo}}"></div>
-							</td>
+						<td>
+							{% create_name "radio" accesorio.codigo as nambre %}
+							{% input_content form_data nambre as input %}
+						 	<input type="radio" name="radio_{{accesorio.codigo}}" value="true" {% if input.value == 'true' %} checked="checked"{% endif %} />  Si
+					    	<br>
+							<input type="radio" name="radio_{{accesorio.codigo}}" value="false" {% if input.value == 'false' %} checked="checked"{% endif %} /> No  
+							<div class="error" id="error_estado_{{accesorio.codigo}}">{{input.error}}</div>
+						</td>
+						<td>
+							{% create_name "observacion" accesorio.codigo as nambre %}
+							{% input_content form_data nambre as input %}	
+							<textarea rows="2" cols="17" {% if accesorio.codigo == 'RADIO_ANT' %}
+							    placeholder="Especificar si es radio o antena" 
+							
+							{% endif %} name="observacion_{{accesorio.codigo}}"></textarea>
+							<div class="error" id="error_observacion_{{accesorio.codigo}}">{{input.error}}</div>
+						</td>
 					{% endif %}
 					{% if forloop.counter|tercera_col %}
 						<td><h4 >{{accesorio.accesorio}}</h4></td>
-							<td>
-							 	<input type="radio" name="radio_{{accesorio.codigo}}" value="true" />  Si
-						    	<br>
-								<input type="radio" name="radio_{{accesorio.codigo}}" value="false" /> No  
-								<div class="error" id="error_estado_{{accesorio.codigo}}"></div>
-							</td>
-							<td>
-								<textarea rows="2" cols="17" name="observacion_{{accesorio.codigo}}"></textarea>
-								<div class="error" id="error_observacion_{{accesorio.codigo}}"></div>
-							</td>
+						<td>
+							{% create_name "radio" accesorio.codigo as nambre %}
+							{% input_content form_data nambre as input %}
+						 	<input type="radio" name="radio_{{accesorio.codigo}}" value="true" {% if input.value == 'true' %} checked="checked"{% endif %} />  Si
+					    	<br>
+							<input type="radio" name="radio_{{accesorio.codigo}}" value="false" {% if input.value == 'false' %} checked="checked"{% endif %} /> No  
+							<div class="error" id="error_estado_{{accesorio.codigo}}">{{input.error}}</div>
+						</td>
+						<td>
+							{% create_name "observacion" accesorio.codigo as nambre %}
+							{% input_content form_data nambre as input %}	
+							<textarea rows="2" cols="17" {% if accesorio.codigo == 'RADIO_ANT' %}
+							    placeholder="Especificar si es radio o antena" 
+							
+							{% endif %} name="observacion_{{accesorio.codigo}}"></textarea>
+							<div class="error" id="error_observacion_{{accesorio.codigo}}">{{input.error}}</div>
+						</td>
 					{% endif %}
 					{% if forloop.counter|divisibleby:3 %}
 						</tr>

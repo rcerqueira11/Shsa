@@ -18,6 +18,8 @@ $("#id_password_confirm").attr('onDrop','return false');
 
 
 $('.ci-mask').inputmask('[9]{8}', {placeholder: ''});
+$('.anho').inputmask('[9]{4}', {placeholder: ''});
+$('.numeros').inputmask('[9]{20}', {placeholder: ''});
 
 $('.chosen-select').chosen();
 
@@ -164,4 +166,23 @@ function show_modal_exito(titulo,subtitulo,mensaje){
   $("#modal-exito-subtitulo").html(subtitulo)
   $("#modal-exito-msj").html(mensaje)
   $("#modal-exito").modal('show')
+};
+
+function show_modal_verificacion(titulo,subtitulo,mensaje){
+  $("#modal-verificacion-titulo").html(titulo)
+  $("#modal-verificacion-subtitulo").html(subtitulo)
+  $("#modal-verificacion-msj").html(mensaje)
+  $("#modal-verificacion").modal('show')
+};
+
+function fill_modal_exito(titulo,subtitulo,mensaje){
+  $("#modal-exito-titulo").html(titulo)
+  $("#modal-exito-subtitulo").html(subtitulo)
+  $("#modal-exito-msj").html(mensaje)
+};
+
+function fill_modal_verificacion(titulo,subtitulo,mensaje){
+  $("#modal-verificacion-titulo").html(titulo)
+  $("#modal-verificacion-subtitulo").html(subtitulo)
+  $("#modal-verificacion-msj").html(mensaje)
 };

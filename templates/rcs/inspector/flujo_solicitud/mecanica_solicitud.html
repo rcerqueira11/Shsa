@@ -20,6 +20,7 @@
 	</center>
 	<form method="post" id="form_mecanica_vehiculo" action="{% url 'mecanica_vehiculo' %}">
 	{% csrf_token %}
+	<input type="hidden" name="id_solicitud"  class="form-control"  value={{solicitud.id}} >
 	<div class="col-xs-12">
 		<table class="table table-bordered">
 			<thead>
@@ -41,46 +42,58 @@
 					{% if forloop.counter|primera_col %}
 						<td><h4 >{{mecanica.parte}}</h4></td>
 						<td>
+							{% create_name "radio" mecanica.codigo as nambre %}
+							{% input_content form_data nambre as input %}
 							{% for estado in estados_vehiculo %}
-							  <input type="radio" name="radio_{{mecanica.codigo}}" value="{{estado.codigo}}" /> {{estado.codigo}} 
+							  <input type="radio" name="radio_{{mecanica.codigo}}" value="{{estado.codigo}}"{% if input.value == estado.codigo  %} checked="checked" {% endif %}/> {{estado.codigo}} 
 							  <br>
 								
 							{% endfor %}
-							<div class="error" id="error_estado_{{mecanica.codigo}}"></div>
+							<div class="error" id="radio_{{mecanica.codigo}}_error">{{input.error}}</div>
 						</td>
 						<td>
+							{% create_name "observacion" mecanica.codigo as nambre %}
+							{% input_content form_data nambre as input %}
 							<textarea rows="2" cols="12" name="observacion_{{mecanica.codigo}}"></textarea>
-							<div class="error" id="error_observacion_{{mecanica.codigo}}"></div>
+							<div class="error" id="id_observacion_{{mecanica.codigo}}_error">{{input.error}}</div>
 						</td>
 					{% endif %}
 					{% if forloop.counter|segunda_col %}
 						<td><h4 >{{mecanica.parte}}</h4></td>
 						<td>
+							{% create_name "radio" mecanica.codigo as nambre %}
+							{% input_content form_data nambre as input %}
 							{% for estado in estados_vehiculo %}
-							  <input type="radio" name="radio_{{mecanica.codigo}}" value="{{estado.codigo}}" /> {{estado.codigo}} 
+							  <input type="radio" name="radio_{{mecanica.codigo}}" value="{{estado.codigo}}"{% if input.value == estado.codigo  %} checked="checked" {% endif %}/> {{estado.codigo}} 
 							  <br>
 								
 							{% endfor %}
-							<div class="error" id="error_estado_{{mecanica.codigo}}"></div>
+							<div class="error" id="radio_{{mecanica.codigo}}_error">{{input.error}}</div>
 						</td>
 						<td>
+							{% create_name "observacion" mecanica.codigo as nambre %}
+							{% input_content form_data nambre as input %}
 							<textarea rows="2" cols="12" name="observacion_{{mecanica.codigo}}"></textarea>
-							<div class="error" id="error_observacion_{{mecanica.codigo}}"></div>
+							<div class="error" id="id_observacion_{{mecanica.codigo}}_error">{{input.error}}</div>
 						</td>
 					{% endif %}
 					{% if forloop.counter|tercera_col %}
 						<td><h4 >{{mecanica.parte}}</h4></td>
 						<td>
+							{% create_name "radio" mecanica.codigo as nambre %}
+							{% input_content form_data nambre as input %}
 							{% for estado in estados_vehiculo %}
-							  <input type="radio" name="radio_{{mecanica.codigo}}" value="{{estado.codigo}}" /> {{estado.codigo}} 
+							  <input type="radio" name="radio_{{mecanica.codigo}}" value="{{estado.codigo}}"{% if input.value == estado.codigo  %} checked="checked" {% endif %}/> {{estado.codigo}} 
 							  <br>
 								
 							{% endfor %}
-							<div class="error" id="error_estado_{{mecanica.codigo}}"></div>
+							<div class="error" id="radio_{{mecanica.codigo}}_error">{{input.error}}</div>
 						</td>
 						<td>
+							{% create_name "observacion" mecanica.codigo as nambre %}
+							{% input_content form_data nambre as input %}
 							<textarea rows="2" cols="12" name="observacion_{{mecanica.codigo}}"></textarea>
-							<div class="error" id="error_observacion_{{mecanica.codigo}}"></div>
+							<div class="error" id="id_observacion_{{mecanica.codigo}}_error">{{input.error}}</div>
 						</td>
 					{% endif %}
 					{% if forloop.counter|divisibleby:3 %}

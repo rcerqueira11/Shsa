@@ -10,11 +10,134 @@
 
 
 <div class="container">
-{# Condiciones Generales del vehiculo #}
-<div class="row">
 	<center>
 	    <section>
-	        <div class="title">Condiciones Generales del Veh&iacute;culo</div>
+	        <div class="title">Datos del Veh&iacute;culo</div>
+		</section>
+	</center>
+<!-- vehiculo
+tipo_vehiculo
+titular_vehiculo
+trajo_vehiculo
+ -->
+
+ <form method="post" id="form_datos_vehiculo" action="{% url 'gestion_ticket' %}">
+{% csrf_token %}
+ 	
+<div class="row">
+	<div class="col-xs-4">
+	<label>Nombre y Apellido del Titular:</label>
+		<input type="text"  class="form-control" value="{{titular_vehiculo.nombre}} {{titular_vehiculo.apellido}}" readonly="true">
+	</div>
+	<div class="col-xs-4">
+		<label>Cedula de identidad:</label>
+		<input type="text" class="form-control"  value="{{titular_vehiculo.cedula}}" readonly="true">
+	</div>
+	<div class="col-xs-4">
+	<label>Tel&eacute;fono</label>
+		<input type="text" class="form-control"  value="{{titular_vehiculo.telefono}}" readonly="true">
+	</div>
+</div>
+
+
+{% if not trajo_alguien_mas %}
+    
+<div class="row">
+	<div class="col-xs-4">
+	<label>Persona que trajo el Veh&iacute;culo a inspecci&oacute;n:</label>
+		<input type="text"  class="form-control" value="{{trajo_vehiculo.nombre}} {{trajo_vehiculo.apellido}}" readonly="true">
+	</div>
+	<div class="col-xs-4">
+	<label>Cedula de identidad:</label>
+		<input type="text"  class="form-control" value="{{trajo_vehiculo.cedula}}" readonly="true">
+	</div>
+	<div class="col-xs-4">
+	<label>Parentesco con el Titular</label>
+		<input type="text"  class="form-control" value="{{trajo_vehiculo.parentesco}}" readonly="true">
+	</div>
+</div>
+
+{% endif %}
+
+
+
+
+
+
+
+
+<input type="hidden" name="id_solicitud"  class="form-control"  value={{solicitud.id}} >
+
+
+
+<label>placa</label>
+<input type="text" class="form-control" value="{{vehiculo.placa}}" readonly="true">
+{% input_content form_data 'cap_puestos' as input %}
+<label>cap_puestos</label>
+<input type="text" name="cap_puestos" id="id_cap_puestos" class="form-control numeros" value="{{input.value}}">
+<div class="error">{{input.error}}</div>
+{% input_content form_data 'cilindros' as input %}
+<label>cilindros</label>
+<input type="text" name="cilindros" id="id_cilindros" class="form-control" value="{{input.value}}">
+<div class="error">{{input.error}}</div>
+{% input_content form_data 'peso' as input %}
+<label>peso</label>
+<input type="text" name="peso" id="id_peso" class="form-control numeros" value="{{input.value}}">
+<div class="error">{{input.error}}</div>
+{% input_content form_data 'color' as input %}
+<label>color</label>
+<input type="text" name="color" id="id_color" class="form-control" value="{{input.value}}">
+<div class="error">{{input.error}}</div>
+{% input_content form_data 'kilometraje' as input %}
+<label>kilometraje</label>
+<input type="text" name="kilometraje" id="id_kilometraje" class="form-control" value="{{input.value}}">
+<div class="error">{{input.error}}</div>
+{% input_content form_data 'serial_carroceria' as input %}
+<label>serial_carroceria</label>
+<input type="text" name="serial_carroceria" id="id_serial_carroceria" class="form-control" value="{{input.value}}">
+<div class="error">{{input.error}}</div>
+{% input_content form_data 'serial_motor' as input %}
+<label>serial_motor</label>
+<input type="text" name="serial_motor" id="id_serial_motor" class="form-control" value="{{input.value}}">
+<div class="error">{{input.error}}</div>
+{% input_content form_data 'valor_estimado' as input %}
+<label>valor_estimado</label>
+<input type="text" name="valor_estimado" id="id_valor_estimado" class="form-control" value="{{input.value}}">
+<div class="error">{{input.error}}</div>
+{% input_content form_data 'modelo' as input %}
+<label>modelo</label>
+<input type="text" name="modelo" id="id_modelo" class="form-control" value="{{input.value}}">
+<div class="error">{{input.error}}</div>
+{% input_content form_data 'marca' as input %}
+<label>marca</label>
+<input type="text" name="marca" id="id_marca" class="form-control" value="{{input.value}}">
+<div class="error">{{input.error}}</div>
+{% input_content form_data 'anho' as input %}
+<label>anho</label>
+<input type="text" name="anho" id="id_anho" class="form-control anho" value="{{input.value}}">
+<div class="error">{{input.error}}</div>
+<label>Tipo Modelo</label>
+<select  data-placeholder="Seleccionar un tipo"  class="form-control chosen-select" name="tipo_vehiculo" id='id_tipo_vehiculo' >
+{% for e in tipos_de_vehiculo %}
+      <option value="{{ e.codigo }}" >{{ e.nombre|title }}</option>
+{% endfor %}
+</select>
+
+<label>Tipo</label>
+<select  data-placeholder="Seleccionar un tipo"  class="form-control chosen-select" name="tipo_manejo" id='id_tipo_manejo' >
+{% for e in tipos_de_manejo %}
+      <option value="{{ e.codigo }}" >{{ e.nombre|title }}</option>
+{% endfor %}
+</select>
+
+<button type="submit"> Continuar</button>
+ </form> 
+
+
+<!-- <div class="row">
+	<center>
+	    <section>
+	        <div class="title">Detalles del Veh&iacute;culo</div>
 		</section>
 	</center>
 	
@@ -89,9 +212,9 @@
 		</table>
 	</div>
 </div>
+ -->
 
-
-{# Mecanica del vehiculo #}
+<!-- {# Mecanica del vehiculo #}
 <div class="row">
 	<center>
 	    <section>
@@ -173,8 +296,8 @@
 	<button type="submit">SEND</button>
 	</form>
 </div>
-
-{# Accesorios del vehiculo #}
+ -->
+<!-- {# Accesorios del vehiculo #}
 <div class="row">
 	<center>
 	    <section>
@@ -248,7 +371,7 @@
 			</tbody>
 		</table>
 	</div>
-</div>
+</div> -->
 
 
 {% endblock main_content %}
