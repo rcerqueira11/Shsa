@@ -5,7 +5,7 @@
     "fields": {
       "parte": "23. Latoneria",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "LAT"
     }
   },
@@ -15,7 +15,7 @@
     "fields": {
       "parte": "24. Planilla O Rejilla Frontal",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "PLA_REJ_FRO"
     }
   },
@@ -25,7 +25,7 @@
     "fields": {
       "parte": "25. Techo ",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "TECH"
     }
   },
@@ -35,7 +35,7 @@
     "fields": {
       "parte": "26. Pintura",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "PINT"
     }
   },
@@ -45,7 +45,7 @@
     "fields": {
       "parte": "27. Sop O Focos Traseros",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "SOP_FOC_TRAS"
     }
   },
@@ -55,7 +55,7 @@
     "fields": {
       "parte": "28. Compuesta Trasera",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "COMP_TRAS"
     }
   },
@@ -65,7 +65,7 @@
     "fields": {
       "parte": "29. Tapiceria",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "TAPI"
     }
   },
@@ -75,7 +75,7 @@
     "fields": {
       "parte": "30. Cocuyos Frontales",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "COC_FRON"
     }
   },
@@ -85,7 +85,7 @@
     "fields": {
       "parte": "31. Parabrisas",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "PARABR"
     }
   },
@@ -95,7 +95,7 @@
     "fields": {
       "parte": "32. Cauchos",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "CAUCH"
     }
   },
@@ -105,7 +105,7 @@
     "fields": {
       "parte": "33. Retrovisor Interno",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "RET_INT"
     }
   },
@@ -115,7 +115,7 @@
     "fields": {
       "parte": "34. Parachoques",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "PAR_CHOQ"
     }
   },
@@ -125,7 +125,7 @@
     "fields": {
       "parte": "35. Platinas ",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "PLAT"
     }
   },
@@ -135,7 +135,7 @@
     "fields": {
       "parte": "36. Manillas Y Cerraduras",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "MANI_CERR"
     }
   },
@@ -145,7 +145,7 @@
     "fields": {
       "parte": "37. Cometa",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "COMT"
     }
   },
@@ -155,7 +155,7 @@
     "fields": {
       "parte": "38. Tableros ",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "TAB"
     }
   },
@@ -165,7 +165,7 @@
     "fields": {
       "parte": "39. Limpia Parabrisas",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "LIMP_PAR"
     }
   },
@@ -175,7 +175,7 @@
     "fields": {
       "parte": "40. Butacas Y Asientos",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "BUT_ASI"
     }
   },
@@ -185,7 +185,7 @@
     "fields": {
       "parte": "41. Faros Y Sus Aros",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "FAR_ARO"
     }
   },
@@ -195,7 +195,7 @@
     "fields": {
       "parte": "42. Retrovisores Externos ",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "RET_EXT"
     }
   },
@@ -205,7 +205,7 @@
     "fields": {
       "parte": "43. Volantes",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "VOL"
     }
   },
@@ -215,7 +215,7 @@
     "fields": {
       "parte": "44. Emblema De Modelo",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "EMB_MOD"
     }
   },
@@ -225,7 +225,7 @@
     "fields": {
       "parte": "45. Guardafangos ",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "GURD_FANG"
     }
   },
@@ -235,7 +235,7 @@
     "fields": {
       "parte": "46. Cinturones De Seguridad",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "CINT_SEG"
     }
   },
@@ -245,7 +245,7 @@
     "fields": {
       "parte": "47. Estribos",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "ESTR"
     }
   },
@@ -255,7 +255,7 @@
     "fields": {
       "parte": "48. Puertas ",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "PUERT"
     }
   },
@@ -265,7 +265,7 @@
     "fields": {
       "parte": "49. Ventanas",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "VENT"
     }
   },
@@ -275,7 +275,7 @@
     "fields": {
       "parte": "50. Frontal",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "FRONT"
     }
   },
@@ -285,7 +285,7 @@
     "fields": {
       "parte": "51. Capot ",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "CAPT"
     }
   },
@@ -295,7 +295,7 @@
     "fields": {
       "parte": "52. Maleta Y Tapa Maleta",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "MALE_TAPA_MALE"
     }
   },
@@ -305,7 +305,7 @@
     "fields": {
       "parte": "53. Modific. Del Modelo",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "MOD_MODELO"
     }
   },
@@ -315,7 +315,7 @@
     "fields": {
       "parte": "54. Carter Trasero",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "CAR_TRAS"
     }
   },
@@ -325,7 +325,7 @@
     "fields": {
       "parte": "55. Otro",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "OTRO"
     }
   }

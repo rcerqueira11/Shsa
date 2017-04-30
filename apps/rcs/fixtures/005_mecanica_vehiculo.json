@@ -5,7 +5,7 @@
     "fields": {
       "parte": "56. Encenddo",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "ENC"
     }
   },
@@ -15,7 +15,7 @@
     "fields": {
       "parte": "57. Embraque O Crocht",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "EMB_CROCH"
     }
   },
@@ -25,7 +25,7 @@
     "fields": {
       "parte": "58. Sistema Electrico",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "SIS_ELEC"
     }
   },
@@ -35,7 +35,7 @@
     "fields": {
       "parte": "59. Otros",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "OTRO1_MV"
     }
   },
@@ -45,7 +45,7 @@
     "fields": {
       "parte": "60. Otros",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "OTRO2_MV"
     }
   },
@@ -55,7 +55,7 @@
     "fields": {
       "parte": "61. Otros",
       "fk_estado_vehiculo": null,
-      "comentario": null,
+      "observacion": null,
       "codigo": "OTRO3_MV"
     }
   }
