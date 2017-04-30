@@ -16,32 +16,37 @@
                 <td colspan="2" style="width:100%; background-color: white;"><center> DATOS DEL VEH&Iacute;CULO</center></td>
             </tr>
             <td rowspan="2"  >
-              Nombre y apellido del Titular:
+              Nombre y apellido del Titular: <br>
+              <center><h4>{{titular_vehiculo.nombre}} {{titular_vehiculo.apellido}}</h4></center>
             </td>
             <td   >
-              Cedula de identidad:  
+              Cedula de identidad:  {{titular_vehiculo.cedula}}
             </td>
             
             <tr>
             	<td   >
-              		Tel&eacute;fonos:  
+              		Tel&eacute;fono:  {{titular_vehiculo.telefono}}
             	</td>	
 			</tr>
         </table>
-        <table class="table table-bordered" border="1" style="width:100%;margin-bottom:0;margin-top:0px;">
-            <td rowspan="2"  >
-              Nombre y apellido de la persona que trajo el veh&iacute;culo a la inspecci&oacute;n:
-            </td>
-            <td   >
-              Cedula de identidad:  
-            </td>
+        {% if trajo_alguien_mas %}
             
-            <tr>
-            	<td   >
-              		Parentesco con el titular  
-            	</td>	            
-              </tr>
-        </table>
+	        <table class="table table-bordered" border="1" style="width:100%;margin-bottom:0;margin-top:0px;">
+	            <td rowspan="2"  >
+	              Nombre y apellido de la persona que trajo el veh&iacute;culo a la inspecci&oacute;n:
+	            </td>
+	            <td   >
+	              Cedula de identidad:  
+	            </td>
+	            
+	            <tr>
+	            	<td   >
+	              		Parentesco con el titular  
+	            	</td>	            
+	              </tr>
+	        </table>
+        
+        {% endif %}
         <br>
 
         
@@ -49,50 +54,58 @@
 	{# Datos vehiculo  #}
 	<div class="row">
         <table class="table table-bordered" border="1" style="width:100%;margin-bottom:0;margin-top:0px;">
-            <tr>placa
-peso
-
-serial_carroceria
-valor_estimado
-
-
+            <tr>
 	            <td>
-	              Marca: {{vehiculo.marca}}
+	              7. Marca: {{vehiculo.marca}}
 	            </td>
 	            <td>
-	              Modelo: {{vehiculo.modelo}}
+	              8. Modelo: {{vehiculo.modelo}}
 	            </td>
 	            <td>
-	              Cap. Puestos: {{vehiculo.cap_puestos}}
+	              9. Cap. Puestos: {{vehiculo.cap_puestos}}
 	            </td>
 	            <td>
-	              Cilindros: {{vehiculo.cilindros}}
+	              10. Cilindros: {{vehiculo.cilindros}}
 	            </td>
 	            <td>
-	              Color: {{vehiculo.color}}
+	              11. Color: {{vehiculo.color}}
 	            </td>
-	            <td>
-	              Tipo: {{vehiculo.fk_tipo_vehiculo.nombre}}
-	            </td>
+	            <td colspan="2">
+	              12. Tipo: {{vehiculo.fk_tipo_vehiculo.nombre}}
+	            </td >
 			</tr>            
 			<tr>
 	            <td>
-	              Año: {{vehiculo.anho}} 
+	              13. Año: {{vehiculo.anho}} 
 	            </td>
 	            <td>
-	              Placa: {{vehiculo.placa}}
+	              14. Placa: {{vehiculo.placa}}
 	            </td>
 	            <td>
-	              Peso: {{vehiculo.peso}}
+	              15. Peso: {{vehiculo.peso}}
 	            </td>
 	            <td>
-	              {{vehiculo.fk_tipo_manejo.nombre}}
+	              16. {{vehiculo.fk_tipo_manejo.nombre}}
 	            </td>
 	            <td>
-	              Kilometraje: {{vehiculo.kilometraje}}
+	              17. Kilometraje: {{vehiculo.kilometraje}}
+	            </td>
+	            <td colspan="2">
+	              18. Serial del Motor: {{vehiculo.serial_motor}}
+	            </td>
+			</tr>  
+			<tr>
+	            <td colspan="2">
+	              19 Serial de Carroceria. Año: {{vehiculo.anho}} 
+	            </td>
+	            <td colspan="2">
+	              20. Valor Estimado: {{vehiculo.placa}}
+	            </td>
+	            <td colspan="2">
+	              21. Nombre del Inspector: {{vehiculo.fk_inspector.nombre|capfirst}} {{vehiculo.fk_inspector.apellido|capfirst}}
 	            </td>
 	            <td>
-	              Serial del Motor: {{vehiculo.serial_motor}}
+	              22. C.I Nro. {{vehiculo.fk_inspector.cedula}}
 	            </td>
 			</tr>            
         </table>

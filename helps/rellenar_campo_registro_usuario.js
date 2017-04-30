@@ -28,8 +28,19 @@ $('#id_anho').val('2007')
 
 
 
+
 usuario2
 123123123C
 
 
 
+numero = 7
+$('#id_username').val('usu'+numero)
+$('#id_correo_electronico').val('usu'+numero+'@gmail.com')
+$('#id_correo2').val('usu'+numero+'@gmail.com')
+$('#id_password').val('123123123C')
+$('#id_password_confirm').val('123123123C')
+$('#id_form-0-respuesta').val('res')
+$('#id_form-1-respuesta').val('res')
+$('#id_form-2-respuesta').val('res')
+$('#id-submit-button').click()

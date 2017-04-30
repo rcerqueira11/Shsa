@@ -45,12 +45,15 @@ class VerPlanillaSeguroCarro(View):
     def get(self, request, *args, **kwargs):
         data = request.GET
         solicitud = SolicitudInspeccion.objects.get(id= 1)
-        instance = solicitud.fk_vehiculo
-        condiciones_generales_vehiculo = instance.condiciones_generales_vehiculo.all().exclude(fk_estado_vehiculo_id=None)
-        mecanica_vehiculo = instance.mecanica_vehiculo.all().exclude(fk_estado_vehiculo_id=None)
-        accesorios_vehiculo = instance.accesorios_vehiculo.all().exclude(observacion=None)
-        detalles_datos = instance.detalles_datos.all()
-        documentos_presentados = instance.documentos_presentados.all()
+        vehiculo = solicitud.fk_vehiculo
+        condiciones_generales_vehiculo = vehiculo.condiciones_generales_vehiculo.all().exclude(fk_estado_vehiculo_id=None)
+        mecanica_vehiculo = vehiculo.mecanica_vehiculo.all().exclude(fk_estado_vehiculo_id=None)
+        accesorios_vehiculo = vehiculo.accesorios_vehiculo.all().exclude(observacion=None)
+        detalles_datos = vehiculo.detalles_datos.all()
+        documentos_presentados = vehiculo.documentos_presentados.all()
+        trajo_vehiculo = vehiculo.fk_trajo_vehiculo
+        titular_vehiculo = solicitud.fk_titular_vehiculo
+
         context = {
             'nombre': request.user.nombre,
             'username': request.user.username,        
@@ -59,7 +62,9 @@ class VerPlanillaSeguroCarro(View):
             'detalles': detalles_datos,
             'documentos': documentos_presentados,
             'mecanicas': mecanica_vehiculo,
-            'vehiculo': instance,
+            'vehiculo': vehiculo,
+            'trajo_alguien_mas': False if trajo_vehiculo is None else True,
+            'titular_vehiculo': titular_vehiculo,
             }
         return render(request, 'rcs/inspector/flujo_solicitud/vista_previa_solicitud.html',context)
 
@@ -349,14 +354,6 @@ class GestionSolicitudAbierta(View):
         
 
 
-        
-
-
-
-
-
-
-
 
 class CondicionVehiculoSolicitud(View):
     """
@@ -473,7 +470,6 @@ class CondicionVehiculoSolicitud(View):
 
             context['form_data'] = form_data
             return render(request, 'rcs/inspector/flujo_solicitud/condiciones_solicitud.html',context)
-
 
 
 class MecanicaVehiculoSolicitud(View):
@@ -755,6 +751,7 @@ class DetallesVehiculoSolicitud(View):
 
 
         return redirect(reverse_lazy('template_dir'))
+
 
 class DocumentosVehiculoSolicitud(View):
     """
