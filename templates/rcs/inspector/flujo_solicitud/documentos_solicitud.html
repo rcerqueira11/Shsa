@@ -20,20 +20,21 @@
 	</center>
 	<form method="post" id="form_documentos_vehiculo" action="{% url 'documentos_vehiculo' %}">
 	{% csrf_token %}
+	<input type="hidden" name="id_solicitud"  class="form-control"  value={{solicitud.id}} >
 
 	<div class="col-xs-12">
 		<table class="table table-bordered">
 			<thead>
 			{# style="width:14%" #}
 				<th style="width:12.1%"><center>DOCUMENTO</center></th>
-				<th style="width:9.1%"><center>SI</center></th>
-				<th style="width:12.1%"><center>NO</center></th>
+				<th style="width:9.1%"><center>TRAJO
+				</center></th>
 				<th style="width:12.1%"><center>DOCUMENTO</center></th>
-				<th style="width:9.1%"><center>SI</center></th>
-				<th style="width:12.1%"><center>NO</center></th>
+				<th style="width:9.1%"><center>TRAJO
+				</center></th>
 				<th style="width:12.1%"><center>DOCUMENTO</center></th>
-				<th style="width:9.1%"><center>SI</center></th>
-				<th style="width:12.1%"><center>NO</center></th>
+				<th style="width:9.1%"><center>TRAJO
+				</center></th>
 			</thead>
 			<tbody>
 				<tr>
@@ -41,19 +42,40 @@
 				{% for documento in documentos  %}
 					{% if forloop.counter|primera_col %}
 						<td><h4 >{{documento.nombre}}</h4></td>
-						<td><input type="radio" name="radio_{{documento.codigo}}" value="true" /></td>
-						<td><input type="radio" name="radio_{{documento.codigo}}" value="false" /></td>
+						<td>
+						{% create_name "radio" documento.codigo as nambre %}
+							{% input_content form_data nambre as input %}
+						 	<input type="radio" name="radio_{{documento.codigo}}" value="true" {% if input.value == 'true' %} checked="checked"{% endif %} />  Si
+					    	<br>
+							<input type="radio" name="radio_{{documento.codigo}}" value="false" {% if input.value == 'false' %} checked="checked"{% endif %} /> No  
+							<div class="error" id="error_estado_{{documento.codigo}}">{{input.error}}</div>
+
+						</td>
 							
 					{% endif %}
 					{% if forloop.counter|segunda_col %}
 						<td><h4 >{{documento.nombre}}</h4></td>
-						<td><input type="radio" name="radio_{{documento.codigo}}" value="true" /></td>
-						<td><input type="radio" name="radio_{{documento.codigo}}" value="false" /></td>
+						<td>
+						{% create_name "radio" documento.codigo as nambre %}
+							{% input_content form_data nambre as input %}
+						 	<input type="radio" name="radio_{{documento.codigo}}" value="true" {% if input.value == 'true' %} checked="checked"{% endif %} />  Si
+					    	<br>
+							<input type="radio" name="radio_{{documento.codigo}}" value="false" {% if input.value == 'false' %} checked="checked"{% endif %} /> No  
+							<div class="error" id="error_estado_{{documento.codigo}}">{{input.error}}</div>
+
+						</td>
 					{% endif %}
 					{% if forloop.counter|tercera_col %}
 						<td><h4 >{{documento.nombre}}</h4></td>
-						<td><input type="radio" name="radio_{{documento.codigo}}" value="true" /></td>
-						<td><input type="radio" name="radio_{{documento.codigo}}" value="false" /></td>
+						<td>
+						{% create_name "radio" documento.codigo as nambre %}
+							{% input_content form_data nambre as input %}
+						 	<input type="radio" name="radio_{{documento.codigo}}" value="true" {% if input.value == 'true' %} checked="checked"{% endif %} />  Si
+					    	<br>
+							<input type="radio" name="radio_{{documento.codigo}}" value="false" {% if input.value == 'false' %} checked="checked"{% endif %} /> No  
+							<div class="error" id="error_estado_{{documento.codigo}}">{{input.error}}</div>
+
+						</td>
 					{% endif %}
 					{% if forloop.counter|divisibleby:3 %}
 						</tr>

@@ -54,7 +54,7 @@
 						<td>
 							{% create_name "observacion" mecanica.codigo as nambre %}
 							{% input_content form_data nambre as input %}
-							<textarea rows="2" cols="12" name="observacion_{{mecanica.codigo}}"></textarea>
+							<textarea rows="2" cols="12" name="observacion_{{mecanica.codigo}}">{{input.value}}</textarea>
 							<div class="error" id="id_observacion_{{mecanica.codigo}}_error">{{input.error}}</div>
 						</td>
 					{% endif %}
@@ -73,7 +73,7 @@
 						<td>
 							{% create_name "observacion" mecanica.codigo as nambre %}
 							{% input_content form_data nambre as input %}
-							<textarea rows="2" cols="12" name="observacion_{{mecanica.codigo}}"></textarea>
+							<textarea rows="2" cols="12" name="observacion_{{mecanica.codigo}}">{{input.value}}</textarea>
 							<div class="error" id="id_observacion_{{mecanica.codigo}}_error">{{input.error}}</div>
 						</td>
 					{% endif %}
@@ -92,7 +92,7 @@
 						<td>
 							{% create_name "observacion" mecanica.codigo as nambre %}
 							{% input_content form_data nambre as input %}
-							<textarea rows="2" cols="12" name="observacion_{{mecanica.codigo}}"></textarea>
+							<textarea rows="2" cols="12" name="observacion_{{mecanica.codigo}}">{{input.value}}</textarea>
 							<div class="error" id="id_observacion_{{mecanica.codigo}}_error">{{input.error}}</div>
 						</td>
 					{% endif %}
