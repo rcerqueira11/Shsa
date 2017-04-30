@@ -169,7 +169,7 @@ class SolicitarInspeccion   (View):
         if not errors:
 
             #procesar y guardar data del formulario en BD
-            import pudb; pu.db
+            # import pudb; pu.db
             solicitud = SolicitudInspeccion()
             vehiculo = Vehiculo()
             titular_vehiculo = TitularVehiculo()
@@ -376,7 +376,7 @@ class CondicionVehiculoSolicitud(View):
             value = data.get(key, None)
 
             if 'observacion_OTRO' in key:
-                codigo = key.split('_')[1] 
+                codigo = key.split('_',1)[1] 
                 if data['radio_'+codigo].strip() !="":
                     errors[key] = 'El campo no debe estar vacío'
                     
@@ -607,15 +607,22 @@ class AccesoriosVehiculoSolicitud(View):
         #obtener errores y guardarlos en el diccionario "errors" en donde los "key" son los nombre de los inputs html
         #Ejemplo: validar que los campos no estén vacios
         # import pudb; pu.db
+
         for key in data:
+            # import pudb; pu.db
             value = data.get(key, None)
-            if 'observacion' not in key:
-                if not value:
+            if 'observacion_OTRO' in key:
+                codigo = key.split('_',1)[1] 
+                if data['radio_'+codigo].strip() !="":
                     errors[key] = 'El campo no debe estar vacío'
-            else:
-                if 'observacion_RADIO_ANT' in key:
+                    
+            if not value and not 'observacion' in key and not 'OTRO' in key :
+                errors[key] = 'El campo no debe estar vacío'
+
+            if 'observacion_RADIO_ANT' in key:
                     if not value:
                         errors[key] = 'El campo no debe estar vacío'
+
         return errors
 
     def get(self, request, *args, **kwargs):
@@ -642,6 +649,16 @@ class AccesoriosVehiculoSolicitud(View):
         observacion = "observacion_"
         radio = "radio_"
         accesorios = AccesoriosVehiculo.objects.all()
+        # import pudb; pu.db
+
+        mutable = request.POST._mutable
+        request.POST._mutable = True
+        for accesorio in accesorios:
+            codigo = radio+accesorio.codigo
+            if not codigo in data:
+                data[codigo] = ""
+
+        request.POST._mutable = mutable
         errors = self.validate(data)
 
         # accesorios 
