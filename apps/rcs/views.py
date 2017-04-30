@@ -374,7 +374,13 @@ class CondicionVehiculoSolicitud(View):
         #Ejemplo: validar que los campos no estén vacios
         for key in data:
             value = data.get(key, None)
-            if not value:
+
+            if 'observacion_OTRO' in key:
+                codigo = key.split('_')[1] 
+                if data['radio_'+codigo].strip() !="":
+                    errors[key] = 'El campo no debe estar vacío'
+                    
+            if not value and not 'observacion' in key and not 'OTRO' in key :
                 errors[key] = 'El campo no debe estar vacío'
 
         return errors
@@ -403,7 +409,17 @@ class CondicionVehiculoSolicitud(View):
         observacion = "observacion_"
         radio = "radio_"
         condiciones = CondicionesGeneralesVehiculo.objects.all()
-        # import pudb; pu.db
+
+        mutable = request.POST._mutable
+        request.POST._mutable = True
+        for condicion in condiciones:
+            codigo = radio+condicion.codigo
+            if not codigo in data:
+                data[codigo] = ""
+
+        request.POST._mutable = mutable
+
+
         errors = self.validate(data)
 
         if not errors:
@@ -475,9 +491,15 @@ class MecanicaVehiculoSolicitud(View):
         #obtener errores y guardarlos en el diccionario "errors" en donde los "key" son los nombre de los inputs html
         #Ejemplo: validar que los campos no estén vacios
         for key in data:
-           if 'observacion' not in key:
-                if not value:
+            # import pudb; pu.db
+            value = data.get(key, None)
+            if 'observacion_OTRO' in key:
+                codigo = key.split('_',1)[1] 
+                if data['radio_'+codigo].strip() !="":
                     errors[key] = 'El campo no debe estar vacío'
+                    
+            if not value and not 'observacion' in key and not 'OTRO' in key :
+                errors[key] = 'El campo no debe estar vacío'
 
         return errors
 
@@ -504,6 +526,16 @@ class MecanicaVehiculoSolicitud(View):
         observacion = "observacion_"
         radio = "radio_"
         mecanicas = MecanicaVehiculo.objects.all()
+
+        mutable = request.POST._mutable
+        request.POST._mutable = True
+        for mecanica in mecanicas:
+            codigo = radio+mecanica.codigo
+            if not codigo in data:
+                data[codigo] = ""
+
+        request.POST._mutable = mutable
+
         errors = self.validate(data)
 
         if not errors:
