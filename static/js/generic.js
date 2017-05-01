@@ -186,3 +186,14 @@ function fill_modal_verificacion(titulo,subtitulo,mensaje){
   $("#modal-verificacion-subtitulo").html(subtitulo)
   $("#modal-verificacion-msj").html(mensaje)
 };
+
+
+
+
+if(typeof(String.prototype.trim) === "undefined")
+{
+    String.prototype.trim = function() 
+    {
+        return String(this).replace(/^\s+|\s+$/g, '');
+    };
+}

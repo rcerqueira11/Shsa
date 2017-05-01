@@ -135,7 +135,6 @@ class Dashboard(View):
         return render(request, 'rcs/dashboard.html',context)
 
 
-
 class SolicitarInspeccion   (View):
     """
     SolicitarInspeccion 
@@ -800,15 +799,15 @@ class DetallesVehiculoSolicitud(View):
                     detalles.tipo_dano = tipo_dano
                     detalles.costo_aproximado = costo_aproximado
                     detalles.codigo = codigo
-                    detalles.save()
-                    vehiculo.detalles_datos.add(detalles)
+                    # detalles.save()
+                    # vehiculo.detalles_datos.add(detalles)
 
                 # mec_sol
                 # import pudb; pu.db
                     # accesorio.save()
                 ##Agregando accesorio a many to many field de vehiculo
                 # vehiculo.accesorios_vehiculo.add(accesorio)
-            vehiculo.save()
+            # vehiculo.save()
 
         return redirect(reverse_lazy('documentos_vehiculo'))
 
