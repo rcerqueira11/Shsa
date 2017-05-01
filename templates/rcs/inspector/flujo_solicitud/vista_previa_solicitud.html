@@ -111,70 +111,7 @@
         </table>
 	</div>
 
-	{# Mecanica del vehiculo #}
-	<div class="row">
-		<center>
-		    <section>
-		        <div class="title">Mec&aacute;nica del Veh&iacute;culo</div>
-			</section>
-		</center>
-		<form method="post" id="form_mecanica_vehiculo" action="{% url 'mecanica_vehiculo' %}">
-		{% csrf_token %}
-		<input type="hidden" name="id_solicitud"  class="form-control"  value={{solicitud.id}} >
-		<div class="col-xs-12">
-			<table class="table table-bordered">
-				<thead>
-				{# style="width:14%" #}
-					<th style="width:15%"><center>PARTES</center></th>
-					<th style="width:2%"><center>B</center></th>
-					<th style="width:2%"><center>R</center></th>
-					<th style="width:2%"><center>M</center></th>
-					<th style="width:9%"><center>OBSERVACI&Oacute;NES</center></th>
-					<th style="width:15%"><center>PARTES</center></th>
-					<th style="width:2%"><center>B</center></th>
-					<th style="width:2%"><center>R</center></th>
-					<th style="width:2%"><center>M</center></th>
-					<th style="width:9%"><center>OBSERVACI&Oacute;NES</center></th>
-					<th style="width:15%"><center>PARTES</center></th>
-					<th style="width:2%"><center>B</center></th>
-					<th style="width:2%"><center>R</center></th>
-					<th style="width:2%"><center>M</center></th>
-					<th style="width:9%"><center>OBSERVACI&Oacute;NES</center></th>
-					
-				</thead>
-				<tbody>
-					<tr>
-								
-					{% for mecanica in mecanicas  %}
-						{% if forloop.counter|primera_col %}
-							<td>{{mecanica.parte}}</td>
-							<td>{% if mecanica.fk_estado_vehiculo.codigo == 'B' %}X{% endif %}</td>
-							<td>{% if mecanica.fk_estado_vehiculo.codigo == 'R' %}X{% endif %}</td>
-							<td>{% if mecanica.fk_estado_vehiculo.codigo == 'M' %}X{% endif %}</td>
-							<td>{{mecanica.observacion}}</td>
-						{% endif %}
-						{% if forloop.counter|segunda_col %}
-							<td>{{mecanica.parte}}</td>
-							<td>{% if mecanica.fk_estado_vehiculo.codigo == 'B' %}X{% endif %}</td>
-							<td>{% if mecanica.fk_estado_vehiculo.codigo == 'R' %}X{% endif %}</td>
-							<td>{% if mecanica.fk_estado_vehiculo.codigo == 'M' %}X{% endif %}</td>
-							<td>{{mecanica.observacion}}</td>
-						{% endif %}
-						{% if forloop.counter|tercera_col %}
-							<td>{{mecanica.parte}}</td>
-							<td>{% if mecanica.fk_estado_vehiculo.codigo == 'B' %}X{% endif %}</td>
-							<td>{% if mecanica.fk_estado_vehiculo.codigo == 'R' %}X{% endif %}</td>
-							<td>{% if mecanica.fk_estado_vehiculo.codigo == 'M' %}X{% endif %}</td>
-							<td>{{mecanica.observacion}}</td>
-						{% endif %}
-						{% if forloop.counter|divisibleby:3 %}
-							</tr>
-						{% endif %}
-					{% endfor %}
-				</tbody>
-			</table>
-			</div>
-	</div>
+
 
 	{# Condiciones Generales del vehiculo #}
 	<div class="row">
@@ -239,6 +176,71 @@
 		</div>
 	</div>
 
+	{# Mecanica del vehiculo #}
+	<div class="row">
+		<center>
+		    <section>
+		        <div class="title">Mec&aacute;nica del Veh&iacute;culo</div>
+			</section>
+		</center>
+		<form method="post" id="form_mecanica_vehiculo" action="{% url 'mecanica_vehiculo' %}">
+		{% csrf_token %}
+		<input type="hidden" name="id_solicitud"  class="form-control"  value={{solicitud.id}} >
+		<div class="col-xs-12">
+			<table class="table table-bordered">
+				<thead>
+				{# style="width:14%" #}
+					<th style="width:15%"><center>PARTES</center></th>
+					<th style="width:2%"><center>B</center></th>
+					<th style="width:2%"><center>R</center></th>
+					<th style="width:2%"><center>M</center></th>
+					<th style="width:9%"><center>OBSERVACI&Oacute;NES</center></th>
+					<th style="width:15%"><center>PARTES</center></th>
+					<th style="width:2%"><center>B</center></th>
+					<th style="width:2%"><center>R</center></th>
+					<th style="width:2%"><center>M</center></th>
+					<th style="width:9%"><center>OBSERVACI&Oacute;NES</center></th>
+					<th style="width:15%"><center>PARTES</center></th>
+					<th style="width:2%"><center>B</center></th>
+					<th style="width:2%"><center>R</center></th>
+					<th style="width:2%"><center>M</center></th>
+					<th style="width:9%"><center>OBSERVACI&Oacute;NES</center></th>
+					
+				</thead>
+				<tbody>
+					<tr>
+								
+					{% for mecanica in mecanicas  %}
+						{% if forloop.counter|primera_col %}
+							<td>{{mecanica.parte}}</td>
+							<td>{% if mecanica.fk_estado_vehiculo.codigo == 'B' %}X{% endif %}</td>
+							<td>{% if mecanica.fk_estado_vehiculo.codigo == 'R' %}X{% endif %}</td>
+							<td>{% if mecanica.fk_estado_vehiculo.codigo == 'M' %}X{% endif %}</td>
+							<td>{{mecanica.observacion}}</td>
+						{% endif %}
+						{% if forloop.counter|segunda_col %}
+							<td>{{mecanica.parte}}</td>
+							<td>{% if mecanica.fk_estado_vehiculo.codigo == 'B' %}X{% endif %}</td>
+							<td>{% if mecanica.fk_estado_vehiculo.codigo == 'R' %}X{% endif %}</td>
+							<td>{% if mecanica.fk_estado_vehiculo.codigo == 'M' %}X{% endif %}</td>
+							<td>{{mecanica.observacion}}</td>
+						{% endif %}
+						{% if forloop.counter|tercera_col %}
+							<td>{{mecanica.parte}}</td>
+							<td>{% if mecanica.fk_estado_vehiculo.codigo == 'B' %}X{% endif %}</td>
+							<td>{% if mecanica.fk_estado_vehiculo.codigo == 'R' %}X{% endif %}</td>
+							<td>{% if mecanica.fk_estado_vehiculo.codigo == 'M' %}X{% endif %}</td>
+							<td>{{mecanica.observacion}}</td>
+						{% endif %}
+						{% if forloop.counter|divisibleby:3 %}
+							</tr>
+						{% endif %}
+					{% endfor %}
+				</tbody>
+			</table>
+			</div>
+	</div>
+	
 	{# Accesorios del vehiculo #}
 	<div class="row">
 			<center>

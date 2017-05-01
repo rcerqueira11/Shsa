@@ -39,7 +39,8 @@ def format_float(X):
 class VerPlanillaSeguroCarro(View):
 
     def dispatch(self, request, *args, **kwargs):
-        print "holis"
+        if not request.user.is_authenticated():
+            return redirect(reverse_lazy('login'))
         return super(VerPlanillaSeguroCarro, self).dispatch(request, *args, **kwargs)
     
     def get(self, request, *args, **kwargs):
@@ -352,8 +353,6 @@ class GestionSolicitudAbierta(View):
         #    response['msj'] = ''
         #    return HttpResponse(json.dumps(response), content_type = "application/json")
         
-
-
 
 class CondicionVehiculoSolicitud(View):
     """
@@ -723,34 +722,87 @@ class DetallesVehiculoSolicitud(View):
         if request.user.is_anonymous():
             return redirect(reverse_lazy('login'))
         return super(DetallesVehiculoSolicitud, self).dispatch(request, *args, **kwargs)
+        
+    def get_context(self, data):
+        id_solicitud = 1
 
-
-
-    def get(self, request, *args, **kwargs):
+        solicitud = SolicitudInspeccion.objects.get(id=id_solicitud)
+        # import pudb; pu.db
+        vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
+        
+        estados_vehiculo = EstadoVehiculo.objects.all()
         context = {
-            'nombre': request.user.nombre,
-            'username': request.user.username,
+            'estados_vehiculo': estados_vehiculo,
+            'vehiculo': vehiculo,
+            'solicitud': solicitud,
+            'nombre': data.user.nombre if 'user' in data else "",
+            'username': data.user.username if 'user' in data else "",
 
         }
+        
+        return context
+
+    def validate(self, data):
+        errors = {}
+
+        #obtener errores y guardarlos en el diccionario "errors" en donde los "key" son los nombre de los inputs html
+        #Ejemplo: validar que los campos no estén vacios
+        # import pudb; pu.db
+
+        for key in data:
+            value = data.get(key, None)
+                    
+            if not value:
+                errors[key] = 'El campo no debe estar vacío'
+
+        return errors
+
+    def get(self, request, *args, **kwargs):
+        data = request.GET
+
+        context = self.get_context(data)
+        
+        #obtener datos que requieran ser pre-cargados en el formulario (ejemplo: editar registro) y guardarlos en form_data
+        form_data = {}
+
+        #"form_data" representa un diccionario cuyas claves son los nombres de los inputs html del formulario y sus valores 
+        #son tuplas donde almacenan los valores y los errores de los inputs respectivamente
+
+        context['nombre'] = request.user.nombre
+        context['username'] = request.user.username
+        context['form_data'] = form_data
 
         return render(request, 'rcs/inspector/flujo_solicitud/detalles_solicitud.html',context)
 
     def post(self,request,*args,**kwargs):
         data = request.POST
         response = {}
+        errors = self.validate(data)
+        
+        if not errors:
+            solicitud = SolicitudInspeccion.objects.get(id= data['id_solicitud'])
+            vehiculo = solicitud.fk_vehiculo
+            with transaction.atomic():
+                    # mec_sol
+                    # import pudb; pu.db
+                        # accesorio.save()
+                    ##Agregando accesorio a many to many field de vehiculo
+                    # vehiculo.accesorios_vehiculo.add(accesorio)
+                vehiculo.save()
+            return redirect(reverse_lazy('documentos_vehiculo'))
+        else:
+            context = self.get_context(request)
 
+            form_data = {}
+            for key, value in data.iteritems():
+                if key in errors.keys():
+                    form_data[key] = (value, errors[key])
+                else:
+                    form_data[key] = (value, '')
 
-        #if data: 
-        #    response['Result'] = 'success'
-        #    response['msj'] = ''
-        #    return HttpResponse(json.dumps(response), content_type = "application/json")
-        #else:
-        #    response['Result'] = 'error'
-        #    response['msj'] = ''
-        #    return HttpResponse(json.dumps(response), content_type = "application/json")
+            context['form_data'] = form_data
 
-
-        return redirect(reverse_lazy('template_dir'))
+        return render(request, 'rcs/inspector/flujo_solicitud/detalles_solicitud.html',context)
 
 
 class DocumentosVehiculoSolicitud(View):

@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+{% load rcs_tags %}
+{% block extra_css %}
+    <link href="/static/css/rcs/common_style.css"  rel="stylesheet" type="text/css"/>
+{% endblock extra_css %}
+
+{% block main_content %}
+{% include "menu_base.html" %}
+
+
+<div class="container">
+
+{# Mecanica del vehiculo #}
+<div class="row">
+	<center>
+	    <section>
+	        <div class="title">Detalles de Datos</div>
+		</section>
+	</center>
+	<form method="post" id="form_detalles_vehiculo" action="{% url 'detalles_vehiculo' %}">
+	{% csrf_token %}
+	<input type="hidden" name="id_solicitud"  class="form-control"  value={{solicitud.id}} >
+	<div class="row">
+       <div class="col-xs-offset-4 col-xs-4">
+           <button id="boton-agregar-detalle" class="btn btn-primario btn-block" type="button" onclick="agregar_detalle();"><span> Agregar detalle<i class="fa fa-plus-square"></i></span>
+       </div>
+   </div>
+	<div class="col-xs-12">
+		<table class="table table-bordered">
+			<thead>
+			{# style="width:14%" #}
+					<th style="width:33%"><center>92. PIEZA</center></th>
+					<th style="width:33%"><center>93. TIPO DE DAÑO</center></th>
+					<th style="width:33%"><center>94. COSTO APROX.</center></th>
+			</thead>
+			<tbody id="detalles_table_body">
+				<tr>
+						
+					<td>
+						{% create_name "pieza" '0' as nambre %}
+						{% input_content form_data nambre as input %}
+						<input type="text" name="pieza_0" class="form-control" value="{{input.value}}"/>
+						<div class="error" id="id_pieza_0_error">{{input.error}}</div>
+					</td>
+						
+					<td>
+						{% create_name "dano" '0' as nambre %}
+						{% input_content form_data nambre as input %}
+						<input type="text" name="dano_0" class="form-control" value="{{input.value}}"/>
+						<div class="error" id="id_pieza_0_error">{{input.error}}</div>
+					</td>
+						
+					<td>
+						{% create_name "costo" '0' as nambre %}
+						{% input_content form_data nambre as input %}
+						<input type="text" name="costo_0" class="form-control" value="{{input.value}}"/>
+						<div class="error" id="id_pieza_0_error">{{input.error}}</div>
+					</td>
+					
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<button type="submit">SEND</button>
+	</form>
+</div>
+
+
+</div>
+
+
+{% endblock main_content %}
+
+{% block extra_script %}
+ 	<script src="{{STATIC_URL}}js/rcs/detalles_datos.js"></script>
+
+{% endblock extra_script %}
