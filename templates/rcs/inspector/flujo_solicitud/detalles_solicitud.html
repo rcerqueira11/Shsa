@@ -21,47 +21,61 @@
 	<form method="post" id="form_detalles_vehiculo" action="{% url 'detalles_vehiculo' %}">
 	{% csrf_token %}
 	<input type="hidden" name="id_solicitud"  class="form-control"  value={{solicitud.id}} >
+	<input type="hidden" name="cantidad_detalles"  class="form-control"  value={{cantidad}} >
+	<input type="hidden" name="contador_agregados"  class="form-control"  id="contador_agregados" value="0" >
 	<div class="row">
-       <div class="col-xs-offset-4 col-xs-4">
-           <button id="boton-agregar-detalle" class="btn btn-primario btn-block" type="button" onclick="agregar_detalle();"><span> Agregar detalle<i class="fa fa-plus-square"></i></span>
+       <div class="col-xs-4"></div>
+       <div class="col-xs-4"></div>
+       <div class="col-xs-4">
+           <button id="boton-agregar-detalle" class="btn btn-primary" type="button" onclick="agregar_detalle();"><span> Agregar detalle <i class="fa fa-plus-square"></i></span>
        </div>
-   </div>
-	<div class="col-xs-12">
-		<table class="table table-bordered">
-			<thead>
-			{# style="width:14%" #}
-					<th style="width:33%"><center>92. PIEZA</center></th>
-					<th style="width:33%"><center>93. TIPO DE DAÑO</center></th>
-					<th style="width:33%"><center>94. COSTO APROX.</center></th>
-			</thead>
-			<tbody id="detalles_table_body">
-				<tr>
-						
-					<td>
-						{% create_name "pieza" '0' as nambre %}
-						{% input_content form_data nambre as input %}
-						<input type="text" name="pieza_0" class="form-control" value="{{input.value}}"/>
-						<div class="error" id="id_pieza_0_error">{{input.error}}</div>
-					</td>
-						
-					<td>
-						{% create_name "dano" '0' as nambre %}
-						{% input_content form_data nambre as input %}
-						<input type="text" name="dano_0" class="form-control" value="{{input.value}}"/>
-						<div class="error" id="id_pieza_0_error">{{input.error}}</div>
-					</td>
-						
-					<td>
-						{% create_name "costo" '0' as nambre %}
-						{% input_content form_data nambre as input %}
-						<input type="text" name="costo_0" class="form-control" value="{{input.value}}"/>
-						<div class="error" id="id_pieza_0_error">{{input.error}}</div>
-					</td>
-					
-				</tr>
-			</tbody>
-		</table>
 	</div>
+	<br>
+	<div class="row">
+		<div class="col-xs-12">
+			<table class="table table-bordered" id="tabla_detalles">
+				<thead>
+				{# style="width:14%" #}
+						<th style="width:18%"><center>CODIGO</center></th>
+						<th style="width:26%"><center>92. PIEZA</center></th>
+						<th style="width:26%"><center>93. TIPO DE DAÑO</center></th>
+						<th style="width:26%"><center>94. COSTO APROX.</center></th>
+						<th style="width:3%"><center> </center></th>
+				</thead>
+				<tbody id="detalles_table_body">
+					<!-- <tr class="cont_tr" id="id_celda_1">
+						
+						<td>
+							{% create_name2 "pieza" "1" as nambre %}
+							{% input_content form_data nambre as input %}
+							<input type="text" name="pieza_1" class="form-control" value="{{input.value}}"/>
+							<div class="error" id="id_pieza_1_error">{{input.error}}</div>
+						</td>
+							
+						<td>
+							{% create_name2 "dano" "1" as nambre %}
+							{% input_content form_data nambre as input %}
+							<input type="text" name="dano_1" class="form-control" value="{{input.value}}"/>
+							<div class="error" id="id_pieza_1_error">{{input.error}}</div>
+						</td>
+							
+						<td>
+							{% create_name2 "costo" "1" as nambre %}
+							{% input_content form_data nambre as input %}
+							<input type="text" name="costo_1" class="form-control" value="{{input.value}}"/>
+							<div class="error" id="id_pieza_1_error">{{input.error}}</div>
+						</td>
+
+						<td>
+							<button id="id_eliminar_celda_1" class="btn btn-danger" type="button" onclick="eliminar_celda(this);"> <center><i class="fa fa-trash white-icon" style="color: white;"></i></center>
+						</td>
+						
+					</tr> -->
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
 	<button type="submit">SEND</button>
 	</form>
 </div>

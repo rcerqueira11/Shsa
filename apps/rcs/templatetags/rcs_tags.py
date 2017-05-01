@@ -40,3 +40,10 @@ def create_name(first, second):
 
     return nombre
 
+
+@register.assignment_tag(name='create_name2')
+def create_name2(first, second):
+    nombre = str(first)+"_"+str(second)
+
+    return nombre
+

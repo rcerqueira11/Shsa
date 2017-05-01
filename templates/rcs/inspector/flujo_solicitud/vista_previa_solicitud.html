@@ -311,17 +311,19 @@
 			<table class="table table-bordered">
 				<thead>
 				{# style="width:14%" #}
-					<th style="width:33%"><center>92. PIEZA</center></th>
-					<th style="width:33%"><center>93. TIPO DE DAÑO</center></th>
-					<th style="width:33%"><center>94. COSTO APROX.</center></th>
+					<th style="width:18%"><center>CODIGO</center></th>
+					<th style="width:26%"><center>92. PIEZA</center></th>
+					<th style="width:26%"><center>93. TIPO DE DAÑO</center></th>
+					<th style="width:26%"><center>94. COSTO APROX.</center></th>
 				</thead>
 				<tbody>
 								
-					{% for documento in documentos  %}
+					{% for detalle in detalles  %}
 					<tr>
-							<td>{{documento.nombre}}</td>
-							<td>{% if documento.recibido %}X{% endif %}</td>
-							<td>{% if not documento.recibido %}X{% endif %}</td>
+						<td>{{detalle.codigo}}</td>
+						<td>{{detalle.pieza}}</td>
+						<td>{{detalle.tipo_dano}}</td>
+						<td>{{detalle.costo_aproximado}}</td>
 					</tr>
 					{% endfor %}
 				</tbody>

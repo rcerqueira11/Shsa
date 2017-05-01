@@ -451,8 +451,8 @@ class CondicionVehiculoSolicitud(View):
                         condicion.observacion = data[observacion+condicion.codigo]
                         condicion.fk_estado_vehiculo_id = EstadoVehiculo.objects.get(codigo = data[radio+condicion.codigo])
                         condicion.save()
-                    ##Agregando condicion a many to many field de vehiculo
-                    vehiculo.condiciones_generales_vehiculo.add(condicion)
+                        ##Agregando condicion a many to many field de vehiculo
+                        vehiculo.condiciones_generales_vehiculo.add(condicion)
                 vehiculo.save()
 
 
@@ -693,8 +693,8 @@ class AccesoriosVehiculoSolicitud(View):
                         accesorio.observacion = data[observacion+accesorio.codigo]
                         accesorio.existe = True if data[radio+accesorio.codigo] == 'true' else False
                         accesorio.save()
+                        vehiculo.accesorios_vehiculo.add(accesorio)
                     ##Agregando accesorio a many to many field de vehiculo
-                    vehiculo.accesorios_vehiculo.add(accesorio)
                 vehiculo.save()
             return redirect(reverse_lazy('documentos_vehiculo'))
         else:
@@ -722,14 +722,15 @@ class DetallesVehiculoSolicitud(View):
         if request.user.is_anonymous():
             return redirect(reverse_lazy('login'))
         return super(DetallesVehiculoSolicitud, self).dispatch(request, *args, **kwargs)
-        
+
     def get_context(self, data):
         id_solicitud = 1
 
         solicitud = SolicitudInspeccion.objects.get(id=id_solicitud)
         # import pudb; pu.db
+            
         vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
-        
+        # cantidad_detalles = range(1,data['cantidad_detalles']) if 'cantidad_detalles' in data else range(1,2)
         estados_vehiculo = EstadoVehiculo.objects.all()
         context = {
             'estados_vehiculo': estados_vehiculo,
@@ -737,7 +738,7 @@ class DetallesVehiculoSolicitud(View):
             'solicitud': solicitud,
             'nombre': data.user.nombre if 'user' in data else "",
             'username': data.user.username if 'user' in data else "",
-
+            # 'cantidad': cantidad_detalles,
         }
         
         return context
@@ -760,6 +761,9 @@ class DetallesVehiculoSolicitud(View):
     def get(self, request, *args, **kwargs):
         data = request.GET
 
+        # cantidad_detalles = range(1,data['cantidad_detalles']+1) if 'cantidad_detalles' in data else range(1,3)
+        # import pudb; pu.db
+        # context = self.get_context(data,cantidad_detalles)
         context = self.get_context(data)
         
         #obtener datos que requieran ser pre-cargados en el formulario (ejemplo: editar registro) y guardarlos en form_data
@@ -769,6 +773,7 @@ class DetallesVehiculoSolicitud(View):
         #son tuplas donde almacenan los valores y los errores de los inputs respectivamente
 
         context['nombre'] = request.user.nombre
+        # context['cantidad'] = cantidad_detalles
         context['username'] = request.user.username
         context['form_data'] = form_data
 
@@ -777,32 +782,61 @@ class DetallesVehiculoSolicitud(View):
     def post(self,request,*args,**kwargs):
         data = request.POST
         response = {}
-        errors = self.validate(data)
-        
-        if not errors:
-            solicitud = SolicitudInspeccion.objects.get(id= data['id_solicitud'])
-            vehiculo = solicitud.fk_vehiculo
-            with transaction.atomic():
-                    # mec_sol
-                    # import pudb; pu.db
-                        # accesorio.save()
-                    ##Agregando accesorio a many to many field de vehiculo
-                    # vehiculo.accesorios_vehiculo.add(accesorio)
-                vehiculo.save()
-            return redirect(reverse_lazy('documentos_vehiculo'))
-        else:
-            context = self.get_context(request)
+        # cantidad_detalles = data['cantidad_detalles']
+        # errors = self.validate(data)
+        numero_agregados = data['contador_agregados']
+        solicitud = SolicitudInspeccion.objects.get(id= data['id_solicitud'])
+        vehiculo = solicitud.fk_vehiculo
 
-            form_data = {}
-            for key, value in data.iteritems():
-                if key in errors.keys():
-                    form_data[key] = (value, errors[key])
-                else:
-                    form_data[key] = (value, '')
+        with transaction.atomic():
+            for i in xrange(int(numero_agregados)+1):
+                if "pieza_"+str(i) in data:
+                    detalles = DetallesDatos()
+                    pieza = data['pieza_'+str(i)]
+                    tipo_dano  = data['dano_'+str(i)]
+                    costo_aproximado = data['costo_'+str(i)]
+                    codigo = data['codigo_'+str(i)]
+                    detalles.pieza = pieza
+                    detalles.tipo_dano = tipo_dano
+                    detalles.costo_aproximado = costo_aproximado
+                    detalles.codigo = codigo
+                    detalles.save()
+                    vehiculo.detalles_datos.add(detalles)
 
-            context['form_data'] = form_data
+                # mec_sol
+                # import pudb; pu.db
+                    # accesorio.save()
+                ##Agregando accesorio a many to many field de vehiculo
+                # vehiculo.accesorios_vehiculo.add(accesorio)
+            vehiculo.save()
 
-        return render(request, 'rcs/inspector/flujo_solicitud/detalles_solicitud.html',context)
+        return redirect(reverse_lazy('documentos_vehiculo'))
+
+        # if not errors:
+        #     solicitud = SolicitudInspeccion.objects.get(id= data['id_solicitud'])
+        #     vehiculo = solicitud.fk_vehiculo
+        #     with transaction.atomic():
+        #             # mec_sol
+        #             # import pudb; pu.db
+        #                 # accesorio.save()
+        #             ##Agregando accesorio a many to many field de vehiculo
+        #             # vehiculo.accesorios_vehiculo.add(accesorio)
+        #         vehiculo.save()
+        #     return redirect(reverse_lazy('documentos_vehiculo'))
+        # else:
+        #     # context = self.get_context(request)
+        #     # context = self.get_context(request,cantidad_detalles)
+
+        #     form_data = {}
+        #     # for key, value in data.iteritems():
+        #     #     if key in errors.keys():
+        #     #         form_data[key] = (value, errors[key])
+        #     #     else:
+        #     #         form_data[key] = (value, '')
+
+        #     context['form_data'] = form_data
+
+        # return render(request, 'rcs/inspector/flujo_solicitud/detalles_solicitud.html',context)
 
 
 class DocumentosVehiculoSolicitud(View):
