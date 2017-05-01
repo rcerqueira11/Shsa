@@ -5,8 +5,6 @@ function agregar_detalle(id_tabla){
 	cant_en_tabla =$('#detalles_table_body').children('tr').length;
 	if (!cant_en_tabla){
 		$("#tabla_detalles").show('slide')
-		console.log("cant_en_tabla");
-				console.log(cant_en_tabla);
 
 	}
 	indice = (parseInt($("#contador_agregados").val()) + 1)
@@ -22,19 +20,20 @@ function agregar_detalle(id_tabla){
 
 	codigo_input =$('<input>',{class:'form-control numeros' , id:'codigo_'+(indice), name:'codigo_'+(indice), type:'text'});
     codigo_input_error = $('<center>').html($('<div>',{id:'codigo_input_error_'+(indice), class:'error'}));
-    tabla_body.append($('<td>').html(codigo_input.append(codigo_input_error)));
+    td_c = $('<td>').append(codigo_input).append(codigo_input_error)
+    tabla_body.append(td_c);
 
 	pieza_input =$('<input>',{class:'form-control' , name:'pieza_'+(indice), id:'pieza_'+(indice), type:'text'});
     pieza_input_error = $('<center>').html($('<div>',{id:'pieza_input_error_'+(indice), class:'error'}));
-    tabla_body.append($('<td>').html(pieza_input.append(pieza_input_error)));
+    tabla_body.append($('<td>').append(pieza_input).append(pieza_input_error));
 
 	dano_input =$('<input>',{class:'form-control' , name:'dano_'+(indice), id:'dano_'+(indice), type:'text'});
     dano_input_error = $('<center>').html($('<div>',{id:'dano_input_error_'+(indice), class:'error'}));
-    tabla_body.append($('<td>').html(dano_input.append(dano_input_error)));
+    tabla_body.append($('<td>').append(dano_input).append(dano_input_error));
 
 	costo_input =$('<input>',{class:'form-control numeros' , name:'costo_'+(indice), id:'costo_'+(indice), type:'text'});
     costo_input_error = $('<center>').html($('<div>',{id:'costo_input_error_'+(indice), class:'error'}));
-    tabla_body.append($('<td>').html(costo_input.append(costo_input_error)));
+    tabla_body.append($('<td>').append(costo_input).append(costo_input_error));
 
     i_botton = $('<center>').html($('<i>',{class:'fa fa-trash white-icon',style:"color: white;"}))
     boton= $('<botton>',{id:"id_eliminar_celda_"+indice,class:"btn btn-danger",type:"button",onclick:"eliminar_celda(this);"})
@@ -60,25 +59,35 @@ function submit_detalles(){
 		id_tr = $( this )[0].id
 		arr = id_tr.split("_")
 		numero = arr[arr.length-1]
-		console.log("numero");
-		console.log(numero);
 		
 		if ($("#codigo_"+numero).val().trim() == ""){
  			$("#codigo_input_error_"+numero).html("Este campo no puede ir vacío")
  			datos_vacios = true
+		} else {
+ 			$("#codigo_input_error_"+numero).html('')
 		}
-		if ($("#codigo_"+numero).val().trim() == ""){
+
+		if ($("#pieza_"+numero).val().trim() == ""){
  			$("#pieza_input_error_"+numero).html("Este campo no puede ir vacío")
  			datos_vacios = true
+		} else {
+ 			$("#pieza_input_error_"+numero).html('')
 		}
-		if ($("#codigo_"+numero).val().trim() == ""){
+		
+		if ($("#dano_"+numero).val().trim() == ""){
  			$("#dano_input_error_"+numero).html("Este campo no puede ir vacío")
  			datos_vacios = true
+		} else {
+ 			$("#dano_input_error_"+numero).html('')
 		}
-		if ($("#codigo_"+numero).val().trim() == ""){
+		
+		if ($("#costo_"+numero).val().trim() == ""){
  			$("#costo_input_error_"+numero).html("Este campo no puede ir vacío")
  			datos_vacios = true
+		} else {
+ 			$("#costo_input_error_"+numero).html('')
 		}
+		
 
 	});
 
@@ -89,7 +98,7 @@ function submit_detalles(){
 
 	} else {
 
-		#si la tabla no esta vacia
+		// #si la tabla no esta vacia
 		if(!$('#detalles_table_body').children('tr').length){
 			// $('#form_detalles_vehiculo').submit();
 			
