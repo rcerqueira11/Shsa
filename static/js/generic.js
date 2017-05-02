@@ -197,3 +197,32 @@ if(typeof(String.prototype.trim) === "undefined")
         return String(this).replace(/^\s+|\s+$/g, '');
     };
 }
+
+
+$.fn.serializeObject = function(){
+    var o = {};
+    var a = this.serializeArray();
+
+    $.each(a, function() {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+
+    var file_data = this.find('input[type=file]');
+
+    $(file_data).each(function(key, value){
+      o[$(value).attr('name')] = $(value)[0].files[0];
+
+      /*$($(value)[0].files[0]).each(function(x, y)){
+        file_info.append(y);
+      });*/
+    });
+
+    return o;
+};

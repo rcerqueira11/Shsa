@@ -100,8 +100,10 @@ function submit_detalles(){
 
 		// #si la tabla no esta vacia
 		if(!$('#detalles_table_body').children('tr').length){
-			// $('#form_detalles_vehiculo').submit();
+			$('#form_detalles_vehiculo').submit();
 			
+		} else {
+			console.log("nada que enviar")
 		}
 		
 	}

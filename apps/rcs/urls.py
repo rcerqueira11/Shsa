@@ -51,5 +51,16 @@ urlpatterns = [
         views.SolicitarInspeccion.as_view(),
         name="crear_solicitud"
     ),
+
+    url(
+        r'^bandeja_solicitudes',
+        views.BandejaSolicitudes.as_view(),
+        name="bandeja_solicitudes"
+    ),
+    url(
+        r'^filtro_busqueda_solicitudes',
+        views.FiltroBusqueda.as_view(),
+        name="filtro_busqueda_solicitudes"
+    ),
     
 ]

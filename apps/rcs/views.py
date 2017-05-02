@@ -11,6 +11,7 @@ from django.utils import timezone
 from django.conf import settings
 from django.db import transaction
 from django.contrib.auth.decorators import login_required
+from django.apps import apps
 # from django.apps import apps
 from apps.wkhtmltopdf.views import PDFTemplateResponse
 from apps.registro.models import *
@@ -114,6 +115,71 @@ class VerPlanillaSeguroCarro(View):
         # return HttpResponse(json.dumps(data), content_type = "application/json")
         # return render(request,"solo_visualizar_planilla_registro_carro_seguro.html",context)
 
+
+class FiltroBusqueda(View):
+    """
+        Vista para filtrar registros de forma genérica
+    """
+
+    def dispatch(self, request, *args, **kwargs):
+
+        if request.user.username == '' or request.user.is_authenticated() == False:
+            return redirect(reverse_lazy('registro_logout'))
+
+        return super(FiltroBusqueda, self).dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        filtro = {}
+        parametros = {}
+        data_filter = []
+
+        # se obtienen los parametros de busquedas provenientes del formulario
+        # de búsqueda
+        parametros = request.GET
+        parametros = parametros.copy()
+        parametros['usuario'] = request.user
+        # el modelo a consultar se obtiene de la variable 'filter_code', al
+        # mismo se le pasan los parametros de busqueda recibidos
+        model_obj = parametros.get('filter_obj', None)
+        filter_code = parametros.get('filter_code', None)
+        if model_obj and filter_code:
+            model_obj = apps.get_model('rcs', model_obj)
+            instance = model_obj()
+            data_filter = model_obj.filtro(instance,parametros, filter_code)
+
+            # si obtenemos resultados en el filtro de busqueda, se procede a
+            # paginarlo
+            if data_filter[1]:
+                paginator = Paginator(data_filter[1], 6)
+
+                try:
+                    page = request.GET.get('page', 1)
+                    page_filter = paginator.page(page)
+                except PageNotAnInteger:
+                    page = 0
+                    page_filter = paginator.page(1)
+                except EmptyPage:
+                    page_filter = paginator.page(paginator.num_pages)
+
+                try:
+                    filtro['previous_page'] = page_filter.previous_page_number()
+                except EmptyPage:
+                    filtro['previous_page'] = False
+                try:
+                    filtro['next_page'] = page_filter.next_page_number()
+                except EmptyPage:
+                    filtro['next_page'] = False
+
+                filtro['total_pages'] = paginator.num_pages
+                filtro['page_number'] = page_filter.number
+                filtro['data'] = json.dumps(page_filter.object_list)
+                filtro['order'] = data_filter[0]
+
+            return HttpResponse(json.dumps(filtro), content_type="application/json")
+        else:
+            return HttpResponse(json.dumps({}), content_type="application/json")
+
+
 # @login_required
 class Dashboard(View):
     """docstring for Dashboard"""
@@ -134,8 +200,28 @@ class Dashboard(View):
         }
         return render(request, 'rcs/dashboard.html',context)
 
+class BandejaSolicitudes(View):
+    """
+    BandejaSolicitudes
+    -------------------------------------------
+    Bandeja donde se muestran las solicitudes de inspeccion realizadas
+    """
 
-class SolicitarInspeccion   (View):
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_anonymous():
+            return redirect(reverse_lazy('login'))
+        return super(BandejaSolicitudes, self).dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        context = {}
+        context['nombre'] = request.user.nombre
+        context['username'] = request.user.username
+
+        return render(request, 'rcs/inspector/bandeja_solicitudes.html',context)
+
+
+
+class SolicitarInspeccion(View):
     """
     SolicitarInspeccion 
     -------------------------------------------
