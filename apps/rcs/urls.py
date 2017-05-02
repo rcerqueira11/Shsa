@@ -17,7 +17,7 @@ urlpatterns = [
     ),
 
     url(
-        r'^gestion_ticket',
+        r'^gestion_ticket/(?P<sol_id>.+)?$',
         views.GestionSolicitudAbierta.as_view(),
         name="gestion_ticket"
     ),

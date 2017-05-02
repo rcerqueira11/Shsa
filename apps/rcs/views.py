@@ -328,9 +328,9 @@ class GestionSolicitudAbierta(View):
         return super(GestionSolicitudAbierta, self).dispatch(request, *args, **kwargs)
 
     def get_context(self, data):
-        id_solicitud = 1
-
-        solicitud = SolicitudInspeccion.objects.get(id=id_solicitud)
+        # id_solicitud = 1
+        # import pudb; pu.db
+        solicitud = SolicitudInspeccion.objects.get(id=data['sol_id'])
         # import pudb; pu.db
         vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
         tipo_vehiculo = TipoVehiculo.objects.all()
@@ -456,7 +456,6 @@ class CondicionVehiculoSolicitud(View):
         id_solicitud = 1
 
         solicitud = SolicitudInspeccion.objects.get(id=id_solicitud)
-        # import pudb; pu.db
         vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
         condiciones = CondicionesGeneralesVehiculo.objects.all()
         estados_vehiculo = EstadoVehiculo.objects.all()

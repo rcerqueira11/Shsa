@@ -225,7 +225,7 @@ class SolicitudInspeccion(models.Model):
             # se guardan las columnas a eliminar/agregar en el arreglo
             # 'columns'
             remove_add_header = (
-                [], #columnas eliminar
+                ['id'], #columnas eliminar
                 ['options'],#columnas agregar
             )
         # si tenemos condiciones, se procede a realizar el la consulta con las
@@ -248,6 +248,7 @@ class SolicitudInspeccion(models.Model):
         cont = 1
         for d in datos_filtrados:
             # se codifica el ID por medida de seguridad
+            # import pudb; pu.db
             #
             # siendo_usado = False
             # rec = seccion.objects.filter(fk_forma=d['id'])
@@ -262,11 +263,11 @@ class SolicitudInspeccion(models.Model):
 
                 d['options'] = [
                     {
-                        'tooltip': 'Editar',
+                        'tooltip': 'Gestionar Solicitud',
                         'icon': 'fa fa-pencil-square-o white-icon',
                                 'class': 'btn btn-info editar_boton',
-                                'href': '/administracion/editar_seccion?',
-                                'status': 'disabled',
+                                'href': '/rcs/gestion_ticket/?sol_id='+str(d['id']),
+                                'status': '',
                     },
                    
 
