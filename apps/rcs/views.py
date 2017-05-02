@@ -217,6 +217,9 @@ class BandejaSolicitudes(View):
         context['nombre'] = request.user.nombre
         context['username'] = request.user.username
 
+        if 'sol_id' in request.session:
+            del request.session['sol_id']
+
         return render(request, 'rcs/inspector/bandeja_solicitudes.html',context)
 
 
@@ -327,10 +330,13 @@ class GestionSolicitudAbierta(View):
             return redirect(reverse_lazy('login'))
         return super(GestionSolicitudAbierta, self).dispatch(request, *args, **kwargs)
 
-    def get_context(self, data):
+    def get_context(self, request,data):
         # id_solicitud = 1
+        # data = request.GET
         # import pudb; pu.db
-        solicitud = SolicitudInspeccion.objects.get(id=data['sol_id'])
+        id_sol = data['sol_id'] if 'sol_id' in data else request.session['sol_id']
+        solicitud = SolicitudInspeccion.objects.get(id=id_sol)
+        request.session['sol_id'] = id_sol
         # import pudb; pu.db
         vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
         tipo_vehiculo = TipoVehiculo.objects.all()
@@ -366,7 +372,7 @@ class GestionSolicitudAbierta(View):
     def get(self, request, *args, **kwargs):
         data = request.GET
 
-        context = self.get_context(data)
+        context = self.get_context(request,data)
         
         #obtener datos que requieran ser pre-cargados en el formulario (ejemplo: editar registro) y guardarlos en form_data
         form_data = {}
@@ -409,15 +415,15 @@ class GestionSolicitudAbierta(View):
 
                 solicitud.fk_inspector = Usuario.objects.get(id=request.user.id)
 
-                solicitud.save()
-                vehiculo.save()
+                # solicitud.save()
+                # vehiculo.save()
                 # print data[observacion+mecanica.codigo]
                 # print data[radio+mecanica.codigo]
 
-            return redirect(reverse_lazy('condiciones_vehiculo'))
+            return redirect('/rcs/condiciones_vehiculo/?sol_id='+data['id_solicitud'])
 
         else:
-            context = self.get_context(request)
+            context = self.get_context(request,request)
 
             form_data = {}
             for key, value in data.iteritems():
@@ -452,10 +458,10 @@ class CondicionVehiculoSolicitud(View):
         return super(CondicionVehiculoSolicitud, self).dispatch(request, *args, **kwargs)
 
 
-    def get_context(self, data):
-        id_solicitud = 1
-
-        solicitud = SolicitudInspeccion.objects.get(id=id_solicitud)
+    def get_context(self, request,data):
+        # id_solicitud = 1
+        id_sol = data['sol_id'] if 'sol_id' in data else request.session['sol_id']
+        solicitud = SolicitudInspeccion.objects.get(id=id_sol)
         vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
         condiciones = CondicionesGeneralesVehiculo.objects.all()
         estados_vehiculo = EstadoVehiculo.objects.all()
@@ -491,7 +497,7 @@ class CondicionVehiculoSolicitud(View):
     def get(self, request, *args, **kwargs):
         data = request.GET
 
-        context = self.get_context(data)
+        context = self.get_context(request,data)
         
         #obtener datos que requieran ser pre-cargados en el formulario (ejemplo: editar registro) y guardarlos en form_data
         form_data = {}
@@ -534,15 +540,15 @@ class CondicionVehiculoSolicitud(View):
                     if data[radio+condicion.codigo].strip() != "":
                         condicion.observacion = data[observacion+condicion.codigo]
                         condicion.fk_estado_vehiculo_id = EstadoVehiculo.objects.get(codigo = data[radio+condicion.codigo])
-                        condicion.save()
+                        # condicion.save()
                         ##Agregando condicion a many to many field de vehiculo
-                        vehiculo.condiciones_generales_vehiculo.add(condicion)
-                vehiculo.save()
+                        # vehiculo.condiciones_generales_vehiculo.add(condicion)
+                # vehiculo.save()
 
 
             return redirect(reverse_lazy('mecanica_vehiculo'))
         else:
-            context = self.get_context(request)
+            context = self.get_context(request,request)
 
             form_data = {}
             for key, value in data.iteritems():
@@ -567,10 +573,9 @@ class MecanicaVehiculoSolicitud(View):
             return redirect(reverse_lazy('login'))
         return super(MecanicaVehiculoSolicitud, self).dispatch(request, *args, **kwargs)
 
-    def get_context(self, data):
-        id_solicitud = 1
-
-        solicitud = SolicitudInspeccion.objects.get(id=id_solicitud)
+    def get_context(self, request,data):
+        id_sol = data['sol_id'] if 'sol_id' in data else request.session['sol_id']
+        solicitud = SolicitudInspeccion.objects.get(id=id_sol)
         # import pudb; pu.db
         vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
         
@@ -609,7 +614,7 @@ class MecanicaVehiculoSolicitud(View):
     def get(self, request, *args, **kwargs):
         data = request.GET
 
-        context = self.get_context(data)
+        context = self.get_context(request,data)
         
         #obtener datos que requieran ser pre-cargados en el formulario (ejemplo: editar registro) y guardarlos en form_data
         form_data = {}
@@ -652,15 +657,15 @@ class MecanicaVehiculoSolicitud(View):
                     if data[radio+mecanica.codigo].strip() != "":
                         mecanica.observacion = data[observacion+mecanica.codigo]
                         mecanica.fk_estado_vehiculo_id = EstadoVehiculo.objects.get(codigo = data[radio+mecanica.codigo])
-                        mecanica.save()
+                        # mecanica.save()
                         ##Agregando mecanica a many to many field de vehiculo
-                        vehiculo.mecanica_vehiculo.add(mecanica)
-                vehiculo.save()
+                        # vehiculo.mecanica_vehiculo.add(mecanica)
+                # vehiculo.save()
 
 
             return redirect(reverse_lazy('accesorios_vehiculo'))
         else:
-            context = self.get_context(request)
+            context = self.get_context(request,request)
             form_data = {}
             for key, value in data.iteritems():
                 if key in errors.keys():
@@ -684,10 +689,9 @@ class AccesoriosVehiculoSolicitud(View):
             return redirect(reverse_lazy('login'))
         return super(AccesoriosVehiculoSolicitud, self).dispatch(request, *args, **kwargs)
 
-    def get_context(self, data):
-        id_solicitud = 1
-
-        solicitud = SolicitudInspeccion.objects.get(id=id_solicitud)
+    def get_context(self, request, data):
+        id_sol = data['sol_id'] if 'sol_id' in data else request.session['sol_id']
+        solicitud = SolicitudInspeccion.objects.get(id=id_sol)
         # import pudb; pu.db
         vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
         
@@ -732,7 +736,7 @@ class AccesoriosVehiculoSolicitud(View):
     def get(self, request, *args, **kwargs):
         data = request.GET
 
-        context = self.get_context(data)
+        context = self.get_context(request,data)
         
         #obtener datos que requieran ser pre-cargados en el formulario (ejemplo: editar registro) y guardarlos en form_data
         form_data = {}
@@ -782,7 +786,7 @@ class AccesoriosVehiculoSolicitud(View):
                 vehiculo.save()
             return redirect(reverse_lazy('documentos_vehiculo'))
         else:
-            context = self.get_context(request)
+            context = self.get_context(request,request)
 
             form_data = {}
             for key, value in data.iteritems():
