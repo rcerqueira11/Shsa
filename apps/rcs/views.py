@@ -255,17 +255,16 @@ class SolicitarInspeccion(View):
         #Ejemplo: validar que los campos no estén vacios
         for key in data:
             value = data.get(key, None)
-            # import pudb; pu.db
             if 'radio_titular' in data:
                 if data['radio_titular'] == 'false':
-                    if not value:
+                    if not value.strip():
                         errors[key] = 'El campo no debe estar vacío'
                 else:
                     if not 'trajo' in key:
-                        if not value:
+                        if not value.strip():
                             errors[key] = 'El campo no debe estar vacío'
             else:
-                if not value:
+                if not value.strip():
                     errors[key] = 'El campo no debe estar vacío'
         return errors
 
@@ -289,6 +288,7 @@ class SolicitarInspeccion(View):
         data = request.POST
         response = {}
         # import pudb; pu.db
+
         errors = self.validate(data)
 
         if not errors:
@@ -307,13 +307,23 @@ class SolicitarInspeccion(View):
                 placa = data['placa']
                 tipo_vehiculo = data['tipo_vehiculo']
 
-                nombre_trajo_vehiculo = data['nombre_trajo_vehiculo']
-                apellido_trajo_vehiculo = data['apellido_trajo_vehiculo']
-                cedula_trajo_vehiculo = data['cedula_trajo_vehiculo']
-                telefono_trajo_vehiculo = data['telefono_trajo_vehiculo']
+                titular_vehiculo.nombre = nombre_titular
+                titular_vehiculo.apellido = apellido_titular
+                titular_vehiculo.cedula = cedula_titular
+                titular_vehiculo.telefono = telefono_titular
+
+                if data['nombre_trajo_vehiculo'].strip() != "":
+                    nombre_trajo_vehiculo = data['nombre_trajo_vehiculo']
+                    apellido_trajo_vehiculo = data['apellido_trajo_vehiculo']
+                    cedula_trajo_vehiculo = data['cedula_trajo_vehiculo']
+                    parentesco_trajo_vehiculo = data['telefono_trajo_vehiculo']
+                    trajo_vehiculo.nombre =  nombre_trajo_vehiculo
+                    trajo_vehiculo.apellido = apellido_trajo_vehiculo
+                    trajo_vehiculo.cedula = cedula_trajo_vehiculo
+                    trajo_vehiculo.parentesco = parentesco_trajo_vehiculo
 
             respuesta={
-            'result': 'success',
+            'results': 'success',
             }
             return HttpResponse(json.dumps(respuesta), content_type="application/json")
         else:
@@ -379,7 +389,7 @@ class GestionSolicitudAbierta(View):
         #Ejemplo: validar que los campos no estén vacios
         for key in data:
             value = data.get(key, None)
-            if not value:
+            if not value.strip():
                 errors[key] = 'El campo no debe estar vacío'
 
         return errors
@@ -504,7 +514,7 @@ class CondicionVehiculoSolicitud(View):
                 if data['radio_'+codigo].strip() !="" and data['observacion_'+codigo].strip()=="":
                     errors[key] = 'El campo no debe estar vacío'
                     
-            if not value and not 'observacion' in key and not 'OTRO' in key :
+            if not value.strip() and not 'observacion' in key and not 'OTRO' in key :
                 errors[key] = 'El campo no debe estar vacío'
 
         return errors
@@ -621,7 +631,7 @@ class MecanicaVehiculoSolicitud(View):
                 if data['radio_'+codigo].strip() !="" and data['observacion_'+codigo].strip()=="":
                     errors[key] = 'El campo no debe estar vacío'
                     
-            if not value and not 'observacion' in key and not 'OTRO' in key :
+            if not value.strip() and not 'observacion' in key and not 'OTRO' in key :
                 errors[key] = 'El campo no debe estar vacío'
 
         return errors
@@ -739,11 +749,11 @@ class AccesoriosVehiculoSolicitud(View):
                 if data['radio_'+codigo].strip() !="" and data['observacion_'+codigo].strip()=="":
                     errors[key] = 'El campo no debe estar vacío'
                     
-            if not value and not 'observacion' in key and not 'OTRO' in key :
+            if not value.strip() and not 'observacion' in key and not 'OTRO' in key :
                 errors[key] = 'El campo no debe estar vacío'
 
             if 'observacion_RADIO_ANT' in key:
-                    if not value:
+                    if not value.strip():
                         errors[key] = 'El campo no debe estar vacío'
 
         return errors
@@ -856,7 +866,7 @@ class DetallesVehiculoSolicitud(View):
         for key in data:
             value = data.get(key, None)
                     
-            if not value:
+            if not value.strip():
                 errors[key] = 'El campo no debe estar vacío'
 
         return errors
@@ -915,31 +925,7 @@ class DetallesVehiculoSolicitud(View):
 
         return redirect(reverse_lazy('documentos_vehiculo'))
 
-        # if not errors:
-        #     solicitud = SolicitudInspeccion.objects.get(id= data['id_solicitud'])
-        #     vehiculo = solicitud.fk_vehiculo
-        #     with transaction.atomic():
-        #             # mec_sol
-        #             # import pudb; pu.db
-        #                 # accesorio.save()
-        #             ##Agregando accesorio a many to many field de vehiculo
-        #             # vehiculo.accesorios_vehiculo.add(accesorio)
-        #         vehiculo.save()
-        #     return redirect(reverse_lazy('documentos_vehiculo'))
-        # else:
-        #     # context = self.get_context(request)
-        #     # context = self.get_context(request,cantidad_detalles)
 
-        #     form_data = {}
-        #     # for key, value in data.iteritems():
-        #     #     if key in errors.keys():
-        #     #         form_data[key] = (value, errors[key])
-        #     #     else:
-        #     #         form_data[key] = (value, '')
-
-        #     context['form_data'] = form_data
-
-        # return render(request, 'rcs/inspector/flujo_solicitud/detalles_solicitud.html',context)
 
 
 class DocumentosVehiculoSolicitud(View):
@@ -984,7 +970,7 @@ class DocumentosVehiculoSolicitud(View):
             # import pudb; pu.db
             value = data.get(key, None)
                     
-            if not value:
+            if not value.strip():
                 errors[key] = 'El campo no debe estar vacío'
 
         return errors

@@ -1,12 +1,12 @@
 $("#tabla_detalles").hide()
-$("#submit_detalles").hide()
+$("#id_submit_detalles").hide()
 function agregar_detalle(id_tabla){
 
 	$("#detalles_table_body").html()
 	cant_en_tabla =$('#detalles_table_body').children('tr').length;
 	if (!cant_en_tabla){
 		$("#tabla_detalles").show('slide')
-		$("#submit_detalles").show('slide')
+		$("#id_submit_detalles").show('slide')
 
 
 	} 
@@ -53,7 +53,7 @@ function eliminar_celda(tag){
 	cant_en_tabla =$('#detalles_table_body').children('tr').length;
 	if (!cant_en_tabla){
 		$("#tabla_detalles").hide('slide')
-		$("#submit_detalles").hide('slide')
+		$("#id_submit_detalles").hide('slide')
 
 	} 
 }
