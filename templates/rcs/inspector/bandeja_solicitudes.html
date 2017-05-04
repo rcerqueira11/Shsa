@@ -17,18 +17,18 @@
  	<div class="well" style=" padding-left: 30px; padding-right: 30px; ">
   		<form id="filter_form_id" class="filter_form" method="GET" action="{% url 'filtro_busqueda_solicitudes' %}">
 
-			
+			<input type="hidden" id="admin_site_id" name="admin_site" value="1">
 			<input type="hidden" id="page_id" name="page" value="1" />
 			<input type="hidden" id="filter_code_id" name="filter_code" value="SOL_INSP_INSP" />
 			<input type="hidden" id="filter_obj_id" name="filter_obj" value="SolicitudInspeccion" />
 			<div class="row">
 				<div class="col-xs-4">
-					<label>Placa</label>
-          			<input id="placa_id" name="placa" type="text" class="form-control" />
+					<label>Cedula</label>
+          			<input id="cedula_id" name="cedula" type="text" class="form-control ci-mask" />
           		</div>
 				<div class="col-xs-4">
-					<label>Cedula</label>
-          			<input id="cedula_id" name="placa" type="text" class="form-control ci-mask" />
+					<label>Placa</label>
+          			<input id="placa_id" name="placa" type="text" class="form-control" />
           		</div>
 			</div>
 

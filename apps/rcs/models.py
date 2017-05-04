@@ -8,6 +8,11 @@ from utils.validate_files import ContentTypeRestrictedFileField
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from utils.HelpMethods.helpers import *
 from django.apps import apps
+from utils.HelpMethods.aes_cipher import encode as secure_value_encode
+from utils.HelpMethods.aes_cipher import decode as secure_value_decode
+
+import urllib
+import operator
 
 TAMANO_MAXIMO_ARCHIVO = 10485760  # 10 megas
 # Create your models here.
@@ -162,9 +167,9 @@ class MotivoSolicitud(models.Model):
 class SolicitudInspeccion(models.Model):
     fk_vehiculo = models.OneToOneField(Vehiculo)
     fk_titular_vehiculo = models.ForeignKey(TitularVehiculo)
-    fk_inspector = models.ForeignKey(Usuario)
+    fk_inspector = models.ForeignKey(Usuario,null=True)
     siendo_verificada = models.IntegerField(blank=True,null=True) #numero id del inspector verificando la solicitud
-    editable = models.BooleanField(default=False)
+    editable = models.BooleanField(default=True)
     fecha_creacion = models.DateTimeField(['%d/%m/%Y'], blank=True, null=True, auto_now=True)
     fk_estado_solicitud = models.ForeignKey(EstadoSolicitud, default=1)
     fk_motivo_solicitud = models.ForeignKey(MotivoSolicitud)
@@ -204,12 +209,11 @@ class SolicitudInspeccion(models.Model):
                 placa= param.get('placa', None)
                 cedula= param.get('cedula', None)
 
-
                 if placa:
-                    condiciones.append(Q(fk_vehiculo__placa=placa))
+                    condiciones.append(Q(fk_vehiculo__placa__icontains=placa))
 
                 if cedula:
-                    condiciones.append(Q(fk_vehiculo__fk_titular_vechiculo__cedula=cedula))
+                    condiciones.append(Q(fk_vehiculo__fk_titular_vechiculo__cedula__icontains=cedula))
 
                 # if 'configurable' in param:
                 #     condiciones.append(Q(fk_seccion__configurable=True))
@@ -220,12 +224,12 @@ class SolicitudInspeccion(models.Model):
         # adicionales de la consulta
         if filter_code == "SOL_INSP_INSP":
             # select['fecha_declaracion'] = "to_char(fecha_declaracion, 'DD/MM/YYYY')"
-            columns = ['id','fk_vehiculo__placa','fk_titular_vehiculo__cedula','fk_titular_vehiculo__nombre',]
+            columns = ['id','fk_vehiculo__placa','fk_titular_vehiculo__cedula','fk_titular_vehiculo__nombre','editable']
 
             # se guardan las columnas a eliminar/agregar en el arreglo
             # 'columns'
             remove_add_header = (
-                ['id'], #columnas eliminar
+                ['id','editable'], #columnas eliminar
                 ['options'],#columnas agregar
             )
         # si tenemos condiciones, se procede a realizar el la consulta con las
@@ -254,7 +258,7 @@ class SolicitudInspeccion(models.Model):
             # rec = seccion.objects.filter(fk_forma=d['id'])
             # if rec:
             #     siendo_usado = True
-            # d['id'] = secure_value_encode(str(d['id']))
+            d['id'] = secure_value_encode(str(d['id']))
             # d['fk_seccion__fk_estado_seccion__nombre'] = d['fk_seccion__fk_estado_seccion__nombre'].upper() 
             # d['fk_seccion__fk_estado_seccion__nombre']
             # NOTA: dependiendo del 'filter_code' se definen los botones de la
@@ -266,8 +270,8 @@ class SolicitudInspeccion(models.Model):
                         'tooltip': 'Gestionar Solicitud',
                         'icon': 'fa fa-pencil-square-o white-icon',
                                 'class': 'btn btn-info editar_boton',
-                                'href': '/rcs/gestion_ticket/?sol_id='+str(d['id']),
-                                'status': '',
+                                'href': '/rcs/gestion_ticket/?'+urllib.urlencode({"sol_id":d['id']}),
+                                'status': 'disabled' if not d['editable'] else '',
                     },
                    
 
