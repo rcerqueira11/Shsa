@@ -41,7 +41,7 @@
 	 		</div>	
 	 		<div class="col-xs-3 ">
 	 			<label>Motivo de la visita</label>
-				<select  data-placeholder="Seleccionar un tipo"  class="form-control chosen-select" name="tipo_vehiculo" id='id_tipo_vehiculo' >
+				<select  data-placeholder="Seleccionar un tipo"  class="form-control chosen-select" name="motivo_visita" id='id_motivo_visita' >
 					{% for e in motivos_de_visita %}
 					      <option value="{{ e.codigo }}" >{{ e.motivo|title }}</option>
 					{% endfor %}
@@ -105,7 +105,7 @@
 				<div class="col-xs-3">
 				<label>Parentesco con el Titular</label>
 					{% input_content form_data 'telefono_trajo_vehiculo' as input %}
-					<input type="text"  class="form-control" name="telefono_trajo_vehiculo" value="{{ input.value }}">
+					<input type="text"  class="form-control" name="parentesco_trajo_vehiculo" value="{{ input.value }}">
 					<div class="error" id="telefono_trajo_vehiculo_error">{{input.error}}</div>
 				</div>
 			</div>

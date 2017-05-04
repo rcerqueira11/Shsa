@@ -16,8 +16,8 @@ from django.apps import apps
 from apps.wkhtmltopdf.views import PDFTemplateResponse
 from apps.registro.models import *
 from apps.rcs.models import *
-# from utils.HelpMethods.aes_cipher import encode as secure_value_encode
-# from utils.HelpMethods.aes_cipher import decode as secure_value_decode
+from utils.HelpMethods.aes_cipher import encode as secure_value_encode
+from utils.HelpMethods.aes_cipher import decode as secure_value_decode
 import json
 import random
 import string
@@ -299,13 +299,19 @@ class SolicitarInspeccion(View):
             vehiculo = Vehiculo()
             titular_vehiculo = TitularVehiculo()
             trajo_vehiculo = TrajoVehiculo()
+
+
+            nombre_titular = data['nombre_titular']
+            apellido_titular = data['apellido_titular']
+            cedula_titular = data['cedula_titular']
+            telefono_titular = data['telefono_titular']
+            placa = data['placa']
+            motivo_visita = data['motivo_visita']
+            nombre_trajo_vehiculo = data['nombre_trajo_vehiculo']
+            apellido_trajo_vehiculo = data['apellido_trajo_vehiculo']
+            cedula_trajo_vehiculo = data['cedula_trajo_vehiculo']
+            parentesco_trajo_vehiculo = data['parentesco_trajo_vehiculo']
             with transaction.atomic():
-                nombre_titular = data['nombre_titular']
-                apellido_titular = data['apellido_titular']
-                cedula_titular = data['cedula_titular']
-                telefono_titular = data['telefono_titular']
-                placa = data['placa']
-                tipo_vehiculo = data['tipo_vehiculo']
 
                 titular_vehiculo.nombre = nombre_titular
                 titular_vehiculo.apellido = apellido_titular
@@ -313,14 +319,24 @@ class SolicitarInspeccion(View):
                 titular_vehiculo.telefono = telefono_titular
 
                 if data['nombre_trajo_vehiculo'].strip() != "":
-                    nombre_trajo_vehiculo = data['nombre_trajo_vehiculo']
-                    apellido_trajo_vehiculo = data['apellido_trajo_vehiculo']
-                    cedula_trajo_vehiculo = data['cedula_trajo_vehiculo']
-                    parentesco_trajo_vehiculo = data['telefono_trajo_vehiculo']
+                    
                     trajo_vehiculo.nombre =  nombre_trajo_vehiculo
                     trajo_vehiculo.apellido = apellido_trajo_vehiculo
                     trajo_vehiculo.cedula = cedula_trajo_vehiculo
                     trajo_vehiculo.parentesco = parentesco_trajo_vehiculo
+                    trajo_vehiculo.save()
+                    vehiculo.fk_trajo_vehiculo = trajo_vehiculo
+
+                titular_vehiculo.save()
+
+                vehiculo.placa = placa
+                vehiculo.fk_titular_vehiculo = titular_vehiculo
+                vehiculo.save()
+
+                solicitud.fk_vehiculo = vehiculo
+                solicitud.fk_titular_vehiculo = titular_vehiculo
+                solicitud.fk_motivo_solicitud = MotivoSolicitud.objects.get(codigo = motivo_visita) 
+                solicitud.save()
 
             respuesta={
             'results': 'success',
@@ -359,7 +375,7 @@ class GestionSolicitudAbierta(View):
         # id_solicitud = 1
         # data = request.GET
         # import pudb; pu.db
-        id_sol = data['sol_id'] if 'sol_id' in data else request.session['sol_id']
+        id_sol = secure_value_decode(data['sol_id']) if 'sol_id' in data else request.session['sol_id']
         solicitud = SolicitudInspeccion.objects.get(id=id_sol)
         request.session['sol_id'] = id_sol
         # import pudb; pu.db
@@ -902,6 +918,7 @@ class DetallesVehiculoSolicitud(View):
         vehiculo = solicitud.fk_vehiculo
 
         with transaction.atomic():
+            vehiculo.detalles_datos.clear()
             for i in xrange(int(numero_agregados)+1):
                 if "pieza_"+str(i) in data:
                     detalles = DetallesDatos()
@@ -913,15 +930,15 @@ class DetallesVehiculoSolicitud(View):
                     detalles.tipo_dano = tipo_dano
                     detalles.costo_aproximado = costo_aproximado
                     detalles.codigo = codigo
-                    # detalles.save()
-                    # vehiculo.detalles_datos.add(detalles)
+                    detalles.save()
+                    vehiculo.detalles_datos.add(detalles)
 
                 # mec_sol
                 # import pudb; pu.db
                     # accesorio.save()
                 ##Agregando accesorio a many to many field de vehiculo
                 # vehiculo.accesorios_vehiculo.add(accesorio)
-            # vehiculo.save()
+            vehiculo.save()
 
         return redirect(reverse_lazy('documentos_vehiculo'))
 
