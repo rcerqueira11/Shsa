@@ -12,6 +12,7 @@
 <div class="container">
 
 {# Accesorios del vehiculo #}
+<div class="well" style="background-color:white; ">
 <div class="row">
 	<center>
 	    <section>
@@ -54,7 +55,7 @@
 						<td>
 							{% create_name "observacion" accesorio.codigo as nambre %}
 							{% input_content form_data nambre as input %}	
-							<textarea rows="2" cols="17" {% if accesorio.codigo == 'RADIO_ANT' %}
+							<textarea rows="2" cols="15" {% if accesorio.codigo == 'RADIO_ANT' %}
 							    placeholder="Especificar si es radio o antena" 
 							
 							{% endif %} name="observacion_{{accesorio.codigo}}">{{input.value}}</textarea>
@@ -74,7 +75,7 @@
 						<td>
 							{% create_name "observacion" accesorio.codigo as nambre %}
 							{% input_content form_data nambre as input %}	
-							<textarea rows="2" cols="17" {% if accesorio.codigo == 'RADIO_ANT' %}
+							<textarea rows="2" cols="15" {% if accesorio.codigo == 'RADIO_ANT' %}
 							    placeholder="Especificar si es radio o antena" 
 							
 							{% endif %} name="observacion_{{accesorio.codigo}}">{{input.value}}</textarea>
@@ -94,7 +95,7 @@
 						<td>
 							{% create_name "observacion" accesorio.codigo as nambre %}
 							{% input_content form_data nambre as input %}	
-							<textarea rows="2" cols="17" {% if accesorio.codigo == 'RADIO_ANT' %}
+							<textarea rows="2" cols="15" {% if accesorio.codigo == 'RADIO_ANT' %}
 							    placeholder="Especificar si es radio o antena" 
 							
 							{% endif %} name="observacion_{{accesorio.codigo}}">{{input.value}}</textarea>
@@ -111,6 +112,8 @@
 	<button type="submit">SEND</button>
 	</form>
 </div>
+</div>
+
 </div>
 
 

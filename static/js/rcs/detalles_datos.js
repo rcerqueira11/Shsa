@@ -1,12 +1,15 @@
 $("#tabla_detalles").hide()
+$("#submit_detalles").hide()
 function agregar_detalle(id_tabla){
 
 	$("#detalles_table_body").html()
 	cant_en_tabla =$('#detalles_table_body').children('tr').length;
 	if (!cant_en_tabla){
 		$("#tabla_detalles").show('slide')
+		$("#submit_detalles").show('slide')
 
-	}
+
+	} 
 	indice = (parseInt($("#contador_agregados").val()) + 1)
 
 	// for (i=1;i<cant_en_tabla;i++){
@@ -47,6 +50,12 @@ function agregar_detalle(id_tabla){
 function eliminar_celda(tag){
 	id_eliminar = $("#"+tag.id).parent().parent()[0].id
 	$("#"+id_eliminar).remove()	
+	cant_en_tabla =$('#detalles_table_body').children('tr').length;
+	if (!cant_en_tabla){
+		$("#tabla_detalles").hide('slide')
+		$("#submit_detalles").hide('slide')
+
+	} 
 }
 
 
