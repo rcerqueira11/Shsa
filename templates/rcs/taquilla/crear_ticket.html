@@ -17,7 +17,7 @@
 		</section>
 	</center>
 
- 	<form method="post" id="form_crear_ticket" action="{% url 'crear_solicitud' %} " target-modal="modal-exito" >
+ 	<form method="post" id="form_crear_ticket"  action="{% url 'crear_solicitud' %} " target-modal="modal-exito" >
 		{% csrf_token %}
 	 	
 	 	<div class="row">
@@ -25,13 +25,12 @@
 	 		<div class="col-xs-3 col-xs-offset-3">
 				<label>¿Titular Presente?</label>
 
-				{% create_name "radio" accesorio.codigo as nambre %}
-				{% input_content form_data nambre as input %}
+				{% input_content form_data 'radio_titular' as input %}
 				<br>
-			 	<input type="radio" name="radio_titular" value="true" {% if input.value == 'true' %} checked="checked"{% endif %} />  Si
+			 	<input id="radio_si" type="radio" name="radio_titular" value="true" {% if input.value == 'true' %} checked="checked"{% endif %} />  Si
 		    	<br>
 				<input type="radio" name="radio_titular" value="false" {% if input.value == 'false' %} checked="checked"{% endif %} /> No  
-				<div class="error" id="error_radio_titular">{{input.error}}</div>
+				<div class="error" id="radio_titular_error">{{input.error}}</div>
 	 		</div>	
 	 		<div class="col-xs-3">
 		 		<label>Placa del Vehiculo</label>

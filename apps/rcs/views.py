@@ -255,9 +255,18 @@ class SolicitarInspeccion(View):
         #Ejemplo: validar que los campos no estén vacios
         for key in data:
             value = data.get(key, None)
-            if not value:
-                errors[key] = 'El campo no debe estar vacío'
-
+            # import pudb; pu.db
+            if 'radio_titular' in data:
+                if data['radio_titular'] == 'false':
+                    if not value:
+                        errors[key] = 'El campo no debe estar vacío'
+                else:
+                    if not 'trajo' in key:
+                        if not value:
+                            errors[key] = 'El campo no debe estar vacío'
+            else:
+                if not value:
+                    errors[key] = 'El campo no debe estar vacío'
         return errors
 
     def get(self, request, *args, **kwargs):
@@ -279,6 +288,7 @@ class SolicitarInspeccion(View):
 
         data = request.POST
         response = {}
+        # import pudb; pu.db
         errors = self.validate(data)
 
         if not errors:
@@ -294,29 +304,34 @@ class SolicitarInspeccion(View):
                 apellido_titular = data['apellido_titular']
                 cedula_titular = data['cedula_titular']
                 telefono_titular = data['telefono_titular']
+                placa = data['placa']
+                tipo_vehiculo = data['tipo_vehiculo']
 
                 nombre_trajo_vehiculo = data['nombre_trajo_vehiculo']
                 apellido_trajo_vehiculo = data['apellido_trajo_vehiculo']
                 cedula_trajo_vehiculo = data['cedula_trajo_vehiculo']
                 telefono_trajo_vehiculo = data['telefono_trajo_vehiculo']
-                placa = data['placa']
-                tipo_vehiculo = data['tipo_vehiculo']
 
-            return redirect('dashboard')
+            respuesta={
+            'result': 'success',
+            }
+            return HttpResponse(json.dumps(respuesta), content_type="application/json")
         else:
-            context = self.get_context(request)
+            # context = self.get_context(request)
 
-            form_data = {}
-            for key, value in data.iteritems():
-                if key in errors.keys():
-                    form_data[key] = (value, errors[key])
-                else:
-                    form_data[key] = (value, '')
+            # form_data = {}
+            # for key, value in data.iteritems():
+            #     if key in errors.keys():
+            #         form_data[key] = (value, errors[key])
+            #     else:
+            #         form_data[key] = (value, '')
 
-            context['form_data'] = form_data
+            # context['form_data'] = form_data
 
-            return render(request, 'rcs/taquilla/crear_ticket.html', context)
-            
+            # return render(request, 'rcs/taquilla/crear_ticket.html', context)
+            response['errors'] = errors
+
+            return HttpResponse(json.dumps(response), content_type = "application/json")
 
 class GestionSolicitudAbierta(View):
     """
