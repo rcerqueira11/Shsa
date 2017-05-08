@@ -2,7 +2,7 @@
 {% load static %}
 {% load rcs_tags %}
 {% block extra_css %}
-    <link href="/static/css/rcs/common_style.css"  rel="stylesheet" type="text/css"/>
+    <link href="/static/css/rcs/flujo_style.css"  rel="stylesheet" type="text/css"/>
 {% endblock extra_css %}
 
 {% block main_content %}
@@ -23,7 +23,10 @@ trajo_vehiculo
 
  <form method="post" id="form_datos_vehiculo" action="{% url 'gestion_ticket' %}">
 {% csrf_token %}
- 	
+<input type="hidden" name="id_solicitud"  class="form-control"  value={{solicitud.id}} >
+		<div class="subtitle">Datos Titular del Veh&iacute;culo</div>
+
+
 <div class="row">
 	<div class="col-xs-4">
 	<label>Nombre y Apellido del Titular:</label>
@@ -41,7 +44,8 @@ trajo_vehiculo
 
 
 {% if trajo_alguien_mas %}
-    
+<div class="subtitle">Datos persona que trajo el Veh&iacute;culo a inspecci&oacute;n</div>	
+
 <div class="row">
 	<div class="col-xs-4">
 	<label>Persona que trajo el Veh&iacute;culo a inspecci&oacute;n:</label>
@@ -59,78 +63,122 @@ trajo_vehiculo
 
 {% endif %}
 
+<div class="subtitle">Veh&iacute;culo</div>
 
+<div class="row">
+	<div class="col-xs-4">
+		<label>Tipo Modelo</label>
+		<select  data-placeholder="Seleccionar un tipo"  class="form-control chosen-select" name="tipo_vehiculo" id='id_tipo_vehiculo' >
+		{% for e in tipos_de_vehiculo %}
+		      <option value="{{ e.codigo }}" >{{ e.nombre|title }}</option>
+		{% endfor %}
+		</select>
+	</div>
+	<div class="col-xs-4">
+		<label>Tipo</label>
+		<select  data-placeholder="Seleccionar un tipo"  class="form-control chosen-select" name="tipo_manejo" id='id_tipo_manejo' >
+		{% for e in tipos_de_manejo %}
+		      <option value="{{ e.codigo }}" >{{ e.nombre|title }}</option>
+		{% endfor %}
+		</select>
+	</div>
+	<div class="col-xs-4">
+		<label>Placa</label>
+		<input type="text" class="form-control" value="{{vehiculo.placa}}" readonly="true">
+	</div>
+</div>
+<br>
 
+<div class="row">
+	
+	<div class="col-xs-4">
+		{% input_content form_data 'cap_puestos' as input %}
+		<label>Canitdad de Puestos</label>
+		<input type="text" name="cap_puestos" id="id_cap_puestos" class="form-control numeros" value="{{input.value}}">
+		<div class="error">{{input.error}}</div>
 
+	</div>
+	<div class="col-xs-4">
 
+		{% input_content form_data 'cilindros' as input %}
+		<label>Cilindros</label>
+		<input type="text" name="cilindros" id="id_cilindros" class="form-control" value="{{input.value}}">
+		<div class="error">{{input.error}}</div>
 
+	</div>
+	<div class="col-xs-4">
+		{% input_content form_data 'peso' as input %}
+		<label>Peso</label>
+		<input type="text" name="peso" id="id_peso" class="form-control numeros" value="{{input.value}}">
+		<div class="error">{{input.error}}</div>
+	</div>
 
+</div>
+<br>
+<div class="row">
+	<div class="col-xs-4">
+		{% input_content form_data 'color' as input %}
+		<label>Color</label>
+		<input type="text" name="color" id="id_color" class="form-control" value="{{input.value}}">
+		<div class="error">{{input.error}}</div>
+	</div>
+	<div class="col-xs-4">
+		{% input_content form_data 'kilometraje' as input %}
+		<label>Kilometraje</label>
+		<input type="text" name="kilometraje" id="id_kilometraje" class="form-control" value="{{input.value}}">
+		<div class="error">{{input.error}}</div>
+	</div>
+	<div class="col-xs-4">
+		{% input_content form_data 'serial_carroceria' as input %}
+		<label>Serial de carroceria</label>
+		<input type="text" name="serial_carroceria" id="id_serial_carroceria" class="form-control" value="{{input.value}}">
+		<div class="error">{{input.error}}</div>
+	</div>
+</div>
+<br>
+<div class="row">
+	<div class="col-xs-4">
+		{% input_content form_data 'serial_motor' as input %}
+		<label>Serial del motor</label>
+		<input type="text" name="serial_motor" id="id_serial_motor" class="form-control" value="{{input.value}}">
+		<div class="error">{{input.error}}</div>
+	</div>
 
-<input type="hidden" name="id_solicitud"  class="form-control"  value={{solicitud.id}} >
+	<div class="col-xs-4">
+		{% input_content form_data 'valor_estimado' as input %}
+		<label>Valor estimado</label>
+		<input type="text" name="valor_estimado" id="id_valor_estimado" class="form-control" value="{{input.value}}">
+		<div class="error">{{input.error}}</div>
+	</div>
+	<div class="col-xs-4">
+		{% input_content form_data 'modelo' as input %}
+		<label>Modelo</label>
+		<input type="text" name="modelo" id="id_modelo" class="form-control" value="{{input.value}}">
+		<div class="error">{{input.error}}</div>
+	</div>
+</div>
+<br>
+<div class="row">
+	<div class="col-xs-4">
+		{% input_content form_data 'marca' as input %}
+		<label>Marca</label>
+		<input type="text" name="marca" id="id_marca" class="form-control" value="{{input.value}}">
+		<div class="error">{{input.error}}</div>
+	</div>
+	<div class="col-xs-4">
+		{% input_content form_data 'anho' as input %}
+		<label>Año</label>
+		<input type="text" name="anho" id="id_anho" class="form-control anho" value="{{input.value}}">
+		<div class="error">{{input.error}}</div>
+	</div>
+</div>
+<br>
+<div class="row">
+		<div class="col-xs-4 col-xs-offset-2"><a class="btn btn-danger btn-block" href="{% url "bandeja_solicitudes" %}" >Atrás</a></div>
 
+		<div class="col-xs-4"><button class="btn btn-primary btn-block" type="submit">Continuar</button></div>
 
-
-<label>placa</label>
-<input type="text" class="form-control" value="{{vehiculo.placa}}" readonly="true">
-{% input_content form_data 'cap_puestos' as input %}
-<label>cap_puestos</label>
-<input type="text" name="cap_puestos" id="id_cap_puestos" class="form-control numeros" value="{{input.value}}">
-<div class="error">{{input.error}}</div>
-{% input_content form_data 'cilindros' as input %}
-<label>cilindros</label>
-<input type="text" name="cilindros" id="id_cilindros" class="form-control" value="{{input.value}}">
-<div class="error">{{input.error}}</div>
-{% input_content form_data 'peso' as input %}
-<label>peso</label>
-<input type="text" name="peso" id="id_peso" class="form-control numeros" value="{{input.value}}">
-<div class="error">{{input.error}}</div>
-{% input_content form_data 'color' as input %}
-<label>color</label>
-<input type="text" name="color" id="id_color" class="form-control" value="{{input.value}}">
-<div class="error">{{input.error}}</div>
-{% input_content form_data 'kilometraje' as input %}
-<label>kilometraje</label>
-<input type="text" name="kilometraje" id="id_kilometraje" class="form-control" value="{{input.value}}">
-<div class="error">{{input.error}}</div>
-{% input_content form_data 'serial_carroceria' as input %}
-<label>serial_carroceria</label>
-<input type="text" name="serial_carroceria" id="id_serial_carroceria" class="form-control" value="{{input.value}}">
-<div class="error">{{input.error}}</div>
-{% input_content form_data 'serial_motor' as input %}
-<label>serial_motor</label>
-<input type="text" name="serial_motor" id="id_serial_motor" class="form-control" value="{{input.value}}">
-<div class="error">{{input.error}}</div>
-{% input_content form_data 'valor_estimado' as input %}
-<label>valor_estimado</label>
-<input type="text" name="valor_estimado" id="id_valor_estimado" class="form-control" value="{{input.value}}">
-<div class="error">{{input.error}}</div>
-{% input_content form_data 'modelo' as input %}
-<label>modelo</label>
-<input type="text" name="modelo" id="id_modelo" class="form-control" value="{{input.value}}">
-<div class="error">{{input.error}}</div>
-{% input_content form_data 'marca' as input %}
-<label>marca</label>
-<input type="text" name="marca" id="id_marca" class="form-control" value="{{input.value}}">
-<div class="error">{{input.error}}</div>
-{% input_content form_data 'anho' as input %}
-<label>anho</label>
-<input type="text" name="anho" id="id_anho" class="form-control anho" value="{{input.value}}">
-<div class="error">{{input.error}}</div>
-<label>Tipo Modelo</label>
-<select  data-placeholder="Seleccionar un tipo"  class="form-control chosen-select" name="tipo_vehiculo" id='id_tipo_vehiculo' >
-{% for e in tipos_de_vehiculo %}
-      <option value="{{ e.codigo }}" >{{ e.nombre|title }}</option>
-{% endfor %}
-</select>
-
-<label>Tipo</label>
-<select  data-placeholder="Seleccionar un tipo"  class="form-control chosen-select" name="tipo_manejo" id='id_tipo_manejo' >
-{% for e in tipos_de_manejo %}
-      <option value="{{ e.codigo }}" >{{ e.nombre|title }}</option>
-{% endfor %}
-</select>
-
-<button type="submit"> Continuar</button>
+	</div>
  </form> 
 
 

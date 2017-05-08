@@ -58,7 +58,7 @@
 						<td>
 							{% create_name "observacion" condicion.codigo as nambre %}
 							{% input_content form_data nambre as input %}
-							<textarea rows="2" cols="12" name="observacion_{{condicion.codigo}}"></textarea>
+							<textarea rows="2" cols="12" name="observacion_{{condicion.codigo}}">{{input.value}}</textarea>
 							<div class="error" id="observacion_{{condicion.codigo}}_error">{{input.error}}</div>
 						</td>
 					{% endif %}
@@ -80,7 +80,7 @@
 						<td>
 							{% create_name "observacion" condicion.codigo as nambre %}
 							{% input_content form_data nambre as input %}
-							<textarea rows="2" cols="12" name="observacion_{{condicion.codigo}}"></textarea>
+							<textarea rows="2" cols="12" name="observacion_{{condicion.codigo}}">{{input.value}}</textarea>
 							<div class="error" id="observacion_{{condicion.codigo}}_error">{{input.error}}</div>
 						</td>
 					{% endif %}
@@ -102,7 +102,7 @@
 						<td>
 							{% create_name "observacion" condicion.codigo as nambre %}
 							{% input_content form_data nambre as input %}
-							<textarea rows="2" cols="12" name="observacion_{{condicion.codigo}}"></textarea>
+							<textarea rows="2" cols="12" name="observacion_{{condicion.codigo}}">{{input.value}}</textarea>
 							<div class="error" id="observacion_{{condicion.codigo}}_error">{{input.error}}</div>
 						</td>
 					{% endif %}
@@ -113,7 +113,13 @@
 			</tbody>
 		</table>
 	</div>
-	<button type="submit">SEND</button>
+	<div class="row">
+		<div class="col-xs-4 col-xs-offset-2"><a class="btn btn-danger btn-block" href="{% url "gestion_ticket" %}" >Atrás</a></div>
+
+		<div class="col-xs-4"><button class="btn btn-primary btn-block" type="submit">Continuar</button></div>
+
+	</div>
+	
 	</form>
 	
 </div>

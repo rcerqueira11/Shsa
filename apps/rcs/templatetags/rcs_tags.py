@@ -47,3 +47,16 @@ def create_name2(first, second):
 
     return nombre
 
+@register.assignment_tag(name='evaluando_sol')
+def evaluando_sol():
+    return True if 'sol_id' in request.session else False
+
+
+@register.filter(name='evaluando')
+def evaluando(x):
+    return True if 'sol_id' in x.session else False
+
+
+
+
+

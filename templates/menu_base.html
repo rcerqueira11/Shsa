@@ -1,3 +1,4 @@
+{% load rcs_tags %}
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -41,13 +42,28 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="{% url "bandeja_solicitudes" %}">Bandeja Solicitudes</a></li>
         <li><a href="{% url "crear_solicitud" %}">Crear Solicitud</a></li>
-        <li><a href="{% url "gestion_ticket" %}">G_ticket</a></li>
+       <!--  <li><a href="{% url "gestion_ticket" %}">G_ticket</a></li>
         <li><a href="{% url "condiciones_vehiculo" %}">Cond</a></li>
         <li><a href="{% url "mecanica_vehiculo" %}">Mec</a></li>
         <li><a href="{% url "accesorios_vehiculo" %}">Acces</a></li>
         <li><a href="{% url "detalles_vehiculo" %}">Detalles</a></li>
         <li><a href="{% url "documentos_vehiculo" %}">Document</a></li>
-        <li><a href="{% url "planilla_seguro_carro" %}">Vista previa documento</a></li>
+        <li><a href="{% url "planilla_seguro_carro" %}">Vista previa documento</a></li> -->
+        {% if request|evaluando %}
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Vehículo {{vehiculo.placa}}<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="{% url "gestion_ticket" %}">Datos B&aacute;sicos</a></li>
+              <li><a href="{% url "condiciones_vehiculo" %}">Condiciones</a></li>
+              <li><a href="{% url "mecanica_vehiculo" %}">Mecanica</a></li>
+              <li><a href="{% url "accesorios_vehiculo" %}">Accesorios</a></li>
+              <li><a href="{% url "detalles_vehiculo" %}">Detalles</a></li>
+              <li><a href="{% url "documentos_vehiculo" %}">Documentos</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="{% url "planilla_seguro_carro" %}">Vista previa documento</a></li>
+            </ul>
+          </li>
+        {% endif %}
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{username|upper}}<span class="caret"></span></a>
           <ul class="dropdown-menu">
