@@ -68,6 +68,7 @@ class VerPlanillaSeguroCarro(View):
             'mecanicas': mecanica_vehiculo,
             'vehiculo': vehiculo,
             'trajo_alguien_mas': False if trajo_vehiculo is None else True,
+            'trajo_vehiculo': trajo_vehiculo,
             'titular_vehiculo': titular_vehiculo,
             }
 
@@ -492,8 +493,8 @@ class GestionSolicitudAbierta(View):
 
                 solicitud.fk_inspector = Usuario.objects.get(id=request.user.id)
 
-                # solicitud.save()
-                # vehiculo.save()
+                solicitud.save()
+                vehiculo.save()
                 # print data[observacion+mecanica.codigo]
                 # print data[radio+mecanica.codigo]
 
@@ -617,10 +618,10 @@ class CondicionVehiculoSolicitud(View):
                     if data[radio+condicion.codigo].strip() != "":
                         condicion.observacion = data[observacion+condicion.codigo]
                         condicion.fk_estado_vehiculo_id = EstadoVehiculo.objects.get(codigo = data[radio+condicion.codigo])
-                        # condicion.save()
+                        condicion.save()
                         ##Agregando condicion a many to many field de vehiculo
-                        # vehiculo.condiciones_generales_vehiculo.add(condicion)
-                # vehiculo.save()
+                        vehiculo.condiciones_generales_vehiculo.add(condicion)
+                vehiculo.save()
 
 
             return redirect(reverse_lazy('mecanica_vehiculo'))
@@ -727,17 +728,17 @@ class MecanicaVehiculoSolicitud(View):
             solicitud = SolicitudInspeccion.objects.get(id= data['id_solicitud'])
             vehiculo = solicitud.fk_vehiculo
             # mecanica_vehiculo
-            import pudb; pu.db
+            # import pudb; pu.db
             with transaction.atomic():
                 for mecanica in mecanicas:
                     # mec_sol
                     if data[radio+mecanica.codigo].strip() != "":
                         mecanica.observacion = data[observacion+mecanica.codigo]
                         mecanica.fk_estado_vehiculo_id = EstadoVehiculo.objects.get(codigo = data[radio+mecanica.codigo])
-                        # mecanica.save()
+                        mecanica.save()
                         ##Agregando mecanica a many to many field de vehiculo
-                        # vehiculo.mecanica_vehiculo.add(mecanica)
-                # vehiculo.save()
+                        vehiculo.mecanica_vehiculo.add(mecanica)
+                vehiculo.save()
 
 
             return redirect(reverse_lazy('accesorios_vehiculo'))
@@ -861,7 +862,7 @@ class AccesoriosVehiculoSolicitud(View):
                         vehiculo.accesorios_vehiculo.add(accesorio)
                     ##Agregando accesorio a many to many field de vehiculo
                 vehiculo.save()
-            return redirect(reverse_lazy('documentos_vehiculo'))
+            return redirect(reverse_lazy('detalles_vehiculo'))
         else:
             context = self.get_context(request,request)
 
@@ -1066,7 +1067,6 @@ class DocumentosVehiculoSolicitud(View):
 
         # documentos 
         if not errors:
-            import pudb; pu.db
             solicitud = SolicitudInspeccion.objects.get(id= data['id_solicitud'])
             vehiculo = solicitud.fk_vehiculo
             with transaction.atomic():

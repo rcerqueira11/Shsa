@@ -36,15 +36,16 @@
             
 	        <table class="table table-bordered" border="1" style="width:100%;margin-bottom:0;margin-top:0px;">
 	            <td rowspan="2"  >
-	              Nombre y apellido de la persona que trajo el veh&iacute;culo a la inspecci&oacute;n:
+	              Nombre y apellido de la persona que trajo el veh&iacute;culo a la inspecci&oacute;n:<br>
+              		<center><h4>{{trajo_vehiculo.nombre}} {{trajo_vehiculo.apellido}}</h4></center>
 	            </td>
-	            <td   >
-	              Cedula de identidad:  
+	            <td>
+	              Cedula de identidad:  {{trajo_vehiculo.cedula}}
 	            </td>
 	            
 	            <tr>
-	            	<td   >
-	              		Parentesco con el titular  
+	            	<td>
+	              		Parentesco con el titular: {{trajo_vehiculo.parentesco}}
 	            	</td>	            
 	              </tr>
 	        </table>
@@ -361,7 +362,13 @@
 
 	<form action="{% url "planilla_seguro_carro" %}" method="POST">
 		{% csrf_token %}
-		<button type="submit">generar pdf</button>
+		
+		<div class="row">
+		<div class="col-xs-4 col-xs-offset-2"><a class="btn btn-danger btn-block" href="{% url "documentos_vehiculo" %}" >Atrás</a></div>
+
+		<div class="col-xs-4"><button class="btn btn-primary btn-block" type="submit">Continuar</button></div>
+
+	</div>
 	</form>
 </div>
 </div>
