@@ -37,16 +37,18 @@ def format_float(X):
 
     return float(X)
 
+
 class VerPlanillaSeguroCarro(View):
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated():
             return redirect(reverse_lazy('login'))
         return super(VerPlanillaSeguroCarro, self).dispatch(request, *args, **kwargs)
-    
-    def get(self, request, *args, **kwargs):
-        data = request.GET
-        solicitud = SolicitudInspeccion.objects.get(id= 1)
+
+    def get_context(self, request,data):
+
+        id_sol = secure_value_decode(data['sol_id']) if 'sol_id' in data else request.session['sol_id']
+        solicitud = SolicitudInspeccion.objects.get(id=id_sol)
         vehiculo = solicitud.fk_vehiculo
         condiciones_generales_vehiculo = vehiculo.condiciones_generales_vehiculo.all().exclude(fk_estado_vehiculo_id=None)
         mecanica_vehiculo = vehiculo.mecanica_vehiculo.all().exclude(fk_estado_vehiculo_id=None)
@@ -68,10 +70,44 @@ class VerPlanillaSeguroCarro(View):
             'trajo_alguien_mas': False if trajo_vehiculo is None else True,
             'titular_vehiculo': titular_vehiculo,
             }
+
+        return context
+    
+    def get(self, request, *args, **kwargs):
+        data = request.GET
+
+        context = self.get_context(request,data)
+        context['nombre'] = request.user.nombre
+        context['username'] = request.user.username
+
+        # id_sol = secure_value_decode(data['sol_id']) if 'sol_id' in data else request.session['sol_id']
+        # solicitud = SolicitudInspeccion.objects.get(id=id_sol)
+        # vehiculo = solicitud.fk_vehiculo
+        # condiciones_generales_vehiculo = vehiculo.condiciones_generales_vehiculo.all().exclude(fk_estado_vehiculo_id=None)
+        # mecanica_vehiculo = vehiculo.mecanica_vehiculo.all().exclude(fk_estado_vehiculo_id=None)
+        # accesorios_vehiculo = vehiculo.accesorios_vehiculo.all().exclude(observacion=None)
+        # detalles_datos = vehiculo.detalles_datos.all()
+        # documentos_presentados = vehiculo.documentos_presentados.all()
+        # trajo_vehiculo = vehiculo.fk_trajo_vehiculo
+        # titular_vehiculo = solicitud.fk_titular_vehiculo
+
+        # context = {
+        #     'nombre': request.user.nombre,
+        #     'username': request.user.username,        
+        #     'condiciones': condiciones_generales_vehiculo,
+        #     'accesorios': accesorios_vehiculo,
+        #     'detalles': detalles_datos,
+        #     'documentos': documentos_presentados,
+        #     'mecanicas': mecanica_vehiculo,
+        #     'vehiculo': vehiculo,
+        #     'trajo_alguien_mas': False if trajo_vehiculo is None else True,
+        #     'titular_vehiculo': titular_vehiculo,
+        #     }
         return render(request, 'rcs/inspector/flujo_solicitud/vista_previa_solicitud.html',context)
 
     def post(self, request, *args, **kwargs):
-        context={}
+        # context={}
+        context = self.get_context(request,request)
         if settings.SECURE_SSL_REDIRECT == True:
                 media_url = 'https://'
         else:
@@ -180,7 +216,6 @@ class FiltroBusqueda(View):
             return HttpResponse(json.dumps({}), content_type="application/json")
 
 
-# @login_required
 class Dashboard(View):
     """docstring for Dashboard"""
     # @login_required
@@ -199,6 +234,7 @@ class Dashboard(View):
             'username': username,
         }
         return render(request, 'rcs/dashboard.html',context)
+
 
 class BandejaSolicitudes(View):
     """
@@ -221,7 +257,6 @@ class BandejaSolicitudes(View):
             del request.session['sol_id']
 
         return render(request, 'rcs/inspector/bandeja_solicitudes.html',context)
-
 
 
 class SolicitarInspeccion(View):
@@ -358,6 +393,7 @@ class SolicitarInspeccion(View):
             response['errors'] = errors
 
             return HttpResponse(json.dumps(response), content_type = "application/json")
+
 
 class GestionSolicitudAbierta(View):
     """
@@ -504,7 +540,7 @@ class CondicionVehiculoSolicitud(View):
         id_sol = data['sol_id'] if 'sol_id' in data else request.session['sol_id']
         solicitud = SolicitudInspeccion.objects.get(id=id_sol)
         vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
-        condiciones = CondicionesGeneralesVehiculo.objects.all()
+        condiciones = CondicionesGeneralesVehiculo.objects.all().order_by('id')
         estados_vehiculo = EstadoVehiculo.objects.all()
         context = {
             'condiciones': condiciones,
@@ -620,7 +656,7 @@ class MecanicaVehiculoSolicitud(View):
         # import pudb; pu.db
         vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
         
-        mecanicas = MecanicaVehiculo.objects.all()
+        mecanicas = MecanicaVehiculo.objects.all().order_by('id')
         estados_vehiculo = EstadoVehiculo.objects.all()
         context = {
             'mecanicas': mecanicas,
@@ -736,7 +772,7 @@ class AccesoriosVehiculoSolicitud(View):
         # import pudb; pu.db
         vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
         
-        accesorios = AccesoriosVehiculo.objects.all()
+        accesorios = AccesoriosVehiculo.objects.all().order_by('id')
         estados_vehiculo = EstadoVehiculo.objects.all()
         context = {
             'accesorios': accesorios,
@@ -852,8 +888,8 @@ class DetallesVehiculoSolicitud(View):
             return redirect(reverse_lazy('login'))
         return super(DetallesVehiculoSolicitud, self).dispatch(request, *args, **kwargs)
 
-    def get_context(self, data):
-        id_solicitud = 1
+    def get_context(self,request, data):
+        id_solicitud = data['sol_id'] if 'sol_id' in data else request.session['sol_id']
 
         solicitud = SolicitudInspeccion.objects.get(id=id_solicitud)
         # import pudb; pu.db
@@ -893,7 +929,7 @@ class DetallesVehiculoSolicitud(View):
         # cantidad_detalles = range(1,data['cantidad_detalles']+1) if 'cantidad_detalles' in data else range(1,3)
         # import pudb; pu.db
         # context = self.get_context(data,cantidad_detalles)
-        context = self.get_context(data)
+        context = self.get_context(request,data)
         
         #obtener datos que requieran ser pre-cargados en el formulario (ejemplo: editar registro) y guardarlos en form_data
         form_data = {}
@@ -943,8 +979,6 @@ class DetallesVehiculoSolicitud(View):
         return redirect(reverse_lazy('documentos_vehiculo'))
 
 
-
-
 class DocumentosVehiculoSolicitud(View):
     """
     DocumentosVehiculoSolicitud
@@ -957,14 +991,14 @@ class DocumentosVehiculoSolicitud(View):
             return redirect(reverse_lazy('login'))
         return super(DocumentosVehiculoSolicitud, self).dispatch(request, *args, **kwargs)
 
-    def get_context(self, data):
-        id_solicitud = 1
+    def get_context(self,request, data):
+        id_solicitud = data['sol_id'] if 'sol_id' in data else request.session['sol_id']
 
         solicitud = SolicitudInspeccion.objects.get(id=id_solicitud)
         # import pudb; pu.db
         vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
         
-        documentos = DocumentosPresentados.objects.all()
+        documentos = DocumentosPresentados.objects.all().order_by('id')
         context = {
             'documentos': documentos,
             'vehiculo': vehiculo,
@@ -996,7 +1030,7 @@ class DocumentosVehiculoSolicitud(View):
         
         data = request.GET
 
-        context = self.get_context(data)
+        context = self.get_context(request,data)
         
         #obtener datos que requieran ser pre-cargados en el formulario (ejemplo: editar registro) y guardarlos en form_data
         form_data = {}
@@ -1047,7 +1081,7 @@ class DocumentosVehiculoSolicitud(View):
                 vehiculo.save()
             return redirect(reverse_lazy('planilla_seguro_carro'))
         else:
-            context = self.get_context(request)
+            context = self.get_context(request,request)
 
             form_data = {}
             for key, value in data.iteritems():

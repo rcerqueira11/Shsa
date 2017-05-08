@@ -186,9 +186,6 @@
 		        <div class="title">Mec&aacute;nica del Veh&iacute;culo</div>
 			</section>
 		</center>
-		<form method="post" id="form_mecanica_vehiculo" action="{% url 'mecanica_vehiculo' %}">
-		{% csrf_token %}
-		<input type="hidden" name="id_solicitud"  class="form-control"  value={{solicitud.id}} >
 		<div class="col-xs-12">
 			<table class="table table-bordered">
 				<thead>
@@ -361,6 +358,11 @@
 		</div>
 
 	</div>
+
+	<form action="{% url "planilla_seguro_carro" %}" method="POST">
+		{% csrf_token %}
+		<button type="submit">generar pdf</button>
+	</form>
 </div>
 </div>
 

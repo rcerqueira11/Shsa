@@ -44,3 +44,22 @@ $('#id_form-0-respuesta').val('res')
 $('#id_form-1-respuesta').val('res')
 $('#id_form-2-respuesta').val('res')
 $('#id-submit-button').click()
+
+
+
+
+
+errors = {}
+errors['nombre_titular'] = "nombre_titular_error"
+errors['apellido_titular'] = "apellido_titular_error"
+errors['cedula_titular'] = "cedula_titular_error"
+errors['telefono_titular'] = "telefono_titular_error"
+errors['placa'] = "placa_error"
+errors['tipo_vehiculo'] = "tipo_vehiculo_error"
+errors['nombre_trajo_vehiculo'] = "nombre_trajo_vehiculo_error"
+errors['apellido_trajo_vehiculo'] = "apellido_trajo_vehiculo_error"
+errors['cedula_trajo_vehiculo'] = "cedula_trajo_vehiculo_error"
+errors['telefono_trajo_vehiculo'] = "telefono_trajo_vehiculo_error"
+
+result = {}
+result['errors']= errors
