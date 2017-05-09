@@ -57,6 +57,11 @@ def evaluando(x):
     return True if 'sol_id' in x.session else False
 
 
+@register.filter(name='check_input')
+def check_input(x):
+    return True if x.strip() != "" else False
+
+
 
 
 

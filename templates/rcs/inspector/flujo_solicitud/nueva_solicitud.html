@@ -94,7 +94,19 @@ trajo_vehiculo
 	<div class="col-xs-4">
 		{% input_content form_data 'cap_puestos' as input %}
 		<label>Canitdad de Puestos</label>
-		<input type="text" name="cap_puestos" id="id_cap_puestos" class="form-control numeros" value="{{input.value}}">
+		{% if input.value|check_input %}
+			<input type="text" name="cap_puestos" id="id_cap_puestos" class="form-control numeros" value="{{input.value}}">
+		    
+		{% else %}
+			{% if input.error|check_input %}
+			    
+				<input type="text" name="cap_puestos" id="id_cap_puestos" class="form-control numeros" value="{{input.value}}">
+			{% else %}
+				<input type="text" name="cap_puestos" id="id_cap_puestos" class="form-control numeros" value="{{vehiculo.cap_puestos}}">
+
+			{% endif %}
+		
+		{% endif %}
 		<div class="error">{{input.error}}</div>
 
 	</div>
