@@ -54,11 +54,18 @@
 						</td>
 						<td>
 							{% create_name "observacion" accesorio.codigo as nambre %}
-							{% input_content form_data nambre as input %}	
-							<textarea rows="2" cols="15" {% if accesorio.codigo == 'RADIO_ANT' %}
+							{% input_content form_data nambre as input %}
+							{% if input.value|check_input or input.error|check_input %}
+								<textarea rows="2" cols="15" {% if accesorio.codigo == 'RADIO_ANT' %}
 							    placeholder="Especificar si es radio o antena" 
 							
-							{% endif %} name="observacion_{{accesorio.codigo}}">{{input.value}}</textarea>
+								{% endif %} name="observacion_{{accesorio.codigo}}">{{input.value}}</textarea>
+							{% else %}
+								<textarea rows="2" cols="15" {% if accesorio.codigo == 'RADIO_ANT' %}
+							    placeholder="Especificar si es radio o antena" 
+							
+								{% endif %} name="observacion_{{accesorio.codigo}}">{{accesorio.observacion|default_if_none:""}}</textarea>
+							{% endif %}
 							<div class="error" id="error_observacion_{{accesorio.codigo}}">{{input.error}}</div>
 						</td>
 					{% endif %}
