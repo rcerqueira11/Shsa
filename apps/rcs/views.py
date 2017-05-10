@@ -550,7 +550,7 @@ class CondicionVehiculoSolicitud(View):
         vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
         # import pudb; pu.db
         if vehiculo.condiciones_generales_vehiculo.all().exists():
-            condiciones = vehiculo.condiciones_generales_vehiculo.all()
+            condiciones = vehiculo.condiciones_generales_vehiculo.all().order_by('id')
         else:
             condiciones = CondicionesGeneralesBase.objects.all().order_by('id')
 
@@ -610,6 +610,7 @@ class CondicionVehiculoSolicitud(View):
         radio = "radio_"
         solicitud = SolicitudInspeccion.objects.get(id= data['id_solicitud'])
         vehiculo = solicitud.fk_vehiculo
+
         if self.tiene_condiciones(solicitud.id):
             condiciones = vehiculo.condiciones_generales_vehiculo.all()
         else:
@@ -637,6 +638,7 @@ class CondicionVehiculoSolicitud(View):
                 tenia_condiciones = self.tiene_condiciones(solicitud.id)
                 vehiculo.condiciones_generales_vehiculo.clear()
                 for condicion in condiciones:
+
                     if tenia_condiciones:
                         codigo_nuevo = condicion.codigo
                     else:
@@ -654,7 +656,7 @@ class CondicionVehiculoSolicitud(View):
 
                         ##Agregando condicion a many to many field de vehiculo
                         vehiculo.condiciones_generales_vehiculo.add(condicion_)
-                        
+
                 vehiculo.save()
 
 
@@ -685,13 +687,21 @@ class MecanicaVehiculoSolicitud(View):
             return redirect(reverse_lazy('login'))
         return super(MecanicaVehiculoSolicitud, self).dispatch(request, *args, **kwargs)
 
+    def tiene_mecanicas(self,id_sol):
+        solicitud = SolicitudInspeccion.objects.get(id=id_sol)
+        vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
+        return vehiculo.mecanica_vehiculo.all().exists()
+
     def get_context(self, request,data):
         id_sol = data['sol_id'] if 'sol_id' in data else request.session['sol_id']
         solicitud = SolicitudInspeccion.objects.get(id=id_sol)
         # import pudb; pu.db
         vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
-        
-        mecanicas = MecanicaVehiculo.objects.all().order_by('id')
+        if vehiculo.mecanica_vehiculo.all().exists():
+            mecanicas = vehiculo.mecanica_vehiculo.all().order_by('id')
+        else:
+            mecanicas = MecanicaBase.objects.all().order_by('id')
+            
         estados_vehiculo = EstadoVehiculo.objects.all()
         context = {
             'mecanicas': mecanicas,
@@ -745,7 +755,12 @@ class MecanicaVehiculoSolicitud(View):
         response = {}
         observacion = "observacion_"
         radio = "radio_"
-        mecanicas = MecanicaVehiculo.objects.all()
+        solicitud = SolicitudInspeccion.objects.get(id= data['id_solicitud'])
+        vehiculo = solicitud.fk_vehiculo
+        if self.tiene_mecanicas(solicitud.id):
+            mecanicas = vehiculo.mecanica_vehiculo.all()
+        else:
+            mecanicas = MecanicaBase.objects.all()
 
         mutable = request.POST._mutable
         request.POST._mutable = True
@@ -764,11 +779,24 @@ class MecanicaVehiculoSolicitud(View):
             # mecanica_vehiculo
             # import pudb; pu.db
             with transaction.atomic():
+                tenia_mecanicas = self.tiene_mecanicas(solicitud.id)
+                vehiculo.mecanica_vehiculo.clear()
                 for mecanica in mecanicas:
+
+                    if tenia_mecanicas:
+                        codigo_nuevo = mecanica.codigo
+                    else:
+                        codigo_nuevo = mecanica.codigo+'_'+str(vehiculo.id)
                     # mec_sol
                     if data[radio+mecanica.codigo].strip() != "":
-                        mecanica.observacion = data[observacion+mecanica.codigo]
-                        mecanica.fk_estado_vehiculo_id = EstadoVehiculo.objects.get(codigo = data[radio+mecanica.codigo])
+                        fk_estado_vehiculo_id = EstadoVehiculo.objects.get(codigo = data[radio+mecanica.codigo])
+                        
+                        if MecanicaVehiculo.objects.filter(codigo=codigo_nuevo).exists():
+                            mecanica = MecanicaVehiculo.objects.get(codigo=codigo_nuevo)
+                            mecanica.observacion = data[observacion+mecanica.codigo]
+                            mecanica.fk_estado_vehiculo= fk_estado_vehiculo_id
+                        else:    
+                            mecanica = MecanicaVehiculo(codigo=codigo_nuevo, observacion = data[observacion+mecanica.codigo], fk_estado_vehiculo= fk_estado_vehiculo_id,parte=mecanica.parte)
                         mecanica.save()
                         ##Agregando mecanica a many to many field de vehiculo
                         vehiculo.mecanica_vehiculo.add(mecanica)
@@ -801,13 +829,22 @@ class AccesoriosVehiculoSolicitud(View):
             return redirect(reverse_lazy('login'))
         return super(AccesoriosVehiculoSolicitud, self).dispatch(request, *args, **kwargs)
 
+    def tiene_accesorios(self,id_sol):
+        solicitud = SolicitudInspeccion.objects.get(id=id_sol)
+        vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
+        return vehiculo.accesorios_vehiculo.all().exists()
+
     def get_context(self, request, data):
         id_sol = data['sol_id'] if 'sol_id' in data else request.session['sol_id']
         solicitud = SolicitudInspeccion.objects.get(id=id_sol)
         # import pudb; pu.db
         vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
+
+        if vehiculo.accesorios_vehiculo.all().exists():
+            accesorios = vehiculo.accesorios_vehiculo.all().order_by('id')
+        else:
+            accesorios = AccesoriosBase.objects.all().order_by('id')
         
-        accesorios = AccesoriosVehiculo.objects.all().order_by('id')
         estados_vehiculo = EstadoVehiculo.objects.all()
         context = {
             'accesorios': accesorios,
@@ -868,7 +905,13 @@ class AccesoriosVehiculoSolicitud(View):
         response = {}
         observacion = "observacion_"
         radio = "radio_"
-        accesorios = AccesoriosVehiculo.objects.all()
+        solicitud = SolicitudInspeccion.objects.get(id= data['id_solicitud'])
+        vehiculo = solicitud.fk_vehiculo
+
+        if self.tiene_accesorios(solicitud.id):
+            accesorios = vehiculo.accesorios_vehiculo.all()
+        else:
+            accesorios = AccesoriosBase.objects.all()
         # import pudb; pu.db
 
         mutable = request.POST._mutable
@@ -886,15 +929,30 @@ class AccesoriosVehiculoSolicitud(View):
             solicitud = SolicitudInspeccion.objects.get(id= data['id_solicitud'])
             vehiculo = solicitud.fk_vehiculo
             with transaction.atomic():
+                tenia_accesorios = self.tiene_accesorios(solicitud.id)
+                vehiculo.accesorios_vehiculo.clear()
                 for accesorio in accesorios:
+
+                    if tenia_accesorios:
+                        codigo_nuevo = accesorio.codigo
+                    else:
+                        codigo_nuevo = accesorio.codigo+'_'+str(vehiculo.id)
                     # mec_sol
                     # import pudb; pu.db
                     if data[radio+accesorio.codigo].strip() != "":
-                        accesorio.observacion = data[observacion+accesorio.codigo]
-                        accesorio.existe = True if data[radio+accesorio.codigo] == 'true' else False
+                        accesorio_existe = True if data[radio+accesorio.codigo] == 'true' else False
+                        
+                        if AccesoriosVehiculo.objects.filter(codigo=codigo_nuevo).exists():
+                            accesorio = AccesoriosVehiculo.objects.get(codigo=codigo_nuevo)
+                            accesorio.observacion = data[observacion+accesorio.codigo]
+                            accesorio.fk_estado_vehiculo= fk_estado_vehiculo_id
+                        else:    
+                            accesorio = AccesoriosVehiculo(codigo=codigo_nuevo, observacion = data[observacion+accesorio.codigo], existe= accesorio_existe,accesorio=accesorio.parte)
+                        
                         accesorio.save()
+                        ##Agregando accesorio a many to many field de vehiculo
                         vehiculo.accesorios_vehiculo.add(accesorio)
-                    ##Agregando accesorio a many to many field de vehiculo
+                        
                 vehiculo.save()
             return redirect(reverse_lazy('detalles_vehiculo'))
         else:
@@ -1026,14 +1084,24 @@ class DocumentosVehiculoSolicitud(View):
             return redirect(reverse_lazy('login'))
         return super(DocumentosVehiculoSolicitud, self).dispatch(request, *args, **kwargs)
 
+
+    def tiene_documentos(self,id_sol):
+        solicitud = SolicitudInspeccion.objects.get(id=id_sol)
+        vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
+        return vehiculo.documentos_presentados.all().exists()
+
     def get_context(self,request, data):
         id_solicitud = data['sol_id'] if 'sol_id' in data else request.session['sol_id']
 
         solicitud = SolicitudInspeccion.objects.get(id=id_solicitud)
         # import pudb; pu.db
         vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
-        
-        documentos = DocumentosPresentados.objects.all().order_by('id')
+
+        if vehiculo.documentos_presentados.all().exists():
+            documentos = vehiculo.documentos_presentados.all().order_by('id')
+        else:
+            documentos = DocumentosPresentadosBase.objects.all().order_by('id')
+
         context = {
             'documentos': documentos,
             'vehiculo': vehiculo,
@@ -1087,6 +1155,8 @@ class DocumentosVehiculoSolicitud(View):
         radio = "radio_"
         # accesorios = AccesoriosVehiculo.objects.all()
         # import pudb; pu.db
+        solicitud = SolicitudInspeccion.objects.get(id= data['id_solicitud'])
+        vehiculo = solicitud.fk_vehiculo
         documentos = DocumentosPresentados.objects.all()
 
         mutable = request.POST._mutable

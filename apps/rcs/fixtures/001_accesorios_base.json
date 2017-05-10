@@ -6,7 +6,7 @@
       "codigo": "RADIO_ANT",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 1
   },
   {
@@ -16,7 +16,7 @@
       "codigo": "FOC_POS",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 2
   },
   {
@@ -26,7 +26,7 @@
       "codigo": "RIN_ESP",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 3
   },
   {
@@ -36,7 +36,7 @@
       "codigo": "RAD_REP",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 4
   },
   {
@@ -46,7 +46,7 @@
       "codigo": "AIR_ACON",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 5
   },
   {
@@ -56,7 +56,7 @@
       "codigo": "CAUC_RESP",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 6
   },
   {
@@ -66,7 +66,7 @@
       "codigo": "REP_ANT",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 7
   },
   {
@@ -76,7 +76,7 @@
       "codigo": "SPOIL",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 8
   },
   {
@@ -86,7 +86,7 @@
       "codigo": "PAR_ESP",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 9
   },
   {
@@ -96,7 +96,7 @@
       "codigo": "CORN_ESP",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 10
   },
   {
@@ -106,7 +106,7 @@
       "codigo": "LLAV_CRUZ",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 11
   },
   {
@@ -116,7 +116,7 @@
       "codigo": "RAY_DEC",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 12
   },
   {
@@ -126,7 +126,7 @@
       "codigo": "COMP_DISC",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 13
   },
   {
@@ -136,7 +136,7 @@
       "codigo": "TRI_SEG",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 14
   },
   {
@@ -146,7 +146,7 @@
       "codigo": "TAZ_CAUCH",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 15
   },
   {
@@ -156,7 +156,7 @@
       "codigo": "ECUAL",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 16
   },
   {
@@ -166,7 +166,7 @@
       "codigo": "PARR_TECH",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 17
   },
   {
@@ -176,7 +176,7 @@
       "codigo": "VOL_ESP",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 18
   },
   {
@@ -186,7 +186,7 @@
       "codigo": "TV",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 19
   },
   {
@@ -196,7 +196,7 @@
       "codigo": "CABI",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 20
   },
   {
@@ -206,7 +206,7 @@
       "codigo": "GATO",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 21
   },
   {
@@ -216,7 +216,7 @@
       "codigo": "PLANT",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 22
   },
   {
@@ -226,7 +226,7 @@
       "codigo": "FAR_ESP",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 23
   },
   {
@@ -236,7 +236,7 @@
       "codigo": "ANT_ROB",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 24
   },
   {
@@ -246,7 +246,7 @@
       "codigo": "TRAN_PED",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 25
   },
   {
@@ -256,7 +256,7 @@
       "codigo": "THE_KING",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 26
   },
   {
@@ -266,7 +266,7 @@
       "codigo": "OTRO1",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 27
   },
   {
@@ -276,7 +276,7 @@
       "codigo": "CORT_COR",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 28
   },
   {
@@ -286,7 +286,7 @@
       "codigo": "TRANC_PALNC",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 29
   },
   {
@@ -296,7 +296,7 @@
       "codigo": "OTRO2",
       "observacion": null
     },
-    "model": "rcs.accesoriosvehiculo",
+    "model": "rcs.accesoriosbase",
     "pk": 30
   }
 ]

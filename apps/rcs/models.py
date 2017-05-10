@@ -73,6 +73,15 @@ class CondicionesGeneralesVehiculo(models.Model):
         return self.parte 
 
 ##56-61 3 otros
+class MecanicaBase(models.Model):
+    parte = models.CharField(max_length=255)
+    fk_estado_vehiculo = models.ForeignKey(EstadoVehiculo, blank=True, null=True)
+    observacion = models.TextField(blank=True, null=True)
+    codigo = models.CharField(max_length=255,unique=True)
+    # otro = models.CharField(max_length=255, blank=True)
+    def __unicode__(self):
+        return self.parte 
+
 class MecanicaVehiculo(models.Model):
     parte = models.CharField(max_length=255)
     fk_estado_vehiculo = models.ForeignKey(EstadoVehiculo, blank=True, null=True)
@@ -83,6 +92,16 @@ class MecanicaVehiculo(models.Model):
         return self.parte 
 
 ##62 - 91 dos 62 radio/antena
+class AccesoriosBase(models.Model):
+    accesorio = models.CharField(max_length=255)
+    existe = models.BooleanField(default=True)
+    observacion = models.TextField(blank=True, null=True)
+    codigo = models.CharField(max_length=255,unique=True)
+    # otro = models.CharField(max_length=255, blank=True)
+    def __unicode__(self):
+        return self.accesorio
+
+
 class AccesoriosVehiculo(models.Model):
     accesorio = models.CharField(max_length=255)
     existe = models.BooleanField(default=True)
@@ -97,6 +116,7 @@ class DetallesDatos(models.Model):
     pieza = models.CharField(max_length=255)
     tipo_dano = models.CharField(max_length=255, null=True)
     costo_aproximado = models.DecimalField(max_digits=21, decimal_places=2, null=True)
+    ##PENDIENTE GUARDAR CON EL ID DEL VEHICULO
     codigo = models.CharField(max_length=255,unique=True)
     # otro = models.CharField(max_length=255, blank=True)
     def __unicode__(self):
@@ -106,6 +126,14 @@ class DetallesDatos(models.Model):
 
 # get_file_path_documentos_presentados
 
+
+class DocumentosPresentadosBase(models.Model):
+    nombre = models.CharField(max_length=255)
+    recibido = models.BooleanField(default=True)
+    codigo = models.CharField(max_length=255,unique=True)
+
+    def __unicode__(self):
+        return self.nombre
 
 class DocumentosPresentados(models.Model):
     nombre = models.CharField(max_length=255)
