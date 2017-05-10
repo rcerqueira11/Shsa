@@ -1,6 +1,6 @@
 [
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 1,
     "fields": {
       "parte": "23. Latoneria",
@@ -10,7 +10,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 2,
     "fields": {
       "parte": "24. Planilla O Rejilla Frontal",
@@ -20,7 +20,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 3,
     "fields": {
       "parte": "25. Techo ",
@@ -30,7 +30,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 4,
     "fields": {
       "parte": "26. Pintura",
@@ -40,7 +40,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 5,
     "fields": {
       "parte": "27. Sop O Focos Traseros",
@@ -50,7 +50,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 6,
     "fields": {
       "parte": "28. Compuesta Trasera",
@@ -60,7 +60,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 7,
     "fields": {
       "parte": "29. Tapiceria",
@@ -70,7 +70,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 8,
     "fields": {
       "parte": "30. Cocuyos Frontales",
@@ -80,7 +80,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 9,
     "fields": {
       "parte": "31. Parabrisas",
@@ -90,7 +90,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 10,
     "fields": {
       "parte": "32. Cauchos",
@@ -100,7 +100,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 11,
     "fields": {
       "parte": "33. Retrovisor Interno",
@@ -110,7 +110,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 12,
     "fields": {
       "parte": "34. Parachoques",
@@ -120,7 +120,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 13,
     "fields": {
       "parte": "35. Platinas ",
@@ -130,7 +130,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 14,
     "fields": {
       "parte": "36. Manillas Y Cerraduras",
@@ -140,7 +140,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 15,
     "fields": {
       "parte": "37. Cometa",
@@ -150,7 +150,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 16,
     "fields": {
       "parte": "38. Tableros ",
@@ -160,7 +160,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 17,
     "fields": {
       "parte": "39. Limpia Parabrisas",
@@ -170,7 +170,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 18,
     "fields": {
       "parte": "40. Butacas Y Asientos",
@@ -180,7 +180,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 19,
     "fields": {
       "parte": "41. Faros Y Sus Aros",
@@ -190,7 +190,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 20,
     "fields": {
       "parte": "42. Retrovisores Externos ",
@@ -200,7 +200,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 21,
     "fields": {
       "parte": "43. Volantes",
@@ -210,7 +210,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 22,
     "fields": {
       "parte": "44. Emblema De Modelo",
@@ -220,7 +220,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 23,
     "fields": {
       "parte": "45. Guardafangos ",
@@ -230,7 +230,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 24,
     "fields": {
       "parte": "46. Cinturones De Seguridad",
@@ -240,7 +240,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 25,
     "fields": {
       "parte": "47. Estribos",
@@ -250,7 +250,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 26,
     "fields": {
       "parte": "48. Puertas ",
@@ -260,7 +260,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 27,
     "fields": {
       "parte": "49. Ventanas",
@@ -270,7 +270,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 28,
     "fields": {
       "parte": "50. Frontal",
@@ -280,7 +280,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 29,
     "fields": {
       "parte": "51. Capot ",
@@ -290,7 +290,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 30,
     "fields": {
       "parte": "52. Maleta Y Tapa Maleta",
@@ -300,7 +300,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 31,
     "fields": {
       "parte": "53. Modific. Del Modelo",
@@ -310,7 +310,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 32,
     "fields": {
       "parte": "54. Carter Trasero",
@@ -320,7 +320,7 @@
     }
   },
   {
-    "model": "rcs.condicionesgeneralesvehiculo",
+    "model": "rcs.condicionesgeneralesbase",
     "pk": 33,
     "fields": {
       "parte": "55. Otro",

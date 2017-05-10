@@ -538,14 +538,22 @@ class CondicionVehiculoSolicitud(View):
             return redirect(reverse_lazy('login'))
         return super(CondicionVehiculoSolicitud, self).dispatch(request, *args, **kwargs)
 
+    def tiene_condiciones(self,id_sol):
+        solicitud = SolicitudInspeccion.objects.get(id=id_sol)
+        vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
+        return vehiculo.condiciones_generales_vehiculo.all().exists()
 
     def get_context(self, request,data):
         # id_solicitud = 1
         id_sol = data['sol_id'] if 'sol_id' in data else request.session['sol_id']
         solicitud = SolicitudInspeccion.objects.get(id=id_sol)
         vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
-        import pudb; pu.db
-        condiciones = CondicionesGeneralesVehiculo.objects.all().order_by('id')
+        # import pudb; pu.db
+        if vehiculo.condiciones_generales_vehiculo.all().exists():
+            condiciones = vehiculo.condiciones_generales_vehiculo.all()
+        else:
+            condiciones = CondicionesGeneralesBase.objects.all().order_by('id')
+
         estados_vehiculo = EstadoVehiculo.objects.all()
         context = {
             'condiciones': condiciones,
@@ -563,6 +571,7 @@ class CondicionVehiculoSolicitud(View):
 
         #obtener errores y guardarlos en el diccionario "errors" en donde los "key" son los nombre de los inputs html
         #Ejemplo: validar que los campos no estén vacios
+        
         for key in data:
             value = data.get(key, None)
 
@@ -599,8 +608,16 @@ class CondicionVehiculoSolicitud(View):
         response = {}
         observacion = "observacion_"
         radio = "radio_"
-        condiciones = CondicionesGeneralesVehiculo.objects.all()
+        solicitud = SolicitudInspeccion.objects.get(id= data['id_solicitud'])
+        vehiculo = solicitud.fk_vehiculo
+        if self.tiene_condiciones(solicitud.id):
+            condiciones = vehiculo.condiciones_generales_vehiculo.all()
+        else:
+            condiciones = CondicionesGeneralesBase.objects.all()
 
+
+
+        # import pudb; pu.db
         mutable = request.POST._mutable
         request.POST._mutable = True
         for condicion in condiciones:
@@ -612,23 +629,32 @@ class CondicionVehiculoSolicitud(View):
 
 
         errors = self.validate(data)
-
+        # import pudb; pu.db
         if not errors:
             solicitud = SolicitudInspeccion.objects.get(id= data['id_solicitud'])
             vehiculo = solicitud.fk_vehiculo
             with transaction.atomic():
+                tenia_condiciones = self.tiene_condiciones(solicitud.id)
+                vehiculo.condiciones_generales_vehiculo.clear()
                 for condicion in condiciones:
-                    # mec_sol
-                    # vehiculo.condiciones_generales_vehiculo.get(codigo = "LAT").fk_estado_vehiculo 
+                    if tenia_condiciones:
+                        codigo_nuevo = condicion.codigo
+                    else:
+                        codigo_nuevo = condicion.codigo+'_'+str(vehiculo.id)
+
                     if data[radio+condicion.codigo].strip() != "":
-                        # fk_estado_vehiculo_id = EstadoVehiculo.objects.get(codigo = data[radio+condicion.codigo])
-                        # condicion_ = CondicionesGeneralesVehiculo(codigo=condicion.codigo, observacion = data[observacion+condicion.codigo], fk_estado_vehiculo= fk_estado_vehiculo_id)
-                        # condicion_ observacion = data[observacion+condicion.codigo], fk_estado_vehiculo= fk_estado_vehiculo_id)
-                        condicion_.observacion = data[observacion+condicion.codigo]
-                        condicion_.fk_estado_vehiculo_id = EstadoVehiculo.objects.get(codigo = data[radio+condicion.codigo])
+                        fk_estado_vehiculo_id = EstadoVehiculo.objects.get(codigo = data[radio+condicion.codigo])
+                        if CondicionesGeneralesVehiculo.objects.filter(codigo=codigo_nuevo).exists():
+                            condicion_ = CondicionesGeneralesVehiculo.objects.get(codigo=codigo_nuevo)
+                            condicion_.observacion = data[observacion+condicion.codigo]
+                            condicion_.fk_estado_vehiculo= fk_estado_vehiculo_id
+                        else:    
+                            condicion_ = CondicionesGeneralesVehiculo(codigo=codigo_nuevo, observacion = data[observacion+condicion.codigo], fk_estado_vehiculo= fk_estado_vehiculo_id,parte=condicion.parte)
                         condicion_.save()
+
                         ##Agregando condicion a many to many field de vehiculo
                         vehiculo.condiciones_generales_vehiculo.add(condicion_)
+                        
                 vehiculo.save()
 
 

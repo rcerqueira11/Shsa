@@ -54,6 +54,15 @@ class TipoManejo(models.Model):
         return self.nombre + " " + self.codigo
 
 ##23-55
+class CondicionesGeneralesBase(models.Model):
+    parte = models.CharField(max_length=255)
+    fk_estado_vehiculo = models.ForeignKey(EstadoVehiculo, blank=True, null=True)
+    observacion = models.TextField(blank=True,null=True)
+    codigo = models.CharField(max_length=255,unique=True)
+
+    def __unicode__(self):
+        return self.parte 
+
 class CondicionesGeneralesVehiculo(models.Model):
     parte = models.CharField(max_length=255)
     fk_estado_vehiculo = models.ForeignKey(EstadoVehiculo, blank=True, null=True)

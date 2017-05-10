@@ -62,7 +62,11 @@
 						<td>
 							{% create_name "observacion" condicion.codigo as nambre %}
 							{% input_content form_data nambre as input %}
+							{% if input.value|check_input or input.error|check_input %}
 							<textarea rows="2" cols="12" name="observacion_{{condicion.codigo}}">{{input.value}}</textarea>
+							{% else %}
+							<textarea rows="2" cols="12" name="observacion_{{condicion.codigo}}">{{condicion.observacion|default_if_none:""}}</textarea>
+							{% endif %}
 							<div class="error" id="observacion_{{condicion.codigo}}_error">{{input.error}}</div>
 						</td>
 					{% endif %}
@@ -87,7 +91,11 @@
 						<td>
 							{% create_name "observacion" condicion.codigo as nambre %}
 							{% input_content form_data nambre as input %}
+							{% if input.value|check_input or input.error|check_input %}
 							<textarea rows="2" cols="12" name="observacion_{{condicion.codigo}}">{{input.value}}</textarea>
+							{% else %}
+							<textarea rows="2" cols="12" name="observacion_{{condicion.codigo}}">{{condicion.observacion|default_if_none:""}}</textarea>
+							{% endif %}
 							<div class="error" id="observacion_{{condicion.codigo}}_error">{{input.error}}</div>
 						</td>
 					{% endif %}
@@ -112,7 +120,11 @@
 						<td>
 							{% create_name "observacion" condicion.codigo as nambre %}
 							{% input_content form_data nambre as input %}
+							{% if input.value|check_input or input.error|check_input %}
 							<textarea rows="2" cols="12" name="observacion_{{condicion.codigo}}">{{input.value}}</textarea>
+							{% else %}
+							<textarea rows="2" cols="12" name="observacion_{{condicion.codigo}}">{{condicion.observacion|default_if_none:""}}</textarea>
+							{% endif %}
 							<div class="error" id="observacion_{{condicion.codigo}}_error">{{input.error}}</div>
 						</td>
 					{% endif %}
