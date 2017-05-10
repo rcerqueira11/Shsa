@@ -1194,8 +1194,8 @@ class DocumentosVehiculoSolicitud(View):
                     if DocumentosPresentados.objects.filter(codigo=codigo_nuevo).exists():
                             documento = DocumentosPresentados.objects.get(codigo=codigo_nuevo)
                             documento.recibido = documento_recibido
-                        else:    
-                            documento = DocumentosPresentados(codigo=codigo_nuevo, recibido= documento_recibido,nombre=documento.nombre)
+                    else:    
+                        documento = DocumentosPresentados(codigo=codigo_nuevo, recibido= documento_recibido,nombre=documento.nombre)
                         
 
                     documento.save()
