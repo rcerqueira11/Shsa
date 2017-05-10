@@ -945,14 +945,14 @@ class AccesoriosVehiculoSolicitud(View):
                         if AccesoriosVehiculo.objects.filter(codigo=codigo_nuevo).exists():
                             accesorio = AccesoriosVehiculo.objects.get(codigo=codigo_nuevo)
                             accesorio.observacion = data[observacion+accesorio.codigo]
-                            accesorio.fk_estado_vehiculo= fk_estado_vehiculo_id
+                            accesorio.existe = accesorio_existe
                         else:    
                             accesorio = AccesoriosVehiculo(codigo=codigo_nuevo, observacion = data[observacion+accesorio.codigo], existe= accesorio_existe,accesorio=accesorio.parte)
                         
                         accesorio.save()
                         ##Agregando accesorio a many to many field de vehiculo
                         vehiculo.accesorios_vehiculo.add(accesorio)
-                        
+
                 vehiculo.save()
             return redirect(reverse_lazy('detalles_vehiculo'))
         else:
@@ -1157,7 +1157,12 @@ class DocumentosVehiculoSolicitud(View):
         # import pudb; pu.db
         solicitud = SolicitudInspeccion.objects.get(id= data['id_solicitud'])
         vehiculo = solicitud.fk_vehiculo
-        documentos = DocumentosPresentados.objects.all()
+
+
+        if self.tiene_documentos(solicitud.id):
+            documentos = vehiculo.documentos_presentados.all()
+        else:
+            documentos = DocumentosPresentadosBase.objects.all()
 
         mutable = request.POST._mutable
         request.POST._mutable = True
@@ -1174,11 +1179,25 @@ class DocumentosVehiculoSolicitud(View):
             solicitud = SolicitudInspeccion.objects.get(id= data['id_solicitud'])
             vehiculo = solicitud.fk_vehiculo
             with transaction.atomic():
+                tenia_documentos = self.tiene_documentos(solicitud.id)
+                vehiculo.documentos_presentados.clear()
+
                 for documento in documentos:
                     # mec_sol
                     # import pudb; pu.db
+                    if tenia_documentos:
+                        codigo_nuevo = documento.codigo
+                    else:
+                        codigo_nuevo = documento.codigo+'_'+str(vehiculo.id)
 
-                    documento.recibido = True if data[radio+documento.codigo] == 'true' else False
+                    documento_recibido = True if data[radio+documento.codigo] == 'true' else False
+                    if DocumentosPresentados.objects.filter(codigo=codigo_nuevo).exists():
+                            documento = DocumentosPresentados.objects.get(codigo=codigo_nuevo)
+                            documento.recibido = documento_recibido
+                        else:    
+                            documento = DocumentosPresentados(codigo=codigo_nuevo, recibido= documento_recibido,nombre=documento.nombre)
+                        
+
                     documento.save()
                     ##Agregando documento a many to many field de vehiculo
                     vehiculo.documentos_presentados.add(documento)
