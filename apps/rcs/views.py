@@ -943,15 +943,15 @@ class AccesoriosVehiculoSolicitud(View):
                         accesorio_existe = True if data[radio+accesorio.codigo] == 'true' else False
                         
                         if AccesoriosVehiculo.objects.filter(codigo=codigo_nuevo).exists():
-                            accesorio = AccesoriosVehiculo.objects.get(codigo=codigo_nuevo)
-                            accesorio.observacion = data[observacion+accesorio.codigo]
-                            accesorio.existe = accesorio_existe
+                            accesorio_ = AccesoriosVehiculo.objects.get(codigo=codigo_nuevo)
+                            accesorio_.observacion = data[observacion+accesorio.codigo]
+                            accesorio_.existe = accesorio_existe
                         else:    
-                            accesorio = AccesoriosVehiculo(codigo=codigo_nuevo, observacion = data[observacion+accesorio.codigo], existe= accesorio_existe,accesorio=accesorio.parte)
+                            accesorio_ = AccesoriosVehiculo(codigo=codigo_nuevo, observacion = data[observacion+accesorio.codigo], existe= accesorio_existe,accesorio=accesorio.accesorio)
                         
-                        accesorio.save()
+                        accesorio_.save()
                         ##Agregando accesorio a many to many field de vehiculo
-                        vehiculo.accesorios_vehiculo.add(accesorio)
+                        vehiculo.accesorios_vehiculo.add(accesorio_)
 
                 vehiculo.save()
             return redirect(reverse_lazy('detalles_vehiculo'))
