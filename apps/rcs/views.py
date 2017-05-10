@@ -253,6 +253,9 @@ class BandejaSolicitudes(View):
         context = {}
         context['nombre'] = request.user.nombre
         context['username'] = request.user.username
+        context['estado_solicitudes'] = EstadoSolicitud.objects.all()
+        
+
 
         if 'sol_id' in request.session:
             del request.session['sol_id']
@@ -541,6 +544,7 @@ class CondicionVehiculoSolicitud(View):
         id_sol = data['sol_id'] if 'sol_id' in data else request.session['sol_id']
         solicitud = SolicitudInspeccion.objects.get(id=id_sol)
         vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
+        import pudb; pu.db
         condiciones = CondicionesGeneralesVehiculo.objects.all().order_by('id')
         estados_vehiculo = EstadoVehiculo.objects.all()
         context = {
@@ -615,12 +619,16 @@ class CondicionVehiculoSolicitud(View):
             with transaction.atomic():
                 for condicion in condiciones:
                     # mec_sol
+                    # vehiculo.condiciones_generales_vehiculo.get(codigo = "LAT").fk_estado_vehiculo 
                     if data[radio+condicion.codigo].strip() != "":
-                        condicion.observacion = data[observacion+condicion.codigo]
-                        condicion.fk_estado_vehiculo_id = EstadoVehiculo.objects.get(codigo = data[radio+condicion.codigo])
-                        condicion.save()
+                        # fk_estado_vehiculo_id = EstadoVehiculo.objects.get(codigo = data[radio+condicion.codigo])
+                        # condicion_ = CondicionesGeneralesVehiculo(codigo=condicion.codigo, observacion = data[observacion+condicion.codigo], fk_estado_vehiculo= fk_estado_vehiculo_id)
+                        # condicion_ observacion = data[observacion+condicion.codigo], fk_estado_vehiculo= fk_estado_vehiculo_id)
+                        condicion_.observacion = data[observacion+condicion.codigo]
+                        condicion_.fk_estado_vehiculo_id = EstadoVehiculo.objects.get(codigo = data[radio+condicion.codigo])
+                        condicion_.save()
                         ##Agregando condicion a many to many field de vehiculo
-                        vehiculo.condiciones_generales_vehiculo.add(condicion)
+                        vehiculo.condiciones_generales_vehiculo.add(condicion_)
                 vehiculo.save()
 
 

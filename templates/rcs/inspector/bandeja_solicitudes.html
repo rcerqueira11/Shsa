@@ -2,7 +2,7 @@
 {% load static %}
 {% load rcs_tags %}
 {% block extra_css %}
-    <link href="/static/css/rcs/common_style.css"  rel="stylesheet" type="text/css"/>
+    <link href="/static/css/rcs/flujo_style.css"  rel="stylesheet" type="text/css"/>
 {% endblock extra_css %}
 
 {% block main_content %}
@@ -30,6 +30,16 @@
 					<label>Placa</label>
           			<input id="placa_id" name="placa" type="text" class="form-control" />
           		</div>
+          		<div class="col-xs-4">
+					<label>Estado Solicitud</label>
+					<select  data-placeholder="Seleccionar un estado"  class="form-control chosen-select" name="estado_sol" 
+					id='id_estado_sol' >
+					<option value=""></option>
+					{% for e in estado_solicitudes %}
+					      <option value="{{ e.codigo }}">{{ e.nombre|title }}</option>
+					{% endfor %}
+					</select>
+				</div>
 			</div>
 
 			<div class="row">
@@ -50,6 +60,7 @@
 			<th><center>NRO. PLACA</center></th>
 			<th><center>CEDULA</center></th>
 			<th><center>NOMBRE</center></th>
+			<th><center>ESTADO</center></th>
 			<th><center>OPCIONES</center></th>
 		</thead>
 		<tbody align="center">

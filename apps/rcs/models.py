@@ -208,12 +208,16 @@ class SolicitudInspeccion(models.Model):
             if filter_code == 'SOL_INSP_INSP':
                 placa= param.get('placa', None)
                 cedula= param.get('cedula', None)
+                estado_sol= param.get('estado_sol', None)
 
                 if placa:
                     condiciones.append(Q(fk_vehiculo__placa__icontains=placa))
 
                 if cedula:
                     condiciones.append(Q(fk_vehiculo__fk_titular_vechiculo__cedula__icontains=cedula))
+
+                if estado_sol:
+                    condiciones.append(Q(fk_estado_solicitud__codigo=estado_sol))
 
                 # if 'configurable' in param:
                 #     condiciones.append(Q(fk_seccion__configurable=True))
@@ -224,7 +228,7 @@ class SolicitudInspeccion(models.Model):
         # adicionales de la consulta
         if filter_code == "SOL_INSP_INSP":
             # select['fecha_declaracion'] = "to_char(fecha_declaracion, 'DD/MM/YYYY')"
-            columns = ['id','fk_vehiculo__placa','fk_titular_vehiculo__cedula','fk_titular_vehiculo__nombre','editable']
+            columns = ['id','fk_vehiculo__placa','fk_titular_vehiculo__cedula','fk_titular_vehiculo__nombre','fk_estado_solicitud__codigo','editable']
 
             # se guardan las columnas a eliminar/agregar en el arreglo
             # 'columns'
@@ -258,6 +262,15 @@ class SolicitudInspeccion(models.Model):
             # rec = seccion.objects.filter(fk_forma=d['id'])
             # if rec:
             #     siendo_usado = True
+            if d['fk_estado_solicitud__codigo'] == 'PEND_INSP':
+                d['fk_estado_solicitud__codigo'] = "ABIERTA"
+
+            if d['fk_estado_solicitud__codigo'] == 'PEND_GEST':
+                d['fk_estado_solicitud__codigo'] = "POR GESTIONAR"
+
+            if d['fk_estado_solicitud__codigo'] == 'CERRADA':
+                d['fk_estado_solicitud__codigo'] = "CERRADA"
+
             d['id'] = secure_value_encode(str(d['id']))
             # d['fk_seccion__fk_estado_seccion__nombre'] = d['fk_seccion__fk_estado_seccion__nombre'].upper() 
             # d['fk_seccion__fk_estado_seccion__nombre']
