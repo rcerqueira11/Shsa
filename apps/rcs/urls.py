@@ -63,4 +63,10 @@ urlpatterns = [
         name="filtro_busqueda_solicitudes"
     ),
     
+    url(
+        r'^verficiar_codigo_detalle_existe/',
+        views.verificar_codigo_detalle,
+        name="verficiar_codigo_detalle_existe"
+    ),
+    
 ]

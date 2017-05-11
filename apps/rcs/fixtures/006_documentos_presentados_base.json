@@ -1,6 +1,6 @@
 [
   {
-    "model": "rcs.documentospresentados",
+    "model": "rcs.documentospresentadosbase",
     "pk": 1,
     "fields": {
       "nombre": "95. Registro Automotor Permanente (R.P.A)",
@@ -9,7 +9,7 @@
     }
   },
   {
-    "model": "rcs.documentospresentados",
+    "model": "rcs.documentospresentadosbase",
     "pk": 2,
     "fields": {
       "nombre": "96. Carnet De Circulacion",
@@ -18,7 +18,7 @@
     }
   },
   {
-    "model": "rcs.documentospresentados",
+    "model": "rcs.documentospresentadosbase",
     "pk": 3,
     "fields": {
       "nombre": "97. Documento De Propiedad (Original/Copia)",
@@ -27,7 +27,7 @@
     }
   },
   {
-    "model": "rcs.documentospresentados",
+    "model": "rcs.documentospresentadosbase",
     "pk": 4,
     "fields": {
       "nombre": "98. Facutura De Compra",
@@ -36,7 +36,7 @@
     }
   },
   {
-    "model": "rcs.documentospresentados",
+    "model": "rcs.documentospresentadosbase",
     "pk": 5,
     "fields": {
       "nombre": "99. Planilla Del Senial De Exoneracion De Impuestos",
@@ -45,7 +45,7 @@
     }
   },
   {
-    "model": "rcs.documentospresentados",
+    "model": "rcs.documentospresentadosbase",
     "pk": 6,
     "fields": {
       "nombre": "100. Certificado De Origen",

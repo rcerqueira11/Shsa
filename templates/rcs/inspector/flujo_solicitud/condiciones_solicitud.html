@@ -46,19 +46,27 @@
 							{% create_name "radio" condicion.codigo as nambre %}
 							{% input_content form_data nambre as input %}
 							{% for estado in estados_vehiculo %}
-							  <input type="radio" name="radio_{{condicion.codigo}}" value="{{estado.codigo}}" {% if input.value == estado.codigo  %}
-							      checked="checked"
-							  
-							  {% endif %}/> {{estado.codigo}} 
-							  <br>
-								
+								{% if input.value|check_input or input.error|check_input %}
+								  <input type="radio" name="radio_{{condicion.codigo}}" value="{{estado.codigo}}" {% if input.value == estado.codigo  %} checked="checked"{% endif %}/> {{estado.codigo}} 
+
+								{% else %}
+								<!-- <p>{{condicion.fk_estado_vehiculo.codigo}}</p> -->
+								<!-- <p>{{estado.codigo}}</p> -->
+									<input type="radio" name="radio_{{condicion.codigo}}" value="{{estado.codigo}}" {% if condicion.fk_estado_vehiculo.codigo == estado.codigo  %} checked="checked" {% endif %}/> {{estado.codigo}} 
+								{% endif %}
+								  <br>
+									
 							{% endfor %}
 							<div class="error" id="radio_{{condicion.codigo}}_error">{{input.error}}</div>
 						</td>
 						<td>
 							{% create_name "observacion" condicion.codigo as nambre %}
 							{% input_content form_data nambre as input %}
+							{% if input.value|check_input or input.error|check_input %}
 							<textarea rows="2" cols="12" name="observacion_{{condicion.codigo}}">{{input.value}}</textarea>
+							{% else %}
+							<textarea rows="2" cols="12" name="observacion_{{condicion.codigo}}">{{condicion.observacion|default_if_none:""}}</textarea>
+							{% endif %}
 							<div class="error" id="observacion_{{condicion.codigo}}_error">{{input.error}}</div>
 						</td>
 					{% endif %}
@@ -68,19 +76,26 @@
 							{% create_name "radio" condicion.codigo as nambre %}
 							{% input_content form_data nambre as input %}
 							{% for estado in estados_vehiculo %}
-							  <input type="radio" name="radio_{{condicion.codigo}}" value="{{estado.codigo}}" {% if input.value == estado.codigo  %}
-							      checked="checked"
-							  
-							  {% endif %}/> {{estado.codigo}} 
-							  <br>
-								
+							  {% if input.value|check_input or input.error|check_input %}
+								  <input type="radio" name="radio_{{condicion.codigo}}" value="{{estado.codigo}}" {% if input.value == estado.codigo  %} checked="checked"{% endif %}/> {{estado.codigo}} 
+
+								{% else %}
+								<!-- <p>{{condicion.fk_estado_vehiculo.codigo}}</p> -->
+								<!-- <p>{{estado.codigo}}</p> -->
+									<input type="radio" name="radio_{{condicion.codigo}}" value="{{estado.codigo}}" {% if condicion.fk_estado_vehiculo.codigo == estado.codigo  %} checked="checked" {% endif %}/> {{estado.codigo}} 
+								{% endif %}
+								  <br>
 							{% endfor %}
 							<div class="error" id="radio_{{condicion.codigo}}_error">{{input.error}}</div>
 						</td>
 						<td>
 							{% create_name "observacion" condicion.codigo as nambre %}
 							{% input_content form_data nambre as input %}
+							{% if input.value|check_input or input.error|check_input %}
 							<textarea rows="2" cols="12" name="observacion_{{condicion.codigo}}">{{input.value}}</textarea>
+							{% else %}
+							<textarea rows="2" cols="12" name="observacion_{{condicion.codigo}}">{{condicion.observacion|default_if_none:""}}</textarea>
+							{% endif %}
 							<div class="error" id="observacion_{{condicion.codigo}}_error">{{input.error}}</div>
 						</td>
 					{% endif %}
@@ -90,19 +105,26 @@
 							{% create_name "radio" condicion.codigo as nambre %}
 							{% input_content form_data nambre as input %}
 							{% for estado in estados_vehiculo %}
-							  <input type="radio" name="radio_{{condicion.codigo}}" value="{{estado.codigo}}" {% if input.value == estado.codigo  %}
-							      checked="checked"
-							  
-							  {% endif %}/> {{estado.codigo}} 
+								{% if input.value|check_input or input.error|check_input %}
+									<input type="radio" name="radio_{{condicion.codigo}}" value="{{estado.codigo}}" {% if input.value == estado.codigo  %} checked="checked"{% endif %}/> {{estado.codigo}} 
+
+								{% else %}
+								<!-- <p>{{condicion.fk_estado_vehiculo.codigo}}</p> -->
+								<!-- <p>{{estado.codigo}}</p> -->
+									<input type="radio" name="radio_{{condicion.codigo}}" value="{{estado.codigo}}" {% if condicion.fk_estado_vehiculo.codigo == estado.codigo  %} checked="checked" {% endif %}/> {{estado.codigo}} 
+								{% endif %}
 							  <br>
-								
 							{% endfor %}
 							<div class="error" id="radio_{{condicion.codigo}}_error">{{input.error}}</div>
 						</td>
 						<td>
 							{% create_name "observacion" condicion.codigo as nambre %}
 							{% input_content form_data nambre as input %}
+							{% if input.value|check_input or input.error|check_input %}
 							<textarea rows="2" cols="12" name="observacion_{{condicion.codigo}}">{{input.value}}</textarea>
+							{% else %}
+							<textarea rows="2" cols="12" name="observacion_{{condicion.codigo}}">{{condicion.observacion|default_if_none:""}}</textarea>
+							{% endif %}
 							<div class="error" id="observacion_{{condicion.codigo}}_error">{{input.error}}</div>
 						</td>
 					{% endif %}

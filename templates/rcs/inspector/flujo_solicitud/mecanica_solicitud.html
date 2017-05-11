@@ -46,8 +46,12 @@
 							{% create_name "radio" mecanica.codigo as nambre %}
 							{% input_content form_data nambre as input %}
 							{% for estado in estados_vehiculo %}
-							  <input type="radio" name="radio_{{mecanica.codigo}}" value="{{estado.codigo}}"{% if input.value == estado.codigo  %} checked="checked" {% endif %}/> {{estado.codigo}} 
-							  <br>
+								{% if input.value|check_input or input.error|check_input %}
+								  <input type="radio" name="radio_{{mecanica.codigo}}" value="{{estado.codigo}}"{% if input.value == estado.codigo  %} checked="checked" {% endif %}/> {{estado.codigo}} 
+								{% else %}
+								  <input type="radio" name="radio_{{mecanica.codigo}}" value="{{estado.codigo}}"{% if mecanica.fk_estado_vehiculo.codigo == estado.codigo  %} checked="checked" {% endif %}/> {{estado.codigo}}  
+								{% endif %}
+								  <br>
 								
 							{% endfor %}
 							<div class="error" id="radio_{{mecanica.codigo}}_error">{{input.error}}</div>
@@ -55,7 +59,11 @@
 						<td>
 							{% create_name "observacion" mecanica.codigo as nambre %}
 							{% input_content form_data nambre as input %}
-							<textarea rows="2" cols="12" name="observacion_{{mecanica.codigo}}">{{input.value}}</textarea>
+							{% if input.value|check_input or input.error|check_input %}
+								<textarea rows="2" cols="12" name="observacion_{{mecanica.codigo}}">{{input.value}}</textarea>
+							{% else %}
+								<textarea rows="2" cols="12" name="observacion_{{mecanica.codigo}}">{{mecanica.observacion|default_if_none:""}}</textarea>
+							{% endif %}
 							<div class="error" id="id_observacion_{{mecanica.codigo}}_error">{{input.error}}</div>
 						</td>
 					{% endif %}
@@ -65,8 +73,12 @@
 							{% create_name "radio" mecanica.codigo as nambre %}
 							{% input_content form_data nambre as input %}
 							{% for estado in estados_vehiculo %}
-							  <input type="radio" name="radio_{{mecanica.codigo}}" value="{{estado.codigo}}"{% if input.value == estado.codigo  %} checked="checked" {% endif %}/> {{estado.codigo}} 
-							  <br>
+								{% if input.value|check_input or input.error|check_input %}
+								  <input type="radio" name="radio_{{mecanica.codigo}}" value="{{estado.codigo}}"{% if input.value == estado.codigo  %} checked="checked" {% endif %}/> {{estado.codigo}} 
+								{% else %}
+								  <input type="radio" name="radio_{{mecanica.codigo}}" value="{{estado.codigo}}"{% if mecanica.fk_estado_vehiculo.codigo == estado.codigo  %} checked="checked" {% endif %}/> {{estado.codigo}}  
+								{% endif %}
+								  <br>
 								
 							{% endfor %}
 							<div class="error" id="radio_{{mecanica.codigo}}_error">{{input.error}}</div>
@@ -74,7 +86,11 @@
 						<td>
 							{% create_name "observacion" mecanica.codigo as nambre %}
 							{% input_content form_data nambre as input %}
-							<textarea rows="2" cols="12" name="observacion_{{mecanica.codigo}}">{{input.value}}</textarea>
+							{% if input.value|check_input or input.error|check_input %}
+								<textarea rows="2" cols="12" name="observacion_{{mecanica.codigo}}">{{input.value}}</textarea>
+							{% else %}
+								<textarea rows="2" cols="12" name="observacion_{{mecanica.codigo}}">{{mecanica.observacion|default_if_none:""}}</textarea>
+							{% endif %}
 							<div class="error" id="id_observacion_{{mecanica.codigo}}_error">{{input.error}}</div>
 						</td>
 					{% endif %}
@@ -84,8 +100,12 @@
 							{% create_name "radio" mecanica.codigo as nambre %}
 							{% input_content form_data nambre as input %}
 							{% for estado in estados_vehiculo %}
-							  <input type="radio" name="radio_{{mecanica.codigo}}" value="{{estado.codigo}}"{% if input.value == estado.codigo  %} checked="checked" {% endif %}/> {{estado.codigo}} 
-							  <br>
+								{% if input.value|check_input or input.error|check_input %}
+								  <input type="radio" name="radio_{{mecanica.codigo}}" value="{{estado.codigo}}"{% if input.value == estado.codigo  %} checked="checked" {% endif %}/> {{estado.codigo}} 
+								{% else %}
+								  <input type="radio" name="radio_{{mecanica.codigo}}" value="{{estado.codigo}}"{% if mecanica.fk_estado_vehiculo.codigo == estado.codigo  %} checked="checked" {% endif %}/> {{estado.codigo}}  
+								{% endif %}
+								  <br>
 								
 							{% endfor %}
 							<div class="error" id="radio_{{mecanica.codigo}}_error">{{input.error}}</div>
@@ -93,7 +113,11 @@
 						<td>
 							{% create_name "observacion" mecanica.codigo as nambre %}
 							{% input_content form_data nambre as input %}
-							<textarea rows="2" cols="12" name="observacion_{{mecanica.codigo}}">{{input.value}}</textarea>
+							{% if input.value|check_input or input.error|check_input %}
+								<textarea rows="2" cols="12" name="observacion_{{mecanica.codigo}}">{{input.value}}</textarea>
+							{% else %}
+								<textarea rows="2" cols="12" name="observacion_{{mecanica.codigo}}">{{mecanica.observacion|default_if_none:""}}</textarea>
+							{% endif %}
 							<div class="error" id="id_observacion_{{mecanica.codigo}}_error">{{input.error}}</div>
 						</td>
 					{% endif %}

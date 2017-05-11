@@ -54,6 +54,15 @@ class TipoManejo(models.Model):
         return self.nombre + " " + self.codigo
 
 ##23-55
+class CondicionesGeneralesBase(models.Model):
+    parte = models.CharField(max_length=255)
+    fk_estado_vehiculo = models.ForeignKey(EstadoVehiculo, blank=True, null=True)
+    observacion = models.TextField(blank=True,null=True)
+    codigo = models.CharField(max_length=255,unique=True)
+
+    def __unicode__(self):
+        return self.parte 
+
 class CondicionesGeneralesVehiculo(models.Model):
     parte = models.CharField(max_length=255)
     fk_estado_vehiculo = models.ForeignKey(EstadoVehiculo, blank=True, null=True)
@@ -64,6 +73,15 @@ class CondicionesGeneralesVehiculo(models.Model):
         return self.parte 
 
 ##56-61 3 otros
+class MecanicaBase(models.Model):
+    parte = models.CharField(max_length=255)
+    fk_estado_vehiculo = models.ForeignKey(EstadoVehiculo, blank=True, null=True)
+    observacion = models.TextField(blank=True, null=True)
+    codigo = models.CharField(max_length=255,unique=True)
+    # otro = models.CharField(max_length=255, blank=True)
+    def __unicode__(self):
+        return self.parte 
+
 class MecanicaVehiculo(models.Model):
     parte = models.CharField(max_length=255)
     fk_estado_vehiculo = models.ForeignKey(EstadoVehiculo, blank=True, null=True)
@@ -74,6 +92,16 @@ class MecanicaVehiculo(models.Model):
         return self.parte 
 
 ##62 - 91 dos 62 radio/antena
+class AccesoriosBase(models.Model):
+    accesorio = models.CharField(max_length=255)
+    existe = models.BooleanField(default=True)
+    observacion = models.TextField(blank=True, null=True)
+    codigo = models.CharField(max_length=255,unique=True)
+    # otro = models.CharField(max_length=255, blank=True)
+    def __unicode__(self):
+        return self.accesorio
+
+
 class AccesoriosVehiculo(models.Model):
     accesorio = models.CharField(max_length=255)
     existe = models.BooleanField(default=True)
@@ -88,15 +116,24 @@ class DetallesDatos(models.Model):
     pieza = models.CharField(max_length=255)
     tipo_dano = models.CharField(max_length=255, null=True)
     costo_aproximado = models.DecimalField(max_digits=21, decimal_places=2, null=True)
+    ##PENDIENTE GUARDAR CON EL ID DEL VEHICULO
     codigo = models.CharField(max_length=255,unique=True)
     # otro = models.CharField(max_length=255, blank=True)
     def __unicode__(self):
-        return self.pieza
+        return self.codigo+ " " + self.pieza
 
 # Decimal("{:.2f}".format(format_float(valor)))
 
 # get_file_path_documentos_presentados
 
+
+class DocumentosPresentadosBase(models.Model):
+    nombre = models.CharField(max_length=255)
+    recibido = models.BooleanField(default=True)
+    codigo = models.CharField(max_length=255,unique=True)
+
+    def __unicode__(self):
+        return self.nombre
 
 class DocumentosPresentados(models.Model):
     nombre = models.CharField(max_length=255)
@@ -208,12 +245,16 @@ class SolicitudInspeccion(models.Model):
             if filter_code == 'SOL_INSP_INSP':
                 placa= param.get('placa', None)
                 cedula= param.get('cedula', None)
+                estado_sol= param.get('estado_sol', None)
 
                 if placa:
                     condiciones.append(Q(fk_vehiculo__placa__icontains=placa))
 
                 if cedula:
                     condiciones.append(Q(fk_vehiculo__fk_titular_vechiculo__cedula__icontains=cedula))
+
+                if estado_sol:
+                    condiciones.append(Q(fk_estado_solicitud__codigo=estado_sol))
 
                 # if 'configurable' in param:
                 #     condiciones.append(Q(fk_seccion__configurable=True))
@@ -224,7 +265,7 @@ class SolicitudInspeccion(models.Model):
         # adicionales de la consulta
         if filter_code == "SOL_INSP_INSP":
             # select['fecha_declaracion'] = "to_char(fecha_declaracion, 'DD/MM/YYYY')"
-            columns = ['id','fk_vehiculo__placa','fk_titular_vehiculo__cedula','fk_titular_vehiculo__nombre','editable']
+            columns = ['id','fk_vehiculo__placa','fk_titular_vehiculo__cedula','fk_titular_vehiculo__nombre','fk_estado_solicitud__codigo','editable']
 
             # se guardan las columnas a eliminar/agregar en el arreglo
             # 'columns'
@@ -258,6 +299,15 @@ class SolicitudInspeccion(models.Model):
             # rec = seccion.objects.filter(fk_forma=d['id'])
             # if rec:
             #     siendo_usado = True
+            if d['fk_estado_solicitud__codigo'] == 'PEND_INSP':
+                d['fk_estado_solicitud__codigo'] = "ABIERTA"
+
+            if d['fk_estado_solicitud__codigo'] == 'PEND_GEST':
+                d['fk_estado_solicitud__codigo'] = "POR GESTIONAR"
+
+            if d['fk_estado_solicitud__codigo'] == 'CERRADA':
+                d['fk_estado_solicitud__codigo'] = "CERRADA"
+
             d['id'] = secure_value_encode(str(d['id']))
             # d['fk_seccion__fk_estado_seccion__nombre'] = d['fk_seccion__fk_estado_seccion__nombre'].upper() 
             # d['fk_seccion__fk_estado_seccion__nombre']

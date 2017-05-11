@@ -14,7 +14,6 @@ $(document).on("click",".confirmar_verificacion", function(){
 	
 });
 
-
 $('#modal-exito').on('shown.bs.modal', function (e) {
     titulo = 'SOLICITUD DE INSPECCIÓN'
 	subtitulo = 'Creación de solicitud de inspección'
