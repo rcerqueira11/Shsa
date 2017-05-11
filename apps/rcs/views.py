@@ -989,11 +989,13 @@ class DetallesVehiculoSolicitud(View):
             
         vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
         # cantidad_detalles = range(1,data['cantidad_detalles']) if 'cantidad_detalles' in data else range(1,2)
+        detalles_vehiculo = vehiculo.detalles_datos.all()
         estados_vehiculo = EstadoVehiculo.objects.all()
         context = {
             'estados_vehiculo': estados_vehiculo,
             'vehiculo': vehiculo,
             'solicitud': solicitud,
+            'detalles_vehiculo': detalles_vehiculo,
             'nombre': data.user.nombre if 'user' in data else "",
             'username': data.user.username if 'user' in data else "",
             # 'cantidad': cantidad_detalles,

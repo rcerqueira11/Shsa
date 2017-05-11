@@ -1,5 +1,15 @@
-$("#tabla_detalles").hide()
+// $("#tabla_detalles").hide()
 $("#id_submit_detalles").hide()
+
+$(document).ready(function(){
+	cant_en_tabla =$('#detalles_table_body').children('tr').length;
+	if (cant_en_tabla){
+		$("#contador_agregados").val(cant_en_tabla)
+	}else{
+		$("#tabla_detalles").hide()
+	}
+
+});
 function agregar_detalle(id_tabla){
 
 	$("#detalles_table_body").html()

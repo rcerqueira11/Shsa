@@ -50,6 +50,32 @@
 						<th style="width:3%"><center> </center></th>
 				</thead>
 				<tbody id="detalles_table_body">
+					{% for detalle in detalles_vehiculo %}
+						
+						<tr id="id_celda_{{forloop.counter}}" class="cont_tr">
+							<td>	
+								<input type="text" class="form-control numeros" id="codigo_{{forloop.counter}}" name="codigo_{{forloop.counter}}" value="{{detalle.codigo}}">
+								<center><div id="codigo_input_error_{{forloop.counter}}" class="error"></div></center>
+							</td>
+							<td>
+								<input type="text" class="form-control" name="pieza_{{forloop.counter}}" id="pieza_{{forloop.counter}}" value="{{detalle.pieza}}">
+								<center><div id="pieza_input_error_{{forloop.counter}}" class="error"></div></center>
+							</td>
+							<td>
+								<input type="text" class="form-control" name="dano_{{forloop.counter}}" id="dano_{{forloop.counter}}" value="{{detalle.tipo_dano}}">
+								<center><div id="dano_input_error_{{forloop.counter}}" class="error"></div></center>
+							</td>
+							<td>
+								<input type="text" class="form-control numeros" name="costo_{{forloop.counter}}" id="costo_{{forloop.counter}}" value="{{detalle.costo_aproximado}}">
+								<center><div id="costo_input_error_{{forloop.counter}}" class="error"></div></center>
+							</td>
+							<td>
+								<botton id="id_eliminar_celda_{{forloop.counter}}" class="btn btn-danger" type="button" onclick="eliminar_celda(this);"><center><i class="fa fa-trash white-icon" style="color: white;"></i></center></botton>
+							</td>
+						</tr>
+
+
+					{% endfor %}
 					<!-- <tr class="cont_tr" id="id_celda_1">
 						
 						<td>
