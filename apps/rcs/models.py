@@ -120,7 +120,7 @@ class DetallesDatos(models.Model):
     codigo = models.CharField(max_length=255,unique=True)
     # otro = models.CharField(max_length=255, blank=True)
     def __unicode__(self):
-        return self.pieza
+        return self.codigo+ " " + self.pieza
 
 # Decimal("{:.2f}".format(format_float(valor)))
 

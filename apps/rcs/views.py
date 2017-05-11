@@ -969,6 +969,14 @@ class AccesoriosVehiculoSolicitud(View):
         return render(request, 'rcs/inspector/flujo_solicitud/accesorios_solicitud.html',context)
 
 
+def verificar_codigo_detalle(request):
+    data = request.GET
+    respuesta = {}
+    validacion = True if DetallesDatos.objects.filter(codigo=data['codigo_verif']).exists() else False
+    respuesta['results'] = 'success'
+    respuesta['existe'] = validacion
+    return HttpResponse(json.dumps(respuesta), content_type = "application/json")
+
 class DetallesVehiculoSolicitud(View):
     """
     DetallesVehiculoSolicitud
@@ -1049,6 +1057,10 @@ class DetallesVehiculoSolicitud(View):
         vehiculo = solicitud.fk_vehiculo
 
         with transaction.atomic():
+            detalles_vehiculo = vehiculo.detalles_datos.all()
+            for detalle in detalles_vehiculo:
+                det = DetallesDatos.objects.get(codigo = detalle.codigo)
+                det.delete()
             vehiculo.detalles_datos.clear()
             for i in xrange(int(numero_agregados)+1):
                 if "pieza_"+str(i) in data:
