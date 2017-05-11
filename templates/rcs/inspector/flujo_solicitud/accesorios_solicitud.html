@@ -44,7 +44,7 @@
 				{% for accesorio in accesorios  %}
 					{% if forloop.counter|primera_col %}
 						<td><h4 >{{accesorio.accesorio}}</h4></td>
-						<td><p>{{accesorio.existe}}</p>
+						<td>
 							{% create_name "radio" accesorio.codigo as nambre %}
 							{% input_content form_data nambre as input %}
 							{% if input.value|check_input or input.error|check_input %}

@@ -20,7 +20,7 @@ $("#id_password_confirm").attr('onDrop','return false');
 $('.ci-mask').inputmask('[9]{8}', {placeholder: ''});
 $('.anho').inputmask('[9]{4}', {placeholder: ''});
 $('.numeros').inputmask('[9]{20}', {placeholder: ''});
-$('.decimals').inputmask('[9]{20}|([9]{20}.[9]{1,2})', {placeholder: ''});
+$('.decimals').inputmask('[9]{20}.[9]{1,2}', {placeholder: ''});
 
 $('.chosen-select').chosen();
 

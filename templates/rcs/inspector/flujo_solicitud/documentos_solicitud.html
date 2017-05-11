@@ -46,9 +46,15 @@
 						<td>
 						{% create_name "radio" documento.codigo as nambre %}
 							{% input_content form_data nambre as input %}
-						 	<input type="radio" name="radio_{{documento.codigo}}" value="true" {% if input.value == 'true' %} checked="checked"{% endif %} />  Si
-					    	<br>
-							<input type="radio" name="radio_{{documento.codigo}}" value="false" {% if input.value == 'false' %} checked="checked"{% endif %} /> No  
+							{% if input.value|check_input or input.error|check_input %}
+						 		<input type="radio" name="radio_{{documento.codigo}}" value="true" {% if input.value == 'true' %} checked="checked"{% endif %} />  Si
+					    		<br>
+								<input type="radio" name="radio_{{documento.codigo}}" value="false" {% if input.value == 'false' %} checked="checked"{% endif %} /> No  
+							{% else %}
+								<input type="radio" name="radio_{{documento.codigo}}" value="true" {% if documento.recibido == True %} checked="checked"{% endif %} />  Si
+					    		<br>
+								<input type="radio" name="radio_{{documento.codigo}}" value="false" {% if documento.recibido == False %} checked="checked"{% endif %} /> No  
+							{% endif %}
 							<div class="error" id="error_estado_{{documento.codigo}}">{{input.error}}</div>
 
 						</td>
@@ -59,9 +65,15 @@
 						<td>
 						{% create_name "radio" documento.codigo as nambre %}
 							{% input_content form_data nambre as input %}
-						 	<input type="radio" name="radio_{{documento.codigo}}" value="true" {% if input.value == 'true' %} checked="checked"{% endif %} />  Si
-					    	<br>
-							<input type="radio" name="radio_{{documento.codigo}}" value="false" {% if input.value == 'false' %} checked="checked"{% endif %} /> No  
+							{% if input.value|check_input or input.error|check_input %}
+						 		<input type="radio" name="radio_{{documento.codigo}}" value="true" {% if input.value == 'true' %} checked="checked"{% endif %} />  Si
+					    		<br>
+								<input type="radio" name="radio_{{documento.codigo}}" value="false" {% if input.value == 'false' %} checked="checked"{% endif %} /> No  
+							{% else %}
+								<input type="radio" name="radio_{{documento.codigo}}" value="true" {% if documento.recibido == True %} checked="checked"{% endif %} />  Si
+					    		<br>
+								<input type="radio" name="radio_{{documento.codigo}}" value="false" {% if documento.recibido == False %} checked="checked"{% endif %} /> No  
+							{% endif %}
 							<div class="error" id="error_estado_{{documento.codigo}}">{{input.error}}</div>
 
 						</td>
@@ -71,9 +83,15 @@
 						<td>
 						{% create_name "radio" documento.codigo as nambre %}
 							{% input_content form_data nambre as input %}
-						 	<input type="radio" name="radio_{{documento.codigo}}" value="true" {% if input.value == 'true' %} checked="checked"{% endif %} />  Si
-					    	<br>
-							<input type="radio" name="radio_{{documento.codigo}}" value="false" {% if input.value == 'false' %} checked="checked"{% endif %} /> No  
+							{% if input.value|check_input or input.error|check_input %}
+						 		<input type="radio" name="radio_{{documento.codigo}}" value="true" {% if input.value == 'true' %} checked="checked"{% endif %} />  Si
+					    		<br>
+								<input type="radio" name="radio_{{documento.codigo}}" value="false" {% if input.value == 'false' %} checked="checked"{% endif %} /> No  
+							{% else %}
+								<input type="radio" name="radio_{{documento.codigo}}" value="true" {% if documento.recibido == True %} checked="checked"{% endif %} />  Si
+					    		<br>
+								<input type="radio" name="radio_{{documento.codigo}}" value="false" {% if documento.recibido == False %} checked="checked"{% endif %} /> No  
+							{% endif %}
 							<div class="error" id="error_estado_{{documento.codigo}}">{{input.error}}</div>
 
 						</td>
