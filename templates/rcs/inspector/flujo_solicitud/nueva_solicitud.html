@@ -125,9 +125,9 @@
 					{% input_content form_data 'peso' as input %}
 					<label>Peso</label>
 					{% if input.value|check_input or input.error|check_input %}
-					<input type="text" name="peso" id="id_peso" class="form-control numeros" value="{{input.value}}">
+					<input type="text" name="peso" id="id_peso" class="form-control decimals" value="{{input.value}}">
 					{% else %}
-					<input type="text" name="peso" id="id_peso" class="form-control numeros" value="{{vehiculo.peso}}">
+					<input type="text" name="peso" id="id_peso" class="form-control decimals" value="{{vehiculo.peso}}">
 					{% endif %}
 					<div class="error">{{input.error}}</div>
 				</div>
