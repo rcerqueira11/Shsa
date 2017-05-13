@@ -4,7 +4,7 @@
     "pk": 1,
     "fields": {
       "nombre": "95. Registro Automotor Permanente (R.P.A)",
-      "recibido": None,
+      "recibido": false,
       "codigo": "RAP"
     }
   },
@@ -13,7 +13,7 @@
     "pk": 2,
     "fields": {
       "nombre": "96. Carnet De Circulacion",
-      "recibido": None,
+      "recibido": false,
       "codigo": "CAR_CIRC"
     }
   },
@@ -22,7 +22,7 @@
     "pk": 3,
     "fields": {
       "nombre": "97. Documento De Propiedad (Original/Copia)",
-      "recibido": None,
+      "recibido": false,
       "codigo": "DOC_PRO"
     }
   },
@@ -31,7 +31,7 @@
     "pk": 4,
     "fields": {
       "nombre": "98. Facutura De Compra",
-      "recibido": None,
+      "recibido": false,
       "codigo": "FACT_COMP"
     }
   },
@@ -40,7 +40,7 @@
     "pk": 5,
     "fields": {
       "nombre": "99. Planilla Del Senial De Exoneracion De Impuestos",
-      "recibido": None,
+      "recibido": false,
       "codigo": "PLA_SEN_EX"
     }
   },
@@ -49,7 +49,7 @@
     "pk": 6,
     "fields": {
       "nombre": "100. Certificado De Origen",
-      "recibido": None,
+      "recibido": false,
       "codigo": "CERT_ORI"
     }
   }
