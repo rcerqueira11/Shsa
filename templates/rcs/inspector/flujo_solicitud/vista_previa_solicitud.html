@@ -365,13 +365,13 @@
 		{% csrf_token %}
 		<input type="hidden" name="id_solicitud" id="id_solicitud"  class="form-control"  value={{solicitud.id}} >
 		
+
+	</form>
 		<div class="row">
 		<div class="col-xs-4 col-xs-offset-2"><a class="btn btn-danger btn-block" href="{% url "documentos_vehiculo" %}" >Atrás</a></div>
 
-		<div class="col-xs-4"><button class="btn btn-primary btn-block confirmar_verificacion" >Continuar</button></div>
-
+		<div class="col-xs-4"><button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal-verificacion" >Continuar</button></div>
 	</div>
-	</form>
 </div>
 </div>
 

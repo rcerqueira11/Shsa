@@ -1,11 +1,20 @@
+var estado_sol = $("#id_estado_solicitud").val()
+
 $('#modal-verificacion').on('shown.bs.modal', function (e) {
     titulo = 'CONFIRMACIÓN'
-	subtitulo = 'Finalizar inspección'
-	mensaje = '¿Esta seguro que desea terminar la inspección?'
+    if (estado_sol =="PEND_INSP"){
+		subtitulo = 'Finalizar inspección'
+		mensaje = '¿Esta seguro que desea terminar la inspección?'
+    }
+    if (estado_sol =="PEND_GEST"){
+		subtitulo = 'Finalizar Gestión'
+		mensaje = '¿Esta seguro que desea terminar de editar la inspección esta no podra volver a ser editada?'
+    }
 	fill_modal_verificacion(titulo,subtitulo,mensaje)
 })
 
-
+// PEND_GEST
+// PEND_INSP
 
 $(document).on("click",".confirmar_verificacion", function(){	
 	$("#modal-verificacion").modal("hide");
@@ -15,8 +24,15 @@ $(document).on("click",".confirmar_verificacion", function(){
 
 $('#modal-exito').on('shown.bs.modal', function (e) {
     titulo = 'INSPECCIÓN'
-	subtitulo = 'Finalizar inspección'
+	if (estado_sol =="PEND_INSP"){
+	subtitulo = 'Inspección Finalizada'
 	mensaje = 'Inspección realizada exitosamente.'
+	}
+
+	if (estado_sol =="PEND_GEST"){
+		subtitulo = 'Edición Finalizada'
+		mensaje = 'Gestión realizada exitosamente, la solicitud de inspección ha sido cerrada.'
+	}
 	fill_modal_exito(titulo,subtitulo,mensaje)
 	
 })
@@ -26,8 +42,8 @@ $('#modal-exito').on('shown.bs.modal', function (e) {
 function submit_form_completar_solicitud(){
 
 
-	// $(document).ajaxStop($.unblockUI);
-	// $.blockUI({ message: '<i class="fa fa-spinner fa-pulse" style="color:#444444"></i> Espere por favor...' });
+	$(document).ajaxStop($.unblockUI);
+	$.blockUI({ message: '<i class="fa fa-spinner fa-pulse" style="color:#444444"></i> Espere por favor...' });
 	var data = $("#form_completar_solicitud").serializeArray();
 	url= $("#form_completar_solicitud").attr('action')
 	$.ajax({

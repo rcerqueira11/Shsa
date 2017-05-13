@@ -29,4 +29,4 @@ $('#tabla_detalles > tbody  > tr').each(function() {
 		})
 console.log("arr:",arr2)
 
-arr[1]==arr[2]
+toString(arr[1])==toString(arr[2])

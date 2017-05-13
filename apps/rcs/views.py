@@ -110,14 +110,19 @@ class VerPlanillaSeguroCarro(View):
                                    cmd_options={'margin-top': 10,'page-size': 'A4','quiet': True},
                             
                                    )
+        codigo_actual = solicitud.fk_estado_solicitud.codigo
+        codigo_siguiente = 'PEND_GEST' if codigo_actual == 'PEND_INSP' else 'CERRADA'
+        solicitud.fk_estado_solicitud = EstadoSolicitud.objects.get(codigo=codigo_siguiente)
+        
 
         with transaction.atomic():
             solicitud.ruta.delete()
             solicitud.ruta.save('Inspeccion_placa_'+solicitud.fk_vehiculo.placa+'.pdf',ContentFile(response.rendered_content))
+
             solicitud.save()
 
 
-        return response
+        # return response
     # def __init__(self, *args, **kwargs):
     #   kwargs['max_length'] = 104
     #   super(VerPlanillaSeguroCarro, self).__init__(*args, **kwargs)
@@ -127,7 +132,7 @@ class VerPlanillaSeguroCarro(View):
 
 
         respuesta['results'] = "success"
-        pdf_dir = acta_recepcion.ruta.url
+        pdf_dir = solicitud.ruta.url
         respuesta['pdf_dir'] = pdf_dir
         return HttpResponse(json.dumps(respuesta), content_type = "application/json")
             # if not enviar_correo_planillas(usuario=registro_pst.usuario, adj=[pdf_dir], template_name='correo/correo_planilla_recepcion.html',asunto='Planilla de recepción'):

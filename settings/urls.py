@@ -5,6 +5,8 @@ from apps.registro import views
 from django.conf import settings
 from apps.wkhtmltopdf.views import PDFTemplateView
 from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     # Examples:
@@ -26,4 +28,8 @@ urlpatterns = [
     	r'^rcs/',
     	include('apps.rcs.urls')
     ),
-]
+    #Url de las imagenes
+    # url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+    #         'document_root': settings.MEDIA_ROOT,
+    #     }),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
