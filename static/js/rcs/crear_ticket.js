@@ -2,7 +2,7 @@
 $('#modal-verificacion').on('shown.bs.modal', function (e) {
     titulo = 'CONFIRMACIÓN'
 	subtitulo = 'Creación de solicitud de inspección'
-	mensaje = 'Esta seguro de crear esta solicitud de inspección.'
+	mensaje = '¿Esta seguro que desea crear esta solicitud de inspección?'
 	fill_modal_verificacion(titulo,subtitulo,mensaje)
 })
 

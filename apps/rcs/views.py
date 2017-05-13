@@ -12,6 +12,7 @@ from django.conf import settings
 from django.db import transaction
 from django.contrib.auth.decorators import login_required
 from django.apps import apps
+from django.core.files.base import ContentFile
 # from django.apps import apps
 from apps.wkhtmltopdf.views import PDFTemplateResponse
 from apps.registro.models import *
@@ -54,6 +55,7 @@ class VerPlanillaSeguroCarro(View):
         mecanica_vehiculo = vehiculo.mecanica_vehiculo.all().exclude(fk_estado_vehiculo_id=None)
         accesorios_vehiculo = vehiculo.accesorios_vehiculo.all().exclude(observacion=None)
         detalles_datos = vehiculo.detalles_datos.all()
+        # import pudb; pu.db
         documentos_presentados = vehiculo.documentos_presentados.all()
         trajo_vehiculo = vehiculo.fk_trajo_vehiculo
         titular_vehiculo = solicitud.fk_titular_vehiculo
@@ -70,6 +72,7 @@ class VerPlanillaSeguroCarro(View):
             'trajo_alguien_mas': False if trajo_vehiculo is None else True,
             'trajo_vehiculo': trajo_vehiculo,
             'titular_vehiculo': titular_vehiculo,
+            'solicitud':solicitud,
             }
 
         return context
@@ -108,12 +111,16 @@ class VerPlanillaSeguroCarro(View):
 
     def post(self, request, *args, **kwargs):
         # context={}
+        # import pudb; pu.db
+        data = request.POST
+        id_sol = data['id_solicitud']
+        solicitud = SolicitudInspeccion.objects.get(id=id_sol)
         context = self.get_context(request,request)
         if settings.SECURE_SSL_REDIRECT == True:
                 media_url = 'https://'
         else:
             media_url = 'http://'
-        data={}
+        response={}
         media_url = media_url+request.META['HTTP_HOST']
 
         context['http_host']= media_url
@@ -125,9 +132,14 @@ class VerPlanillaSeguroCarro(View):
                                    cmd_options={'margin-top': 10,'page-size': 'A4','quiet': True},
                             
                                    )
-        return response
 
-    
+        with transaction.atomic():
+            solicitud.ruta.delete()
+            solicitud.ruta.save('Inspeccion_placa_'+solicitud.fk_vehiculo.placa+'.pdf',ContentFile(response.rendered_content))
+            solicitud.save()
+
+
+        return response
     # def __init__(self, *args, **kwargs):
     #   kwargs['max_length'] = 104
     #   super(VerPlanillaSeguroCarro, self).__init__(*args, **kwargs)

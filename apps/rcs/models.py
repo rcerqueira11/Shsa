@@ -10,6 +10,7 @@ from utils.HelpMethods.helpers import *
 from django.apps import apps
 from utils.HelpMethods.aes_cipher import encode as secure_value_encode
 from utils.HelpMethods.aes_cipher import decode as secure_value_decode
+from utils.HelpMethods.helpers import get_file_path_solicitud
 
 import urllib
 import operator

@@ -11,6 +11,7 @@ from django.db.models import Q
 from os import path
 from django.template.loader import get_template
 from django.template import Context
+from hashlib import sha1
 
 from apps.registro.models import *
 
@@ -24,7 +25,21 @@ sys.setdefaultencoding("utf-8")
 import csv
 
 
+def gen_path_str_from_key_str(key_str):
+    hash_str = sha1(key_str).hexdigest()
+    return '-'.join(hash_str[i:i + 4] for i in xrange(0, 40, 4))
 
+def normalize_filename(string="", pass_blank_name=False):
+    try:
+        re = ''.join(e if ord(e) < 128 else '' for e in string if e.isalnum() or e == ".")
+        if len(re):
+            return re
+        elif not pass_blank_name:
+            return "archivo_%s" % (datetime.now().strftime('%d%m%Y'))
+        else:
+            return ''
+    except Exception, e:
+        raise e
 
 def elimina_tildes(s):
     """
@@ -50,8 +65,8 @@ def get_file_path_documentos_presentados(instance, filename):
 def get_file_path_solicitud(instance, filename):
     return path.join(
         gen_path_str_from_key_str(
-            str(instance.cedula_titular)
+            str(instance.fk_vehiculo.fk_titular_vehiculo.cedula)
         ),
-        str(instance.placa),
+        str(instance.fk_vehiculo.placa),
         normalize_filename(filename.lower())
     )

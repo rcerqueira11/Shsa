@@ -312,10 +312,10 @@
 			<table class="table table-bordered">
 				<thead>
 				{# style="width:14%" #}
-					<th style="width:18%"><center>CODIGO</center></th>
-					<th style="width:26%"><center>92. PIEZA</center></th>
-					<th style="width:26%"><center>93. TIPO DE DAÑO</center></th>
-					<th style="width:26%"><center>94. COSTO APROX.</center></th>
+					<th style="width:6%"><center>CODIGO</center></th>
+					<th style="width:14%"><center>92. PIEZA</center></th>
+					<th style="width:14%"><center>93. TIPO DE DAÑO</center></th>
+					<th style="width:14%"><center>94. COSTO APROX.</center></th>
 				</thead>
 				<tbody>
 								
@@ -341,7 +341,7 @@
 			<table class="table table-bordered">
 				<thead>
 				{# style="width:14%" #}
-					<th style="width:96%"><center>DOCUMENTO</center></th>
+					<th style="width:46%"><center>DOCUMENTO</center></th>
 					<th style="width:2%"><center>SI</center></th>
 					<th style="width:2%"><center>NO</center></th>
 				</thead>
@@ -360,13 +360,14 @@
 
 	</div>
 
-	<form action="{% url "planilla_seguro_carro" %}" method="POST">
+	<form id="form_completar_solicitud" action="{% url "planilla_seguro_carro" %}" method="POST">
 		{% csrf_token %}
+		<input type="hidden" name="id_solicitud" id="id_solicitud"  class="form-control"  value={{solicitud.id}} >
 		
 		<div class="row">
 		<div class="col-xs-4 col-xs-offset-2"><a class="btn btn-danger btn-block" href="{% url "documentos_vehiculo" %}" >Atrás</a></div>
 
-		<div class="col-xs-4"><button class="btn btn-primary btn-block" type="submit">Continuar</button></div>
+		<div class="col-xs-4"><button class="btn btn-primary btn-block confirmar_verificacion" >Continuar</button></div>
 
 	</div>
 	</form>
@@ -380,6 +381,6 @@
 {% endblock main_content %}
 
 {% block extra_script %}
- 	<!-- <script src="{{STATIC_URL}}js/registro/editar_usuario.js"></script> -->
+ 	<script src="{{STATIC_URL}}js/rcs/completar_solictud.js"></script>
 
 {% endblock extra_script %}
