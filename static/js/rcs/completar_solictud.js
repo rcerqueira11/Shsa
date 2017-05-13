@@ -6,7 +6,7 @@ $('#modal-verificacion').on('shown.bs.modal', function (e) {
 		subtitulo = 'Finalizar inspección'
 		mensaje = '¿Esta seguro que desea terminar la inspección?'
     }
-    if (estado_sol =="PEND_GEST"){
+    else{
 		subtitulo = 'Finalizar Gestión'
 		mensaje = '¿Esta seguro que desea terminar de editar la inspección esta no podra volver a ser editada?'
     }
@@ -29,7 +29,7 @@ $('#modal-exito').on('shown.bs.modal', function (e) {
 	mensaje = 'Inspección realizada exitosamente.'
 	}
 
-	if (estado_sol =="PEND_GEST"){
+	else{
 		subtitulo = 'Edición Finalizada'
 		mensaje = 'Gestión realizada exitosamente, la solicitud de inspección ha sido cerrada.'
 	}
