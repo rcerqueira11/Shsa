@@ -73,6 +73,7 @@ class VerPlanillaSeguroCarro(View):
             'trajo_vehiculo': trajo_vehiculo,
             'titular_vehiculo': titular_vehiculo,
             'solicitud':solicitud,
+            'estado_solicitud':solicitud.fk_estado_solicitud.codigo,
             }
 
         return context
@@ -84,29 +85,6 @@ class VerPlanillaSeguroCarro(View):
         context['nombre'] = request.user.nombre
         context['username'] = request.user.username
 
-        # id_sol = secure_value_decode(data['sol_id']) if 'sol_id' in data else request.session['sol_id']
-        # solicitud = SolicitudInspeccion.objects.get(id=id_sol)
-        # vehiculo = solicitud.fk_vehiculo
-        # condiciones_generales_vehiculo = vehiculo.condiciones_generales_vehiculo.all().exclude(fk_estado_vehiculo_id=None)
-        # mecanica_vehiculo = vehiculo.mecanica_vehiculo.all().exclude(fk_estado_vehiculo_id=None)
-        # accesorios_vehiculo = vehiculo.accesorios_vehiculo.all().exclude(observacion=None)
-        # detalles_datos = vehiculo.detalles_datos.all()
-        # documentos_presentados = vehiculo.documentos_presentados.all()
-        # trajo_vehiculo = vehiculo.fk_trajo_vehiculo
-        # titular_vehiculo = solicitud.fk_titular_vehiculo
-
-        # context = {
-        #     'nombre': request.user.nombre,
-        #     'username': request.user.username,        
-        #     'condiciones': condiciones_generales_vehiculo,
-        #     'accesorios': accesorios_vehiculo,
-        #     'detalles': detalles_datos,
-        #     'documentos': documentos_presentados,
-        #     'mecanicas': mecanica_vehiculo,
-        #     'vehiculo': vehiculo,
-        #     'trajo_alguien_mas': False if trajo_vehiculo is None else True,
-        #     'titular_vehiculo': titular_vehiculo,
-        #     }
         return render(request, 'rcs/inspector/flujo_solicitud/vista_previa_solicitud.html',context)
 
     def post(self, request, *args, **kwargs):
@@ -120,7 +98,7 @@ class VerPlanillaSeguroCarro(View):
                 media_url = 'https://'
         else:
             media_url = 'http://'
-        response={}
+        respuesta={}
         media_url = media_url+request.META['HTTP_HOST']
 
         context['http_host']= media_url
@@ -148,18 +126,19 @@ class VerPlanillaSeguroCarro(View):
         # direc = ('recepcion_juridico.pdf',ContentFile(response.rendered_content))
 
 
-            # data['Result'] = "success"
-            # pdf_dir = acta_recepcion.ruta.url
-            # data['pdf_dir'] = pdf_dir
+        respuesta['results'] = "success"
+        pdf_dir = acta_recepcion.ruta.url
+        respuesta['pdf_dir'] = pdf_dir
+        return HttpResponse(json.dumps(respuesta), content_type = "application/json")
             # if not enviar_correo_planillas(usuario=registro_pst.usuario, adj=[pdf_dir], template_name='correo/correo_planilla_recepcion.html',asunto='Planilla de recepción'):
             #     data = {}
-            #     data['Result'] = 'error'
+            #     data['results'] = 'error'
             #     data['Message'] = 'Correo invalido4'
             #     data['codigo_error'] = 'CORREO_INVALIDO'
 
             #     return HttpResponse(json.dumps(data), content_type = "application/json")
         # solicitud.ruta.save('PlanillaSolicitud.pdf', ContentFile(file_pdf.getvalue()))
-        # data['Result'] = "success"
+        # data['results'] = "success"
         # data['pdf_dir'] = 'planilla_multa_omision'
         # return HttpResponse(json.dumps(data), content_type = "application/json")
         # return render(request,"solo_visualizar_planilla_registro_carro_seguro.html",context)

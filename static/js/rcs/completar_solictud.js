@@ -39,8 +39,14 @@ function submit_form_completar_solicitud(){
 	
 	                $("#modal-verificacion").modal('hide');
 	                $("#modal-exito").modal('show');
+
+					url = results.pdf_dir;
+					console.log(url);
+					link=document.createElement('a');
+					link.href=url;
+					window.open(link.href);
 	            }
-	            if(results.Result == 'error'){
+	            if(results.results == 'error'){
 	                if(results.codigo_error == "SESSION_EXPIRE")
 	                        $('#expireModal').modal('show');
 	                else{

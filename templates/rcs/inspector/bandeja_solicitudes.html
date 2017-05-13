@@ -32,9 +32,9 @@
           		</div>
           		<div class="col-xs-4">
 					<label>Estado Solicitud</label>
-					<select  data-placeholder="Seleccionar un estado"  class="form-control chosen-select" name="estado_sol" 
-					id='id_estado_sol' >
+					<select  data-placeholder="Seleccionar un estado"  class="form-control chosen-select" name="estado_sol" id='id_estado_sol' multiple>
 					<option value=""></option>
+					
 					{% for e in estado_solicitudes %}
 					      <option value="{{ e.codigo }}">{{ e.nombre|title }}</option>
 					{% endfor %}
