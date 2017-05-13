@@ -189,5 +189,9 @@ function fill_modal_verificacion(titulo,subtitulo,mensaje){
 };
 
 
-
-
+$(".no-space").on('keypress',function(e){
+  if(e.which === 32){
+    return false
+  }
+  
+})

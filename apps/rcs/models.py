@@ -117,7 +117,7 @@ class DetallesDatos(models.Model):
     tipo_dano = models.CharField(max_length=255, null=True)
     costo_aproximado = models.DecimalField(max_digits=21, decimal_places=2, null=True)
     ##PENDIENTE GUARDAR CON EL ID DEL VEHICULO
-    codigo = models.CharField(max_length=255,unique=True)
+    codigo = models.CharField(max_length=255)
     # otro = models.CharField(max_length=255, blank=True)
     def __unicode__(self):
         return self.codigo+ " " + self.pieza

@@ -1,7 +1,7 @@
 // $("#tabla_detalles").hide()
 $("#id_submit_detalles").hide()
 
-$(document).ready(function(){
+$(document).on('ready',(function(){
 	$('.decimal_mask').inputmask('[9]{11}.{0,1}[9]{0,2}', {placeholder: '',"greedy": false,});    
 	$('.integer_mask').inputmask('[9]{19}',  {placeholder: '', "greedy": false,});    
 	cant_en_tabla =$('#detalles_table_body').children('tr').length;
@@ -11,7 +11,10 @@ $(document).ready(function(){
 		$("#tabla_detalles").hide()
 	}
 
-});
+	$(".no-space").keypress(function(e){if(e.which === 32){return false}});
+
+}));
+
 function agregar_detalle(id_tabla){
 
 	$("#detalles_table_body").html()
@@ -33,7 +36,7 @@ function agregar_detalle(id_tabla){
 
 	tabla_body = $('<tr>',{id:'id_celda_'+indice,class:'cont_tr'});
 
-	codigo_input =$('<input>',{class:'form-control numeros' , id:'codigo_'+(indice), name:'codigo_'+(indice), type:'text'});
+	codigo_input =$('<input>',{class:'form-control codigo_evaluar no-space' , id:'codigo_'+(indice), name:'codigo_'+(indice), type:'text'});
     codigo_input_error = $('<center>').html($('<div>',{id:'codigo_input_error_'+(indice), class:'error'}));
     td_c = $('<td>').append(codigo_input).append(codigo_input_error)
     tabla_body.append(td_c);
@@ -46,7 +49,7 @@ function agregar_detalle(id_tabla){
     dano_input_error = $('<center>').html($('<div>',{id:'dano_input_error_'+(indice), class:'error'}));
     tabla_body.append($('<td>').append(dano_input).append(dano_input_error));
 
-	costo_input =$('<input>',{class:'form-control numeros' , name:'costo_'+(indice), id:'costo_'+(indice), type:'text'});
+	costo_input =$('<input>',{class:'form-control decimal_mask' , name:'costo_'+(indice), id:'costo_'+(indice), type:'text'});
     costo_input_error = $('<center>').html($('<div>',{id:'costo_input_error_'+(indice), class:'error'}));
     tabla_body.append($('<td>').append(costo_input).append(costo_input_error));
 
@@ -118,13 +121,18 @@ function submit_detalles(){
 	if(datos_vacios){
 
 	} else {
-
 		// #si la tabla no esta vacia
-		if($('#detalles_table_body').children('tr').length){
-			$('#form_detalles_vehiculo').submit();
-			
-		} else {
-			console.log("nada que enviar")
+
+		if(verificar_codigo_duplicado()){
+
+		}else {
+
+			if($('#detalles_table_body').children('tr').length){
+				$('#form_detalles_vehiculo').submit();
+				
+			} else {
+				console.log("nada que enviar")
+			}
 		}
 		
 	}
@@ -133,39 +141,132 @@ function submit_detalles(){
 	
 }
 
+function get_codigos(){
+	arr_codigos = []
+	cont= 0
+	$('#tabla_detalles > tbody  > tr').each(function() {
+	    
+			id_tr = $( this )[0].id
+			arr = id_tr.split("_")
+			numero = arr[arr.length-1]
+			
+			arr_codigos[cont]=($("#codigo_"+numero).val().trim())
+	    cont= cont+1
+		})
+	console.log("arr_codigos:",arr_codigos);
+	
+	return arr_codigos
+}
 
+function se_repite_algun_codigo(arr){
+	console.log("arr.length:",arr.length);
+	
+	for (i=0; i< arr.length;i++){
+		console.log("i:",i);
+		
+		arr[i]
+		for (j=0; j< arr.length;j++){	
+			if (i!=j){
+				// console.log("arr[i].toString()");
+					// console.log(arr[i].toString());
+					// console.log("arr[j].toString()",arr[j].toString());
+				if(arr[i].toString()==arr[j].toString()){
+					
+					
+					return arr[i]
+
+				}
+			}
+		}
+	}
+	$('#tabla_detalles > tbody  > tr').each(function() {
+		
+			id_tr = $( this )[0].id
+			// console.log("id_tr");
+			// console.log(id_tr);
+			
+			arr = id_tr.split("_")
+			// console.log("arr");
+			// console.log(arr);
+			
+
+			numero = arr[arr.length-1]
+			// console.log("numero");
+			// console.log(numero);
+			
+			
+			if ($("#codigo_input_error_"+numero).html()=="El codigo no puede estar duplicado"){
+	 			$("#codigo_input_error_"+numero).html('')
+			}
+
+		})
+	return ""
+}
+
+function verificar_codigo_duplicado(){
+	arr_codigos = get_codigos()
+
+	repetido = se_repite_algun_codigo(arr_codigos)
+	console.log("repetido:",repetido);
+	algun_codigo_repetido = false
+	if(repetido.trim() != "" ){
+
+		$('#tabla_detalles > tbody  > tr').each(function() {
+		
+			id_tr = $( this )[0].id
+			arr = id_tr.split("_")
+			numero = arr[arr.length-1]
+			
+			if ($("#codigo_"+numero).val().trim()==repetido){
+	 			$("#codigo_input_error_"+numero).html("El codigo no puede estar duplicado")
+	 			algun_codigo_repetido = true
+			}
+
+		})
+	}
+	console.log("algun_codigo_repetido");
+	console.log(algun_codigo_repetido);
+	
+	return algun_codigo_repetido
+}
 
 $(".codigo_evaluar").focusout(function() {
-    codigo_verif = $(this).val()
-    console.log("codigo_verif");
-    console.log(codigo_verif);
-    console.log("this");
-    console.log(this);
-    apicar = this.id
-	arr = apicar.split("_")
-	id_error = arr[0]+"_input_error_" +arr[1]
+	// this.value
+
+	verificar_codigo_duplicado()
+})
+// $(".codigo_evaluar").focusout(function() {
+//     codigo_verif = $(this).val()
+//     id_solicitud = $("#id_solicitud").val()
+//     console.log("codigo_verif");
+//     console.log(codigo_verif);
+//     console.log("this");
+//     console.log(this);
+//     apicar = this.id
+// 	arr = apicar.split("_")
+// 	id_error = arr[0]+"_input_error_" +arr[1]
     
-    $.ajax({
-            type: 'GET' ,
-            url: '/rcs/verficiar_codigo_detalle_existe/' , // <= Providing the URL
-            data: jQuery.param({'codigo_verif':codigo_verif}), // <= Providing the form data, serialized above
-            success: function(results){
-             if(results.results == 'success'){
-					if(results.existe == true){
-						$("#"+id_error).html("Este codigo ya se encuentra registrado para otra pieza")
-						console.log("show error")    				
-					} else{
-						$("#"+id_error).html()
-					}
+//     $.ajax({
+//             type: 'GET' ,
+//             url: '/rcs/verficiar_codigo_detalle_existe/' , // <= Providing the URL
+//             data: jQuery.param({'codigo_verif':codigo_verif,'id_solicitud':id_solicitud}), // <= Providing the form data, serialized above
+//             success: function(results){
+//              if(results.results == 'success'){
+// 					if(results.existe == true){
+// 						$("#"+id_error).html("Este codigo ya se encuentra registrado para otra pieza")
+// 						console.log("show error")    				
+// 					} else{
+// 						$("#"+id_error).html()
+// 					}
                     
-                }
-            },
-            error: function(results){
-                console.log("ERROR");
-            }
-        });
+//                 }
+//             },
+//             error: function(results){
+//                 console.log("ERROR");
+//             }
+//         });
     
     
-  })
+//   })
 
 

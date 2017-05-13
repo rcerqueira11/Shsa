@@ -33,7 +33,7 @@
 <div class="row">
 	<form method="post" id="form_detalles_vehiculo" action="{% url 'detalles_vehiculo' %}">
 	{% csrf_token %}
-	<input type="hidden" name="id_solicitud"  class="form-control"  value={{solicitud.id}} >
+	<input type="hidden" name="id_solicitud" id="id_solicitud"  class="form-control"  value={{solicitud.id}} >
 	<input type="hidden" name="cantidad_detalles"  class="form-control"  value={{cantidad}} >
 	<input type="hidden" name="contador_agregados"  class="form-control"  id="contador_agregados" value="0" >
 	
@@ -54,7 +54,7 @@
 						
 						<tr id="id_celda_{{forloop.counter}}" class="cont_tr">
 							<td>	
-								<input type="text" class="form-control integer_mask codigo_evaluar" id="codigo_{{forloop.counter}}" name="codigo_{{forloop.counter}}" value="{{detalle.codigo}}">
+								<input type="text" class="form-control codigo_evaluar no-space" id="codigo_{{forloop.counter}}" name="codigo_{{forloop.counter}}" value="{{detalle.codigo}}">
 								<center><div id="codigo_input_error_{{forloop.counter}}" class="error"></div></center>
 							</td>
 							<td>

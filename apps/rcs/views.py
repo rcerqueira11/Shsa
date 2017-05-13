@@ -972,9 +972,24 @@ class AccesoriosVehiculoSolicitud(View):
 def verificar_codigo_detalle(request):
     data = request.GET
     respuesta = {}
+    solicitud = SolicitudInspeccion.objects.get(id=data['id_solicitud'])
+    vehiculo= solicitud.fk_vehiculo
+    detalles = vehiculo.detalles_datos.all()
+    codigos_detalles_vehiculo = [x.codigo for x in detalles]
+
     validacion = True if DetallesDatos.objects.filter(codigo=data['codigo_verif']).exists() else False
-    respuesta['results'] = 'success'
-    respuesta['existe'] = validacion
+    codigo_es_mio = True if data['codigo_verif'] in codigos_detalles_vehiculo else False
+
+    if validacion:
+        if not codigo_es_mio:
+            respuesta['results'] = 'success'
+            respuesta['existe'] = validacion
+        else:
+            respuesta['results'] = 'success'
+            respuesta['existe'] = False
+    else:
+        respuesta['results'] = 'success'
+        respuesta['existe'] = validacion
     return HttpResponse(json.dumps(respuesta), content_type = "application/json")
 
 class DetallesVehiculoSolicitud(View):
