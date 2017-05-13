@@ -26,4 +26,4 @@ echo "Cargando Fixtures de Gestion de Solicitud"
 python manage.py loaddata apps/rcs/fixtures/0*
 
 
-python manage.py loaddata helps/registro.json
+python manage.py loaddata helps/todo.json
