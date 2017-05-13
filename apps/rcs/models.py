@@ -11,6 +11,8 @@ from django.apps import apps
 from utils.HelpMethods.aes_cipher import encode as secure_value_encode
 from utils.HelpMethods.aes_cipher import decode as secure_value_decode
 from utils.HelpMethods.helpers import get_file_path_solicitud
+from settings.settings import MEDIA_URL
+
 
 import urllib
 import operator
@@ -130,7 +132,7 @@ class DetallesDatos(models.Model):
 
 class DocumentosPresentadosBase(models.Model):
     nombre = models.CharField(max_length=255)
-    recibido = models.BooleanField(default=True)
+    recibido = models.BooleanField(default=False)
     codigo = models.CharField(max_length=255,unique=True)
 
     def __unicode__(self):
@@ -266,12 +268,12 @@ class SolicitudInspeccion(models.Model):
         # adicionales de la consulta
         if filter_code == "SOL_INSP_INSP":
             # select['fecha_declaracion'] = "to_char(fecha_declaracion, 'DD/MM/YYYY')"
-            columns = ['id','fk_vehiculo__placa','fk_titular_vehiculo__cedula','fk_titular_vehiculo__nombre','fk_estado_solicitud__codigo','editable']
+            columns = ['id','fk_vehiculo__placa','fk_titular_vehiculo__cedula','fk_titular_vehiculo__nombre','fk_estado_solicitud__codigo','editable','ruta',]
 
             # se guardan las columnas a eliminar/agregar en el arreglo
             # 'columns'
             remove_add_header = (
-                ['id','editable'], #columnas eliminar
+                ['id','editable','ruta'], #columnas eliminar
                 ['options'],#columnas agregar
             )
         # si tenemos condiciones, se procede a realizar el la consulta con las
@@ -300,14 +302,6 @@ class SolicitudInspeccion(models.Model):
             # rec = seccion.objects.filter(fk_forma=d['id'])
             # if rec:
             #     siendo_usado = True
-            if d['fk_estado_solicitud__codigo'] == 'PEND_INSP':
-                d['fk_estado_solicitud__codigo'] = "ABIERTA"
-
-            if d['fk_estado_solicitud__codigo'] == 'PEND_GEST':
-                d['fk_estado_solicitud__codigo'] = "POR GESTIONAR"
-
-            if d['fk_estado_solicitud__codigo'] == 'CERRADA':
-                d['fk_estado_solicitud__codigo'] = "CERRADA"
 
             d['id'] = secure_value_encode(str(d['id']))
             # d['fk_seccion__fk_estado_seccion__nombre'] = d['fk_seccion__fk_estado_seccion__nombre'].upper() 
@@ -316,17 +310,35 @@ class SolicitudInspeccion(models.Model):
             # tabla en el template
             if filter_code == "SOL_INSP_INSP":
 
-                d['options'] = [
-                    {
+                d['options'] = []
+
+                if d['fk_estado_solicitud__codigo'] == 'PEND_INSP' or d['fk_estado_solicitud__codigo'] == 'PEND_GEST':
+                    d['options'].append({
                         'tooltip': 'Gestionar Solicitud',
                         'icon': 'fa fa-pencil-square-o white-icon',
                                 'class': 'btn btn-info editar_boton',
                                 'href': '/rcs/gestion_ticket/?'+urllib.urlencode({"sol_id":d['id']}),
-                                'status': 'disabled' if not d['editable'] else '',
-                    },
-                   
+                                'status': 'disabled' if d['fk_estado_solicitud__codigo'] == 'CERRADA' else '',
+                    })
+                
+                if d['fk_estado_solicitud__codigo'] == 'PEND_GEST' or d['fk_estado_solicitud__codigo'] == 'CERRADA':
+                    d['options'].append({
+                        'href': MEDIA_URL+str(d['ruta']),
+                        'tooltip': 'Ver detalle solicitud',
+                        'target': '_blank',
+                        'icon': 'fa fa-search',
+                        'class': 'btn btn-warning',
+                        'status': '',
+                    })    
+                
+            if d['fk_estado_solicitud__codigo'] == 'PEND_INSP':
+                d['fk_estado_solicitud__codigo'] = "ABIERTA"
 
-                ]
+            if d['fk_estado_solicitud__codigo'] == 'PEND_GEST':
+                d['fk_estado_solicitud__codigo'] = "POR GESTIONAR"
+
+            if d['fk_estado_solicitud__codigo'] == 'CERRADA':
+                d['fk_estado_solicitud__codigo'] = "CERRADA"
 
             d['id'] = str(cont)
             cont = cont + 1

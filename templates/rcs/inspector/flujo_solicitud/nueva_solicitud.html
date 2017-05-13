@@ -103,7 +103,7 @@
 						<input type="text" name="cap_puestos" id="id_cap_puestos" class="form-control numeros" value="{{input.value}}">
 					    
 					{% else %}
-						<input type="text" name="cap_puestos" id="id_cap_puestos" class="form-control numeros" value="{{vehiculo.cap_puestos}}">
+						<input type="text" name="cap_puestos" id="id_cap_puestos" class="form-control numeros" value="{{vehiculo.cap_puestos|default_if_none:""}}">
 
 					{% endif %}
 					<div class="error">{{input.error}}</div>
@@ -116,7 +116,7 @@
 					{% if input.value|check_input or input.error|check_input %}
 					<input type="text" name="cilindros" id="id_cilindros" class="form-control" value="{{input.value}}">
 					{% else %}
-					<input type="text" name="cilindros" id="id_cilindros" class="form-control" value="{{vehiculo.cilindros}}">
+					<input type="text" name="cilindros" id="id_cilindros" class="form-control" value="{{vehiculo.cilindros|default_if_none:""}}">
 					{% endif %}
 					<div class="error">{{input.error}}</div>
 
@@ -127,7 +127,7 @@
 					{% if input.value|check_input or input.error|check_input %}
 					<input type="text" name="peso" id="id_peso" class="form-control decimals" value="{{input.value}}">
 					{% else %}
-					<input type="text" name="peso" id="id_peso" class="form-control decimals" value="{{vehiculo.peso}}">
+					<input type="text" name="peso" id="id_peso" class="form-control decimals" value="{{vehiculo.peso|default_if_none:""}}">
 					{% endif %}
 					<div class="error">{{input.error}}</div>
 				</div>
@@ -141,7 +141,7 @@
 					{% if input.value|check_input or input.error|check_input %}
 					<input type="text" name="color" id="id_color" class="form-control" value="{{input.value}}">
 					{% else %}
-					<input type="text" name="color" id="id_color" class="form-control" value="{{vehiculo.color}}">
+					<input type="text" name="color" id="id_color" class="form-control" value="{{vehiculo.color|default_if_none:""}}">
 					{% endif %}
 
 					<div class="error">{{input.error}}</div>
@@ -152,7 +152,7 @@
 					{% if input.value|check_input or input.error|check_input %}
 					<input type="text" name="kilometraje" id="id_kilometraje" class="form-control" value="{{input.value}}">
 					{% else %}
-					<input type="text" name="kilometraje" id="id_kilometraje" class="form-control" value="{{vehiculo.kilometraje}}">
+					<input type="text" name="kilometraje" id="id_kilometraje" class="form-control" value="{{vehiculo.kilometraje|default_if_none:""}}">
 					{% endif %}
 					<div class="error">{{input.error}}</div>
 				</div>
@@ -162,7 +162,7 @@
 					{% if input.value|check_input or input.error|check_input %}
 					<input type="text" name="serial_carroceria" id="id_serial_carroceria" class="form-control" value="{{input.value}}">
 					{% else %}
-					<input type="text" name="serial_carroceria" id="id_serial_carroceria" class="form-control" value="{{vehiculo.serial_carroceria}}">
+					<input type="text" name="serial_carroceria" id="id_serial_carroceria" class="form-control" value="{{vehiculo.serial_carroceria|default_if_none:""}}">
 					{% endif %}
 					
 					<div class="error">{{input.error}}</div>
@@ -176,7 +176,7 @@
 					{% if input.value|check_input or input.error|check_input %}
 					<input type="text" name="serial_motor" id="id_serial_motor" class="form-control" value="{{input.value}}">
 					{% else %}
-					<input type="text" name="serial_motor" id="id_serial_motor" class="form-control" value="{{vehiculo.serial_motor}}">
+					<input type="text" name="serial_motor" id="id_serial_motor" class="form-control" value="{{vehiculo.serial_motor|default_if_none:""}}">
 					{% endif %}
 					<div class="error">{{input.error}}</div>
 				</div>
@@ -187,7 +187,7 @@
 					{% if input.value|check_input or input.error|check_input %}
 					<input type="text" name="valor_estimado" id="id_valor_estimado" class="form-control" value="{{input.value}}">
 					{% else %}
-					<input type="text" name="valor_estimado" id="id_valor_estimado" class="form-control" value="{{vehiculo.valor_estimado}}">
+					<input type="text" name="valor_estimado" id="id_valor_estimado" class="form-control" value="{{vehiculo.valor_estimado|default_if_none:""}}">
 					{% endif %}
 					<div class="error">{{input.error}}</div>
 				</div>
@@ -197,7 +197,7 @@
 					{% if input.value|check_input or input.error|check_input %}
 					<input type="text" name="modelo" id="id_modelo" class="form-control" value="{{input.value}}">
 					{% else %}
-					<input type="text" name="modelo" id="id_modelo" class="form-control" value="{{vehiculo.modelo}}">
+					<input type="text" name="modelo" id="id_modelo" class="form-control" value="{{vehiculo.modelo|default_if_none:""}}">
 					{% endif %}
 					<div class="error">{{input.error}}</div>
 				</div>
@@ -210,7 +210,7 @@
 					{% if input.value|check_input or input.error|check_input %}
 					<input type="text" name="marca" id="id_marca" class="form-control" value="{{input.value}}">
 					{% else %}
-					<input type="text" name="marca" id="id_marca" class="form-control" value="{{vehiculo.marca}}">
+					<input type="text" name="marca" id="id_marca" class="form-control" value="{{vehiculo.marca|default_if_none:""}}">
 					{% endif %}
 					<div class="error">{{input.error}}</div>
 				</div>
@@ -220,7 +220,7 @@
 					{% if input.value|check_input or input.error|check_input %}
 					<input type="text" name="anho" id="id_anho" class="form-control anho" value="{{input.value}}">
 					{% else %}
-					<input type="text" name="anho" id="id_anho" class="form-control anho" value="{{vehiculo.anho}}">
+					<input type="text" name="anho" id="id_anho" class="form-control anho" value="{{vehiculo.anho|default_if_none:""}}">
 					{% endif %}
 					<div class="error">{{input.error}}</div>
 				</div>
