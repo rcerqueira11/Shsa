@@ -491,7 +491,7 @@ class GestionSolicitudAbierta(View):
                 # print data[observacion+mecanica.codigo]
                 # print data[radio+mecanica.codigo]
 
-            return redirect('/rcs/condiciones_vehiculo/?sol_id='+data['id_solicitud'])
+            return redirect('/rcs/condiciones_vehiculo/')
 
         else:
             context = self.get_context(request,request)

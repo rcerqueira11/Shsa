@@ -209,7 +209,6 @@ class SolicitudInspeccion(models.Model):
     fk_titular_vehiculo = models.ForeignKey(TitularVehiculo)
     fk_inspector = models.ForeignKey(Usuario,null=True)
     siendo_verificada = models.IntegerField(blank=True,null=True) #numero id del inspector verificando la solicitud
-    editable = models.BooleanField(default=True)
     fecha_creacion = models.DateTimeField(['%d/%m/%Y'], blank=True, null=True, auto_now=True)
     fk_estado_solicitud = models.ForeignKey(EstadoSolicitud, default=1)
     fk_motivo_solicitud = models.ForeignKey(MotivoSolicitud)
@@ -268,12 +267,12 @@ class SolicitudInspeccion(models.Model):
         # adicionales de la consulta
         if filter_code == "SOL_INSP_INSP":
             # select['fecha_declaracion'] = "to_char(fecha_declaracion, 'DD/MM/YYYY')"
-            columns = ['id','fk_vehiculo__placa','fk_titular_vehiculo__cedula','fk_titular_vehiculo__nombre','fk_estado_solicitud__codigo','editable','ruta',]
+            columns = ['id','fk_vehiculo__placa','fk_titular_vehiculo__cedula','fk_titular_vehiculo__nombre','fk_estado_solicitud__codigo','ruta',]
 
             # se guardan las columnas a eliminar/agregar en el arreglo
             # 'columns'
             remove_add_header = (
-                ['id','editable','ruta'], #columnas eliminar
+                ['id','ruta'], #columnas eliminar
                 ['options'],#columnas agregar
             )
         # si tenemos condiciones, se procede a realizar el la consulta con las
