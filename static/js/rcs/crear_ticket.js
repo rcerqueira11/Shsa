@@ -61,26 +61,13 @@ function submit_form_crear_solicitud(){
 	        url: url , // <= Providing the URL
 	        data: dataForm , // <= Providing the form data, serialized above
 	        success: function(results){
-	                
-	         // if(results.result == 'success'){
-	
-	         //    }
-	         //    if(results.result == 'error'){
-	         //        if(results.codigo_error == "SESSION_EXPIRE")
-	         //                $('#expireModal').modal('show');
-	         //        else{
-	         //            console.log('error');
-	                    
-	         //        }
-	         //    }
-	         if (results['results'] == "success"){
-	                  // $(document).ajaxStop($.unblockUI);
-	                  $("#modal-exito").modal('show');               
-	              }
-			if(results['results']=="error"){
-
-			  show_modal_errores_personalizado(results['mensaje'])
-			}
+	          
+				if (results['results'] == "success"){
+					$("#modal-exito").modal('show');               
+				}
+				if(results['results']=="error"){
+					show_modal_errores_personalizado(results['mensaje'])
+				}
 	        },
 	        error: function(results){
 	        	$('#modal-error').modal('show')

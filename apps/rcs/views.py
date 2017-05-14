@@ -410,7 +410,6 @@ class SolicitarInspeccion(View):
             cedula_trajo_vehiculo = data['cedula_trajo_vehiculo']
             parentesco_trajo_vehiculo = data['parentesco_trajo_vehiculo']
             if SolicitudInspeccion.objects.filter(Q(fk_vehiculo__placa=placa),Q(fk_titular_vehiculo__cedula=cedula_titular),~Q(fk_estado_solicitud__codigo="CERRADA")).exists():
-                # ~Q(fk_estado_solicitud__codigo="CERRADA")
                 respuesta = {}
                 respuesta['results'] = "error"
                 respuesta['mensaje'] = "No se puede crear otra solicitud para el mismo carro mientras una esté en proceso."

@@ -82,5 +82,16 @@ def completa(x):
 
     return True
 
+@register.filter(name='es_inspector')
+def es_inspector(x):
+    return True if x.user.fk_tipo_usuario.codigo=="INSP" else False
+    
+
+
+@register.filter(name='es_taquilla')
+def es_taquilla(x):
+    return True if x.user.fk_tipo_usuario.codigo=="TAQ" else False
+
+
 
 
