@@ -58,6 +58,11 @@ urlpatterns = [
         name="bandeja_solicitudes"
     ),
     url(
+        r'^bandeja_tickets',
+        views.BandejaTickets.as_view(),
+        name="bandeja_tickets"
+    ),
+    url(
         r'^filtro_busqueda_solicitudes',
         views.FiltroBusqueda.as_view(),
         name="filtro_busqueda_solicitudes"
@@ -82,6 +87,11 @@ urlpatterns = [
         r'^verificar_cedula_trajo_existe/',
         views.verificar_trajo_cedula,
         name="verificar_cedula_trajo_existe"
+    ),
+    url(
+        r'^editar_ticket/(?P<sol_id>.+)?$',
+        views.EditarTicket.as_view(),
+        name="editar_ticket"
     ),
     
 ]

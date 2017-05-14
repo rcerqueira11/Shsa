@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% load static %}
+{% load rcs_tags %}
+{% block extra_css %}
+    <link href="/static/css/rcs/flujo_style.css"  rel="stylesheet" type="text/css"/>
+{% endblock extra_css %}
+
+{% block main_content %}
+{% include "menu_base.html" %}
+
+
+<div class="container">
+<div class="well" style="background-color:white; ">
+	<center>
+	    <section>
+	        <div class="title">Edici&oacute;n de Ticket para inspecci&oacute;n</div>
+		</section>
+	</center>
+
+ 	<form method="post" id="form_editar_ticket"  action="{% url 'editar_ticket' %} " target-modal="modal-exito" >
+		{% csrf_token %}
+	 	<input type="hidden" name="id_solicitud"  class="form-control"  value={{solicitud.id}} >
+	 	<div class="row">
+
+	 		<div class="col-xs-3 col-xs-offset-3">
+				<label>¿Titular Presente?</label>
+				{% input_content form_data 'radio_titular' as input %}
+				{% if input.value|check_input or input.error|check_input %}
+				 	<br>
+				 	<input id="radio_si" type="radio" name="radio_titular" value="true" {% if input.value == 'true' %} checked="checked"{% endif %} />  Si
+			    	<br>
+					<input type="radio" name="radio_titular" value="false" {% if input.value == 'false' %} checked="checked"{% endif %} /> No 
+				{% else %}
+				 	<br>
+				 	<input id="radio_si" type="radio" name="radio_titular" value="true"  {% if solicitud.fk_trajo_vehiculo == None %} checked="checked"{% endif %} />  Si
+			    	<br>
+					<input type="radio" name="radio_titular" value="false" {% if solicitud.fk_trajo_vehiculo != None %} checked="checked"{% endif %} /> No  
+				{% endif %}
+				 
+				<div class="error" id="radio_titular_error">{{input.error}}</div>
+	 		</div>	
+	 		<div class="col-xs-3">
+		 		<label>Placa del Vehiculo</label>
+				{% input_content form_data 'placa' as input %}
+				{% if input.value|check_input or input.error|check_input %}
+				<input type="text" id="id_placa" class="form-control" name="placa" value="{{ input.value }}">
+				{% else %}
+				<input type="text" id="id_placa" class="form-control" name="placa" value="{{ solicitud.fk_vehiculo.placa }}">
+				{% endif %}
+				<div class="error" id="placa_error">{{ input.error }}</div>
+
+
+	 		</div>	
+	 		<div class="col-xs-3 ">
+	 			<label>Motivo de la visita</label>
+				<select  data-placeholder="Seleccionar un tipo"  class="form-control chosen-select" name="motivo_visita" id='id_motivo_visita' >
+					{% for e in motivos_de_visita %}
+					      <option value="{{ e.codigo }}" {% if solicitud.fk_motivo_solicitud.codigo == e.codigo %}
+					       selected="true" {% endif %}>{{ e.motivo|title }}</option>
+					{% endfor %}
+				</select>
+	 		</div>
+
+	 	</div>
+		<div class="subtitle">Datos Titular del Veh&iacute;culo</div>
+		<div class="row">
+			<div class="col-xs-3">
+				<label>Cedula de identidad:</label>
+				{% input_content form_data 'cedula_titular' as input %}
+				{% if input.value|check_input or input.error|check_input %}
+				<input type="text" id="id_cedula_titular" class="form-control  ci-mask"  name="cedula_titular" value="{{ input.value }}" >
+				{% else %}
+				<input type="text" id="id_cedula_titular" class="form-control  ci-mask"  name="cedula_titular" value="{{ titular_vehiculo.cedula }}" >
+				{% endif %}
+				<div class="error" id="cedula_titular_error">{{input.error}}</div>
+			</div>
+			<div class="col-xs-3">
+			<label>Nombre del Titular:</label>
+				{% input_content form_data 'nombre_titular' as input %}
+				{% if input.value|check_input or input.error|check_input %}
+				<input type="text" id="id_nombre_titular" class="form-control" name="nombre_titular" value="{{ input.value }}" >
+				{% else %}
+				<input type="text" id="id_nombre_titular" class="form-control" name="nombre_titular" value="{{ titular_vehiculo.nombre }}" >
+				{% endif %}
+				<div class="error" id="nombre_titular_error">{{ input.error }}</div>
+			</div>
+			<div class="col-xs-3">
+			<label>Apellido del Titular:</label>
+				{% input_content form_data 'apellido_titular' as input %}
+				{% if input.value|check_input or input.error|check_input %}
+				<input type="text" id="id_apellido_titular" class="form-control" name="apellido_titular" value="{{ input.value }}" >
+				{% else %}
+				<input type="text" id="id_apellido_titular" class="form-control" name="apellido_titular" value="{{ titular_vehiculo.apellido }}" >
+				{% endif %}
+				<div class="error" id="apellido_titular_error">{{input.error}}</div>
+			</div>
+			<div class="col-xs-3">
+			<label>Tel&eacute;fono</label>
+				{% input_content form_data 'telefono_titular' as input %}
+				{% if input.value|check_input or input.error|check_input %}
+				<input type="text" id="id_telefono_titular" class="form-control"  name="telefono_titular" value="{{ input.value }}" >
+				{% else %}
+				<input type="text" id="id_telefono_titular" class="form-control"  name="telefono_titular" value="{{ titular_vehiculo.telefono }}" >
+				{% endif %}
+				<div class="error" id="telefono_titular_error">{{input.error}}</div>
+			</div>
+			
+		</div>
+
+
+
+	    <div id="id_trajo_form">
+	    	
+			<div class="subtitle">Datos persona que trajo el Veh&iacute;culo a inspecci&oacute;n</div>	
+			<div class="row" >
+				<div class="col-xs-3">
+				<label>Cedula de identidad:</label>
+					{% input_content form_data 'cedula_trajo_vehiculo' as input %}
+					{% if input.value|check_input or input.error|check_input %}
+					<input type="text" id="id_cedula_trajo_vehiculo" class="form-control ci-mask" name="cedula_trajo_vehiculo" value="{{ input.value }}">
+					{% else %}
+					<input type="text" id="id_cedula_trajo_vehiculo" class="form-control ci-mask" name="cedula_trajo_vehiculo" value="{{ trajo_vehiculo.cedula }}">
+					{% endif %}
+					<div class="error" id="cedula_trajo_vehiculo_error">{{input.error}}</div>
+				</div>
+				<div class="col-xs-3">
+				<label>Nombre</label>
+					{% input_content form_data 'nombre_trajo_vehiculo' as input %}
+					{% if input.value|check_input or input.error|check_input %}
+					<input type="text"  id="id_nombre_trajo" class="form-control" name="nombre_trajo_vehiculo" value="{{ input.value }}">
+					{% else %}
+					<input type="text"  id="id_nombre_trajo" class="form-control" name="nombre_trajo_vehiculo" value="{{ trajo_vehiculo.nombre }}">
+					{% endif %}
+					<div class="error" id="nombre_trajo_vehiculo_error">{{input.error}}</div>
+				</div>
+				<div class="col-xs-3">
+				<label>Apellido</label>
+					{% input_content form_data 'apellido_trajo_vehiculo' as input %}
+					{% if input.value|check_input or input.error|check_input %}
+					<input type="text" id="id_apellido_trajo" class="form-control" name="apellido_trajo_vehiculo" value="{{ input.value }}">
+					{% else %}
+					<input type="text" id="id_apellido_trajo" class="form-control" name="apellido_trajo_vehiculo" value="{{ trajo_vehiculo.apellido }}">
+					{% endif %}
+					<div class="error" id="apellido_trajo_vehiculo_error">{{input.error}}</div>
+				</div>
+				<div class="col-xs-3">
+				<label>Parentesco con el Titular</label>
+					{% input_content form_data 'telefono_trajo_vehiculo' as input %}
+					{% if input.value|check_input or input.error|check_input %}
+					<input type="text" id="id_parentesco_trajo" class="form-control" name="parentesco_trajo_vehiculo" value="{{ input.value }}">
+					{% else %}
+					<input type="text" id="id_parentesco_trajo" class="form-control" name="parentesco_trajo_vehiculo" value="{{ trajo_vehiculo.parentesco }}">
+					{% endif %}
+					<div class="error" id="telefono_trajo_vehiculo_error">{{input.error}}</div>
+				</div>
+			</div>
+	    </div>
+
+
+		<br>
+
+
+
+
+		<a class="btn btn-primary btn-flat btn-block" data-toggle="modal" data-target="#modal-verificacion">
+		                            Guardar Cambios
+		                            </a>
+
+    </form>
+</div>
+</div>
+
+
+
+
+
+
+
+{% endblock main_content %}
+
+{% block extra_script %}
+ 	<script src="{{STATIC_URL}}js/rcs/editar_ticket.js"></script>
+
+{% endblock extra_script %}

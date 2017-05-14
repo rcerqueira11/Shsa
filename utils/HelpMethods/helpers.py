@@ -12,7 +12,8 @@ from os import path
 from django.template.loader import get_template
 from django.template import Context
 from hashlib import sha1
-
+from utils.HelpMethods.aes_cipher import encode as secure_value_encode
+from utils.HelpMethods.aes_cipher import decode as secure_value_decode
 from apps.registro.models import *
 
 
@@ -70,3 +71,24 @@ def get_file_path_solicitud(instance, filename):
         str(instance.fk_vehiculo.placa),
         normalize_filename(filename.lower())
     )
+
+
+def en_revision(x):
+    from apps.rcs.models import SolicitudInspeccion
+    if SolicitudInspeccion.objects.filter(id= secure_value_decode(str(x))).exists():
+        solicitud = SolicitudInspeccion.objects.get(id= secure_value_decode(str(x)))
+        vehiculo = solicitud.fk_vehiculo
+        peso= vehiculo.peso != None
+        color= vehiculo.color != None
+        condiciones= vehiculo.condiciones_generales_vehiculo.all().exists()
+        mecanica= vehiculo.mecanica_vehiculo.all().exists()
+        accesorios= vehiculo.accesorios_vehiculo.all().exists()
+        detalles= vehiculo.detalles_datos.all().exists()
+        documentos= vehiculo.documentos_presentados.all().exists()
+
+        if peso or color or condiciones or mecanica or accesorios or detalles or documentos:
+            return True
+        else:  
+            return False
+
+    return False

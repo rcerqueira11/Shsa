@@ -14,6 +14,7 @@ from utils.HelpMethods.helpers import get_file_path_solicitud
 from settings.settings import MEDIA_URL
 
 
+
 import urllib
 import operator
 
@@ -258,6 +259,19 @@ class SolicitudInspeccion(models.Model):
                 if estado_sol:
                     condiciones.append(Q(fk_estado_solicitud__codigo=estado_sol))
 
+            if filter_code == 'TICKETS_ABIERTOS':
+                placa= param.get('placa', None)
+                cedula= param.get('cedula', None)
+                estado_sol= param.get('estado_sol', None)
+
+                if placa:
+                    condiciones.append(Q(fk_vehiculo__placa__icontains=placa))
+
+                if cedula:
+                    condiciones.append(Q(fk_vehiculo__fk_titular_vechiculo__cedula__icontains=cedula))
+
+                condiciones.append(Q(fk_estado_solicitud__codigo="PEND_INSP"))
+
                 # if 'configurable' in param:
                 #     condiciones.append(Q(fk_seccion__configurable=True))
                 # else:
@@ -273,6 +287,17 @@ class SolicitudInspeccion(models.Model):
             # 'columns'
             remove_add_header = (
                 ['id','ruta'], #columnas eliminar
+                ['options'],#columnas agregar
+            )
+
+        if filter_code == "TICKETS_ABIERTOS":
+            # select['fecha_declaracion'] = "to_char(fecha_declaracion, 'DD/MM/YYYY')"
+            columns = ['id','fk_vehiculo__placa','fk_titular_vehiculo__cedula','fk_titular_vehiculo__nombre','fk_estado_solicitud__codigo']
+
+            # se guardan las columnas a eliminar/agregar en el arreglo
+            # 'columns'
+            remove_add_header = (
+                ['id',], #columnas eliminar
                 ['options'],#columnas agregar
             )
         # si tenemos condiciones, se procede a realizar el la consulta con las
@@ -329,14 +354,29 @@ class SolicitudInspeccion(models.Model):
                         'status': '',
                     })    
                 
-            if d['fk_estado_solicitud__codigo'] == 'PEND_INSP':
-                d['fk_estado_solicitud__codigo'] = "ABIERTA"
+                if d['fk_estado_solicitud__codigo'] == 'PEND_INSP':
+                    d['fk_estado_solicitud__codigo'] = "ABIERTA"
 
-            if d['fk_estado_solicitud__codigo'] == 'PEND_GEST':
-                d['fk_estado_solicitud__codigo'] = "POR GESTIONAR"
+                if d['fk_estado_solicitud__codigo'] == 'PEND_GEST':
+                    d['fk_estado_solicitud__codigo'] = "POR GESTIONAR"
 
-            if d['fk_estado_solicitud__codigo'] == 'CERRADA':
-                d['fk_estado_solicitud__codigo'] = "CERRADA"
+                if d['fk_estado_solicitud__codigo'] == 'CERRADA':
+                    d['fk_estado_solicitud__codigo'] = "CERRADA"
+
+            if filter_code == "TICKETS_ABIERTOS":
+                en_rev = en_revision(d['id'])
+                d['options'] = []
+
+                d['options'].append({
+                    'tooltip': 'Gestionar Solicitud',
+                    'icon': 'fa fa-pencil-square-o white-icon',
+                            'class': 'btn btn-info editar_boton',
+                            'href': '/rcs/editar_ticket/?'+urllib.urlencode({"sol_id":d['id']}),
+                            'status': 'disabled' if en_rev else '',
+                })
+             
+                
+                
 
             d['id'] = str(cont)
             cont = cont + 1

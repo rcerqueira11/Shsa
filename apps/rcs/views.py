@@ -39,6 +39,7 @@ def format_float(X):
 
     return float(X)
 
+
 def verificar_codigo_detalle(request):
     data = request.GET
     respuesta = {}
@@ -323,7 +324,6 @@ class BandejaSolicitudes(View):
 
         return render(request, 'rcs/inspector/bandeja_solicitudes.html',context)
 
-
 class SolicitarInspeccion(View):
     """
     SolicitarInspeccion 
@@ -334,7 +334,7 @@ class SolicitarInspeccion(View):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_anonymous():
             return redirect(reverse_lazy('login'))
-        return super(SolicitarInspeccion    , self).dispatch(request, *args, **kwargs)
+        return super(SolicitarInspeccion, self).dispatch(request, *args, **kwargs)
 
 
     def get_context(self, data):
@@ -468,7 +468,7 @@ class SolicitarInspeccion(View):
 
             return HttpResponse(json.dumps(response), content_type = "application/json")
 
-
+## Views de Flujo
 class GestionSolicitudAbierta(View):
     """
     GestionSolicitudAbierta
@@ -1271,4 +1271,178 @@ class DocumentosVehiculoSolicitud(View):
             context['form_data'] = form_data
         return render(request, 'rcs/inspector/flujo_solicitud/documentos_solicitud.html',context)
 
+## Fin Views de Flujo
 
+
+
+
+class BandejaTickets(View):
+    """
+    BandejaTickets
+    -------------------------------------------
+    Bandeja donde se muestran las solicitudes de inspeccion realizadas
+    """
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_anonymous():
+            return redirect(reverse_lazy('login'))
+        return super(BandejaTickets, self).dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        context = {}
+        context['nombre'] = request.user.nombre
+        context['username'] = request.user.username
+
+        return render(request, 'rcs/taquilla/bandeja_taquilla.html',context)
+
+
+class EditarTicket(View):
+    """
+    EditarTicket 
+    -------------------------------------------
+    Gestiona las solicitudes en estatus abierta, paso 1 datos del vehiculo
+    """
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_anonymous():
+            return redirect(reverse_lazy('login'))
+        return super(EditarTicket, self).dispatch(request, *args, **kwargs)
+
+
+    def get_context(self, data):
+        motivo = MotivoSolicitud.objects.all()
+        # import pudb; pu.db
+        # data = request.GET
+        id_sol = secure_value_decode(data.GET['sol_id'])
+        solicitud = SolicitudInspeccion.objects.get(id= id_sol)
+        context = {
+            'motivos_de_visita': motivo,
+            'nombre': data.user.nombre,
+            'username': data.user.username,
+            'solicitud': solicitud,
+            'trajo_vehiculo': solicitud.fk_trajo_vehiculo,
+            'titular_vehiculo': solicitud.fk_titular_vehiculo,
+            'existe_trajo_vehiculo': False if solicitud.fk_trajo_vehiculo== None else True
+        }
+        
+        return context
+
+    def validate(self, data):
+        errors = {}
+
+        #obtener errores y guardarlos en el diccionario "errors" en donde los "key" son los nombre de los inputs html
+        #Ejemplo: validar que los campos no estén vacios
+        for key in data:
+            value = data.get(key, None)
+            if 'radio_titular' in data:
+                if data['radio_titular'] == 'false':
+                    if not value.strip():
+                        errors[key] = 'El campo no debe estar vacío'
+                else:
+                    if not 'trajo' in key:
+                        if not value.strip():
+                            errors[key] = 'El campo no debe estar vacío'
+            else:
+                if not value.strip():
+                    errors[key] = 'El campo no debe estar vacío'
+        return errors
+
+    def get(self, request, *args, **kwargs):
+        data = {}
+        context = self.get_context(request)
+        
+        #obtener datos que requieran ser pre-cargados en el formulario (ejemplo: editar registro) y guardarlos en form_data
+        form_data = {}
+
+        #"form_data" representa un diccionario cuyas claves son los nombres de los inputs html del formulario y sus valores 
+        #son tuplas donde almacenan los valores y los errores de los inputs respectivamente
+
+        context['form_data'] = form_data
+
+        return render(request, 'rcs/taquilla/editar_ticket.html',context)
+
+    def post(self,request,*args,**kwargs):
+
+
+        data = request.POST
+        response = {}
+
+        errors = self.validate(data)
+
+        if not errors:
+
+            #procesar y guardar data del formulario en BD
+            solicitud = SolicitudInspeccion()
+            vehiculo = Vehiculo()
+            titular_vehiculo = TitularVehiculo()
+            trajo_vehiculo = TrajoVehiculo()
+
+
+            nombre_titular = data['nombre_titular']
+            apellido_titular = data['apellido_titular']
+            cedula_titular = data['cedula_titular']
+            telefono_titular = data['telefono_titular']
+            placa = data['placa']
+            motivo_visita = data['motivo_visita']
+            nombre_trajo_vehiculo = data['nombre_trajo_vehiculo']
+            apellido_trajo_vehiculo = data['apellido_trajo_vehiculo']
+            cedula_trajo_vehiculo = data['cedula_trajo_vehiculo']
+            parentesco_trajo_vehiculo = data['parentesco_trajo_vehiculo']
+            if SolicitudInspeccion.objects.filter(Q(fk_vehiculo__placa=placa),Q(fk_titular_vehiculo__cedula=cedula_titular),~Q(fk_estado_solicitud__codigo="CERRADA")).exists():
+                respuesta = {}
+                respuesta['results'] = "error"
+                respuesta['mensaje'] = "No se puede crear otra solicitud para el mismo carro mientras una esté en proceso."
+                return HttpResponse(json.dumps(respuesta), content_type="application/json")
+
+            with transaction.atomic():
+                if TitularVehiculo.objects.filter(cedula=cedula_titular).exists():
+                    titular_vehiculo=TitularVehiculo.objects.get(cedula=cedula_titular)
+                else:
+                    titular_vehiculo.nombre = nombre_titular
+                    titular_vehiculo.apellido = apellido_titular
+                    titular_vehiculo.cedula = cedula_titular
+                    titular_vehiculo.telefono = telefono_titular
+                    titular_vehiculo.save()
+
+                if data['nombre_trajo_vehiculo'].strip() != "":
+                    
+                    if TrajoVehiculo.objects.filter(cedula=cedula_trajo_vehiculo).exists():
+                        trajo_vehiculo= TrajoVehiculo.objects.get(cedula=cedula_trajo_vehiculo)
+                    else:
+                        trajo_vehiculo.nombre =  nombre_trajo_vehiculo
+                        trajo_vehiculo.apellido = apellido_trajo_vehiculo
+                        trajo_vehiculo.cedula = cedula_trajo_vehiculo
+                        trajo_vehiculo.parentesco = parentesco_trajo_vehiculo
+                        trajo_vehiculo.save()
+                    # vehiculo.fk_trajo_vehiculo = trajo_vehiculo
+                    solicitud.fk_trajo_vehiculo = trajo_vehiculo
+                    
+
+
+                vehiculo.placa = placa
+                vehiculo.fk_titular_vehiculo = titular_vehiculo
+                vehiculo.save()
+
+                solicitud.fk_vehiculo = vehiculo
+                solicitud.fk_titular_vehiculo = titular_vehiculo
+                solicitud.fk_motivo_solicitud = MotivoSolicitud.objects.get(codigo = motivo_visita) 
+                solicitud.save()
+
+            respuesta={'results': 'success',}
+            return HttpResponse(json.dumps(respuesta), content_type="application/json")
+        else:
+            # context = self.get_context(request)
+
+            # form_data = {}
+            # for key, value in data.iteritems():
+            #     if key in errors.keys():
+            #         form_data[key] = (value, errors[key])
+            #     else:
+            #         form_data[key] = (value, '')
+
+            # context['form_data'] = form_data
+
+            # return render(request, 'rcs/taquilla/crear_ticket.html', context)
+            response['errors'] = errors
+
+            return HttpResponse(json.dumps(response), content_type = "application/json")
