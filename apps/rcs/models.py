@@ -193,7 +193,7 @@ class Vehiculo(models.Model):
     documentos_presentados = models.ManyToManyField(DocumentosPresentados)
 
     def __unicode__(self):
-        return self.placa + "" + self.fk_titular_vehiculo.cedula
+        return "Placa: "+ self.placa + " Cedula: " + self.fk_titular_vehiculo.cedula
 
 
 class MotivoSolicitud(models.Model):
@@ -201,7 +201,7 @@ class MotivoSolicitud(models.Model):
     codigo = models.CharField(max_length=255, unique=True )
 
     def __unicode__(self):
-        return self.motivo + "" + self.codigo
+        return self.motivo + " " + self.codigo
 
 
 class SolicitudInspeccion(models.Model):
@@ -296,7 +296,6 @@ class SolicitudInspeccion(models.Model):
         cont = 1
         for d in datos_filtrados:
             # se codifica el ID por medida de seguridad
-            # import pudb; pu.db
             #
             # siendo_usado = False
             # rec = seccion.objects.filter(fk_forma=d['id'])

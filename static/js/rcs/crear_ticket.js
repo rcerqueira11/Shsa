@@ -31,7 +31,7 @@ $( document ).ready(function() {
     if (valor_radio == "false"){
     	$("#id_trajo_form").show('slide')
     }else{
-    	$("#id_trajo_form").hide('slide')
+    	$("#id_trajo_form").hide()
 
     }
 });

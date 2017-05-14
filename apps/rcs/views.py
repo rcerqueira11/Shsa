@@ -55,7 +55,6 @@ class VerPlanillaSeguroCarro(View):
         mecanica_vehiculo = vehiculo.mecanica_vehiculo.all().exclude(fk_estado_vehiculo_id=None)
         accesorios_vehiculo = vehiculo.accesorios_vehiculo.all().exclude(observacion=None)
         detalles_datos = vehiculo.detalles_datos.all()
-        # import pudb; pu.db
         documentos_presentados = vehiculo.documentos_presentados.all()
         trajo_vehiculo = vehiculo.fk_trajo_vehiculo
         titular_vehiculo = solicitud.fk_titular_vehiculo
@@ -89,7 +88,6 @@ class VerPlanillaSeguroCarro(View):
 
     def post(self, request, *args, **kwargs):
         # context={}
-        # import pudb; pu.db
         data = request.POST
         id_sol = data['id_solicitud']
         solicitud = SolicitudInspeccion.objects.get(id=id_sol)
@@ -322,14 +320,12 @@ class SolicitarInspeccion(View):
 
         data = request.POST
         response = {}
-        # import pudb; pu.db
 
         errors = self.validate(data)
 
         if not errors:
 
             #procesar y guardar data del formulario en BD
-            # import pudb; pu.db
             solicitud = SolicitudInspeccion()
             vehiculo = Vehiculo()
             titular_vehiculo = TitularVehiculo()
@@ -410,11 +406,9 @@ class GestionSolicitudAbierta(View):
     def get_context(self, request,data):
         # id_solicitud = 1
         # data = request.GET
-        # import pudb; pu.db
         id_sol = secure_value_decode(data['sol_id']) if 'sol_id' in data else request.session['sol_id']
         solicitud = SolicitudInspeccion.objects.get(id=id_sol)
         request.session['sol_id'] = id_sol
-        # import pudb; pu.db
         vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
         tipo_vehiculo = TipoVehiculo.objects.all()
         titular_vehiculo = solicitud.fk_titular_vehiculo
@@ -544,7 +538,6 @@ class CondicionVehiculoSolicitud(View):
         id_sol = data['sol_id'] if 'sol_id' in data else request.session['sol_id']
         solicitud = SolicitudInspeccion.objects.get(id=id_sol)
         vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
-        # import pudb; pu.db
         if vehiculo.condiciones_generales_vehiculo.all().exists():
             condiciones = vehiculo.condiciones_generales_vehiculo.all().order_by('id')
         else:
@@ -614,7 +607,6 @@ class CondicionVehiculoSolicitud(View):
 
 
 
-        # import pudb; pu.db
         mutable = request.POST._mutable
         request.POST._mutable = True
         for condicion in condiciones:
@@ -626,7 +618,6 @@ class CondicionVehiculoSolicitud(View):
 
 
         errors = self.validate(data)
-        # import pudb; pu.db
         if not errors:
             solicitud = SolicitudInspeccion.objects.get(id= data['id_solicitud'])
             vehiculo = solicitud.fk_vehiculo
@@ -691,7 +682,6 @@ class MecanicaVehiculoSolicitud(View):
     def get_context(self, request,data):
         id_sol = data['sol_id'] if 'sol_id' in data else request.session['sol_id']
         solicitud = SolicitudInspeccion.objects.get(id=id_sol)
-        # import pudb; pu.db
         vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
         if vehiculo.mecanica_vehiculo.all().exists():
             mecanicas = vehiculo.mecanica_vehiculo.all().order_by('id')
@@ -717,7 +707,6 @@ class MecanicaVehiculoSolicitud(View):
         #obtener errores y guardarlos en el diccionario "errors" en donde los "key" son los nombre de los inputs html
         #Ejemplo: validar que los campos no estén vacios
         for key in data:
-            # import pudb; pu.db
             value = data.get(key, None)
             if 'observacion_OTRO' in key:
                 codigo = key.split('_',1)[1] 
@@ -773,7 +762,6 @@ class MecanicaVehiculoSolicitud(View):
             solicitud = SolicitudInspeccion.objects.get(id= data['id_solicitud'])
             vehiculo = solicitud.fk_vehiculo
             # mecanica_vehiculo
-            # import pudb; pu.db
             with transaction.atomic():
                 tenia_mecanicas = self.tiene_mecanicas(solicitud.id)
                 vehiculo.mecanica_vehiculo.clear()
@@ -833,7 +821,6 @@ class AccesoriosVehiculoSolicitud(View):
     def get_context(self, request, data):
         id_sol = data['sol_id'] if 'sol_id' in data else request.session['sol_id']
         solicitud = SolicitudInspeccion.objects.get(id=id_sol)
-        # import pudb; pu.db
         vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
 
         if vehiculo.accesorios_vehiculo.all().exists():
@@ -859,10 +846,8 @@ class AccesoriosVehiculoSolicitud(View):
 
         #obtener errores y guardarlos en el diccionario "errors" en donde los "key" son los nombre de los inputs html
         #Ejemplo: validar que los campos no estén vacios
-        # import pudb; pu.db
 
         for key in data:
-            # import pudb; pu.db
             value = data.get(key, None)
             if 'observacion_OTRO' in key:
                 codigo = key.split('_',1)[1] 
@@ -908,7 +893,6 @@ class AccesoriosVehiculoSolicitud(View):
             accesorios = vehiculo.accesorios_vehiculo.all()
         else:
             accesorios = AccesoriosBase.objects.all()
-        # import pudb; pu.db
 
         mutable = request.POST._mutable
         request.POST._mutable = True
@@ -934,7 +918,6 @@ class AccesoriosVehiculoSolicitud(View):
                     else:
                         codigo_nuevo = accesorio.codigo+'_'+str(vehiculo.id)
                     # mec_sol
-                    # import pudb; pu.db
                     if data[radio+accesorio.codigo].strip() != "":
                         accesorio_existe = True if data[radio+accesorio.codigo] == 'true' else False
                         
@@ -1004,7 +987,6 @@ class DetallesVehiculoSolicitud(View):
         id_solicitud = data['sol_id'] if 'sol_id' in data else request.session['sol_id']
 
         solicitud = SolicitudInspeccion.objects.get(id=id_solicitud)
-        # import pudb; pu.db
             
         vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
         # cantidad_detalles = range(1,data['cantidad_detalles']) if 'cantidad_detalles' in data else range(1,2)
@@ -1027,7 +1009,6 @@ class DetallesVehiculoSolicitud(View):
 
         #obtener errores y guardarlos en el diccionario "errors" en donde los "key" son los nombre de los inputs html
         #Ejemplo: validar que los campos no estén vacios
-        # import pudb; pu.db
 
         for key in data:
             value = data.get(key, None)
@@ -1041,7 +1022,6 @@ class DetallesVehiculoSolicitud(View):
         data = request.GET
 
         # cantidad_detalles = range(1,data['cantidad_detalles']+1) if 'cantidad_detalles' in data else range(1,3)
-        # import pudb; pu.db
         # context = self.get_context(data,cantidad_detalles)
         context = self.get_context(request,data)
         
@@ -1088,7 +1068,6 @@ class DetallesVehiculoSolicitud(View):
                     vehiculo.detalles_datos.add(detalles)
 
                 # mec_sol
-                # import pudb; pu.db
                     # accesorio.save()
                 ##Agregando accesorio a many to many field de vehiculo
                 # vehiculo.accesorios_vehiculo.add(accesorio)
@@ -1119,7 +1098,6 @@ class DocumentosVehiculoSolicitud(View):
         id_solicitud = data['sol_id'] if 'sol_id' in data else request.session['sol_id']
 
         solicitud = SolicitudInspeccion.objects.get(id=id_solicitud)
-        # import pudb; pu.db
         vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
 
         if vehiculo.documentos_presentados.all().exists():
@@ -1143,10 +1121,8 @@ class DocumentosVehiculoSolicitud(View):
 
         #obtener errores y guardarlos en el diccionario "errors" en donde los "key" son los nombre de los inputs html
         #Ejemplo: validar que los campos no estén vacios
-        # import pudb; pu.db
 
         for key in data:
-            # import pudb; pu.db
             value = data.get(key, None)
                     
             if not value.strip():
@@ -1179,7 +1155,6 @@ class DocumentosVehiculoSolicitud(View):
 
         radio = "radio_"
         # accesorios = AccesoriosVehiculo.objects.all()
-        # import pudb; pu.db
         solicitud = SolicitudInspeccion.objects.get(id= data['id_solicitud'])
         vehiculo = solicitud.fk_vehiculo
 
@@ -1209,7 +1184,6 @@ class DocumentosVehiculoSolicitud(View):
 
                 for documento in documentos:
                     # mec_sol
-                    # import pudb; pu.db
                     if tenia_documentos:
                         codigo_nuevo = documento.codigo
                     else:

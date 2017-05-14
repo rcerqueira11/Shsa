@@ -1,5 +1,6 @@
 from django import template
 from django.conf import settings
+from apps.rcs.models import *
 
 register = template.Library()
 
@@ -62,6 +63,24 @@ def check_input(x):
     return True if x.strip() != "" else False
 
 
+@register.filter(name='completa')
+def completa(x):
+    if 'sol_id' in x.session:
+        sol_id = x.session['sol_id']
+        solicitud = SolicitudInspeccion.objects.get(id= sol_id)
+        vehiculo = solicitud.fk_vehiculo
+        peso= vehiculo.peso != None
+        color= vehiculo.color != None
+        condiciones= vehiculo.condiciones_generales_vehiculo.all().exists()
+        mecanica= vehiculo.mecanica_vehiculo.all().exists()
+        accesorios= vehiculo.accesorios_vehiculo.all().exists()
+        detalles= vehiculo.detalles_datos.all().exists()
+        documentos= vehiculo.documentos_presentados.all().exists()
+
+        if peso and color and condiciones and mecanica and accesorios and detalles and documentos:
+            return False
+
+    return True
 
 
 
