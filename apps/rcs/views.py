@@ -13,6 +13,7 @@ from django.db import transaction
 from django.contrib.auth.decorators import login_required
 from django.apps import apps
 from django.core.files.base import ContentFile
+from django.db.models import Q
 # from django.apps import apps
 from apps.wkhtmltopdf.views import PDFTemplateResponse
 from apps.registro.models import *
@@ -38,6 +39,71 @@ def format_float(X):
 
     return float(X)
 
+def verificar_codigo_detalle(request):
+    data = request.GET
+    respuesta = {}
+    solicitud = SolicitudInspeccion.objects.get(id=data['id_solicitud'])
+    vehiculo= solicitud.fk_vehiculo
+    detalles = vehiculo.detalles_datos.all()
+    codigos_detalles_vehiculo = [x.codigo for x in detalles]
+
+    validacion = True if DetallesDatos.objects.filter(codigo=data['codigo_verif']).exists() else False
+    codigo_es_mio = True if data['codigo_verif'] in codigos_detalles_vehiculo else False
+
+    if validacion:
+        if not codigo_es_mio:
+            respuesta['results'] = 'success'
+            respuesta['existe'] = validacion
+        else:
+            respuesta['results'] = 'success'
+            respuesta['existe'] = False
+    else:
+        respuesta['results'] = 'success'
+        respuesta['existe'] = validacion
+    return HttpResponse(json.dumps(respuesta), content_type = "application/json")
+
+def verificar_placa_carro(request):
+    data = request.GET
+    placa = data['placa']
+    respuesta = {}
+    if Vehiculo.objects.filter(placa=placa).exists():
+        titular = Vehiculo.objects.get(placa=placa).fk_titular_vehiculo
+        respuesta['results'] = 'success'
+        respuesta['nombre'] = titular.nombre
+        respuesta['apellido'] = titular.apellido
+        respuesta['telefono'] = titular.telefono
+        respuesta['cedula'] = titular.cedula
+    else:
+        respuesta['results'] = 'success_no_existe'
+    return HttpResponse(json.dumps(respuesta), content_type = "application/json")
+
+def verificar_titular_cedula(request):
+    data = request.GET
+    cedula = data['cedula']
+    respuesta = {}
+    if TitularVehiculo.objects.filter(cedula=cedula).exists():
+        titular = TitularVehiculo.objects.get(cedula=cedula)
+        respuesta['results'] = 'success'
+        respuesta['nombre'] = titular.nombre
+        respuesta['apellido'] = titular.apellido
+        respuesta['telefono'] = titular.telefono
+    else:
+        respuesta['results'] = 'success_no_existe'
+    return HttpResponse(json.dumps(respuesta), content_type = "application/json")
+
+def verificar_trajo_cedula(request):
+    data = request.GET
+    cedula = data['cedula']
+    respuesta = {}
+    if TrajoVehiculo.objects.filter(cedula=cedula).exists():
+        titular = TrajoVehiculo.objects.get(cedula=cedula)
+        respuesta['results'] = 'success'
+        respuesta['nombre'] = titular.nombre
+        respuesta['apellido'] = titular.apellido
+        respuesta['parentesco'] = titular.parentesco
+    else:
+        respuesta['results'] = 'success_no_existe'
+    return HttpResponse(json.dumps(respuesta), content_type = "application/json")
 
 class VerPlanillaSeguroCarro(View):
 
@@ -56,7 +122,8 @@ class VerPlanillaSeguroCarro(View):
         accesorios_vehiculo = vehiculo.accesorios_vehiculo.all().exclude(observacion=None)
         detalles_datos = vehiculo.detalles_datos.all()
         documentos_presentados = vehiculo.documentos_presentados.all()
-        trajo_vehiculo = vehiculo.fk_trajo_vehiculo
+        # trajo_vehiculo = vehiculo.fk_trajo_vehiculo
+        trajo_vehiculo = solicitud.fk_trajo_vehiculo
         titular_vehiculo = solicitud.fk_titular_vehiculo
 
         context = {
@@ -342,23 +409,37 @@ class SolicitarInspeccion(View):
             apellido_trajo_vehiculo = data['apellido_trajo_vehiculo']
             cedula_trajo_vehiculo = data['cedula_trajo_vehiculo']
             parentesco_trajo_vehiculo = data['parentesco_trajo_vehiculo']
-            with transaction.atomic():
+            if SolicitudInspeccion.objects.filter(Q(fk_vehiculo__placa=placa),Q(fk_titular_vehiculo__cedula=cedula_titular),~Q(fk_estado_solicitud__codigo="CERRADA")).exists():
+                # ~Q(fk_estado_solicitud__codigo="CERRADA")
+                respuesta = {}
+                respuesta['results'] = "error"
+                respuesta['mensaje'] = "No se puede crear otra solicitud para el mismo carro mientras una esté en proceso."
+                return HttpResponse(json.dumps(respuesta), content_type="application/json")
 
-                titular_vehiculo.nombre = nombre_titular
-                titular_vehiculo.apellido = apellido_titular
-                titular_vehiculo.cedula = cedula_titular
-                titular_vehiculo.telefono = telefono_titular
+            with transaction.atomic():
+                if TitularVehiculo.objects.filter(cedula=cedula_titular).exists():
+                    titular_vehiculo=TitularVehiculo.objects.get(cedula=cedula_titular)
+                else:
+                    titular_vehiculo.nombre = nombre_titular
+                    titular_vehiculo.apellido = apellido_titular
+                    titular_vehiculo.cedula = cedula_titular
+                    titular_vehiculo.telefono = telefono_titular
+                    titular_vehiculo.save()
 
                 if data['nombre_trajo_vehiculo'].strip() != "":
                     
-                    trajo_vehiculo.nombre =  nombre_trajo_vehiculo
-                    trajo_vehiculo.apellido = apellido_trajo_vehiculo
-                    trajo_vehiculo.cedula = cedula_trajo_vehiculo
-                    trajo_vehiculo.parentesco = parentesco_trajo_vehiculo
-                    trajo_vehiculo.save()
-                    vehiculo.fk_trajo_vehiculo = trajo_vehiculo
+                    if TrajoVehiculo.objects.filter(cedula=cedula_trajo_vehiculo).exists():
+                        trajo_vehiculo= TrajoVehiculo.objects.get(cedula=cedula_trajo_vehiculo)
+                    else:
+                        trajo_vehiculo.nombre =  nombre_trajo_vehiculo
+                        trajo_vehiculo.apellido = apellido_trajo_vehiculo
+                        trajo_vehiculo.cedula = cedula_trajo_vehiculo
+                        trajo_vehiculo.parentesco = parentesco_trajo_vehiculo
+                        trajo_vehiculo.save()
+                    # vehiculo.fk_trajo_vehiculo = trajo_vehiculo
+                    solicitud.fk_trajo_vehiculo = trajo_vehiculo
+                    
 
-                titular_vehiculo.save()
 
                 vehiculo.placa = placa
                 vehiculo.fk_titular_vehiculo = titular_vehiculo
@@ -369,9 +450,7 @@ class SolicitarInspeccion(View):
                 solicitud.fk_motivo_solicitud = MotivoSolicitud.objects.get(codigo = motivo_visita) 
                 solicitud.save()
 
-            respuesta={
-            'results': 'success',
-            }
+            respuesta={'results': 'success',}
             return HttpResponse(json.dumps(respuesta), content_type="application/json")
         else:
             # context = self.get_context(request)
@@ -412,7 +491,8 @@ class GestionSolicitudAbierta(View):
         vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
         tipo_vehiculo = TipoVehiculo.objects.all()
         titular_vehiculo = solicitud.fk_titular_vehiculo
-        trajo_vehiculo = vehiculo.fk_trajo_vehiculo
+        # trajo_vehiculo = vehiculo.fk_trajo_vehiculo
+        trajo_vehiculo = solicitud.fk_trajo_vehiculo
         tipo_manejo = TipoManejo.objects.all()
         context = {
             'vehiculo': vehiculo,
@@ -947,29 +1027,6 @@ class AccesoriosVehiculoSolicitud(View):
             context['form_data'] = form_data
         return render(request, 'rcs/inspector/flujo_solicitud/accesorios_solicitud.html',context)
 
-
-def verificar_codigo_detalle(request):
-    data = request.GET
-    respuesta = {}
-    solicitud = SolicitudInspeccion.objects.get(id=data['id_solicitud'])
-    vehiculo= solicitud.fk_vehiculo
-    detalles = vehiculo.detalles_datos.all()
-    codigos_detalles_vehiculo = [x.codigo for x in detalles]
-
-    validacion = True if DetallesDatos.objects.filter(codigo=data['codigo_verif']).exists() else False
-    codigo_es_mio = True if data['codigo_verif'] in codigos_detalles_vehiculo else False
-
-    if validacion:
-        if not codigo_es_mio:
-            respuesta['results'] = 'success'
-            respuesta['existe'] = validacion
-        else:
-            respuesta['results'] = 'success'
-            respuesta['existe'] = False
-    else:
-        respuesta['results'] = 'success'
-        respuesta['existe'] = validacion
-    return HttpResponse(json.dumps(respuesta), content_type = "application/json")
 
 class DetallesVehiculoSolicitud(View):
     """

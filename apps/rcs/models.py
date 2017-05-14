@@ -171,7 +171,6 @@ class TrajoVehiculo(models.Model):
 class Vehiculo(models.Model):
     placa = models.CharField(max_length=255, unique=True)
     fk_titular_vehiculo = models.ForeignKey(TitularVehiculo)
-    fk_trajo_vehiculo = models.ForeignKey(TrajoVehiculo, blank=True, null=True)
     cap_puestos = models.IntegerField(null=True)
     cilindros = models.CharField(max_length=255, null=True)
     peso = models.DecimalField(max_digits=21, decimal_places=2, null=True)
@@ -207,6 +206,7 @@ class MotivoSolicitud(models.Model):
 class SolicitudInspeccion(models.Model):
     fk_vehiculo = models.OneToOneField(Vehiculo)
     fk_titular_vehiculo = models.ForeignKey(TitularVehiculo)
+    fk_trajo_vehiculo = models.ForeignKey(TrajoVehiculo, blank=True, null=True)
     fk_inspector = models.ForeignKey(Usuario,null=True)
     siendo_verificada = models.IntegerField(blank=True,null=True) #numero id del inspector verificando la solicitud
     fecha_creacion = models.DateTimeField(['%d/%m/%Y'], blank=True, null=True, auto_now=True)

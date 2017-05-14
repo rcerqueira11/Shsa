@@ -68,5 +68,20 @@ urlpatterns = [
         views.verificar_codigo_detalle,
         name="verficiar_codigo_detalle_existe"
     ),
+    url(
+        r'^verificar_cedula_titular_existe/',
+        views.verificar_titular_cedula,
+        name="verificar_cedula_titular_existe"
+    ),
+    url(
+        r'^verificar_placa_carro_existe/',
+        views.verificar_placa_carro,
+        name="verificar_placa_carro_existe"
+    ),
+    url(
+        r'^verificar_cedula_trajo_existe/',
+        views.verificar_trajo_cedula,
+        name="verificar_cedula_trajo_existe"
+    ),
     
 ]
