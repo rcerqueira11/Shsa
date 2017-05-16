@@ -207,3 +207,18 @@ function fill_modal_verificacion_eliminar(titulo,subtitulo,mensaje){
   $("#modal-verificacion-eliminar-subtitulo").html(subtitulo)
   $("#modal-verificacion-eliminar-msj").html(mensaje)
 };
+
+
+// $(":radio").on('click', function(){
+//   console.log("this:",this);
+//   console.log("$(this).prop('checked'):",$(this).prop('checked'));
+  
+//   // if ($(this).prop('checked')){
+//   //   $(this).prop('checked', false);
+//   // }else{
+//   //   $(this).prop('checked', true);
+
+//   // }
+  
+
+// })

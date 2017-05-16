@@ -67,6 +67,7 @@ urlpatterns = [
         views.FiltroBusqueda.as_view(),
         name="filtro_busqueda_solicitudes"
     ),
+
     
     url(
         r'^verficiar_codigo_detalle_existe/',
@@ -99,4 +100,9 @@ urlpatterns = [
         name="cancelar_ticket"
     ),
     
+    url(
+        r'^pdf_prueba',
+        views.PdfVista.as_view(),
+        name="pdf_prueba"
+    ),
 ]

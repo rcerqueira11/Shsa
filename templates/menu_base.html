@@ -19,17 +19,17 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
      
       <ul class="nav navbar-nav navbar-right">
-        {% if request|es_inspector  %}
+        {# {% if request|es_inspector  %} #}
             
           <li><a href="{% url "bandeja_solicitudes" %}">Bandeja Solicitudes</a></li>
         
-        {% endif %}
-        {% if request|es_taquilla %}
+        {# {% endif %} #}
+        {# {% if request|es_taquilla %} #}
             
           <li><a href="{% url "bandeja_tickets" %}">Tickets Creados</a></li>
           <li><a href="{% url "crear_solicitud" %}">Crear Solicitud</a></li>
         
-        {% endif %}
+        {# {% endif %} #}
        
         {% if request|evaluando %}
           <li class="dropdown">

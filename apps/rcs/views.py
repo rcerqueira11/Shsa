@@ -1477,3 +1477,67 @@ def cancela_ticket(request):
 
     respuesta={'results': 'success',}
     return HttpResponse(json.dumps(respuesta), content_type="application/json")
+
+
+class PdfVista(View):
+    """
+    Vista para ver los pdf
+    """
+
+    # def dispatch(self, request, *args, **kwargs):
+    #     if request.user.username == '' or request.user.is_authenticated() == False:
+    #         return redirect(reverse_lazy('registro_logout'))
+    #     else:
+    #         return super(PdfVista, self).dispatch(request, *args, **kwargs)
+    def get_context(self, request,data):
+
+        id_sol = secure_value_decode(data['sol_id']) if 'sol_id' in data else request.session['sol_id']
+        solicitud = SolicitudInspeccion.objects.get(id=id_sol)
+        vehiculo = solicitud.fk_vehiculo
+        condiciones_generales_vehiculo = vehiculo.condiciones_generales_vehiculo.all().exclude(fk_estado_vehiculo_id=None)
+        mecanica_vehiculo = vehiculo.mecanica_vehiculo.all().exclude(fk_estado_vehiculo_id=None)
+        accesorios_vehiculo = vehiculo.accesorios_vehiculo.all().exclude(observacion=None)
+        detalles_datos = vehiculo.detalles_datos.all()
+        documentos_presentados = vehiculo.documentos_presentados.all()
+        # trajo_vehiculo = vehiculo.fk_trajo_vehiculo
+        trajo_vehiculo = solicitud.fk_trajo_vehiculo
+        titular_vehiculo = solicitud.fk_titular_vehiculo
+
+        context = {
+            'nombre': request.user.nombre,
+            'username': request.user.username,        
+            'condiciones': condiciones_generales_vehiculo,
+            'accesorios': accesorios_vehiculo,
+            'detalles': detalles_datos,
+            'documentos': documentos_presentados,
+            'mecanicas': mecanica_vehiculo,
+            'vehiculo': vehiculo,
+            'trajo_alguien_mas': False if trajo_vehiculo is None else True,
+            'trajo_vehiculo': trajo_vehiculo,
+            'titular_vehiculo': titular_vehiculo,
+            'solicitud':solicitud,
+            'estado_solicitud':solicitud.fk_estado_solicitud.codigo,
+            }
+
+        return context
+    
+    def get(self, request, *args, **kwargs):
+        
+        context = self.get_context(request,request)
+        if settings.SECURE_SSL_REDIRECT == True:
+                media_url = 'https://'
+        else:
+            media_url = 'http://'
+        respuesta={}
+        media_url = media_url+request.META['HTTP_HOST']
+
+        context['http_host']= media_url
+        response = PDFTemplateResponse(request=request,
+                                   template='rcs/solo_visualizar_planilla_registro_carro_seguro.html',
+                                   filename="planilla_registro_carro.pdf",
+                                   context= context,
+                                   show_content_in_browser=True,
+                                   cmd_options={'margin-top': 10,'page-size': 'A4','quiet': True},
+                            
+                                   )
+        return response
