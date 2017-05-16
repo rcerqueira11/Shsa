@@ -93,5 +93,10 @@ urlpatterns = [
         views.EditarTicket.as_view(),
         name="editar_ticket"
     ),
+    url(
+        r'^cancelar_ticket/',
+        views.cancela_ticket,
+        name="cancelar_ticket"
+    ),
     
 ]

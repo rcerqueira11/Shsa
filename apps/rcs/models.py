@@ -174,7 +174,7 @@ class Vehiculo(models.Model):
     fk_titular_vehiculo = models.ForeignKey(TitularVehiculo)
     cap_puestos = models.IntegerField(null=True)
     cilindros = models.CharField(max_length=255, null=True)
-    peso = models.DecimalField(max_digits=21, decimal_places=2, null=True)
+    peso =  models.CharField(max_length=255, null=True)
     color = models.CharField(max_length=255, null=True)
     kilometraje = models.CharField(max_length=255, null=True)
     serial_carroceria = models.CharField(max_length=255, null=True)
@@ -205,7 +205,7 @@ class MotivoSolicitud(models.Model):
 
 
 class SolicitudInspeccion(models.Model):
-    fk_vehiculo = models.OneToOneField(Vehiculo)
+    fk_vehiculo = models.ForeignKey(Vehiculo)
     fk_titular_vehiculo = models.ForeignKey(TitularVehiculo)
     fk_trajo_vehiculo = models.ForeignKey(TrajoVehiculo, blank=True, null=True)
     fk_inspector = models.ForeignKey(Usuario,null=True)
@@ -271,6 +271,14 @@ class SolicitudInspeccion(models.Model):
                     condiciones.append(Q(fk_vehiculo__fk_titular_vechiculo__cedula__icontains=cedula))
 
                 condiciones.append(Q(fk_estado_solicitud__codigo="PEND_INSP"))
+                condiciones.append(Q(fk_vehiculo__peso=None))
+                condiciones.append(Q(fk_vehiculo__color=None))
+
+        # condiciones= vehiculo.condiciones_generales_vehiculo.all().exists()
+        # mecanica= vehiculo.mecanica_vehiculo.all().exists()
+        # accesorios= vehiculo.accesorios_vehiculo.all().exists()
+        # detalles= vehiculo.detalles_datos.all().exists()
+        # documentos= vehiculo.documentos_presentados.all().exists()
 
                 # if 'configurable' in param:
                 #     condiciones.append(Q(fk_seccion__configurable=True))
@@ -368,11 +376,13 @@ class SolicitudInspeccion(models.Model):
                 d['options'] = []
 
                 d['options'].append({
-                    'tooltip': 'Gestionar Solicitud',
-                    'icon': 'fa fa-pencil-square-o white-icon',
-                            'class': 'btn btn-info editar_boton',
-                            'href': '/rcs/editar_ticket/?'+urllib.urlencode({"sol_id":d['id']}),
-                            'status': 'disabled' if en_rev else '',
+                    'tooltip': 'Cancelar Solicitud',
+                    'icon': 'fa fa-minus-circle white-icon',
+                    'class': 'btn btn-danger eliminar_boton',
+                    'target-modal': 'modal-verificacion-eliminar',
+                    'status': '',
+                    'data-ref': '/rcs/cancelar_ticket/?'+urllib.urlencode({"sol_id":d['id']}),
+                            # 'href': '/rcs/cancelar_ticket/?'+urllib.urlencode({"sol_id":d['id']}),
                 })
              
                 

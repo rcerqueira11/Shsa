@@ -39,6 +39,18 @@ def format_float(X):
 
     return float(X)
 
+def mas_una_solicitud_titular(x):
+    cant = len(SolicitudInspeccion.objects.filter(fk_titular_vehiculo=x))
+    return True if cant > 1 else False
+
+def mas_una_solicitud_trajo(x):
+    cant = len(SolicitudInspeccion.objects.filter(fk_trajo_vehiculo=x))
+    return True if cant > 1 else False
+
+def mas_una_solicitud_placa(x):
+    cant = len(SolicitudInspeccion.objects.filter(fk_vehiculo__placa=x))
+    return True if cant > 1 else False
+
 
 def verificar_codigo_detalle(request):
     data = request.GET
@@ -1356,7 +1368,10 @@ class EditarTicket(View):
 
         #"form_data" representa un diccionario cuyas claves son los nombres de los inputs html del formulario y sus valores 
         #son tuplas donde almacenan los valores y los errores de los inputs respectivamente
-
+        import pudb; pu.db
+        # mas_una_solictud_titular
+        # mas_una_solictud_trajo
+        # mas_una_solictud_placa
         context['form_data'] = form_data
 
         return render(request, 'rcs/taquilla/editar_ticket.html',context)
@@ -1446,3 +1461,66 @@ class EditarTicket(View):
             response['errors'] = errors
 
             return HttpResponse(json.dumps(response), content_type = "application/json")
+
+
+def cancela_ticket(request):
+    """
+    CancelarTicket 
+    -------------------------------------------
+    Cancela los tickets que esten abiertos
+    """
+
+    data = request.GET
+    id_sol = secure_value_decode(str(data['sol_id']))
+    solicitud = SolicitudInspeccion.objects.get(id=id_sol)
+
+    with transaction.atomic():
+        if not mas_una_solicitud_placa(solicitud.fk_vehiculo.placa):
+            solicitud.fk_vehiculo.delete() 
+        if not mas_una_solicitud_titular(solicitud.fk_titular_vehiculo):
+            solicitud.fk_titular_vehiculo.delete()
+
+        if solicitud.fk_trajo_vehiculo!=None:
+            if not mas_una_solicitud_trajo(solicitud.fk_trajo_vehiculo):
+                solicitud.fk_trajo_vehiculo.delete()
+        solicitud.delete()
+
+
+    respuesta={'results': 'success',}
+    return HttpResponse(json.dumps(respuesta), content_type="application/json")
+   
+
+           
+    #     titular_vehiculo=TitularVehiculo.objects.get(cedula=cedula_titular)
+    # else:
+    #     titular_vehiculo.nombre = nombre_titular
+    #     titular_vehiculo.apellido = apellido_titular
+    #     titular_vehiculo.cedula = cedula_titular
+    #     titular_vehiculo.telefono = telefono_titular
+    #     titular_vehiculo.save()
+
+    # if data['nombre_trajo_vehiculo'].strip() != "":
+        
+    #     if TrajoVehiculo.objects.filter(cedula=cedula_trajo_vehiculo).exists():
+    #         trajo_vehiculo= TrajoVehiculo.objects.get(cedula=cedula_trajo_vehiculo)
+    #     else:
+    #         trajo_vehiculo.nombre =  nombre_trajo_vehiculo
+    #         trajo_vehiculo.apellido = apellido_trajo_vehiculo
+    #         trajo_vehiculo.cedula = cedula_trajo_vehiculo
+    #         trajo_vehiculo.parentesco = parentesco_trajo_vehiculo
+    #         trajo_vehiculo.save()
+    #     # vehiculo.fk_trajo_vehiculo = trajo_vehiculo
+    #     solicitud.fk_trajo_vehiculo = trajo_vehiculo
+        
+
+
+    # vehiculo.placa = placa
+    # vehiculo.fk_titular_vehiculo = titular_vehiculo
+    # vehiculo.save()
+
+    # solicitud.fk_vehiculo = vehiculo
+    # solicitud.fk_titular_vehiculo = titular_vehiculo
+    # solicitud.fk_motivo_solicitud = MotivoSolicitud.objects.get(codigo = motivo_visita) 
+    # solicitud.save()
+
+            

@@ -195,3 +195,15 @@ $(".no-space").on('keypress',function(e){
   }
   
 })
+
+function fill_modal_exito_eliminar(titulo,subtitulo,mensaje){
+  $("#modal-exito-eliminar-titulo").html(titulo)
+  $("#modal-exito-eliminar-subtitulo").html(subtitulo)
+  $("#modal-exito-eliminar-msj").html(mensaje)
+};
+
+function fill_modal_verificacion_eliminar(titulo,subtitulo,mensaje){
+  $("#modal-verificacion-eliminar-titulo").html(titulo)
+  $("#modal-verificacion-eliminar-subtitulo").html(subtitulo)
+  $("#modal-verificacion-eliminar-msj").html(mensaje)
+};
