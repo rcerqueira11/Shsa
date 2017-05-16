@@ -1446,18 +1446,7 @@ class EditarTicket(View):
             respuesta={'results': 'success',}
             return HttpResponse(json.dumps(respuesta), content_type="application/json")
         else:
-            # context = self.get_context(request)
-
-            # form_data = {}
-            # for key, value in data.iteritems():
-            #     if key in errors.keys():
-            #         form_data[key] = (value, errors[key])
-            #     else:
-            #         form_data[key] = (value, '')
-
-            # context['form_data'] = form_data
-
-            # return render(request, 'rcs/taquilla/crear_ticket.html', context)
+           
             response['errors'] = errors
 
             return HttpResponse(json.dumps(response), content_type = "application/json")
@@ -1488,39 +1477,3 @@ def cancela_ticket(request):
 
     respuesta={'results': 'success',}
     return HttpResponse(json.dumps(respuesta), content_type="application/json")
-   
-
-           
-    #     titular_vehiculo=TitularVehiculo.objects.get(cedula=cedula_titular)
-    # else:
-    #     titular_vehiculo.nombre = nombre_titular
-    #     titular_vehiculo.apellido = apellido_titular
-    #     titular_vehiculo.cedula = cedula_titular
-    #     titular_vehiculo.telefono = telefono_titular
-    #     titular_vehiculo.save()
-
-    # if data['nombre_trajo_vehiculo'].strip() != "":
-        
-    #     if TrajoVehiculo.objects.filter(cedula=cedula_trajo_vehiculo).exists():
-    #         trajo_vehiculo= TrajoVehiculo.objects.get(cedula=cedula_trajo_vehiculo)
-    #     else:
-    #         trajo_vehiculo.nombre =  nombre_trajo_vehiculo
-    #         trajo_vehiculo.apellido = apellido_trajo_vehiculo
-    #         trajo_vehiculo.cedula = cedula_trajo_vehiculo
-    #         trajo_vehiculo.parentesco = parentesco_trajo_vehiculo
-    #         trajo_vehiculo.save()
-    #     # vehiculo.fk_trajo_vehiculo = trajo_vehiculo
-    #     solicitud.fk_trajo_vehiculo = trajo_vehiculo
-        
-
-
-    # vehiculo.placa = placa
-    # vehiculo.fk_titular_vehiculo = titular_vehiculo
-    # vehiculo.save()
-
-    # solicitud.fk_vehiculo = vehiculo
-    # solicitud.fk_titular_vehiculo = titular_vehiculo
-    # solicitud.fk_motivo_solicitud = MotivoSolicitud.objects.get(codigo = motivo_visita) 
-    # solicitud.save()
-
-            

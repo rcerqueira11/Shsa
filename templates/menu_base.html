@@ -36,14 +36,30 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Vehículo {{vehiculo.placa}}<span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="{% url "gestion_ticket" %}">Datos B&aacute;sicos</a></li>
-              <li><a href="{% url "condiciones_vehiculo" %}">Condiciones</a></li>
-              <li><a href="{% url "mecanica_vehiculo" %}">Mecanica</a></li>
-              <li><a href="{% url "accesorios_vehiculo" %}">Accesorios</a></li>
-              <li><a href="{% url "detalles_vehiculo" %}">Detalles</a></li>
-              <li><a href="{% url "documentos_vehiculo" %}">Documentos</a></li>
+              {% if not request|condiciones %}
+              <li><a href="{% url "condiciones_vehiculo" %}" {% if request|condiciones %} class="disabled"{% endif %}>Condiciones</a></li>
+              {% endif %}
+
+              {% if not request|mecanica %}
+              <li><a href="{% url "mecanica_vehiculo" %}" {% if request|mecanica %} class="disabled"{% endif %}>Mecanica</a></li>
+              {% endif %}
+
+              {% if not request|accesorios %} 
+              <li><a href="{% url "accesorios_vehiculo" %}" {% if request|accesorios %} class="disabled"{% endif %}>Accesorios</a></li>
+              {% endif %}
+
+              {% if not request|detalles %}
+              <li><a href="{% url "detalles_vehiculo" %}" {% if request|detalles %} class="disabled"{% endif %}>Detalles</a></li>
+              {% endif %}
+
+              {% if not request|documentos %} 
+              <li><a href="{% url "documentos_vehiculo" %}" {% if request|documentos %} class="disabled"{% endif %}>Documentos</a></li>
+              {% endif %}
+
+              {% if not request|completa %}
               <li role="separator" class="divider"></li>
-              <li><a href="{% url "planilla_seguro_carro" %}" {% if request|completa %}
-              class="disabled"{% endif %} >Vista previa documento</a></li>
+              <li><a href="{% url "planilla_seguro_carro" %}" {% if request|completa %} class="disabled"{% endif %} >Vista previa documento</a></li>
+              {% endif %}
             </ul>
           </li>
         {% endif %}

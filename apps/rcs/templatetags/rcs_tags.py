@@ -93,5 +93,98 @@ def es_taquilla(x):
     return True if x.user.fk_tipo_usuario.codigo=="TAQ" else False
 
 
+@register.filter(name='condiciones')
+def condiciones(x):
+    if 'sol_id' in x.session:
+        sol_id = x.session['sol_id']
+        solicitud = SolicitudInspeccion.objects.get(id= sol_id)
+        vehiculo = solicitud.fk_vehiculo
+        peso= vehiculo.peso != None
+        color= vehiculo.color != None
+        condiciones= vehiculo.condiciones_generales_vehiculo.all().exists()
+
+        if (peso and color) or condiciones:
+            return False
+
+    return True
+
+@register.filter(name='mecanica')
+def mecanica(x):
+    if 'sol_id' in x.session:
+        sol_id = x.session['sol_id']
+        solicitud = SolicitudInspeccion.objects.get(id= sol_id)
+        vehiculo = solicitud.fk_vehiculo
+        peso= vehiculo.peso != None
+        color= vehiculo.color != None
+        condiciones= vehiculo.condiciones_generales_vehiculo.all().exists()
+        
+        mecanica= vehiculo.mecanica_vehiculo.all().exists()
+        
+
+        if (peso and color and condiciones) or mecanica:
+            return False
+
+    return True
+
+@register.filter(name='accesorios')
+def accesorios(x):
+    if 'sol_id' in x.session:
+        sol_id = x.session['sol_id']
+        solicitud = SolicitudInspeccion.objects.get(id= sol_id)
+        vehiculo = solicitud.fk_vehiculo
+        peso= vehiculo.peso != None
+        color= vehiculo.color != None
+        condiciones= vehiculo.condiciones_generales_vehiculo.all().exists()
+
+        mecanica= vehiculo.mecanica_vehiculo.all().exists()
+        accesorios= vehiculo.accesorios_vehiculo.all().exists()
+
+        if (peso and color and condiciones and mecanica) or accesorios:
+            return False
+
+    return True
+
+
+@register.filter(name='detalles')
+def detalles(x):
+    if 'sol_id' in x.session:
+        sol_id = x.session['sol_id']
+        solicitud = SolicitudInspeccion.objects.get(id= sol_id)
+        vehiculo = solicitud.fk_vehiculo
+        peso= vehiculo.peso != None
+        color= vehiculo.color != None
+        condiciones= vehiculo.condiciones_generales_vehiculo.all().exists()
+        
+        mecanica= vehiculo.mecanica_vehiculo.all().exists()
+        accesorios= vehiculo.accesorios_vehiculo.all().exists()
+        detalles= vehiculo.detalles_datos.all().exists()
+        
+
+        if (peso and color and condiciones and mecanica and accesorios) or detalles:
+            return False
+
+    return True
+
+
+@register.filter(name='documentos')
+def documentos(x):
+    if 'sol_id' in x.session:
+        sol_id = x.session['sol_id']
+        solicitud = SolicitudInspeccion.objects.get(id= sol_id)
+        vehiculo = solicitud.fk_vehiculo
+        peso= vehiculo.peso != None
+        color= vehiculo.color != None
+        condiciones= vehiculo.condiciones_generales_vehiculo.all().exists()
+        
+        mecanica= vehiculo.mecanica_vehiculo.all().exists()
+        accesorios= vehiculo.accesorios_vehiculo.all().exists()
+        detalles= vehiculo.detalles_datos.all().exists()
+        documentos= vehiculo.documentos_presentados.all().exists()
+        
+
+        if (peso and color and condiciones and mecanica and accesorios and detalles) or documentos:
+            return False
+
+    return True
 
 
