@@ -30,7 +30,11 @@
           <li><a href="{% url "crear_solicitud" %}">Crear Solicitud</a></li>
         
         {# {% endif %} #}
-       
+        {# {% if request|es_admin %} #}
+          <li><a href="{% url "bandeja_titulares" %}">Bandeja Titurales</a></li>
+          <li><a href="{% url "bandeja_trajo_vehiculo" %}">Bandeja Trajo Vehiculo</a></li>
+          <li><a href="{% url "bandeja_usuarios" %}">Bandeja Usuarios</a></li>
+        {# {% endif %} #}
         {% if request|evaluando %}
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Vehículo {{vehiculo.placa}}<span class="caret"></span></a>

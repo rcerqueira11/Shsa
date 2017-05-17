@@ -28,6 +28,11 @@ urlpatterns = [
     	r'^rcs/',
     	include('apps.rcs.urls')
     ),
+    
+    url(
+        r'^administracion/',
+        include('apps.administracion.urls')
+    ),
     #Url de las imagenes
     # url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
     #         'document_root': settings.MEDIA_ROOT,

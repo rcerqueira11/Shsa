@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'apps.rcs',
     'apps.registro',
     'apps.wkhtmltopdf',
+    'apps.administracion',
 )
 
 MIDDLEWARE_CLASSES = (

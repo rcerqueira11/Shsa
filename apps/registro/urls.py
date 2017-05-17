@@ -46,6 +46,9 @@ urlpatterns = [
         views.EditarCuenta.as_view(),
         name="editar_cuenta"
     ),
-
-    
+    url(
+        r'^filtro_busqueda_solicitudes_registro',
+        views.FiltroBusqueda.as_view(),
+        name="filtro_busqueda_solicitudes_registro"
+    ),
 ]

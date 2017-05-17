@@ -156,6 +156,121 @@ class TitularVehiculo(models.Model):
     def __unicode__(self):
         return self.nombre + " " + self.apellido
 
+    def filtro(instance,param, filter_code):
+        """Método que filtra y retorna las declaraciones realizadas por los usuarios del sistema"""
+        # se definen las variables asociadas a las condiciones de la busqueda y
+        # el arreglo de columns para establecer los campos a consultar
+        select = {}
+        exclude = []
+        condiciones = []
+        columns = []
+        remove_add_header = ([], [])
+
+        # si se reciben parametros de busqueda, se procede a llenar el arreglo
+        # de condiciones
+
+        if param:
+            # se obtienen los parametros de busqueda relacionados al modelo actual dependiendo del 'filter_code'
+            # NOTA: dependiendo del 'filter_code' se extraen los parametros de
+            # la consulta
+            if filter_code == 'TITULARES_VEHICULOS':
+                placa= param.get('placa', None)
+                cedula= param.get('cedula', None)
+                nombre= param.get('nombre', None)
+                apellido= param.get('apellido', None)
+                telefono= param.get('telefono', None)
+
+                if placa:
+                    condiciones.append(Q(fk_vehiculo__placa__icontains=placa))
+
+                if cedula:
+                    condiciones.append(Q(cedula__icontains=cedula))
+
+                if nombre:
+                    condiciones.append(Q(nombre__icontains=nombre))
+
+                if apellido:
+                    condiciones.append(Q(apellido__icontains=apellido))
+
+                if telefono:
+                    condiciones.append(Q(telefono__icontains=telefono))
+        
+        # NOTA: dependiendo del 'filter_code' se define las condiciones
+        # adicionales de la consulta
+        if filter_code == "TITULARES_VEHICULOS":
+            # select['fecha_declaracion'] = "to_char(fecha_declaracion, 'DD/MM/YYYY')"
+            columns = ['id','cedula','nombre','apellido','telefono',]
+
+            # se guardan las columnas a eliminar/agregar en el arreglo
+            # 'columns'
+            remove_add_header = (
+                ['id',], #columnas eliminar
+                ['options'],#columnas agregar
+            )
+
+        # si tenemos condiciones, se procede a realizar el la consulta con las
+        # mismas
+        if len(condiciones) > 0:
+            datos_filtrados = TitularVehiculo.objects.extra(select=select)\
+                               .values(*columns)\
+                               .filter(reduce(operator.and_, condiciones))
+            # en caso contrario se obtienen todos los registros pertenecientes
+            # al modelo
+        else:
+            datos_filtrados = TitularVehiculo.objects.extra(select=select).values(*columns).all()
+
+        # se procede a eliminar/agregar las columnas que van o no van a ser
+        # visualizadas en el template
+        # -- diferencia --
+        columns = [x for x in columns if x not in remove_add_header[0]]
+        columns = columns + remove_add_header[1]  # -- unión --
+
+        cont = 1
+        for d in datos_filtrados:
+            # se codifica el ID por medida de seguridad
+            #
+            # siendo_usado = False
+            # rec = seccion.objects.filter(fk_forma=d['id'])
+            # if rec:
+            #     siendo_usado = True
+            tiene_sol_cerrada = SolicitudInspeccion.objects.filter(fk_titular_vehiculo=d['id'],fk_estado_solicitud__codigo="CERRADA").exists()
+            d['id'] = secure_value_encode(str(d['id']))
+            # d['fk_seccion__fk_estado_seccion__nombre'] = d['fk_seccion__fk_estado_seccion__nombre'].upper() 
+            # d['fk_seccion__fk_estado_seccion__nombre']
+            # NOTA: dependiendo del 'filter_code' se definen los botones de la
+            # tabla en el template
+            if filter_code == "TITULARES_VEHICULOS":
+
+                d['options'] = []
+
+                d['options'].append({
+                    'tooltip': 'Gestionar Solicitud',
+                    'icon': 'fa fa-pencil-square-o white-icon',
+                    'class': 'btn btn-info editar_boton',
+                    'href': '/administracion/editar_titular/?'+urllib.urlencode({"titular_id":d['id']}),
+                    'status': 'disabled' if tiene_sol_cerrada else '',
+                    })
+                
+                # d['options'].append({
+                #     'tooltip': 'Cancelar Solicitud',
+                #     'icon': 'fa fa-minus-circle white-icon',
+                #     'class': 'btn btn-danger eliminar_boton',
+                #     'target-modal': 'modal-verificacion-eliminar',
+                #     'status': '',
+                #     'data-ref': '/rcs/cancelar_ticket/?'+urllib.urlencode({"sol_id":d['id']}),
+                #             # 'href': '/rcs/cancelar_ticket/?'+urllib.urlencode({"sol_id":d['id']}),
+                # })
+             
+                
+                
+
+            d['id'] = str(cont)
+            cont = cont + 1
+
+        # al final se devuelve una tupa, donde 'columns' representa el orden en
+        # que se renderiza el resultado almacenado en el segundo valor
+
+        return (columns, datos_filtrados)
 
 class TrajoVehiculo(models.Model):
     nombre = models.CharField(max_length=255)
@@ -166,7 +281,120 @@ class TrajoVehiculo(models.Model):
     def __unicode__(self):
         return self.nombre + " " + self.apellido
 
+    def filtro(instance,param, filter_code):
+        """Método que filtra y retorna las declaraciones realizadas por los usuarios del sistema"""
+        # se definen las variables asociadas a las condiciones de la busqueda y
+        # el arreglo de columns para establecer los campos a consultar
+        select = {}
+        exclude = []
+        condiciones = []
+        columns = []
+        remove_add_header = ([], [])
 
+        # si se reciben parametros de busqueda, se procede a llenar el arreglo
+        # de condiciones
+
+        if param:
+            # se obtienen los parametros de busqueda relacionados al modelo actual dependiendo del 'filter_code'
+            # NOTA: dependiendo del 'filter_code' se extraen los parametros de
+            # la consulta
+            if filter_code == 'TRAJO_VEHICULO':
+                # placa= param.get('placa', None)
+                cedula= param.get('cedula', None)
+                nombre= param.get('nombre', None)
+                apellido= param.get('apellido', None)
+                parentesco= param.get('parentesco', None)
+
+                # if placa:
+                    # condiciones.append(Q(fk_vehiculo__placa__icontains=placa))
+# 
+                if cedula:
+                    condiciones.append(Q(cedula__icontains=cedula))
+
+                if nombre:
+                    condiciones.append(Q(nombre__icontains=nombre))
+                if apellido:
+                    condiciones.append(Q(apellido__icontains=apellido))
+                if parentesco:
+                    condiciones.append(Q(parentesco__icontains=parentesco))
+
+        
+        # NOTA: dependiendo del 'filter_code' se define las condiciones
+        # adicionales de la consulta
+        if filter_code == "TRAJO_VEHICULO":
+            # select['fecha_declaracion'] = "to_char(fecha_declaracion, 'DD/MM/YYYY')"
+            columns = ['id','cedula','nombre','apellido','parentesco',]
+
+            # se guardan las columnas a eliminar/agregar en el arreglo
+            # 'columns'
+            remove_add_header = (
+                ['id',], #columnas eliminar
+                ['options'],#columnas agregar
+            )
+
+        # si tenemos condiciones, se procede a realizar el la consulta con las
+        # mismas
+        if len(condiciones) > 0:
+            datos_filtrados = TrajoVehiculo.objects.extra(select=select)\
+                               .values(*columns)\
+                               .filter(reduce(operator.and_, condiciones))
+            # en caso contrario se obtienen todos los registros pertenecientes
+            # al modelo
+        else:
+            datos_filtrados = TrajoVehiculo.objects.extra(select=select).values(*columns).all()
+
+        # se procede a eliminar/agregar las columnas que van o no van a ser
+        # visualizadas en el template
+        # -- diferencia --
+        columns = [x for x in columns if x not in remove_add_header[0]]
+        columns = columns + remove_add_header[1]  # -- unión --
+
+        cont = 1
+        for d in datos_filtrados:
+            # se codifica el ID por medida de seguridad
+            #
+            # siendo_usado = False
+            # rec = seccion.objects.filter(fk_forma=d['id'])
+            # if rec:
+            #     siendo_usado = True
+            tiene_sol_cerrada = SolicitudInspeccion.objects.filter(fk_trajo_vehiculo=d['id'],fk_estado_solicitud__codigo="CERRADA").exists()
+            d['id'] = secure_value_encode(str(d['id']))
+            # d['fk_seccion__fk_estado_seccion__nombre'] = d['fk_seccion__fk_estado_seccion__nombre'].upper() 
+            # d['fk_seccion__fk_estado_seccion__nombre']
+            # NOTA: dependiendo del 'filter_code' se definen los botones de la
+            # tabla en el template
+            if filter_code == "TRAJO_VEHICULO":
+
+                d['options'] = []
+
+                d['options'].append({
+                    'tooltip': 'Gestionar Solicitud',
+                    'icon': 'fa fa-pencil-square-o white-icon',
+                    'class': 'btn btn-info editar_boton',
+                    'href': '/administracion/editar_trajo_vehiculo/?'+urllib.urlencode({"trajo_vehiculo_id":d['id']}),
+                    'status': 'disabled' if tiene_sol_cerrada else '',
+                    })
+                
+                # d['options'].append({
+                #     'tooltip': 'Cancelar Solicitud',
+                #     'icon': 'fa fa-minus-circle white-icon',
+                #     'class': 'btn btn-danger eliminar_boton',
+                #     'target-modal': 'modal-verificacion-eliminar',
+                #     'status': '',
+                #     'data-ref': '/rcs/cancelar_ticket/?'+urllib.urlencode({"sol_id":d['id']}),
+                #             # 'href': '/rcs/cancelar_ticket/?'+urllib.urlencode({"sol_id":d['id']}),
+                # })
+             
+                
+                
+
+            d['id'] = str(cont)
+            cont = cont + 1
+
+        # al final se devuelve una tupa, donde 'columns' representa el orden en
+        # que se renderiza el resultado almacenado en el segundo valor
+
+        return (columns, datos_filtrados)
 
 
 class Vehiculo(models.Model):
