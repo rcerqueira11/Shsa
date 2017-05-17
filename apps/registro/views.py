@@ -180,7 +180,7 @@ class RegistroUsuario(View):
 
     def get(self, request, *args, **kwargs):
 
-        tipo_usuario = TipoUsuario.objects.all().order_by('nombre')
+        tipo_usuario = TipoUsuario.objects.all().exclud(codigo="ADM").order_by('nombre')
 
         context = {
             'tipos_de_usuario': tipo_usuario,

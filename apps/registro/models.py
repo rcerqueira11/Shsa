@@ -10,7 +10,7 @@ from django.apps import apps
 from utils.HelpMethods.aes_cipher import encode as secure_value_encode
 from utils.HelpMethods.aes_cipher import decode as secure_value_decode
 from settings.settings import MEDIA_URL
-from apps.rcs.models import *
+
 # Create your models here.
 
 class TipoUsuario(models.Model):
@@ -54,6 +54,7 @@ class Usuario(AbstractBaseUser):
 		#Método que filtra y retorna las declaraciones realizadas por los usuarios del sistema
 		# se definen las variables asociadas a las condiciones de la busqueda y
 		# el arreglo de columns para establecer los campos a consultar
+		from apps.rcs.models import *
 		select = {}
 		exclude = []
 		condiciones = []
@@ -97,7 +98,7 @@ class Usuario(AbstractBaseUser):
 			# se guardan las columnas a eliminar/agregar en el arreglo
 			# 'columns'
 			remove_add_header = (
-				['id',], #columnas eliminar
+				['id','last_login','intentos_login','password'], #columnas eliminar
 				['options'],#columnas agregar
 			)
 
@@ -126,6 +127,7 @@ class Usuario(AbstractBaseUser):
 			# rec = seccion.objects.filter(fk_forma=d['id'])
 			# if rec:
 			#     siendo_usado = True
+			# import pudb; pu.db
 			tiene_sol_cerrada = SolicitudInspeccion.objects.filter(fk_inspector=d['id'],fk_estado_solicitud__codigo="CERRADA").exists()
 			d['id'] = secure_value_encode(str(d['id']))
 			# d['fk_seccion__fk_estado_seccion__nombre'] = d['fk_seccion__fk_estado_seccion__nombre'].upper() 

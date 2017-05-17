@@ -90,7 +90,7 @@ class BandejaUsuarios(View):
         context = {}
         context['nombre'] = request.user.nombre
         context['username'] = request.user.username
-        context['tipos_de_usuario'] = TipoUsuario.objects.all()
+        context['tipos_de_usuario'] = TipoUsuario.objects.all().exclude(codigo="ADM").order_by('id')
 
 
     	return render(request, 'administracion/bandeja_usuarios.html',context)
