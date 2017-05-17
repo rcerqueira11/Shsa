@@ -127,7 +127,12 @@ class Usuario(AbstractBaseUser):
 			# rec = seccion.objects.filter(fk_forma=d['id'])
 			# if rec:
 			#     siendo_usado = True
-			# import pudb; pu.db
+			if d['last_login'] != None:
+				d['last_login'] = d['last_login'].date().isoformat()
+				fecha = d['last_login'].split('-')
+				d['last_login'] = fecha[2] + '/' + fecha[1] + '/' + fecha[0]
+			else:
+				d['last_login'] = ""
 			tiene_sol_cerrada = SolicitudInspeccion.objects.filter(fk_inspector=d['id'],fk_estado_solicitud__codigo="CERRADA").exists()
 			d['id'] = secure_value_encode(str(d['id']))
 			# d['fk_seccion__fk_estado_seccion__nombre'] = d['fk_seccion__fk_estado_seccion__nombre'].upper() 
