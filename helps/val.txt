@@ -1,0 +1,12 @@
+if placa esta en otra solicitud no puedes editarla
+if cedula esta en otra solicitud no puedes editarla
+if fk_trajo esta en otra solicitud no se puede editar
+
+
+
+eliminar si el vehiculo no ha sido revisado nada todavia
+
+eliminar solicitud
+if vehiculo no esta en otra solicitud aparte de esta eliminar vehiculo (placa)
+if titular no esta en otro vehiculo (mas de dos porque no he eliminado la sol todavia) eliminar titular
+if trajo no esta en otro solicitud (mas de dos porque no he eliminado la sol todavia)

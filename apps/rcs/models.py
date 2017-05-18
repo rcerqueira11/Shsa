@@ -204,7 +204,7 @@ class TitularVehiculo(models.Model):
             # se guardan las columnas a eliminar/agregar en el arreglo
             # 'columns'
             remove_add_header = (
-                ['id',], #columnas eliminar
+                ['id','apellido'], #columnas eliminar
                 ['options'],#columnas agregar
             )
 
@@ -239,6 +239,7 @@ class TitularVehiculo(models.Model):
             # d['fk_seccion__fk_estado_seccion__nombre']
             # NOTA: dependiendo del 'filter_code' se definen los botones de la
             # tabla en el template
+            d['nombre'] = d['nombre'] +" "+ d['apellido']
             if filter_code == "TITULARES_VEHICULOS":
 
                 d['options'] = []
@@ -328,7 +329,7 @@ class TrajoVehiculo(models.Model):
             # se guardan las columnas a eliminar/agregar en el arreglo
             # 'columns'
             remove_add_header = (
-                ['id',], #columnas eliminar
+                ['id','apellido'], #columnas eliminar
                 ['options'],#columnas agregar
             )
 
@@ -363,6 +364,7 @@ class TrajoVehiculo(models.Model):
             # d['fk_seccion__fk_estado_seccion__nombre']
             # NOTA: dependiendo del 'filter_code' se definen los botones de la
             # tabla en el template
+            d['nombre'] = d['nombre'] +" "+ d['apellido']
             if filter_code == "TRAJO_VEHICULO":
 
                 d['options'] = []

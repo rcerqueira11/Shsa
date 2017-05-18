@@ -111,10 +111,42 @@ class EditarTitular(View):
             return redirect(reverse_lazy('login'))
     	return super(EditarTitular, self).dispatch(request, *args, **kwargs)
 
-    def get(self, request, *args, **kwargs):
+    def get_context(self, data):
+        id_titular = secure_value_decode(data.GET['titular_id'])
+        titular_vehiculo = TitularVehiculo.objects.get(id= id_titular) 
         context = {
-
+            'nombre': data.user.nombre if 'user' in data else "",
+            'username': data.user.username if 'user' in data else "",
+            'titular_vehiculo': titular_vehiculo,
         }
+        
+        
+        return context
+
+    def validate(self, data):
+        errors = {}
+
+        #obtener errores y guardarlos en el diccionario "errors" en donde los "key" son los nombre de los inputs html
+        #Ejemplo: validar que los campos no estén vacios
+        for key in data:
+            value = data.get(key, None)
+            if not value.strip():
+                errors[key] = 'El campo no debe estar vacío'
+        return errors
+
+    def get(self, request, *args, **kwargs):
+        data = {}
+        context = self.get_context(request)
+        
+        #obtener datos que requieran ser pre-cargados en el formulario (ejemplo: editar registro) y guardarlos en form_data
+        form_data = {}
+
+        #"form_data" representa un diccionario cuyas claves son los nombres de los inputs html del formulario y sus valores 
+        #son tuplas donde almacenan los valores y los errores de los inputs respectivamente
+        context['nombre'] = request.user.nombre
+        context['username'] = request.user.username
+        context['form_data'] = form_data
+
 
     	return render(request, 'administracion/editar_titular.html',context)
 

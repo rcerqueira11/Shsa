@@ -6,17 +6,17 @@ from django.views.generic import TemplateView
 urlpatterns = [
 
     url(
-        r'^editar_titular/(?P<sol_id>.+)?$',
+        r'^editar_titular/(?P<titular_id>.+)?$',
         views.EditarTitular.as_view(),
         name="editar_titular"
     ),
     url(
-        r'^editar_trajo_vehiculo/(?P<sol_id>.+)?$',
+        r'^editar_trajo_vehiculo/(?P<trajo_vehi_id>.+)?$',
         views.EditarTrajoVehiculo.as_view(),
         name="editar_trajo_vehiculo"
     ),
     url(
-        r'^editar_usaurio/(?P<sol_id>.+)?$',
+        r'^editar_usaurio/(?P<usuario_id>.+)?$',
         views.EditarUsuario.as_view(),
         name="editar_usuario"
     ),
