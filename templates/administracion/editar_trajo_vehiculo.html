@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load static %}
+{% load rcs_tags %}
+{% block extra_css %}
+    <link href="/static/css/rcs/flujo_style.css"  rel="stylesheet" type="text/css"/>
+{% endblock extra_css %}
+
+{% block main_content %}
+{% include "menu_base.html" %}
+
+
+<div class="container">
+<div class="well" style="background-color:white; ">
+	<center>
+	    <section>
+	        <div class="title">Datos Persona Trajo el Veh&iacute;culo</div>
+		</section>
+	</center>
+
+ 	<form method="post" id="form_editar_trajo_vehiculo"  action="{% url 'editar_trajo_vehiculo' %} " >
+		{% csrf_token %}
+	 	
+		<div class="row" >
+				<div class="col-xs-3">
+				<label>Cedula de identidad:</label>
+					{% input_content form_data 'cedula_trajo_vehiculo' as input %}
+					{% if input.value|check_input or input.error|check_input %}
+					<input type="text" id="id_cedula_trajo_vehiculo" class="form-control ci-mask" name="cedula_trajo_vehiculo" value="{{ input.value }}">
+					{% else %}
+					<input type="text" id="id_cedula_trajo_vehiculo" class="form-control ci-mask" name="cedula_trajo_vehiculo" value="{{ trajo_vehiculo.cedula }}">
+					{% endif %}
+					<div class="error" id="cedula_trajo_vehiculo_error">{{input.error}}</div>
+				</div>
+				<div class="col-xs-3">
+				<label>Nombre</label>
+					{% input_content form_data 'nombre_trajo_vehiculo' as input %}
+					{% if input.value|check_input or input.error|check_input %}
+					<input type="text"  id="id_nombre_trajo" class="form-control" name="nombre_trajo_vehiculo" value="{{ input.value }}">
+					{% else %}
+					<input type="text"  id="id_nombre_trajo" class="form-control" name="nombre_trajo_vehiculo" value="{{ trajo_vehiculo.nombre }}">
+					{% endif %}
+					<div class="error" id="nombre_trajo_vehiculo_error">{{input.error}}</div>
+				</div>
+				<div class="col-xs-3">
+				<label>Apellido</label>
+					{% input_content form_data 'apellido_trajo_vehiculo' as input %}
+					{% if input.value|check_input or input.error|check_input %}
+					<input type="text" id="id_apellido_trajo" class="form-control" name="apellido_trajo_vehiculo" value="{{ input.value }}">
+					{% else %}
+					<input type="text" id="id_apellido_trajo" class="form-control" name="apellido_trajo_vehiculo" value="{{ trajo_vehiculo.apellido }}">
+					{% endif %}
+					<div class="error" id="apellido_trajo_vehiculo_error">{{input.error}}</div>
+				</div>
+				<div class="col-xs-3">
+				<label>Parentesco con el Titular</label>
+					{% input_content form_data 'telefono_trajo_vehiculo' as input %}
+					{% if input.value|check_input or input.error|check_input %}
+					<input type="text" id="id_parentesco_trajo" class="form-control" name="parentesco_trajo_vehiculo" value="{{ input.value }}">
+					{% else %}
+					<input type="text" id="id_parentesco_trajo" class="form-control" name="parentesco_trajo_vehiculo" value="{{ trajo_vehiculo.parentesco }}">
+					{% endif %}
+					<div class="error" id="telefono_trajo_vehiculo_error">{{input.error}}</div>
+				</div>
+			</div>
+
+
+
+
+		<br>
+
+
+        <div class="row">
+			<div class="col-xs-4 col-xs-offset-2"><a class="btn btn-danger btn-block" href="{% url "bandeja_trajo_vehiculo" %}" >Atrás</a></div>
+
+			<div class="col-xs-4"><button  class="btn btn-primary btn-block"  type="button" data-toggle="modal" data-target="#modal-verificacion"">Guardar cambios</button></div>
+
+        </div>
+	</div>
+    </form>
+</div>
+</div>
+
+
+
+
+
+
+
+{% endblock main_content %}
+
+{% block extra_script %}
+ 	<script src="{{STATIC_URL}}js/administracion/editar_ticket.js"></script>
+
+{% endblock extra_script %}

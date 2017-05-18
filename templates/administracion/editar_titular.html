@@ -17,7 +17,7 @@
 		</section>
 	</center>
 
- 	<form method="post" id="form_editar_ticket"  action="{% url 'editar_titular' %} " >
+ 	<form method="post" id="form_editar_titular"  action="{% url 'editar_titular' %} " >
 		{% csrf_token %}
 	 	
 		<div class="row">
@@ -90,6 +90,6 @@
 {% endblock main_content %}
 
 {% block extra_script %}
- 	<script src="{{STATIC_URL}}js/administracion/editar_ticket.js"></script>
+ 	<script src="{{STATIC_URL}}js/administracion/editar_titular.js"></script>
 
 {% endblock extra_script %}

@@ -41,14 +41,14 @@ class BandejaTitulares(View):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_anonymous():
             return redirect(reverse_lazy('login'))
-    	return super(BandejaTitulares, self).dispatch(request, *args, **kwargs)
+        return super(BandejaTitulares, self).dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
         context = {
 
         }
 
-    	return render(request, 'administracion/bandeja_titulares.html',context)
+        return render(request, 'administracion/bandeja_titulares.html',context)
 
 
 class BandejaTrajoVehiculo(View):
@@ -61,14 +61,14 @@ class BandejaTrajoVehiculo(View):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_anonymous():
             return redirect(reverse_lazy('login'))
-    	return super(BandejaTrajoVehiculo, self).dispatch(request, *args, **kwargs)
+        return super(BandejaTrajoVehiculo, self).dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
         context = {}
         context['nombre'] = request.user.nombre
         context['username'] = request.user.username
 
-    	return render(request, 'administracion/bandeja_trajo_vehiculo.html',context)
+        return render(request, 'administracion/bandeja_trajo_vehiculo.html',context)
 
 
 class BandejaUsuarios(View):
@@ -81,7 +81,7 @@ class BandejaUsuarios(View):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_anonymous():
             return redirect(reverse_lazy('login'))
-    	return super(BandejaUsuarios, self).dispatch(request, *args, **kwargs)
+        return super(BandejaUsuarios, self).dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
         context = {
@@ -93,7 +93,7 @@ class BandejaUsuarios(View):
         context['tipos_de_usuario'] = TipoUsuario.objects.all().exclude(codigo="ADM").order_by('id')
 
 
-    	return render(request, 'administracion/bandeja_usuarios.html',context)
+        return render(request, 'administracion/bandeja_usuarios.html',context)
 
 
 
@@ -109,7 +109,7 @@ class EditarTitular(View):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_anonymous():
             return redirect(reverse_lazy('login'))
-    	return super(EditarTitular, self).dispatch(request, *args, **kwargs)
+        return super(EditarTitular, self).dispatch(request, *args, **kwargs)
 
     def get_context(self, data):
         id_titular = secure_value_decode(data.GET['titular_id'])
@@ -130,6 +130,10 @@ class EditarTitular(View):
         #Ejemplo: validar que los campos no estén vacios
         for key in data:
             value = data.get(key, None)
+            if key=="cedula":
+                cant_usu = TitularVehiculo.objects.filter(cedula = data)
+                if len(cant_usu) > 1:
+                    errors[key] = 'Esta cedula la posee otro usuario.'
             if not value.strip():
                 errors[key] = 'El campo no debe estar vacío'
         return errors
@@ -148,25 +152,23 @@ class EditarTitular(View):
         context['form_data'] = form_data
 
 
-    	return render(request, 'administracion/editar_titular.html',context)
+        return render(request, 'administracion/editar_titular.html',context)
 
     def post(self,request,*args,**kwargs):
+        
         data = request.POST
         response = {}
 
+        errors = self.validate(data)
 
-        #if data: 
-		#	response['Result'] = 'success'
-        #    response['msj'] = ''
-        #    return HttpResponse(json.dumps(response), content_type = "application/json")
-        #else:
-        #    response['Result'] = 'error'
-        #    response['msj'] = ''
-        #    return HttpResponse(json.dumps(response), content_type = "application/json")
+        if not errors:
+            respuesta={'results': 'success',}
+            return HttpResponse(json.dumps(response), content_type = "application/json")
+        else:
+                   
+            response['errors'] = errors
+            return HttpResponse(json.dumps(response), content_type = "application/json")
 
-
-        return redirect(reverse_lazy('dashboard'))
-        
 class EditarTrajoVehiculo(View):
     """
     EditarTrajoVehiculo
@@ -178,66 +180,133 @@ class EditarTrajoVehiculo(View):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_anonymous():
             return redirect(reverse_lazy('login'))
-    	return super(EditarTrajoVehiculo, self).dispatch(request, *args, **kwargs)
+        return super(EditarTrajoVehiculo, self).dispatch(request, *args, **kwargs)
+
+    def get_context(self, data):
+        id_trajo_vehiculo = secure_value_decode(data.GET['trajo_vehiculo_id'])
+        trajo_vehiculo = TrajoVehiculo.objects.get(id= id_trajo_vehiculo) 
+        context = {
+            'nombre': data.user.nombre if 'user' in data else "",
+            'username': data.user.username if 'user' in data else "",
+            'trajo_vehiculo': trajo_vehiculo,
+        }
+        
+        
+        return context
+
+    def validate(self, data):
+        errors = {}
+
+        #obtener errores y guardarlos en el diccionario "errors" en donde los "key" son los nombre de los inputs html
+        #Ejemplo: validar que los campos no estén vacios
+        for key in data:
+            value = data.get(key, None)
+            if key=="cedula":
+                cant_usu = TrajoVehiculo.objects.filter(cedula = data)
+                if len(cant_usu) > 1:
+                    errors[key] = 'Esta cedula la posee otro usuario.'
+                    
+            if not value.strip():
+                errors[key] = 'El campo no debe estar vacío'
+        return errors
 
     def get(self, request, *args, **kwargs):
-        context = {
+        data = {}
+        context = self.get_context(request)
+        
+        #obtener datos que requieran ser pre-cargados en el formulario (ejemplo: editar registro) y guardarlos en form_data
+        form_data = {}
 
-        }
+        #"form_data" representa un diccionario cuyas claves son los nombres de los inputs html del formulario y sus valores 
+        #son tuplas donde almacenan los valores y los errores de los inputs respectivamente
+        context['nombre'] = request.user.nombre
+        context['username'] = request.user.username
+        context['form_data'] = form_data
 
-    	return render(request, 'administracion/editar_trajo_vehiculo.html',context)
+
+        return render(request, 'administracion/editar_trajo_vehiculo.html',context)
 
     def post(self,request,*args,**kwargs):
         data = request.POST
         response = {}
 
+        errors = self.validate(data)
 
-        #if data: 
-		#	response['Result'] = 'success'
-        #    response['msj'] = ''
-        #    return HttpResponse(json.dumps(response), content_type = "application/json")
-        #else:
-        #    response['Result'] = 'error'
-        #    response['msj'] = ''
-        #    return HttpResponse(json.dumps(response), content_type = "application/json")
-
-
-        return redirect(reverse_lazy('dashboard'))
+        if not errors:
+            respuesta={'results': 'success',}
+            return HttpResponse(json.dumps(response), content_type = "application/json")
+        else:
+                   
+            response['errors'] = errors
+            return HttpResponse(json.dumps(response), content_type = "application/json")
 
 
 class EditarUsuario(View):
     """
     EditarUsuario
     -------------------------------------------
-    Edita quien trajoel vehiculo vehiculo
-    si no tienen ninguna solicitud ya en cerrada
+    Edita los usuarios registrados que utilizan el sistema
+    inspectores y taquilleros
     """
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_anonymous():
             return redirect(reverse_lazy('login'))
-    	return super(EditarUsuario, self).dispatch(request, *args, **kwargs)
+        return super(EditarUsuario, self).dispatch(request, *args, **kwargs)
+
+    def get_context(self, data):
+        id_usuario = secure_value_decode(data.GET['usuario_id'])
+        usuario = Usuario.objects.get(id= id_usuario) 
+        context = {
+            'nombre': data.user.nombre if 'user' in data else "",
+            'username': data.user.username if 'user' in data else "",
+            'usuario': usuario,
+        }
+        
+        
+        return context
+
+    def validate(self, data):
+        errors = {}
+
+        #obtener errores y guardarlos en el diccionario "errors" en donde los "key" son los nombre de los inputs html
+        #Ejemplo: validar que los campos no estén vacios
+        for key in data:
+            value = data.get(key, None)
+            if key=="cedula":
+                cant_usu = Usuario.objects.filter(cedula = data)
+                if len(cant_usu) > 1:
+                    errors[key] = 'Esta cedula la posee otro usuario.'
+                    
+            if not value.strip():
+                errors[key] = 'El campo no debe estar vacío'
+        return errors
 
     def get(self, request, *args, **kwargs):
-        context = {
+        data = {}
+        context = self.get_context(request)
+        
+        #obtener datos que requieran ser pre-cargados en el formulario (ejemplo: editar registro) y guardarlos en form_data
+        form_data = {}
 
-        }
+        #"form_data" representa un diccionario cuyas claves son los nombres de los inputs html del formulario y sus valores 
+        #son tuplas donde almacenan los valores y los errores de los inputs respectivamente
+        context['nombre'] = request.user.nombre
+        context['username'] = request.user.username
+        context['form_data'] = form_data
 
-    	return render(request, 'administracion/editar_trajo_vehiculo.html',context)
+        return render(request, 'administracion/editar_usuarios.html',context)
 
     def post(self,request,*args,**kwargs):
         data = request.POST
         response = {}
 
+        errors = self.validate(data)
 
-        #if data: 
-		#	response['Result'] = 'success'
-        #    response['msj'] = ''
-        #    return HttpResponse(json.dumps(response), content_type = "application/json")
-        #else:
-        #    response['Result'] = 'error'
-        #    response['msj'] = ''
-        #    return HttpResponse(json.dumps(response), content_type = "application/json")
-
-
-        return redirect(reverse_lazy('dashboard'))
+        if not errors:
+            respuesta={'results': 'success',}
+            return HttpResponse(json.dumps(response), content_type = "application/json")
+        else:
+                   
+            response['errors'] = errors
+            return HttpResponse(json.dumps(response), content_type = "application/json")
