@@ -68,37 +68,42 @@ class Usuario(AbstractBaseUser):
 			# se obtienen los parametros de busqueda relacionados al modelo actual dependiendo del 'filter_code'
 			# NOTA: dependiendo del 'filter_code' se extraen los parametros de
 			# la consulta
-			if filter_code == 'BAN_USUARIO':
+			if filter_code == 'BAN_USUARIOS':
 				# placa= param.get('placa', None)
 				cedula= param.get('cedula', None)
+				correo= param.get('correo', None)
+				tipo_usuario= param.get('tipo_usuario', None)
 				nombre= param.get('nombre', None)
 				apellido= param.get('apellido', None)
-				parentesco= param.get('parentesco', None)
 
 				# if placa:
 					# condiciones.append(Q(fk_vehiculo__placa__icontains=placa))
 # 
 				if cedula:
 					condiciones.append(Q(cedula__icontains=cedula))
-
 				if nombre:
 					condiciones.append(Q(nombre__icontains=nombre))
 				if apellido:
 					condiciones.append(Q(apellido__icontains=apellido))
-				if parentesco:
-					condiciones.append(Q(parentesco__icontains=parentesco))
+				if correo:
+					condiciones.append(Q(correo_electronico__icontains=parentesco))
+				if tipo_usuario:
+					condiciones.append(Q(fk_tipo_usuario__codigo=tipo_usuario))
+
+
+				condiciones.append(~Q(fk_tipo_usuario__codigo="ADM"))
 
 		
 		# NOTA: dependiendo del 'filter_code' se define las condiciones
 		# adicionales de la consulta
-		if filter_code == "BAN_USUARIO":
+		if filter_code == "BAN_USUARIOS":
 			# select['fecha_declaracion'] = "to_char(fecha_declaracion, 'DD/MM/YYYY')"
 			columns = ['id','username', 'cedula','nombre', 'apellido','fk_tipo_usuario','correo_electronico',]
 
 			# se guardan las columnas a eliminar/agregar en el arreglo
 			# 'columns'
 			remove_add_header = (
-				['id','last_login','intentos_login','password'], #columnas eliminar
+				['id','last_login','intentos_login','password', 'is_active'], #columnas eliminar
 				['options'],#columnas agregar
 			)
 
@@ -127,19 +132,20 @@ class Usuario(AbstractBaseUser):
 			# rec = seccion.objects.filter(fk_forma=d['id'])
 			# if rec:
 			#     siendo_usado = True
-			if d['last_login'] != None:
-				d['last_login'] = d['last_login'].date().isoformat()
-				fecha = d['last_login'].split('-')
-				d['last_login'] = fecha[2] + '/' + fecha[1] + '/' + fecha[0]
-			else:
-				d['last_login'] = ""
+			# if d['last_login'] != None:
+			# 	d['last_login'] = d['last_login'].date().isoformat()
+			# 	fecha = d['last_login'].split('-')
+			# 	d['last_login'] = fecha[2] + '/' + fecha[1] + '/' + fecha[0]
+			# else:
+			# 	d['last_login'] = ""
+			d['fk_tipo_usuario'] = TipoUsuario.objects.get(id=d['fk_tipo_usuario']).nombre
 			tiene_sol_cerrada = SolicitudInspeccion.objects.filter(fk_inspector=d['id'],fk_estado_solicitud__codigo="CERRADA").exists()
 			d['id'] = secure_value_encode(str(d['id']))
 			# d['fk_seccion__fk_estado_seccion__nombre'] = d['fk_seccion__fk_estado_seccion__nombre'].upper() 
 			# d['fk_seccion__fk_estado_seccion__nombre']
 			# NOTA: dependiendo del 'filter_code' se definen los botones de la
 			# tabla en el template
-			if filter_code == "BAN_USUARIO":
+			if filter_code == "BAN_USUARIOS":
 
 				d['options'] = []
 
