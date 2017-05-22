@@ -19,6 +19,7 @@
 
  	<form method="post" id="form_editar_titular"  action="{% url 'editar_titular' %} " >
 		{% csrf_token %}
+	 	<input type="hidden" name="id_titular_vehiculo" value="{{titular_vehiculo.id}}">
 	 	
 		<div class="row">
 			<div class="col-xs-3">

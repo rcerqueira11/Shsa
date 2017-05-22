@@ -134,7 +134,7 @@ class EditarTitular(View):
                 cant_usu = TitularVehiculo.objects.filter(cedula = value)
                 if len(cant_usu) > 0:
                     if str(cant_usu[0].id) != str(data['id_titular_vehiculo']):
-                        errors[key] = 'Esta cedula la posee otro usuario.'
+                        errors[key] = 'Esta cedula la posee otra persona.'
             if not value.strip():
                 errors[key] = 'El campo no debe estar vacío'
         return errors
@@ -162,11 +162,31 @@ class EditarTitular(View):
         errors = self.validate(data)
 
         if not errors:
-            response={'results': 'success',}
-            return HttpResponse(json.dumps(response), content_type = "application/json")
+            cedula_nuevo = data['cedula_titular']
+            nombre_nuevo = data['nombre_titular']
+            apellido_nuevo = data['apellido_titular']
+            telefono_nuevo = data['telefono_titular']
+            titular_vehiculo_editar =  TitularVehiculo.objects.get(id= data['id_titular_vehiculo'])
+
+            if (titular_vehiculo_editar.nombre ==  nombre_nuevo) and (titular_vehiculo_editar.apellido ==  apellido_nuevo) and (titular_vehiculo_editar.cedula ==  cedula_nuevo) and (titular_vehiculo_editar.telefono ==  telefono_nuevo):
+                response={'results':'data_igual', }
+                response['mensaje'] = "No hay nada nuevo que guardar."
+                return HttpResponse(json.dumps(response), content_type = "application/json")
+            else:
+
+                titular_vehiculo_editar.nombre =  nombre_nuevo
+                titular_vehiculo_editar.apellido =  apellido_nuevo
+                titular_vehiculo_editar.cedula =  cedula_nuevo
+                titular_vehiculo_editar.telefono =  telefono_nuevo
+                with transaction.atomic():
+                    titular_vehiculo_editar.save()
+
+                response={'results':'success', }
+                return HttpResponse(json.dumps(response), content_type = "application/json")
         else:
                    
             response['errors'] = errors
+            response['mensaje'] = "Errores en la edición favor verificar los datos suministrados."
             return HttpResponse(json.dumps(response), content_type = "application/json")
 
 class EditarTrajoVehiculo(View):
@@ -206,7 +226,7 @@ class EditarTrajoVehiculo(View):
                 cant_usu = TrajoVehiculo.objects.filter(cedula = value)
                 if len(cant_usu) > 0:
                     if str(cant_usu[0].id) != str(data['id_trajo_vehiculo']):
-                        errors[key] = 'Esta cedula la posee otro usuario.'
+                        errors[key] = 'Esta cedula la posee otra persona.'
                     
             if not value.strip():
                 errors[key] = 'El campo no debe estar vacío'

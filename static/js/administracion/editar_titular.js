@@ -39,7 +39,14 @@ function submit_form_editar_titular(){
 				if (results['results'] == "success"){
 					$("#modal-exito").modal('show');               
 				}
-				if(results['results']=="error"){
+				if (results['results'] == "data_igual"){
+					show_modal_errores_personalizado(results['mensaje'])           
+				}
+				if(results['errors']){
+					$('.error').empty();
+			        $.each(results['errors'], function(key, value){
+			          $('#' + key + '_error').html(value);
+			        });
 					show_modal_errores_personalizado(results['mensaje'])
 				}
 	        },
