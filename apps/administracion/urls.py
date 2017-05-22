@@ -16,7 +16,7 @@ urlpatterns = [
         name="editar_trajo_vehiculo"
     ),
     url(
-        r'^editar_usaurio/(?P<usuario_id>.+)?$',
+        r'^editar_usuario/(?P<usuario_id>.+)?$',
         views.EditarUsuario.as_view(),
         name="editar_usuario"
     ),
