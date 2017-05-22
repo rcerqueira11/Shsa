@@ -1,6 +1,6 @@
 // Email y contraseña comparacion bilateral
 $("#id_correo_electronico").attr('onblur',"confirmEmail2();");
-
+$('.tlf-cel-mask').inputmask('(9999)-999-99-99');
 //Contraseña minimo 8 digitos y que contenga una Mayuscula
 $("#id_password").attr('pattern','(?=.*[A-Z]).{8,}')
 $("#id_password").attr('onkeypress','return beta(event)');
@@ -222,3 +222,38 @@ function fill_modal_verificacion_eliminar(titulo,subtitulo,mensaje){
   
 
 // })
+
+$('.tlf-cel-mask').each(function(i, obj) {
+    $(obj).on('input', function (event) {
+            var str_sample = '(0424)-123-12-12';
+            var replace_1 = '(____)-___-__-__';
+            var re = /^\(0(?:412|414|416|424|426|415)\)\-[0-9]{3}\-[0-9]{2}\-[0-9]{2}/;
+            var new_str = '';
+            var primer_str = '';
+            var cant_nums = this.value.replace(/[^0-9]/g,"").length;
+            if(cant_nums == 1){
+                primer_str = this.value.substring(0,2);
+                if(primer_str != '(0')
+                    this.value = replace_1;
+            }
+            if(cant_nums == 2){
+                primer_str = this.value.substring(0,3);
+                new_str = primer_str + str_sample.substring(3,16);
+                if( !new_str.match(re) )
+                    this.value = this.value.substring(0,2) + replace_1.substring(2,16);
+            }
+            if(cant_nums == 3){
+                primer_str = this.value.substring(0,4);
+                new_str = primer_str + str_sample.substring(4,16);
+                if( !new_str.match(re) )
+                    this.value = this.value.substring(0,3) + replace_1.substring(3,16);
+            }
+            if(cant_nums == 4){
+                primer_str = this.value.substring(0,5);
+                new_str = primer_str + str_sample.substring(5,16);
+                if( !new_str.match(re) )
+                    this.value = this.value.substring(0,4) + replace_1.substring(4,16);
+            }
+        });
+
+});

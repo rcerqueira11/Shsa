@@ -179,7 +179,6 @@ class TitularVehiculo(models.Model):
                 nombre= param.get('nombre', None)
                 apellido= param.get('apellido', None)
                 telefono= param.get('telefono', None)
-
                 if placa:
                     condiciones.append(Q(fk_vehiculo__placa__icontains=placa))
 
