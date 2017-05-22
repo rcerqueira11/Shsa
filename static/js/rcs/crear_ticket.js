@@ -68,6 +68,12 @@ function submit_form_crear_solicitud(){
 				if(results['results']=="error"){
 					show_modal_errores_personalizado(results['mensaje'])
 				}
+				if(results['errors']){
+					$('.error').empty();
+			        $.each(results['errors'], function(key, value){
+			          $('#' + key + '_error').html(value);
+			        });
+			    }
 	        },
 	        error: function(results){
 	        	$('#modal-error').modal('show')

@@ -369,6 +369,9 @@ class SolicitarInspeccion(View):
             value = data.get(key, None)
             if 'radio_titular' in data:
                 if data['radio_titular'] == 'false':
+                    if 'cedula' in key:
+                            if str(data['cedula_titular']) == str(data['cedula_trajo_vehiculo']):
+                                errors[key] = 'La cedula del titular y quien trajo el vehículo no pueden ser iguales.'
                     if not value.strip():
                         errors[key] = 'El campo no debe estar vacío'
                 else:

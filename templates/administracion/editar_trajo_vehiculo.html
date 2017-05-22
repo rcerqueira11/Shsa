@@ -19,7 +19,7 @@
 
  	<form method="post" id="form_editar_trajo_vehiculo"  action="{% url 'editar_trajo_vehiculo' %} " >
 		{% csrf_token %}
-	 	
+	 	<input type="hidden" name="id_trajo_vehiculo" value="{{trajo_vehiculo.id}}">
 		<div class="row" >
 				<div class="col-xs-3">
 				<label>Cedula de identidad:</label>
@@ -59,7 +59,7 @@
 					{% else %}
 					<input type="text" id="id_parentesco_trajo" class="form-control" name="parentesco_trajo_vehiculo" value="{{ trajo_vehiculo.parentesco }}">
 					{% endif %}
-					<div class="error" id="telefono_trajo_vehiculo_error">{{input.error}}</div>
+					<div class="error" id="parentesco_trajo_vehiculo_error">{{input.error}}</div>
 				</div>
 			</div>
 
@@ -89,6 +89,6 @@
 {% endblock main_content %}
 
 {% block extra_script %}
- 	<script src="{{STATIC_URL}}js/administracion/editar_ticket.js"></script>
+ 	<script src="{{STATIC_URL}}js/administracion/editar_trajo_vehiculo.js"></script>
 
 {% endblock extra_script %}

@@ -130,10 +130,11 @@ class EditarTitular(View):
         #Ejemplo: validar que los campos no estén vacios
         for key in data:
             value = data.get(key, None)
-            if key=="cedula":
-                cant_usu = TitularVehiculo.objects.filter(cedula = data)
-                if len(cant_usu) > 1:
-                    errors[key] = 'Esta cedula la posee otro usuario.'
+            if "cedula" in key:
+                cant_usu = TitularVehiculo.objects.filter(cedula = value)
+                if len(cant_usu) > 0:
+                    if str(cant_usu[0].id) != str(data['id_titular_vehiculo']):
+                        errors[key] = 'Esta cedula la posee otro usuario.'
             if not value.strip():
                 errors[key] = 'El campo no debe estar vacío'
         return errors
@@ -155,14 +156,13 @@ class EditarTitular(View):
         return render(request, 'administracion/editar_titular.html',context)
 
     def post(self,request,*args,**kwargs):
-        
         data = request.POST
         response = {}
 
         errors = self.validate(data)
 
         if not errors:
-            respuesta={'results': 'success',}
+            response={'results': 'success',}
             return HttpResponse(json.dumps(response), content_type = "application/json")
         else:
                    
@@ -199,12 +199,14 @@ class EditarTrajoVehiculo(View):
 
         #obtener errores y guardarlos en el diccionario "errors" en donde los "key" son los nombre de los inputs html
         #Ejemplo: validar que los campos no estén vacios
+
         for key in data:
             value = data.get(key, None)
-            if key=="cedula":
-                cant_usu = TrajoVehiculo.objects.filter(cedula = data)
-                if len(cant_usu) > 1:
-                    errors[key] = 'Esta cedula la posee otro usuario.'
+            if "cedula" in key:
+                cant_usu = TrajoVehiculo.objects.filter(cedula = value)
+                if len(cant_usu) > 0:
+                    if str(cant_usu[0].id) != str(data['id_trajo_vehiculo']):
+                        errors[key] = 'Esta cedula la posee otro usuario.'
                     
             if not value.strip():
                 errors[key] = 'El campo no debe estar vacío'
@@ -227,17 +229,37 @@ class EditarTrajoVehiculo(View):
         return render(request, 'administracion/editar_trajo_vehiculo.html',context)
 
     def post(self,request,*args,**kwargs):
+
         data = request.POST
         response = {}
 
         errors = self.validate(data)
-
         if not errors:
-            respuesta={'results': 'success',}
-            return HttpResponse(json.dumps(response), content_type = "application/json")
+            nombre_nuevo = data['nombre_trajo_vehiculo']
+            apellido_nuevo = data['apellido_trajo_vehiculo']
+            cedula_nuevo = data['cedula_trajo_vehiculo']
+            parentesco_nuevo = data['parentesco_trajo_vehiculo']
+            trajo_vehiculo_editar =  TrajoVehiculo.objects.get(id= data['id_trajo_vehiculo'])
+
+            if (trajo_vehiculo_editar.nombre ==  nombre_nuevo) and (trajo_vehiculo_editar.apellido ==  apellido_nuevo) and (trajo_vehiculo_editar.cedula ==  cedula_nuevo) and (trajo_vehiculo_editar.parentesco ==  parentesco_nuevo):
+                response={'results':'data_igual', }
+                response['mensaje'] = "No hay nada nuevo que guardar."
+                return HttpResponse(json.dumps(response), content_type = "application/json")
+            else:
+
+                trajo_vehiculo_editar.nombre =  nombre_nuevo
+                trajo_vehiculo_editar.apellido =  apellido_nuevo
+                trajo_vehiculo_editar.cedula =  cedula_nuevo
+                trajo_vehiculo_editar.parentesco =  parentesco_nuevo
+                with transaction.atomic():
+                    trajo_vehiculo_editar.save()
+
+                response={'results':'success', }
+                return HttpResponse(json.dumps(response), content_type = "application/json")
         else:
                    
             response['errors'] = errors
+            response['mensaje'] = "Errores en la edición favor verificar los datos suministrados."
             return HttpResponse(json.dumps(response), content_type = "application/json")
 
 
