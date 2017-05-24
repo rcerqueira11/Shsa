@@ -59,44 +59,6 @@ function submit_form_editar_titular(){
 
 
 
-// function verificar_titular_cedula(cedula){
-// $("#id_cedula_titular").on('focusout',function(){
-// 	cedula = this.value
-
-// 	if (cedula != ""){
-// 	// $(document).ajaxStop($.unblockUI);
-// 	// $.blockUI({ message: '<i class="fa fa-spinner fa-pulse" style="color:#444444"></i> Espere por favor...' });
-// 	$.ajax({
-// 	        type: 'GET' ,
-// 	        url: '/rcs/verificar_cedula_titular_existe' , // <= Providing the URL
-// 	        data: jQuery.param({'cedula':cedula}) , // <= Providing the form data, serialized above
-// 	        success: function(results){
-// 		        if(results.results == 'success'){
-// 					$("#id_nombre_titular").val(results.nombre)
-// 					$("#id_apellido_titular").val(results.apellido)
-// 					$("#id_telefono_titular").val(results.telefono)
-// 					$("#id_nombre_titular").prop('readonly', true);
-// 					$("#id_apellido_titular").prop('readonly', true);
-// 					$("#id_telefono_titular").prop('readonly', true);
-	                
-// 	            }else{
-// 	            	$("#id_nombre_titular").prop('readonly', false);
-// 					$("#id_apellido_titular").prop('readonly', false);
-// 					$("#id_telefono_titular").prop('readonly', false);	
-// 					$("#id_nombre_titular").val('')
-// 					$("#id_apellido_titular").val('')
-// 					$("#id_telefono_titular").val('')
-// 	            }
-	            
-// 	        },
-// 	        error: function(results){
-// 	            console.log("ERROR");
-// 	        }
-// 	    });
-// 	}
-
-// })
-
 
 
 

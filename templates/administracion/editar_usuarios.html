@@ -19,9 +19,104 @@
 
  	<form method="post" id="form_editar_usuario"  action="{% url 'editar_usuario' %} " >
 		{% csrf_token %}
-	 	<input type="hidden" name="id_titular_vehiculo" value="{{titular_vehiculo.id}}">
+	 	<input type="hidden" name="id_usuario" value="{{usuario.id}}">
 	 	
+	 	<div class="row">
+	 		<div class="col-xs-3 col-xs-offset-9">
+	 			<!-- <div class="col-xs-4"> -->
+				<label>Tipo de usuario</label>
+				<input type="text" class="form-control" id='id_tipo_usuario' readonly="true" value=" {{usuario.fk_tipo_usuario.nombre|title}}" />
+				</div>
+
+ 		</div>
 		<div class="row">
+			<div class="col-xs-6">
+				<label>Usuario</label>
+				<input type="text" placeholder="nombre de usuario" id="id_username" value = "{{usuario.username}}" class="form-control input-lg" readonly/>
+				<div class=" small_error_letter error" id="id-error-username" ></div>
+			</div>
+			<div class="col-xs-6">
+				<label>C&eacute;dula</label>	
+				<input type="text" value="{{usuario.cedula}}" placeholder="12345678" class="ci-mask form-control input-lg" id="id_cedula" readonly/>
+				<div class=" error" id="id-error-cedula"></div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-6">
+				<label>Nombre</label>
+				{% input_content form_data 'nombre' as input %}
+				{% if input.value|check_input or input.error|check_input %}
+				<input type="text" name="nombre" placeholder="nombre" id="id_nombre" class="form-control input-lg" value="{{ input.value }}" required/>
+				{% else %}
+				<input type="text" name="nombre" placeholder="nombre" id="id_nombre" class="form-control input-lg" value="{{ usuario.nombre }}" required/>
+				{% endif %}
+				<div class="error" id="nombre_error" >{{input.error}}</div>
+			</div>
+
+			<div class="col-xs-6">
+				<label>Apellido</label>	
+				{% input_content form_data 'apellido' as input %}
+				{% if input.value|check_input or input.error|check_input %}
+				<input type="text" name="apellido" placeholder="Arismendi" class="input-mask-n form-control input-lg" id="id_apellido" value="{{ input.value }}" required/>
+				{% else %}
+				<input type="text" name="apellido" placeholder="Arismendi" class="input-mask-n form-control input-lg" id="id_apellido" value="{{ usuario.apellido }}" required/>
+				{% endif %}
+				<div class="error" id="apellido_error" >{{input.error}}</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-6">
+				<label>Correo</label>
+				{% input_content form_data 'correo_electronico' as input %}
+				{% if input.value|check_input or input.error|check_input %}
+				<input type="email" name="correo_electronico" placeholder="nombre@dominio.com" id="id_correo_electronico" class="form-control input-lg" placeholder="Nombre@Dominio.com" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off value="{{ input.value }}" required/>
+				{% else %}
+				<input type="email" name="correo_electronico" placeholder="nombre@dominio.com" id="id_correo_electronico" class="form-control input-lg" placeholder="Nombre@Dominio.com" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off value="{{ usuario.correo_electronico }}" required/>
+				{% endif %}
+				<div class="error" id="correo_electronico_error" >{{input.error}}</div>
+				<!-- <div class="error" id="id-error-correo" ></div> -->
+			</div>
+			<div class="col-xs-6">
+				<label>Verificar Correo</label>
+				{% input_content form_data 'email2' as input %}
+				{% if input.value|check_input or input.error|check_input %}
+				<input type="email" name="email2" placeholder="nombre@dominio.com" id="id_correo2" class="form-control input-lg" onblur="confirmEmail()" placeholder="Nombre@Dominio.com" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off value="{{ input.value }}" required/>
+				{% else %}
+				<input type="email" name="email2" placeholder="nombre@dominio.com" id="id_correo2" class="form-control input-lg" onblur="confirmEmail()" placeholder="Nombre@Dominio.com" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off value="{{ usuario.correo_electronico }}" required/>
+				{% endif %}
+				<div class="error" id="email2_error">{{input.error}}</div>
+				<!-- <div class="error" id="id-error-confirm-email"></div> -->
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-6">
+				<label>Contraseña</label>
+				{% input_content form_data 'password' as input %}
+				{% if input.value|check_input or input.error|check_input %}
+				<input type="password" name="password" placeholder="contraseña" class="form-control input-lg" id="id_password" required/>
+				{% else %}
+				<input type="password" name="password" placeholder="contraseña" class="form-control input-lg" id="id_password" required/>
+				{% endif %}
+				<div class="error" id="password_error" >{{input.error}}</div>
+				<!-- <div class="error" id="id-error-password" ></div> -->
+			</div>
+			<div class="col-xs-6">
+				<label>Verificar contraseña</label>
+				{% input_content form_data 'password2' as input %}
+				{% if input.value|check_input or input.error|check_input %}
+				<input type="password" name="password2" placeholder="verificar contraseña" class="form-control input-lg" id="id_password_confirm" required/>
+				{% else %}	
+				<input type="password" name="password2" placeholder="verificar contraseña" class="form-control input-lg" id="id_password_confirm" required/>
+				{% endif %}	
+				<div class="error" id="password2_error" >{{input.error}}</div>
+				<!-- <div class="error" id="id-error-confirm-pass-recover" ></div> -->
+			</div>
+		</div>
+		<!-- <div class="row">
+
 			<div class="col-xs-3">
 				<label>Cedula de identidad:</label>
 				{% input_content form_data 'cedula_titular' as input %}
@@ -63,7 +158,7 @@
 				<div class="error" id="telefono_titular_error">{{input.error}}</div>
 			</div>
 			
-		</div>
+		</div> -->
 
 
 

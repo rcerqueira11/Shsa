@@ -315,11 +315,7 @@ class EditarUsuario(View):
         #Ejemplo: validar que los campos no estén vacios
         for key in data:
             value = data.get(key, None)
-            if key=="cedula":
-                cant_usu = Usuario.objects.filter(cedula = data)
-                if len(cant_usu) > 1:
-                    errors[key] = 'Esta cedula la posee otro usuario.'
-                    
+                                
             if not value.strip():
                 errors[key] = 'El campo no debe estar vacío'
         return errors
@@ -342,7 +338,6 @@ class EditarUsuario(View):
     def post(self,request,*args,**kwargs):
         data = request.POST
         response = {}
-
         errors = self.validate(data)
 
         if not errors:

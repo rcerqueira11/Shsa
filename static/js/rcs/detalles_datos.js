@@ -59,6 +59,7 @@ function agregar_detalle(id_tabla){
 
 	$("#detalles_table_body").append(tabla_body)
 	$("#contador_agregados").val(parseInt($("#contador_agregados").val()) + 1) 
+	// #falta
 
 }
 
