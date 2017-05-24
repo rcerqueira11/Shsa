@@ -24,9 +24,14 @@
 	 	<div class="row">
 	 		<div class="col-xs-3 col-xs-offset-9">
 	 			<!-- <div class="col-xs-4"> -->
-				<label>Tipo de usuario</label>
-				<input type="text" class="form-control" id='id_tipo_usuario' readonly="true" value=" {{usuario.fk_tipo_usuario.nombre|title}}" />
-				</div>
+		        <label>Tipo de usuario</label>
+		        <select  data-placeholder="Seleccionar usuario"  class="form-control chosen-select" name="tipo_usuario" id='id_tipo_usuario' >
+		        {% for e in tipos_de_usuario %}
+		              <option value="{{ e.codigo }}" {% if usuario.fk_tipo_usuario.codigo == e.codigo %} 
+		              selected="true" {% endif %} >{{ e.nombre|title }}</option>
+		        {% endfor %}
+		        </select>
+	        </div>
 
  		</div>
 		<div class="row">
@@ -41,7 +46,7 @@
 				<div class=" error" id="id-error-cedula"></div>
 			</div>
 		</div>
-
+		<br>
 		<div class="row">
 			<div class="col-xs-6">
 				<label>Nombre</label>
@@ -65,7 +70,7 @@
 				<div class="error" id="apellido_error" >{{input.error}}</div>
 			</div>
 		</div>
-
+		<br>
 		<div class="row">
 			<div class="col-xs-6">
 				<label>Correo</label>
@@ -91,7 +96,7 @@
 			</div>
 		</div>
 
-		<div class="row">
+		<!-- <div class="row">
 			<div class="col-xs-6">
 				<label>Contraseña</label>
 				{% input_content form_data 'password' as input %}
@@ -101,7 +106,6 @@
 				<input type="password" name="password" placeholder="contraseña" class="form-control input-lg" id="id_password" required/>
 				{% endif %}
 				<div class="error" id="password_error" >{{input.error}}</div>
-				<!-- <div class="error" id="id-error-password" ></div> -->
 			</div>
 			<div class="col-xs-6">
 				<label>Verificar contraseña</label>
@@ -112,9 +116,8 @@
 				<input type="password" name="password2" placeholder="verificar contraseña" class="form-control input-lg" id="id_password_confirm" required/>
 				{% endif %}	
 				<div class="error" id="password2_error" >{{input.error}}</div>
-				<!-- <div class="error" id="id-error-confirm-pass-recover" ></div> -->
 			</div>
-		</div>
+		</div> -->
 		<!-- <div class="row">
 
 			<div class="col-xs-3">

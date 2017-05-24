@@ -299,10 +299,12 @@ class EditarUsuario(View):
     def get_context(self, data):
         id_usuario = secure_value_decode(data.GET['usuario_id'])
         usuario = Usuario.objects.get(id= id_usuario) 
+        tipo_usuario = TipoUsuario.objects.all().exclude(codigo="ADM").order_by('nombre')
         context = {
             'nombre': data.user.nombre if 'user' in data else "",
             'username': data.user.username if 'user' in data else "",
             'usuario': usuario,
+            'tipos_de_usuario': tipo_usuario,
         }
         
         
@@ -315,7 +317,19 @@ class EditarUsuario(View):
         #Ejemplo: validar que los campos no estén vacios
         for key in data:
             value = data.get(key, None)
-                                
+            if 'correo' in key:
+                if Usuario.objects.filter(~Q(id=data['id_usuario']),Q(correo_electronico=data['correo_electronico'])).exists():
+                    if str(data['correo_electronico']) != str(data['email2']):
+                        errors[key] = 'Este correo no es igual al de confirmación'
+                else:
+                    errors[key] = 'Este correo ya se encuentra registrado por otro usuario.'
+            if 'email' in key:
+                if Usuario.objects.filter(~Q(id=data['id_usuario']),Q(correo_electronico=data['email2'])).exists():
+                    if str(data['correo_electronico']) != str(data['email2']):
+                        errors[key] = 'El correo de confirmación no es igual al correo principal'
+                else:
+                    errors[key] = 'Este correo ya se encuentra registrado por otro usuario.'
+
             if not value.strip():
                 errors[key] = 'El campo no debe estar vacío'
         return errors
