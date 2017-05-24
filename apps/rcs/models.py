@@ -244,7 +244,7 @@ class TitularVehiculo(models.Model):
                 d['options'] = []
 
                 d['options'].append({
-                    'tooltip': 'Gestionar Solicitud',
+                    'tooltip': 'Editar Titular',
                     'icon': 'fa fa-pencil-square-o white-icon',
                     'class': 'btn btn-info editar_boton',
                     'href': '/administracion/editar_titular/?'+urllib.urlencode({"titular_id":d['id']}),
@@ -369,7 +369,7 @@ class TrajoVehiculo(models.Model):
                 d['options'] = []
 
                 d['options'].append({
-                    'tooltip': 'Gestionar Solicitud',
+                    'tooltip': 'Editar Persona',
                     'icon': 'fa fa-pencil-square-o white-icon',
                     'class': 'btn btn-info editar_boton',
                     'href': '/administracion/editar_trajo_vehiculo/?'+urllib.urlencode({"trajo_vehiculo_id":d['id']}),

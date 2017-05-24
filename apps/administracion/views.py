@@ -318,13 +318,13 @@ class EditarUsuario(View):
         for key in data:
             value = data.get(key, None)
             if 'correo' in key:
-                if Usuario.objects.filter(~Q(id=data['id_usuario']),Q(correo_electronico=data['correo_electronico'])).exists():
+                if not Usuario.objects.filter(~Q(id=data['id_usuario']),Q(correo_electronico=data['correo_electronico'])).exists():
                     if str(data['correo_electronico']) != str(data['email2']):
                         errors[key] = 'Este correo no es igual al de confirmación'
                 else:
                     errors[key] = 'Este correo ya se encuentra registrado por otro usuario.'
             if 'email' in key:
-                if Usuario.objects.filter(~Q(id=data['id_usuario']),Q(correo_electronico=data['email2'])).exists():
+                if not Usuario.objects.filter(~Q(id=data['id_usuario']),Q(correo_electronico=data['email2'])).exists():
                     if str(data['correo_electronico']) != str(data['email2']):
                         errors[key] = 'El correo de confirmación no es igual al correo principal'
                 else:
