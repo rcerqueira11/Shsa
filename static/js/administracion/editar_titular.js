@@ -15,9 +15,11 @@ $(document).on("click",".confirmar_verificacion", function(){
 });
 
 $('#modal-exito').on('shown.bs.modal', function (e) {
+	href_aceptar = $('#id_href_modal_aceptar').attr('href')
     titulo = 'EDICIÓN TITULARES'
 	subtitulo = 'Edición Titular de Vehículo'
 	mensaje = 'Edición Titular de Vehículo realizada exitosamente.'
+	$("#modal-exito-href").attr("href", href_aceptar)
 	fill_modal_exito(titulo,subtitulo,mensaje)
 	
 })

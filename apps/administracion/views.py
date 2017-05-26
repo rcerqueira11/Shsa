@@ -405,11 +405,10 @@ class EditarUsuario(View):
                 response={'results':'data_igual', }
                 response['mensaje'] = "No hay nada nuevo que guardar."
                 return HttpResponse(json.dumps(response), content_type = "application/json")
-
             usuario.nombre = nombre_nuevo
             usuario.apellido = apellido_nuevo
             usuario.correo_electronico = correo_nuevo
-            usuario.tipo_usuario = tipo_usuario_nuevo
+            usuario.fk_tipo_usuario = tipo_usuario_nuevo
 
             with transaction.atomic():
                 usuario.save()

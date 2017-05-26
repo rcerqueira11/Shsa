@@ -15,9 +15,11 @@ $(document).on("click",".confirmar_verificacion", function(){
 });
 
 $('#modal-exito').on('shown.bs.modal', function (e) {
+	href_aceptar = $('#id_href_modal_aceptar').attr('href')
     titulo = 'EDICIÓN PERSONA TRAJO EL VEHÍCULO'
 	subtitulo = 'Edición persona Trajo el Vehículo'
 	mensaje = 'Edición de quien trajo el vehículo realizada exitosamente.'
+	$("#modal-exito-href").attr("href", href_aceptar)
 	fill_modal_exito(titulo,subtitulo,mensaje)
 	
 })
