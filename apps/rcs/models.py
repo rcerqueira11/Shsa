@@ -192,6 +192,8 @@ class TitularVehiculo(models.Model):
                     condiciones.append(Q(apellido__icontains=apellido))
 
                 if telefono:
+                    if "_" in telefono:
+                        telefono = telefono[:telefono.find("_")]
                     condiciones.append(Q(telefono__icontains=telefono))
         
         # NOTA: dependiendo del 'filter_code' se define las condiciones
