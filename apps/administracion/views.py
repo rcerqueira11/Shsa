@@ -51,9 +51,10 @@ class BandejaTitulares(View):
         return super(BandejaTitulares, self).dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        context = {
-
-        }
+        
+        context = {}
+        context['nombre'] = request.user.nombre
+        context['username'] = request.user.username
 
         return render(request, 'administracion/bandeja_titulares.html',context)
 
