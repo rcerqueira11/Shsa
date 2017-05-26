@@ -15,6 +15,7 @@ from hashlib import sha1
 from utils.HelpMethods.aes_cipher import encode as secure_value_encode
 from utils.HelpMethods.aes_cipher import decode as secure_value_decode
 from apps.registro.models import *
+from django.core.mail import EmailMessage
 
 
 import unicodedata
@@ -92,3 +93,38 @@ def en_revision(x):
             return False
 
     return False
+
+
+def enviar_correo(asunto, contenido, correo, custom_filename, adjuntos=[]):
+    if not type(custom_filename) is list:
+        custom_filename = [custom_filename]
+
+    try:
+        msg = EmailMessage(asunto, contenido, to=correo)
+        msg.content_subtype = "html"
+        # msg.attach_alternative(contenido, "text/html")
+        # msg.mixed_subtype = 'related'
+
+        for f in custom_filename:
+            fp = open(path.join(BASE_DIR, 'static', 'img', f), 'rb')
+            msg_img = MIMEImage(fp.read())
+            fp.close()
+            msg_img.add_header('Content-ID', '<{}>'.format(f))
+            msg.attach(msg_img)
+
+        if adjuntos:
+            for ad in adjuntos:
+                try:
+                    msg.attach_file(ad)
+                except Exception as e:
+                    msg.attach_file(ad[1:])
+
+        msg.send()
+       
+
+    except Exception as e:
+        print '=======>Error al enviar correo<=========', e
+        # raise e
+        return False
+    return True
+

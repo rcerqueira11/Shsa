@@ -18,8 +18,10 @@ from django.db.models import Q
 from apps.wkhtmltopdf.views import PDFTemplateResponse
 from apps.registro.models import *
 from apps.rcs.models import *
+from apps.registro.views import create_new_password
 from utils.HelpMethods.aes_cipher import encode as secure_value_encode
 from utils.HelpMethods.aes_cipher import decode as secure_value_decode
+from utils.HelpMethods.helpers import enviar_correo
 import json
 import random
 import string
@@ -30,6 +32,11 @@ import sys
 
 from os import path
 # Create your views here.
+
+def iguales_(value1, value2):
+    val1 = str(value1)
+    val2 = str(value2)
+    return val1 == val2
 
 class BandejaTitulares(View):
     """
@@ -310,6 +317,33 @@ class EditarUsuario(View):
         
         return context
 
+    def reset_user(self,request,usuario_id):
+
+        usuario = Usuario.objects.get(id=usuario_id)
+        correo = usuario.correo_electronico
+        clave_nueva = create_new_password()
+        usuario.set_password(clave_nueva)
+    
+        correoTemplate = get_template('correo/usuario_recuperar_clave.html')
+        context_email = Context({
+                'usuario': usuario,
+                'clave': clave_nueva,
+            })
+        contenidoHtmlCorreo = correoTemplate.render(context_email)
+        
+        email_enviado = enviar_correo(asunto="Recuperar Cuenta",contenido=contenidoHtmlCorreo, correo=[correo] ,custom_filename='seguros_horizontes_logo.png')
+
+        if not email_enviado:
+            respuesta['Result'] = 'error'
+            respuesta['ERROR_CODE'] = 'NO_MAIL_SEND'
+            respuesta['mensaje'] = 'El correo no pudo ser enviado, favor intentar mas tarde.'
+            return HttpResponse(json.dumps(respuesta), content_type = "application/json")
+        
+        usuario.save()
+        respuesta = {}
+        respuesta['Result'] = 'success'
+        return HttpResponse(json.dumps(respuesta), content_type = "application/json")
+
     def validate(self, data):
         errors = {}
 
@@ -355,7 +389,36 @@ class EditarUsuario(View):
         errors = self.validate(data)
 
         if not errors:
-            respuesta={'results': 'success',}
+            usuario = Usuario.objects.get(id=data['id_usuario'])
+            correo_nuevo = data['correo_electronico']
+            nombre_nuevo = data['nombre']
+            apellido_nuevo = data['apellido']
+            tipo_usuario_nuevo = TipoUsuario.objects.get(codigo=data['tipo_usuario'])
+
+            corre_iguales = iguales_(correo_nuevo,usuario.correo_electronico)
+            nombre_iguales = iguales_(nombre_nuevo,usuario.nombre)
+            apellido_iguales = iguales_(apellido_nuevo, usuario.apellido)
+            tipo_usuario_iguales = iguales_(data['tipo_usuario'],usuario.fk_tipo_usuario.codigo)
+
+
+            if corre_iguales and nombre_iguales and apellido_iguales and tipo_usuario_iguales and (not 'reiniciar' in data ):
+                response={'results':'data_igual', }
+                response['mensaje'] = "No hay nada nuevo que guardar."
+                return HttpResponse(json.dumps(response), content_type = "application/json")
+
+            usuario.nombre = nombre_nuevo
+            usuario.apellido = apellido_nuevo
+            usuario.correo_electronico = correo_nuevo
+            usuario.tipo_usuario = tipo_usuario_nuevo
+
+            with transaction.atomic():
+                usuario.save()
+
+                if 'reiniciar' in data:
+                    # pass
+                    self.reset_user(request,usuario.id)
+
+            response={'results': 'success',}
             return HttpResponse(json.dumps(response), content_type = "application/json")
         else:
                    
