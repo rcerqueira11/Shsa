@@ -21,6 +21,11 @@ urlpatterns = [
         name="editar_usuario"
     ),
     url(
+        r'^eliminar_usuario/(?P<usuario_id>.+)?$',
+        views.EliminarUsuario.as_view(),
+        name="eliminar_usuario"
+    ),
+    url(
         r'^bandeja_titulares',
         views.BandejaTitulares.as_view(),
         name="bandeja_titulares"

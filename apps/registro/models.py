@@ -157,15 +157,15 @@ class Usuario(AbstractBaseUser):
 					'status': 'disabled' if tiene_sol_cerrada else '',
 					})
 				
-				# d['options'].append({
-				#     'tooltip': 'Cancelar Solicitud',
-				#     'icon': 'fa fa-minus-circle white-icon',
-				#     'class': 'btn btn-danger eliminar_boton',
-				#     'target-modal': 'modal-verificacion-eliminar',
-				#     'status': '',
-				#     'data-ref': '/rcs/cancelar_ticket/?'+urllib.urlencode({"sol_id":d['id']}),
-				#             # 'href': '/rcs/cancelar_ticket/?'+urllib.urlencode({"sol_id":d['id']}),
-				# })
+				d['options'].append({
+				    'tooltip': 'Eliminar Usuario',
+				    'icon': 'fa fa-trash-o white-icon',
+				    'class': 'btn btn-danger eliminar_boton',
+				    'target-modal': 'modal-verificacion-eliminar',
+				    'status': '',
+				    'data-ref': '/administracion/eliminar_usuario/?'+urllib.urlencode({"usuario_id":d['id']}),
+				            # 'href': '/rcs/cancelar_ticket/?'+urllib.urlencode({"sol_id":d['id']}),
+				})
 			 
 				
 				

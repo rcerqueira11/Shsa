@@ -424,3 +424,38 @@ class EditarUsuario(View):
                    
             response['errors'] = errors
             return HttpResponse(json.dumps(response), content_type = "application/json")
+
+
+class EliminarUsuario(View):
+    """
+    EliminarUsuario
+    -------------------------------------------
+    Views para eliminar un usuario, se pueden eliminar aquellos que no tengan una inspeccion en curso
+
+    """
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_anonymous():
+            return redirect(reverse_lazy('login'))
+        return super(EliminarUsuario, self).dispatch(request, *args, **kwargs)
+
+
+    def post(self,request,*args,**kwargs):
+        data = request.POST
+        response = {}
+        import pudb; pu.db
+        id_usuario = secure_value_decode(data.GET['usuario_id'])
+        usuario = Usuario.objects.get(id= id_usuario) 
+
+        #if data: 
+        #    response['Result'] = 'success'
+        #    response['msj'] = ''
+        #    return HttpResponse(json.dumps(response), content_type = "application/json")
+        #else:
+        #    response['Result'] = 'error'
+        #    response['msj'] = ''
+        #    return HttpResponse(json.dumps(response), content_type = "application/json")
+        response={'results': 'success',}
+        response['mensaje'] = "No hay nada nuevo que guardar."
+        return HttpResponse(json.dumps(response), content_type = "application/json")
+
