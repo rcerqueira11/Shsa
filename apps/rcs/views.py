@@ -916,11 +916,14 @@ class AccesoriosVehiculoSolicitud(View):
         id_sol = data['sol_id'] if 'sol_id' in data else request.session['sol_id']
         solicitud = SolicitudInspeccion.objects.get(id=id_sol)
         vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
+        no_base = True
 
         if vehiculo.accesorios_vehiculo.all().exists():
             accesorios = vehiculo.accesorios_vehiculo.all().order_by('id')
+            no_base = True
         else:
             accesorios = AccesoriosBase.objects.all().order_by('id')
+            no_base = False
         
         estados_vehiculo = EstadoVehiculo.objects.all()
         context = {
@@ -930,7 +933,7 @@ class AccesoriosVehiculoSolicitud(View):
             'solicitud': solicitud,
             'nombre': data.user.nombre if 'user' in data else "",
             'username': data.user.username if 'user' in data else "",
-
+            'no_base': no_base,
         }
         
         return context
@@ -1170,11 +1173,14 @@ class DocumentosVehiculoSolicitud(View):
 
         solicitud = SolicitudInspeccion.objects.get(id=id_solicitud)
         vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
+        no_base = True
 
         if vehiculo.documentos_presentados.all().exists():
             documentos = vehiculo.documentos_presentados.all().order_by('id')
+            no_base = True
         else:
             documentos = DocumentosPresentadosBase.objects.all().order_by('id')
+            no_base = False
 
         context = {
             'documentos': documentos,
@@ -1182,6 +1188,7 @@ class DocumentosVehiculoSolicitud(View):
             'solicitud': solicitud,
             'nombre': data.user.nombre if 'user' in data else "",
             'username': data.user.username if 'user' in data else "",
+            'no_base': no_base,
 
         }
         
@@ -1326,7 +1333,6 @@ class EditarTicket(View):
 
     def get_context(self, data):
         motivo = MotivoSolicitud.objects.all()
-        # import pudb; pu.db
         # data = request.GET
         id_sol = secure_value_decode(data.GET['sol_id'])
         solicitud = SolicitudInspeccion.objects.get(id= id_sol)
@@ -1371,7 +1377,6 @@ class EditarTicket(View):
 
         #"form_data" representa un diccionario cuyas claves son los nombres de los inputs html del formulario y sus valores 
         #son tuplas donde almacenan los valores y los errores de los inputs respectivamente
-        import pudb; pu.db
         # mas_una_solictud_titular
         # mas_una_solictud_trajo
         # mas_una_solictud_placa

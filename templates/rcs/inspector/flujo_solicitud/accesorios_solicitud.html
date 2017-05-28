@@ -52,9 +52,9 @@
 						    	<br>
 								<input type="radio" name="radio_{{accesorio.codigo}}" value="false" {% if input.value == 'false' %} checked="checked"{% endif %} /> No  
 							{% else %}
-							 	<input type="radio" name="radio_{{accesorio.codigo}}" value="true" {% if accesorio.existe == True %} checked="checked"{% endif %} />  Si
+							 	<input type="radio" name="radio_{{accesorio.codigo}}" value="true" {% if accesorio.existe == True and no_base %} checked="checked"{% endif %} />  Si
 						    	<br>
-								<input type="radio" name="radio_{{accesorio.codigo}}" value="false" {% if accesorio.existe == False %} checked="checked"{% endif %} /> No  
+								<input type="radio" name="radio_{{accesorio.codigo}}" value="false" {% if accesorio.existe == False and no_base %} checked="checked"{% endif %} /> No  
 							{% endif %}
 								<div class="error" id="error_estado_{{accesorio.codigo}}">{{input.error}}</div>
 						</td>
@@ -85,9 +85,9 @@
 						    	<br>
 								<input type="radio" name="radio_{{accesorio.codigo}}" value="false" {% if input.value == 'false' %} checked="checked"{% endif %} /> No  
 							{% else %}
-							 	<input type="radio" name="radio_{{accesorio.codigo}}" value="true" {% if accesorio.existe == True %} checked="checked"{% endif %} />  Si
+							 	<input type="radio" name="radio_{{accesorio.codigo}}" value="true" {% if accesorio.existe == True and no_base %} checked="checked"{% endif %} />  Si
 						    	<br>
-								<input type="radio" name="radio_{{accesorio.codigo}}" value="false" {% if accesorio.existe == False %} checked="checked"{% endif %} /> No  
+								<input type="radio" name="radio_{{accesorio.codigo}}" value="false" {% if accesorio.existe == False and no_base %} checked="checked"{% endif %} /> No 
 							{% endif %}
 								<div class="error" id="error_estado_{{accesorio.codigo}}">{{input.error}}</div>
 						</td>
@@ -118,9 +118,9 @@
 						    	<br>
 								<input type="radio" name="radio_{{accesorio.codigo}}" value="false" {% if input.value == 'false' %} checked="checked"{% endif %} /> No  
 							{% else %}
-							 	<input type="radio" name="radio_{{accesorio.codigo}}" value="true" {% if accesorio.existe == True %} checked="checked"{% endif %} />  Si
+							 	<input type="radio" name="radio_{{accesorio.codigo}}" value="true" {% if accesorio.existe == True and no_base %} checked="checked"{% endif %} />  Si
 						    	<br>
-								<input type="radio" name="radio_{{accesorio.codigo}}" value="false" {% if accesorio.existe == False %} checked="checked"{% endif %} /> No  
+								<input type="radio" name="radio_{{accesorio.codigo}}" value="false" {% if accesorio.existe == False and no_base %} checked="checked"{% endif %} /> No  
 							{% endif %}
 								<div class="error" id="error_estado_{{accesorio.codigo}}">{{input.error}}</div>
 						</td>

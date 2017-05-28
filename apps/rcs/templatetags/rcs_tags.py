@@ -103,7 +103,7 @@ def condiciones(x):
         color= vehiculo.color != None
         condiciones= vehiculo.condiciones_generales_vehiculo.all().exists()
 
-        if (peso and color) or condiciones:
+        if (peso and color):
             return False
 
     return True
@@ -121,7 +121,7 @@ def mecanica(x):
         mecanica= vehiculo.mecanica_vehiculo.all().exists()
         
 
-        if (peso and color and condiciones) or mecanica:
+        if (peso and color and condiciones):
             return False
 
     return True
@@ -139,7 +139,7 @@ def accesorios(x):
         mecanica= vehiculo.mecanica_vehiculo.all().exists()
         accesorios= vehiculo.accesorios_vehiculo.all().exists()
 
-        if (peso and color and condiciones and mecanica) or accesorios:
+        if (peso and color and condiciones and mecanica):
             return False
 
     return True
@@ -160,7 +160,7 @@ def detalles(x):
         detalles= vehiculo.detalles_datos.all().exists()
         
 
-        if (peso and color and condiciones and mecanica and accesorios) or detalles:
+        if peso and color and condiciones and mecanica and accesorios:
             return False
 
     return True
@@ -182,7 +182,7 @@ def documentos(x):
         documentos= vehiculo.documentos_presentados.all().exists()
         
 
-        if (peso and color and condiciones and mecanica and accesorios and detalles) or documentos:
+        if (peso and color and condiciones and mecanica and accesorios and detalles):
             return False
 
     return True
