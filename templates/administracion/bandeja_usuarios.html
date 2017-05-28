@@ -88,6 +88,11 @@
 </div>
 
 
+<form id="id_csrf" name="para_eliminar_usuario">
+	{% csrf_token %}
+</form>
+
+
 {% endblock main_content %}
 
 {% block extra_script %}

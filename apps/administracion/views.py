@@ -443,19 +443,19 @@ class EliminarUsuario(View):
     def post(self,request,*args,**kwargs):
         data = request.POST
         response = {}
-        import pudb; pu.db
-        id_usuario = secure_value_decode(data.GET['usuario_id'])
+        id_usuario = secure_value_decode(data['usuario_id'])
         usuario = Usuario.objects.get(id= id_usuario) 
+        if SolicitudInspeccion.objects.filter(Q(fk_inspector=usuario),Q(fk_estado_solicitud__codigo="CERRADA")).exists():
+            response={'results': 'inspec_pendiente_inspeccion',}
+            response['mensaje'] = "No se puede eliminar el usuario ya que tiene una solicitud pendiente por gestionar."
 
-        #if data: 
-        #    response['Result'] = 'success'
-        #    response['msj'] = ''
-        #    return HttpResponse(json.dumps(response), content_type = "application/json")
-        #else:
-        #    response['Result'] = 'error'
-        #    response['msj'] = ''
-        #    return HttpResponse(json.dumps(response), content_type = "application/json")
-        response={'results': 'success',}
-        response['mensaje'] = "No hay nada nuevo que guardar."
+        else:
+            if SolicitudInspeccion.objects.filter(Q(fk_inspector=usuario)).exists():
+                response={'results': 'inspec_pendiente_inspeccion',}
+                response['mensaje'] = "No se puede eliminar el usuario ya que tiene ha evaluado una solicitud anteriormente."
+            else:
+                with transaction.atomic():
+                    usuario.delete()
+                    response={'results': 'success',}
         return HttpResponse(json.dumps(response), content_type = "application/json")
 

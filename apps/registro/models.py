@@ -163,7 +163,7 @@ class Usuario(AbstractBaseUser):
 				    'class': 'btn btn-danger eliminar_boton',
 				    'target-modal': 'modal-verificacion-eliminar',
 				    'status': '',
-				    'data-ref': '/administracion/eliminar_usuario/?'+urllib.urlencode({"usuario_id":d['id']}),
+				    'data-ref': d['id'],
 				            # 'href': '/rcs/cancelar_ticket/?'+urllib.urlencode({"sol_id":d['id']}),
 				})
 			 

@@ -23,26 +23,31 @@ $(document).on("click",".confirmar_eliminacion", function(){
 });
 
 function eliminar_usuario(url){
-	$(document).ajaxStop($.unblockUI);
-    $.blockUI({ message: '<i class="fa fa-spinner fa-pulse" style="color:#444444"></i> Espere por favor...' });
+	// $(document).ajaxStop($.unblockUI);
+    // $.blockUI({ message: '<i class="fa fa-spinner fa-pulse" style="color:#444444"></i> Espere por favor...' });
+    dataForm = $("#id_csrf").serializeArray();
+    dataForm.push({name:'usuario_id', value:url_elim_sol});
 	$.ajax({
             type: 'POST' ,
-            url: url , // <= Providing the URL
-            // data: dataForm , // <= Providing the form data, serialized above
+            url: '/administracion/eliminar_usuario/' , // <= Providing the URL
+            data: dataForm , // <= Providing the form data, serialized above
             success: function(results){
              if(results.results == 'success'){
-                    titulo = 'USUARIOS'
-                    subtitulo = 'Usuario ELiminado'
-                    mensaje = 'El usuario ha sido eliminado exitosamente.' 
+				titulo = 'USUARIOS'
+				subtitulo = 'Usuario Eliminado'
+				mensaje = 'El usuario ha sido eliminado exitosamente.' 
 
-                   fill_modal_exito_eliminar(titulo,subtitulo,mensaje)
-                   $("#filter_form_id").submit();
-	                $("#modal-exito-eliminar").modal('show');
+				fill_modal_exito_eliminar(titulo,subtitulo,mensaje)
+				$("#filter_form_id").submit();
+				$("#modal-exito-eliminar").modal('show');
                 }
+            else{
+            	show_modal_errores_personalizado(results.mensaje)
+            }
                
             },
             error: function(results){
-                $('#modal-error').modal('show')
+                show_modal_errores_personalizado("Ocurrio un error favor intentarlo mas tarde.")
                 console.log("ERROR");
             }
         });
