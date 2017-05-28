@@ -156,7 +156,27 @@ class Usuario(AbstractBaseUser):
 					'href': '/administracion/editar_usuario/?'+urllib.urlencode({"usuario_id":d['id']}),
 					'status': 'disabled' if tiene_sol_cerrada else '',
 					})
-				
+				if Usuario.objects.get(id = secure_value_decode(str(d['id']))).is_active:
+					d['options'].append({
+					    'tooltip': 'Inactivar Usuario',
+					    'icon': 'fa-power-off  white-icon',
+					    'class': 'btn btn-danger inactivar_boton',
+					    'target-modal': 'modal-verificacion-inactivar',
+					    'status': '',
+					    'data-ref': d['id'],
+					            # 'href': '/rcs/cancelar_ticket/?'+urllib.urlencode({"sol_id":d['id']}),
+					})
+			 	else:
+			 		d['options'].append({
+					    'tooltip': 'Activar Usuario',
+					    'icon': 'fa-power-off  white-icon',
+					    'class': 'btn btn-success activar_boton',
+					    'target-modal': 'modal-verificacion-activar',
+					    'status': '',
+					    'data-ref': d['id'],
+					            # 'href': '/rcs/cancelar_ticket/?'+urllib.urlencode({"sol_id":d['id']}),
+					})
+
 				d['options'].append({
 				    'tooltip': 'Eliminar Usuario',
 				    'icon': 'fa fa-trash-o white-icon',

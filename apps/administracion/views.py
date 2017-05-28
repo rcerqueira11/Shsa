@@ -459,3 +459,38 @@ class EliminarUsuario(View):
                     response={'results': 'success',}
         return HttpResponse(json.dumps(response), content_type = "application/json")
 
+
+class InactivarUsuario(View):
+    """
+    InactivarUsuario
+    -------------------------------------------
+    View para inactivar un usuario softdelete
+    """
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_anonymous():
+            return redirect(reverse_lazy('login'))
+        return super(InactivarUsuario, self).dispatch(request, *args, **kwargs)
+
+
+    def post(self,request,*args,**kwargs):
+        data = request.POST
+        response = {}
+        id_usuario = secure_value_decode(data['usuario_id'])
+        usuario = Usuario.objects.get(id= id_usuario)
+        if usuario.is_active:
+            if SolicitudInspeccion.objects.filter(Q(fk_inspector=usuario),Q(fk_estado_solicitud__codigo="CERRADA")).exists():
+                response={'results': 'inspec_pendiente_inspeccion',}
+                response['mensaje'] = "No se puede inactivar este usuario ya que tiene una solicitud pendiente por gestionar."
+            else:
+                response={'results': 'success',}
+                response['tipo'] = "INACT"
+                usuario.is_active = False
+        else:
+            response={'results': 'success',}
+            response['tipo'] = "ACT"
+            usuario.is_active = True
+        with transaction.atomic():
+            usuario.save()
+
+        return HttpResponse(json.dumps(response), content_type = "application/json")

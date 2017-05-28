@@ -84,3 +84,5 @@
    pointer-events: none;
    cursor: default;
 }
+
+body { padding-right: 0 !important }

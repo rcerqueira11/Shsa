@@ -16,6 +16,11 @@ urlpatterns = [
         name="editar_trajo_vehiculo"
     ),
     url(
+        r'^inactivar_usuario/(?P<usuario_id>.+)?$',
+        views.InactivarUsuario.as_view(),
+        name="inactivar_usuario"
+    ),
+    url(
         r'^editar_usuario/(?P<usuario_id>.+)?$',
         views.EditarUsuario.as_view(),
         name="editar_usuario"

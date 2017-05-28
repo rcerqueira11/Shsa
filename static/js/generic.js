@@ -209,6 +209,32 @@ function fill_modal_verificacion_eliminar(titulo,subtitulo,mensaje){
 };
 
 
+
+function fill_modal_exito_inactivar(titulo,subtitulo,mensaje){
+  $("#modal-exito-inactivar-titulo").html(titulo)
+  $("#modal-exito-inactivar-subtitulo").html(subtitulo)
+  $("#modal-exito-inactivar-msj").html(mensaje)
+};
+
+function fill_modal_verificacion_inactivar(titulo,subtitulo,mensaje){
+  $("#modal-verificacion-inactivar-titulo").html(titulo)
+  $("#modal-verificacion-inactivar-subtitulo").html(subtitulo)
+  $("#modal-verificacion-inactivar-msj").html(mensaje)
+};
+
+function fill_modal_exito_activar(titulo,subtitulo,mensaje){
+  $("#modal-exito-activar-titulo").html(titulo)
+  $("#modal-exito-activar-subtitulo").html(subtitulo)
+  $("#modal-exito-activar-msj").html(mensaje)
+};
+
+function fill_modal_verificacion_activar(titulo,subtitulo,mensaje){
+  $("#modal-verificacion-activar-titulo").html(titulo)
+  $("#modal-verificacion-activar-subtitulo").html(subtitulo)
+  $("#modal-verificacion-activar-msj").html(mensaje)
+};
+
+
 // $(":radio").on('click', function(){
 //   console.log("this:",this);
 //   console.log("$(this).prop('checked'):",$(this).prop('checked'));
