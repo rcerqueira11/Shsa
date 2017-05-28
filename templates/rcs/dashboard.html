@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% load rcs_tags %}
 
 
 {% block main_content %}
 {% include "menu_base.html" %}
 
 
-	<center><h1>Bienvenido {{nombre}} </h1></center>
+	<center><h1>Bienvenido {{nombre|capfirst}} {{apellido|capfirst}} </h1></center>
 
     
 {% endblock main_content %}

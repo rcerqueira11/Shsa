@@ -303,10 +303,12 @@ class Dashboard(View):
         
     def get(self, request, *args, **kwargs):
         nombre = request.user.nombre
+        apellido = request.user.apellido
         username = request.user.username
         context = {
             'nombre': nombre,
             'username': username,
+            'apellido': apellido,
         }
         return render(request, 'rcs/dashboard.html',context)
 

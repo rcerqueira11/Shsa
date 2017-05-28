@@ -42,6 +42,14 @@ def create_name(first, second):
     return nombre
 
 
+@register.assignment_tag(name='primera')
+def primera(cadena):
+    import pudb; pu.db
+    cadena_ = cadena.split(" ")
+
+    return cadena_[0]
+
+
 @register.assignment_tag(name='create_name2')
 def create_name2(first, second):
     nombre = str(first)+"_"+str(second)
@@ -91,6 +99,11 @@ def es_inspector(x):
 @register.filter(name='es_taquilla')
 def es_taquilla(x):
     return True if x.user.fk_tipo_usuario.codigo=="TAQ" else False
+
+
+@register.filter(name='es_admin')
+def es_admin(x):
+    return True if x.user.fk_tipo_usuario.codigo=="ADM" else False
 
 
 @register.filter(name='condiciones')
