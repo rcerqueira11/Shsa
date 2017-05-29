@@ -60,6 +60,7 @@ function agregar_detalle(id_tabla){
 	$("#detalles_table_body").append(tabla_body)
 	$("#contador_agregados").val(parseInt($("#contador_agregados").val()) + 1) 
 	// #falta
+	load_validators()
 
 }
 
@@ -236,38 +237,16 @@ $(".codigo_evaluar").focusout(function() {
 
 	verificar_codigo_duplicado()
 })
-// $(".codigo_evaluar").focusout(function() {
-//     codigo_verif = $(this).val()
-//     id_solicitud = $("#id_solicitud").val()
-//     console.log("codigo_verif");
-//     console.log(codigo_verif);
-//     console.log("this");
-//     console.log(this);
-//     apicar = this.id
-// 	arr = apicar.split("_")
-// 	id_error = arr[0]+"_input_error_" +arr[1]
-    
-//     $.ajax({
-//             type: 'GET' ,
-//             url: '/rcs/verficiar_codigo_detalle_existe/' , // <= Providing the URL
-//             data: jQuery.param({'codigo_verif':codigo_verif,'id_solicitud':id_solicitud}), // <= Providing the form data, serialized above
-//             success: function(results){
-//              if(results.results == 'success'){
-// 					if(results.existe == true){
-// 						$("#"+id_error).html("Este codigo ya se encuentra registrado para otra pieza")
-// 						console.log("show error")    				
-// 					} else{
-// 						$("#"+id_error).html()
-// 					}
-                    
-//                 }
-//             },
-//             error: function(results){
-//                 console.log("ERROR");
-//             }
-//         });
-    
-    
-//   })
 
+function load_validators(){
+	$('.decimal_mask').inputmask('[9]{11}.{0,1}[9]{0,2}', {placeholder: '',"greedy": false,});  
+	$('.integer_mask').inputmask('[9]{19}',  {placeholder: '', "greedy": false,});    
+	$(".no-space").keypress(function(e){if(e.which === 32){return false}});
+	
+	$(".codigo_evaluar").focusout(function() {
+		// this.value
 
+		verificar_codigo_duplicado()
+	})
+
+}
