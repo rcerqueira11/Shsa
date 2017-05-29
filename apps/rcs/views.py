@@ -303,7 +303,9 @@ class Dashboard(View):
         
     def get(self, request, *args, **kwargs):
         nombre = request.user.nombre
+        nombre = nombre.split(" ")[0]
         apellido = request.user.apellido
+        apellido = apellido.split(" ")[0]
         username = request.user.username
         context = {
             'nombre': nombre,
