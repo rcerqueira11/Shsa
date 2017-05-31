@@ -332,7 +332,7 @@ class EditarUsuario(View):
             })
         contenidoHtmlCorreo = correoTemplate.render(context_email)
         
-        email_enviado = enviar_correo(asunto="Recuperar Cuenta",contenido=contenidoHtmlCorreo, correo=[correo] ,custom_filename='seguros_horizontes_logo.png')
+        email_enviado = enviar_correo(asunto="Recuperar Cuenta",contenido=contenidoHtmlCorreo, correo=[correo] ,custom_filename='banner_correo.png')
 
         if not email_enviado:
             respuesta['Result'] = 'error'

@@ -274,7 +274,7 @@ class RegistroUsuario(View):
                     })
                 contenidoHtmlCorreo = correoTemplate.render(context_email)
 
-                email_enviado = enviar_correo(asunto="Registro de Usuario",contenido=contenidoHtmlCorreo, correo=[email] ,custom_filename='seguros_horizontes_logo.png')
+                email_enviado = enviar_correo(asunto="Registro de Usuario",contenido=contenidoHtmlCorreo, correo=[email] ,custom_filename='banner_correo.png')
 
 
                 usuario_nuevo.save()
@@ -323,7 +323,7 @@ class RestaurarCuenta(View):
                 })
             contenidoHtmlCorreo = correoTemplate.render(context_email)
 
-            email_enviado = enviar_correo(asunto="Recuperar Cuenta",contenido=contenidoHtmlCorreo, correo=[correo] ,custom_filename='seguros_horizontes_logo.png')
+            email_enviado = enviar_correo(asunto="Recuperar Cuenta",contenido=contenidoHtmlCorreo, correo=[correo] ,custom_filename='banner_correo.png')
 
             if not email_enviado:
                 respuesta['Result'] = 'error'
@@ -497,7 +497,7 @@ class EditarCuenta(View):
                     })
                 contenidoHtmlCorreo = correoTemplate.render(context_email)
 
-                email_enviado = enviar_correo(asunto="Actualización de datos de usuario",contenido=contenidoHtmlCorreo, correo=[usuario_modificado.correo_electronico] ,custom_filename='seguros_horizontes_logo.png')
+                email_enviado = enviar_correo(asunto="Actualización de datos de usuario",contenido=contenidoHtmlCorreo, correo=[usuario_modificado.correo_electronico] ,custom_filename='banner_correo.png')
 
 
                 usuario_modificado.save()

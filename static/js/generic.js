@@ -283,3 +283,11 @@ $('.tlf-cel-mask').each(function(i, obj) {
         });
 
 });
+
+
+$(document).on("click","input[type=radio]",function(e){
+   
+  if (e.ctrlKey) {
+    if($(this).prop('checked')){$(this).prop('checked',false)}
+  }    
+})
