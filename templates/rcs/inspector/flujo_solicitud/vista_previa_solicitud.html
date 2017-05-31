@@ -364,9 +364,16 @@
 	<form id="form_completar_solicitud" action="{% url "planilla_seguro_carro" %}" method="POST">
 		{% csrf_token %}
 		<input type="hidden" name="id_solicitud" id="id_solicitud"  class="form-control"  value={{solicitud.id}} >
-		
+		<div class="row">
+			<div class="col-xs-12">
+				<label aling="left">Observaciones:</label>
+				<textarea name="observaciones_solicitud" class="form-control" rows="3">{{solicitud.observaciones|default_if_none:""}}</textarea>
+			</div>
+			
+		</div>
 
 	</form>
+		<br>
 		<div class="row">
 		<div class="col-xs-4 col-xs-offset-2"><a class="btn btn-danger btn-block" href="{% url "documentos_vehiculo" %}" >Atrás</a></div>
 

@@ -171,6 +171,7 @@ class VerPlanillaSeguroCarro(View):
         data = request.POST
         id_sol = data['id_solicitud']
         solicitud = SolicitudInspeccion.objects.get(id=id_sol)
+        solicitud.observaciones = data['observaciones_solicitud']
         context = self.get_context(request,request)
         if settings.SECURE_SSL_REDIRECT == True:
                 media_url = 'https://'
