@@ -22,10 +22,10 @@
             	<!-- <td align="center" rowspan="2" style="width:33%"><img src="/static/img/seguros_horizontes_logo.png" alt="..." style="width:100%;"></td> -->
 
             	<td align="center" rowspan="2" style="width:33%" >INFORME DE INSPECCIÓN <br> AUTOMÓVIL</td>
-            	<td align="center" style="width:33%">{{solicitud.fecha_creacion}}</td>
+            	<td align="center" style="width:33%" align="left">Fecha de elaboración: {{solicitud.fecha_creacion|fecha_formato}}</td>
             </tr>
         	<tr>
-            	<td align="center">{{solicitud.fecha_creacion}}</td>
+            	<td align="center" align="left">Hora: {{solicitud.fecha_creacion|hora_fecha_formato}}</td>
             </tr>
         
         </table>

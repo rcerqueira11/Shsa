@@ -201,3 +201,19 @@ def documentos(x):
     return True
 
 
+@register.filter(name='fecha_formato')
+def fecha_formato(x):
+    fecha = x.date().isoformat()
+    fecha_iso = fecha.split('-')
+    fecha = fecha_iso[2] + '/' + fecha_iso[1] + '/' + fecha_iso[0]
+    return fecha
+
+
+
+@register.filter(name='hora_fecha_formato')
+def hora_fecha_formato(x):
+    res = str(x.hour) +":"+ str(x.minute) +":" + str(x.second)
+    fecha = res
+    return fecha
+
+
