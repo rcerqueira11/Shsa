@@ -14,14 +14,51 @@
 
 	<input type="hidden" name="estado_solicitud" id="id_estado_solicitud"  class="form-control"  value={{estado_solicitud}} >
 
+	{# HEADER #}
+	<div class="row">
+		<table class="table table-bordered" border="1" style="width:100%;margin-bottom:0;margin-top:0px;">
+        	<tr>
+            	<td align="center" rowspan="2" style="width:33%"><img src="/static/img/logo_pdf.png" alt="..." style="width:100%;"></td>
+            	<!-- <td align="center" rowspan="2" style="width:33%"><img src="/static/img/seguros_horizontes_logo.png" alt="..." style="width:100%;"></td> -->
+
+            	<td align="center" rowspan="2" style="width:33%" >INFORME DE INSPECCIÓN <br> AUTOMÓVIL</td>
+            	<td align="center" style="width:33%">{{solicitud.fecha_creacion}}</td>
+            </tr>
+        	<tr>
+            	<td align="center">{{solicitud.fecha_creacion}}</td>
+            </tr>
+        
+        </table>
+    </div>
+
+	{# Motivo de la solicitud de inspeccion #}
+
 	<div class="row">
 		 <table class="table table-bordered" border="1" style="width:100%;margin-bottom:0;margin-top:0px;">
+        	<tr>
+                <td colspan="2" style="width:100%; background-color: white;"><center> MOTIVO DE LA SOLICITUD DE INSPECCIÓN</center></td>
+            </tr>
+            <td align="center">{{solicitud.fk_motivo_solicitud.motivo}}
+            </td>
+            
+        </table>
+        
+
+        <br>
+
+        
+	</div>
+
+
+	{# Datos vehiculo #}
+
+	<div class="row">
+		<table class="table table-bordered" border="1" style="width:100%;margin-bottom:0;margin-top:0px;">
         	<tr>
                 <td colspan="2" style="width:100%; background-color: white;"><center> DATOS DEL VEH&Iacute;CULO</center></td>
             </tr>
             <td rowspan="2"  >
-              Nombre y apellido del Titular: <br>
-              <center><h4>{{titular_vehiculo.nombre}} {{titular_vehiculo.apellido}}</h4></center>
+              Nombre y apellido del Titular: {{titular_vehiculo.nombre}} {{titular_vehiculo.apellido}}
             </td>
             <td   >
               Cedula de identidad:  {{titular_vehiculo.cedula}}
@@ -53,10 +90,9 @@
         
         {% endif %}
         <br>
-
-        
 	</div>
-	{# Datos vehiculo  #}
+
+	{# Datos vehiculo TablaBD #}
 	<div class="row">
         <table class="table table-bordered" border="1" style="width:100%;margin-bottom:0;margin-top:0px;">
             <tr>
@@ -72,7 +108,7 @@
 	            <td>
 	              10. Cilindros: {{vehiculo.cilindros}}
 	            </td>
-	            <td>
+	            <td colspan="2">
 	              11. Color: {{vehiculo.color}}
 	            </td>
 	            <td colspan="2">
@@ -92,7 +128,7 @@
 	            <td>
 	              16. {{vehiculo.fk_tipo_manejo.nombre}}
 	            </td>
-	            <td>
+	            <td colspan="2">
 	              17. Kilometraje: {{vehiculo.kilometraje}}
 	            </td>
 	            <td colspan="2">
@@ -373,6 +409,54 @@
 		</div>
 
 	</form>
+
+	{# Foot Table #}
+			
+	<table class="table table-bordered">
+					
+		<tr>
+	    	<td colspan="2" rowspan="5" style="width:50%" >
+
+	    		carro
+
+	    	</td>
+	    	<td colspan="2" style="width:50%" >
+	    		<b>NOTA:</b> 
+				La inpseccion del vehículo descrito anteriormente, no implica aceptación del riesgo por par de Horizonte S.A. los riegos que asume la empresa correrán por cuenta de la misma, desde el momento en que el asegurado haya cancelado la prima convenida.
+			</td>
+		</tr>
+	  	<tr>
+	    	<td colspan="2">
+	    		<b>Yo, el inspector declaro que:</b>
+				<br>
+				No he omitido y/o simulado, ningún hecho o circunstancia en las respuesta, que puedan modificar las condiciones de riego y que los datos indicado fueron tomados del vehículo descrito en el presente formulario y en las fotografías respectivas.
+			</td>
+	  	</tr>
+	  	<tr>
+	    	<td colspan="2" rowspan="2">
+	    		<b>Yo, el Asegurado y/o Solicitante declaro que:</b>
+				<br>
+				a) En caso de fraude o declaración falsa por mi parte, la presente inspección es NULA, siendo de igual manera NULO el Contrato que la misma respalda, censando en cuyo caso toda responsabilidad de la empresa.
+
+				<br>
+				b) De igual manera certifico todos y cada uno de los SERIALES y NUMERACIONES Y CONDICIONES indicadas por el inspector, en el presente formulario, como los correspondientes a mi (el) vehículo.
+			</td>
+	  	</tr>
+	  	<tr>
+	  	</tr>
+	  	<tr>
+	    	<td align="center"><br><br>Firma Inspector de riesgos</td>
+	    	<td align="center"><br><br>Firma Asegurado o Solicitante</td>
+	  	</tr>
+	  	<tr>
+	    	<td colspan="2" rowspan="2">Sucursal, Agencia o Unidad de Asesoramiento: SERVICIOS GENERALES</td>
+	    	<td rowspan="2" align="center"><br><br>Firma Intermediario de Seguros</td>
+	    	<td rowspan="2">Fecha: <br><br>Codigo:</td>
+	  	</tr>
+	  	<tr>
+	  	</tr>
+	</table>
+
 		<br>
 		<div class="row">
 		<div class="col-xs-4 col-xs-offset-2"><a class="btn btn-danger btn-block" href="{% url "documentos_vehiculo" %}" >Atrás</a></div>

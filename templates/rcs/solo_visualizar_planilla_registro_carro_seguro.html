@@ -152,7 +152,7 @@
 					
 				</thead>
 				<tbody>
-					<tr>
+					<tr class="keeptogether">
 								
 					{% for condicion in condiciones  %}
 						{% if forloop.counter|primera_col %}
@@ -178,6 +178,7 @@
 					{% endif %}
 						{% if forloop.counter|divisibleby:3 %}
 							</tr>
+							<tr class="keeptogether">
 						{% endif %}
 					{% endfor %}
 				</tbody>
@@ -259,19 +260,18 @@
 			<div class="col-xs-12">
 				<table class="table table-bordered">
 					<thead>
-					{# style="width:14%" #}
 						<th style="width:19%"><center>ACCESORIOS</center></th>
 						<th style="width:2%"><center>SI</center></th>
 						<th style="width:2%"><center>NO</center></th>
-						<th style="width:7%"><center>OBSERVACI&Oacute;NES</center></th>
+						<th style="width:5%"><center>OBSERVACI&Oacute;NES</center></th>
 						<th style="width:19%"><center>ACCESORIOS</center></th>
 						<th style="width:2%"><center>SI</center></th>
 						<th style="width:2%"><center>NO</center></th>
-						<th style="width:7%"><center>OBSERVACI&Oacute;NES</center></th>
+						<th style="width:5%"><center>OBSERVACI&Oacute;NES</center></th>
 						<th style="width:19%"><center>ACCESORIOS</center></th>
 						<th style="width:2%"><center>SI</center></th>
 						<th style="width:2%"><center>NO</center></th>
-						<th style="width:7%"><center>OBSERVACI&Oacute;NES</center></th>
+						<th style="width:5%"><center>OBSERVACI&Oacute;NES</center></th>
 					</thead>
 					<tbody>
 						<tr>
