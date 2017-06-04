@@ -16,141 +16,154 @@
 
 	{# HEADER #}
 	<div class="row">
-		<table class="table table-bordered" border="1" style="width:100%;margin-bottom:0;margin-top:0px;">
-        	<tr>
-            	<td align="center" rowspan="2" style="width:33%"><img src="/static/img/logo_pdf.png" alt="..." style="width:100%;"></td>
-            	<!-- <td align="center" rowspan="2" style="width:33%"><img src="/static/img/seguros_horizontes_logo.png" alt="..." style="width:100%;"></td> -->
+		<div class="col-xs-12">
+			<table class="table table-bordered" border="1" style="width:100%;margin-bottom:0;margin-top:0px;">
+	        	<tr>
+	            	<td align="center" rowspan="2" style="width:33%"><img src="/static/img/logo_pdf.png" alt="..." style="width:100%;"></td>
+	            	<!-- <td align="center" rowspan="2" style="width:33%"><img src="/static/img/seguros_horizontes_logo.png" alt="..." style="width:100%;"></td> -->
 
-            	<td align="center" rowspan="2" style="width:33%" >INFORME DE INSPECCIÓN <br> AUTOMÓVIL</td>
-            	<td align="center" style="width:33%" align="left">Fecha de elaboración: {{solicitud.fecha_creacion|fecha_formato}}</td>
-            </tr>
-        	<tr>
-            	<td align="center" align="left">Hora: {{solicitud.fecha_creacion|hora_fecha_formato}}</td>
-            </tr>
-        
-        </table>
+	            	<td align="center" rowspan="2" style="width:33%" >INFORME DE INSPECCIÓN <br> AUTOMÓVIL</td>
+	            	<td align="center" style="width:33%" align="left">Fecha de elaboración: {{solicitud.fecha_creacion|fecha_formato}}</td>
+	            </tr>
+	        	<tr>
+	            	<td align="center" align="left">Hora: {{solicitud.fecha_creacion|hora_fecha_formato}}</td>
+	            </tr>
+	        
+	        </table>
+		</div>
     </div>
 
 	{# Motivo de la solicitud de inspeccion #}
 
 	<div class="row">
-		 <table class="table table-bordered" border="1" style="width:100%;margin-bottom:0;margin-top:0px;">
-        	<tr>
-                <td colspan="2" style="width:100%; background-color: white;"><center> MOTIVO DE LA SOLICITUD DE INSPECCIÓN</center></td>
-            </tr>
-            <td align="center">{{solicitud.fk_motivo_solicitud.motivo}}
-            </td>
-            
-        </table>
-        
-
-        <br>
-
-        
+		<center>
+		    <section>
+		        <div class="title">Motivo de la Inspección</div>
+			</section>
+		</center>
+		 <div class="col-xs-12">
+		 	<table class="table table-bordered" border="1" style="width:100%;margin-bottom:0;margin-top:0px;">
+	        	<!-- <tr>
+	                <td colspan="2" style="width:100%; background-color: white;"><center> MOTIVO DE LA SOLICITUD DE INSPECCIÓN</center></td>
+	            </tr> -->
+	            <td align="center">
+	            	{{solicitud.fk_motivo_solicitud.motivo}}
+	            </td>
+	        </table>
+		 </div>
 	</div>
 
 
 	{# Datos vehiculo #}
-
 	<div class="row">
-		<table class="table table-bordered" border="1" style="width:100%;margin-bottom:0;margin-top:0px;">
-        	<tr>
-                <td colspan="2" style="width:100%; background-color: white;"><center> DATOS DEL VEH&Iacute;CULO</center></td>
-            </tr>
-            <td rowspan="2"  >
-              Nombre y apellido del Titular: {{titular_vehiculo.nombre}} {{titular_vehiculo.apellido}}
-            </td>
-            <td   >
-              Cedula de identidad:  {{titular_vehiculo.cedula}}
-            </td>
-            
-            <tr>
-            	<td   >
-              		Tel&eacute;fono:  {{titular_vehiculo.telefono}}
-            	</td>	
-			</tr>
-        </table>
-        {% if trajo_alguien_mas %}
+		<center>
+		    <section>
+		        <div class="title">Datos del Veh&iacute;culo</div>
+			</section>
+		</center>
+		
+		<div class="col-xs-12">
+			<table class="table table-bordered" border="1" style="width:100%;margin-bottom:0;margin-top:0px;">
+	        	<!-- <tr> -->
+	                <!-- <td colspan="2" style="width:100%; background-color: white;"><center> DATOS DEL VEH&Iacute;CULO</center></td> -->
+	            <!-- </tr> -->
+	            <td rowspan="2" style="width: 60%"  >
+	              1. Nombre y apellido del Titular: {{titular_vehiculo.nombre}} {{titular_vehiculo.apellido}}
+	            </td>
+	            <td   >
+	              2. Cedula de identidad:  {{titular_vehiculo.cedula}}
+	            </td>
+	            
+	            <tr>
+	            	<td   >
+	              		3. Tel&eacute;fono:  {{titular_vehiculo.telefono}}
+	            	</td>	
+				</tr>
+	        </table>
+	        {% if trajo_alguien_mas %}
             
 	        <table class="table table-bordered" border="1" style="width:100%;margin-bottom:0;margin-top:0px;">
-	            <td rowspan="2"  >
-	              Nombre y apellido de la persona que trajo el veh&iacute;culo a la inspecci&oacute;n:<br>
-              		<center><h4>{{trajo_vehiculo.nombre}} {{trajo_vehiculo.apellido}}</h4></center>
+	            <td rowspan="2" style="width: 60%"  >
+	              4. Nombre y apellido de la persona que trajo el veh&iacute;culo a la inspecci&oacute;n: {{trajo_vehiculo.nombre}} {{trajo_vehiculo.apellido}}
 	            </td>
 	            <td>
-	              Cedula de identidad:  {{trajo_vehiculo.cedula}}
+	              5. Cedula de identidad:  {{trajo_vehiculo.cedula}}
 	            </td>
 	            
 	            <tr>
 	            	<td>
-	              		Parentesco con el titular: {{trajo_vehiculo.parentesco}}
+	              		6. Parentesco con el titular: {{trajo_vehiculo.parentesco}}
 	            	</td>	            
 	              </tr>
 	        </table>
-        
-        {% endif %}
-        <br>
+	        
+	        {% endif %}
+		</div>
 	</div>
+
 
 	{# Datos vehiculo TablaBD #}
 	<div class="row">
-        <table class="table table-bordered" border="1" style="width:100%;margin-bottom:0;margin-top:0px;">
-            <tr>
-	            <td>
-	              7. Marca: {{vehiculo.marca}}
-	            </td>
-	            <td>
-	              8. Modelo: {{vehiculo.modelo}}
-	            </td>
-	            <td>
-	              9. Cap. Puestos: {{vehiculo.cap_puestos}}
-	            </td>
-	            <td>
-	              10. Cilindros: {{vehiculo.cilindros}}
-	            </td>
-	            <td colspan="2">
-	              11. Color: {{vehiculo.color}}
-	            </td>
-	            <td colspan="2">
-	              12. Tipo: {{vehiculo.fk_tipo_vehiculo.nombre}}
-	            </td >
-			</tr>            
-			<tr>
-	            <td>
-	              13. Año: {{vehiculo.anho}} 
-	            </td>
-	            <td>
-	              14. Placa: {{vehiculo.placa}}
-	            </td>
-	            <td>
-	              15. Peso: {{vehiculo.peso}}
-	            </td>
-	            <td>
-	              16. {{vehiculo.fk_tipo_manejo.nombre}}
-	            </td>
-	            <td colspan="2">
-	              17. Kilometraje: {{vehiculo.kilometraje}}
-	            </td>
-	            <td colspan="2">
-	              18. Serial del Motor: {{vehiculo.serial_motor}}
-	            </td>
-			</tr>  
-			<tr>
-	            <td colspan="2">
-	              19 Serial de Carroceria. Año: {{vehiculo.anho}} 
-	            </td>
-	            <td colspan="2">
-	              20. Valor Estimado: {{vehiculo.placa}}
-	            </td>
-	            <td colspan="2">
-	              21. Nombre del Inspector: {{vehiculo.fk_inspector.nombre|capfirst}} {{vehiculo.fk_inspector.apellido|capfirst}}
-	            </td>
-	            <td>
-	              22. C.I Nro. {{vehiculo.fk_inspector.cedula}}
-	            </td>
-			</tr>            
-        </table>
+		<div class="col-xs-12">
+        	<table class="table table-bordered" border="1" style="width:100%;margin-bottom:0;margin-top:0px;">
+	            <tr>
+		            <td  style="width: 15%">
+		              7. Marca: {{vehiculo.marca}}
+		            </td>
+		            <td style="width: 15%">
+		              8. Modelo: {{vehiculo.modelo}}
+		            </td>
+		            <td style="width: 15%">
+		              9. Cap. Puestos: {{vehiculo.cap_puestos}}
+		            </td>
+		            <td style="width: 15%">
+		              10. Cilindros: {{vehiculo.cilindros}}
+		            </td>
+		            <td>
+		              11. Color: {{vehiculo.color}}
+		            </td>
+		            <td colspan="2">
+		              12. Tipo: {{vehiculo.fk_tipo_vehiculo.nombre}}
+		            </td >
+				</tr>            
+				<tr>
+		            <td>
+		              13. Año: {{vehiculo.anho}} 
+		            </td>
+		            <td>
+		              14. Placa: {{vehiculo.placa}}
+		            </td>
+		            <td>
+		              15. Peso: {{vehiculo.peso}}
+		            </td>
+		            <td>
+		              16. {{vehiculo.fk_tipo_manejo.nombre}}
+		            </td>
+		            <td>
+		              17. Kilometraje: {{vehiculo.kilometraje}}
+		            </td>
+		            <td colspan="2">
+		              18. Serial del Motor: {{vehiculo.serial_motor}}
+		            </td>
+				</tr>  
+				<tr>
+		            <td colspan="2">
+		              19 Serial de Carroceria. Año: {{vehiculo.anho}} 
+		            </td>
+		            <td colspan="2">
+		              20. Valor Estimado: {{vehiculo.placa}}
+		            </td>
+		            <td colspan="2">
+		              21. Nombre del Inspector: {{vehiculo.fk_inspector.nombre|capfirst}} {{vehiculo.fk_inspector.apellido|capfirst}}
+		            </td>
+		            <td>
+		              22. C.I Nro. {{vehiculo.fk_inspector.cedula}}
+		            </td>
+				</tr>            
+        	</table>
+		</div>
 	</div>
+
 
 
 
@@ -166,21 +179,21 @@
 			<table class="table table-bordered">
 				<thead>
 				{# style="width:14%" #}
-					<th style="width:15%"><center>PARTES</center></th>
-					<th style="width:2%"><center>B</center></th>
-					<th style="width:2%"><center>R</center></th>
-					<th style="width:2%"><center>M</center></th>
-					<th style="width:9%"><center>OBSERVACI&Oacute;NES</center></th>
-					<th style="width:15%"><center>PARTES</center></th>
-					<th style="width:2%"><center>B</center></th>
-					<th style="width:2%"><center>R</center></th>
-					<th style="width:2%"><center>M</center></th>
-					<th style="width:9%"><center>OBSERVACI&Oacute;NES</center></th>
-					<th style="width:15%"><center>PARTES</center></th>
-					<th style="width:2%"><center>B</center></th>
-					<th style="width:2%"><center>R</center></th>
-					<th style="width:2%"><center>M</center></th>
-					<th style="width:9%"><center>OBSERVACI&Oacute;NES</center></th>
+					<th id="partes"><center>PARTES</center></th>
+					<th id="B"><center>B</center></th>
+					<th id="R"><center>R</center></th>
+					<th id="M" ><center>M</center></th>
+					<th id="observacion"><center>OBSERVACI&Oacute;NES</center></th>
+					<th id="partes2"><center>PARTES</center></th>
+					<th id="B2"><center>B</center></th>
+					<th id="R2"><center>R</center></th>
+					<th id="M2"><center>M</center></th>
+					<th id="observacion2"><center>OBSERVACI&Oacute;NES</center></th>
+					<th id="partes3"><center>PARTES</center></th>
+					<th id="B3"><center>B</center></th>
+					<th id="R3"><center>R</center></th>
+					<th id="M3"><center>M</center></th>
+					<th id="observacion3"><center>OBSERVACI&Oacute;NES</center></th>
 					
 				</thead>
 				<tbody>
@@ -417,7 +430,7 @@
 		<tr>
 	    	<td colspan="2" rowspan="5" style="width:50%" >
 
-	    		carro
+	    		<img src="/static/img/car.jpg" alt="..." style="width:100%;height: 100%;">
 
 	    	</td>
 	    	<td colspan="2" style="width:50%" >

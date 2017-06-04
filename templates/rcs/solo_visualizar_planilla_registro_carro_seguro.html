@@ -6,373 +6,484 @@
       <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
       <!-- Bootstrap -->
-      <link href="/static/css/bootstrap.min.css"  rel="stylesheet" type="text/css" />
-      <link href="/static/css/font-awesome.min.css"  rel="stylesheet" type="text/css"/>
-      <link href="/static/css/rcs/pdf_style.css"  rel="stylesheet" type="text/css"/>
+      <link href="{{ http_host }}/static/css/bootstrap.min.css"  rel="stylesheet" type="text/css" />
+      <link href="{{ http_host }}/static/css/font-awesome.min.css"  rel="stylesheet" type="text/css"/>
+      <link href="{{ http_host }}/static/css/rcs/pdf_style.css"  rel="stylesheet" type="text/css"/>
       {# <link href="{{ http_host }}/static/css/bootstrap.min.css"  rel="stylesheet" type="text/css" /> #}
       {# <link href="{{ http_host }}/static/css/font-awesome.min.css"  rel="stylesheet" type="text/css"/> #}
 
 
-<section id="content">
-<div class="container">
-<div class="well" style="background-color:white; ">
+<section class="content">
+	<div class="container">
 
-
-	<div class="row">
-		 <table class="table table-bordered" border="1" style="width:100%;margin-bottom:0;margin-top:0px;">
-        	<tr>
-                <td colspan="2" style="width:100%; background-color: white;"><center> DATOS DEL VEH&Iacute;CULO</center></td>
-            </tr>
-            <td rowspan="2"  >
-              Nombre y apellido del Titular: <br>
-              <center><h4>{{titular_vehiculo.nombre}} {{titular_vehiculo.apellido}}</h4></center>
-            </td>
-            <td   >
-              Cedula de identidad:  {{titular_vehiculo.cedula}}
-            </td>
-            
-            <tr>
-            	<td   >
-              		Tel&eacute;fono:  {{titular_vehiculo.telefono}}
-            	</td>	
-			</tr>
-        </table>
-        {% if trajo_alguien_mas %}
-            
-	        <table class="table table-bordered" border="1" style="width:100%;margin-bottom:0;margin-top:0px;">
-	            <td rowspan="2"  >
-	              Nombre y apellido de la persona que trajo el veh&iacute;culo a la inspecci&oacute;n:<br>
-              		<center><h4>{{trajo_vehiculo.nombre}} {{trajo_vehiculo.apellido}}</h4></center>
-	            </td>
-	            <td>
-	              Cedula de identidad:  {{trajo_vehiculo.cedula}}
-	            </td>
-	            
-	            <tr>
-	            	<td>
-	              		Parentesco con el titular: {{trajo_vehiculo.parentesco}}
-	            	</td>	            
-	              </tr>
-	        </table>
-        
-        {% endif %}
-        <br>
-
-        
-	</div>
-	{# Datos vehiculo  #}
-	<div class="row">
-        <table class="table table-bordered" border="1" style="width:100%;margin-bottom:0;margin-top:0px;">
-            <tr>
-	            <td>
-	              7. Marca: {{vehiculo.marca}}
-	            </td>
-	            <td>
-	              8. Modelo: {{vehiculo.modelo}}
-	            </td>
-	            <td>
-	              9. Cap. Puestos: {{vehiculo.cap_puestos}}
-	            </td>
-	            <td>
-	              10. Cilindros: {{vehiculo.cilindros}}
-	            </td>
-	            <td>
-	              11. Color: {{vehiculo.color}}
-	            </td>
-	            <td colspan="2">
-	              12. Tipo: {{vehiculo.fk_tipo_vehiculo.nombre}}
-	            </td >
-			</tr>            
-			<tr>
-	            <td>
-	              13. Año: {{vehiculo.anho}} 
-	            </td>
-	            <td>
-	              14. Placa: {{vehiculo.placa}}
-	            </td>
-	            <td>
-	              15. Peso: {{vehiculo.peso}}
-	            </td>
-	            <td>
-	              16. {{vehiculo.fk_tipo_manejo.nombre}}
-	            </td>
-	            <td>
-	              17. Kilometraje: {{vehiculo.kilometraje}}
-	            </td>
-	            <td colspan="2">
-	              18. Serial del Motor: {{vehiculo.serial_motor}}
-	            </td>
-			</tr>  
-			<tr>
-	            <td colspan="2">
-	              19 Serial de Carroceria. Año: {{vehiculo.anho}} 
-	            </td>
-	            <td colspan="2">
-	              20. Valor Estimado: {{vehiculo.placa}}
-	            </td>
-	            <td colspan="2">
-	              21. Nombre del Inspector: {{vehiculo.fk_inspector.nombre|capfirst}} {{vehiculo.fk_inspector.apellido|capfirst}}
-	            </td>
-	            <td>
-	              22. C.I Nro. {{vehiculo.fk_inspector.cedula}}
-	            </td>
-			</tr>            
-        </table>
-	</div>
-
-
-
-	{# Condiciones Generales del vehiculo #}
-	<div class="row">
-		<center>
-		    <section>
-		        <div class="title">Condiciones Generales del Veh&iacute;culo</div>
-			</section>
-		</center>
-		
-		<div class="col-xs-12">
-			<table class="table table-bordered">
-				<thead>
-				{# style="width:14%" #}
-					<th style="width:15%"><center>PARTES</center></th>
-					<th style="width:2%"><center>B</center></th>
-					<th style="width:2%"><center>R</center></th>
-					<th style="width:2%"><center>M</center></th>
-					<th style="width:9%"><center>OBSERVACI&Oacute;NES</center></th>
-					<th style="width:15%"><center>PARTES</center></th>
-					<th style="width:2%"><center>B</center></th>
-					<th style="width:2%"><center>R</center></th>
-					<th style="width:2%"><center>M</center></th>
-					<th style="width:9%"><center>OBSERVACI&Oacute;NES</center></th>
-					<th style="width:15%"><center>PARTES</center></th>
-					<th style="width:2%"><center>B</center></th>
-					<th style="width:2%"><center>R</center></th>
-					<th style="width:2%"><center>M</center></th>
-					<th style="width:9%"><center>OBSERVACI&Oacute;NES</center></th>
-					
-				</thead>
-				<tbody>
-					<tr class="keeptogether">
-								
-					{% for condicion in condiciones  %}
-						{% if forloop.counter|primera_col %}
-						<td>{{condicion.parte}}</td>
-						<td>{% if condicion.fk_estado_vehiculo.codigo == 'B' %}X{% endif %}</td>
-						<td>{% if condicion.fk_estado_vehiculo.codigo == 'R' %}X{% endif %}</td>
-						<td>{% if condicion.fk_estado_vehiculo.codigo == 'M' %}X{% endif %}</td>
-						<td>{{condicion.observacion}}</td>
-					{% endif %}
-					{% if forloop.counter|segunda_col %}
-						<td>{{condicion.parte}}</td>
-						<td>{% if condicion.fk_estado_vehiculo.codigo == 'B' %}X{% endif %}</td>
-						<td>{% if condicion.fk_estado_vehiculo.codigo == 'R' %}X{% endif %}</td>
-						<td>{% if condicion.fk_estado_vehiculo.codigo == 'M' %}X{% endif %}</td>
-						<td>{{condicion.observacion}}</td>
-					{% endif %}
-					{% if forloop.counter|tercera_col %}
-						<td>{{condicion.parte}}</td>
-						<td>{% if condicion.fk_estado_vehiculo.codigo == 'B' %}X{% endif %}</td>
-						<td>{% if condicion.fk_estado_vehiculo.codigo == 'R' %}X{% endif %}</td>
-						<td>{% if condicion.fk_estado_vehiculo.codigo == 'M' %}X{% endif %}</td>
-						<td>{{condicion.observacion}}</td>
-					{% endif %}
-						{% if forloop.counter|divisibleby:3 %}
-							</tr>
-							<tr class="keeptogether">
-						{% endif %}
-					{% endfor %}
-				</tbody>
-			</table>
-		</div>
-	</div>
-
-	{# Mecanica del vehiculo #}
-	<div class="row">
-		<center>
-		    <section>
-		        <div class="title">Mec&aacute;nica del Veh&iacute;culo</div>
-			</section>
-		</center>
-		<div class="col-xs-12">
-			<table class="table table-bordered">
-				<thead>
-				{# style="width:14%" #}
-					<th style="width:15%"><center>PARTES</center></th>
-					<th style="width:2%"><center>B</center></th>
-					<th style="width:2%"><center>R</center></th>
-					<th style="width:2%"><center>M</center></th>
-					<th style="width:9%"><center>OBSERVACI&Oacute;NES</center></th>
-					<th style="width:15%"><center>PARTES</center></th>
-					<th style="width:2%"><center>B</center></th>
-					<th style="width:2%"><center>R</center></th>
-					<th style="width:2%"><center>M</center></th>
-					<th style="width:9%"><center>OBSERVACI&Oacute;NES</center></th>
-					<th style="width:15%"><center>PARTES</center></th>
-					<th style="width:2%"><center>B</center></th>
-					<th style="width:2%"><center>R</center></th>
-					<th style="width:2%"><center>M</center></th>
-					<th style="width:9%"><center>OBSERVACI&Oacute;NES</center></th>
-					
-				</thead>
-				<tbody>
-					<tr>
-								
-					{% for mecanica in mecanicas  %}
-						{% if forloop.counter|primera_col %}
-							<td>{{mecanica.parte}}</td>
-							<td>{% if mecanica.fk_estado_vehiculo.codigo == 'B' %}X{% endif %}</td>
-							<td>{% if mecanica.fk_estado_vehiculo.codigo == 'R' %}X{% endif %}</td>
-							<td>{% if mecanica.fk_estado_vehiculo.codigo == 'M' %}X{% endif %}</td>
-							<td>{{mecanica.observacion}}</td>
-						{% endif %}
-						{% if forloop.counter|segunda_col %}
-							<td>{{mecanica.parte}}</td>
-							<td>{% if mecanica.fk_estado_vehiculo.codigo == 'B' %}X{% endif %}</td>
-							<td>{% if mecanica.fk_estado_vehiculo.codigo == 'R' %}X{% endif %}</td>
-							<td>{% if mecanica.fk_estado_vehiculo.codigo == 'M' %}X{% endif %}</td>
-							<td>{{mecanica.observacion}}</td>
-						{% endif %}
-						{% if forloop.counter|tercera_col %}
-							<td>{{mecanica.parte}}</td>
-							<td>{% if mecanica.fk_estado_vehiculo.codigo == 'B' %}X{% endif %}</td>
-							<td>{% if mecanica.fk_estado_vehiculo.codigo == 'R' %}X{% endif %}</td>
-							<td>{% if mecanica.fk_estado_vehiculo.codigo == 'M' %}X{% endif %}</td>
-							<td>{{mecanica.observacion}}</td>
-						{% endif %}
-						{% if forloop.counter|divisibleby:3 %}
-							</tr>
-						{% endif %}
-					{% endfor %}
-				</tbody>
-			</table>
-			</div>
-	</div>
-	
-	{# Accesorios del vehiculo #}
-	<div class="row">
-			<center>
-			    <section>
-			        <div class="title">Accesorios del Veh&iacute;culo</div>
-				</section>
-			</center>
-			
-
+		{# HEADER #}
+		<div class="row">
 			<div class="col-xs-12">
-				<table class="table table-bordered">
+				<table class="table table-bordered" border="1">
+		        	<tr>
+		            	<td align="center" rowspan="2" style="width:33%"><img src="/static/img/logo_pdf.png" alt="..." style="width:100%;"></td>
+		            	<!-- <td align="center" rowspan="2" style="width:33%"><img src="/static/img/seguros_horizontes_logo.png" alt="..." style="width:100%;"></td> -->
+
+		            	<td align="center" rowspan="2" style="width:33%" >INFORME DE INSPECCIÓN <br> AUTOMÓVIL</td>
+		            	<td align="center" style="width:33%" align="left">Fecha de elaboración: {{solicitud.fecha_creacion|fecha_formato}}</td>
+		            </tr>
+		        	<tr>
+		            	<td align="center" align="left">Hora: {{solicitud.fecha_creacion|hora_fecha_formato}}</td>
+		            </tr>
+		        </table>
+	    	</div>
+	    </div>
+
+
+		{# Motivo de la solicitud de inspeccion #}
+		<div class="row">
+			<div class="col-xs-12">
+				<table class="table table-bordered" border="1">
+		        	<tr>
+		                <td colspan="2" style="width:100%; background-color: white;"><center> MOTIVO DE LA SOLICITUD DE INSPECCIÓN</center></td>
+		            </tr>
+		            <td align="center">{{solicitud.fk_motivo_solicitud.motivo}}
+		            </td>
+		            
+		        </table>
+		        <br>
+			</div>
+		</div>
+
+
+		{# Datos vehiculo #}
+		<div class="row">
+			<div class="col-xs-12">
+				<table class="table table-bordered" border="1" style="width:100%;margin-bottom:0;margin-top:0px;">
+		        	<tr>
+		                <td colspan="2" style="width:100%; background-color: white;"><center> DATOS DEL VEH&Iacute;CULO</center></td>
+		            </tr>
+		            <td rowspan="2" style="width: 60%"  >
+		              1. Nombre y apellido del Titular: {{titular_vehiculo.nombre}} {{titular_vehiculo.apellido}}
+		            </td>
+		            <td   >
+		              2. Cedula de identidad:  {{titular_vehiculo.cedula}}
+		            </td>
+		            
+		            <tr>
+		            	<td   >
+		              		3. Tel&eacute;fono:  {{titular_vehiculo.telefono}}
+		            	</td>	
+					</tr>
+		        </table>
+		        {% if trajo_alguien_mas %}
+	            
+		        <table class="table table-bordered" border="1" style="width:100%;margin-bottom:0;margin-top:0px;">
+		            <td rowspan="2" style="width: 60%"  >
+		              4. Nombre y apellido de la persona que trajo el veh&iacute;culo a la inspecci&oacute;n: {{trajo_vehiculo.nombre}} {{trajo_vehiculo.apellido}}
+		            </td>
+		            <td>
+		              5. Cedula de identidad:  {{trajo_vehiculo.cedula}}
+		            </td>
+		            
+		            <tr>
+		            	<td>
+		              		6. Parentesco con el titular: {{trajo_vehiculo.parentesco}}
+		            	</td>	            
+		              </tr>
+		        </table>
+		        
+		        {% endif %}
+		        <br>
+			</div>
+		</div>
+
+
+		{# Datos vehiculo TablaBD #}
+		<div class="row">
+			<div class="col-xs-12">
+	        	<table class="table table-bordered" border="1" style="width:100%;margin-bottom:0;margin-top:0px;">
+		            <tr>
+			            <td  style="width: 15%">
+			              7. Marca: {{vehiculo.marca}}
+			            </td>
+			            <td style="width: 15%">
+			              8. Modelo: {{vehiculo.modelo}}
+			            </td>
+			            <td style="width: 15%">
+			              9. Cap. Puestos: {{vehiculo.cap_puestos}}
+			            </td>
+			            <td style="width: 15%">
+			              10. Cilindros: {{vehiculo.cilindros}}
+			            </td>
+			            <td>
+			              11. Color: {{vehiculo.color}}
+			            </td>
+			            <td colspan="2">
+			              12. Tipo: {{vehiculo.fk_tipo_vehiculo.nombre}}
+			            </td >
+					</tr>            
+					<tr>
+			            <td>
+			              13. Año: {{vehiculo.anho}} 
+			            </td>
+			            <td>
+			              14. Placa: {{vehiculo.placa}}
+			            </td>
+			            <td>
+			              15. Peso: {{vehiculo.peso}}
+			            </td>
+			            <td>
+			              16. {{vehiculo.fk_tipo_manejo.nombre}}
+			            </td>
+			            <td>
+			              17. Kilometraje: {{vehiculo.kilometraje}}
+			            </td>
+			            <td colspan="2">
+			              18. Serial del Motor: {{vehiculo.serial_motor}}
+			            </td>
+					</tr>  
+					<tr>
+			            <td colspan="2">
+			              19 Serial de Carroceria. Año: {{vehiculo.anho}} 
+			            </td>
+			            <td colspan="2">
+			              20. Valor Estimado: {{vehiculo.placa}}
+			            </td>
+			            <td colspan="2">
+			              21. Nombre del Inspector: {{vehiculo.fk_inspector.nombre|capfirst}} {{vehiculo.fk_inspector.apellido|capfirst}}
+			            </td>
+			            <td>
+			              22. C.I Nro. {{vehiculo.fk_inspector.cedula}}
+			            </td>
+					</tr>            
+	        	</table>
+			</div>
+		</div>
+
+		{# Condiciones Generales del vehiculo #}
+		<div class="row">
+			<div class="col-xs-12">
+				<table class="table table-bordered" style="margin-bottom:0;margin-top:0px;">
 					<thead>
-						<th style="width:19%"><center>ACCESORIOS</center></th>
-						<th style="width:2%"><center>SI</center></th>
-						<th style="width:2%"><center>NO</center></th>
-						<th style="width:5%"><center>OBSERVACI&Oacute;NES</center></th>
-						<th style="width:19%"><center>ACCESORIOS</center></th>
-						<th style="width:2%"><center>SI</center></th>
-						<th style="width:2%"><center>NO</center></th>
-						<th style="width:5%"><center>OBSERVACI&Oacute;NES</center></th>
-						<th style="width:19%"><center>ACCESORIOS</center></th>
-						<th style="width:2%"><center>SI</center></th>
-						<th style="width:2%"><center>NO</center></th>
-						<th style="width:5%"><center>OBSERVACI&Oacute;NES</center></th>
-					</thead>
-					<tbody>
 						<tr>
-									
-						{% for accesorio in accesorios  %}
+		                	<td colspan="15" style="width:100%; background-color: white;"><center> CONDICIONES GENERALES DEL VEHI&Iacute;CULO </center></td>
+		            	</tr>
+						<th style="width:9%"><center>PARTES</center></th>
+						<th style="width:3%"><center>B</center></th>
+						<th style="width:3%"><center>R</center></th>
+						<th style="width:3%"><center>M</center></th>
+						<th style="width:15%"><center>OBSERVACI&Oacute;NES</center></th>
+						<th style="width:9%"><center>PARTES</center></th>
+						<th style="width:3%"><center>B</center></th>
+						<th style="width:3%"><center>R</center></th>
+						<th style="width:3%"><center>M</center></th>
+						<th style="width:15%"><center>OBSERVACI&Oacute;NES</center></th>
+						<th style="width:9%"><center>PARTES</center></th>
+						<th style="width:3%"><center>B</center></th>
+						<th style="width:3%"><center>R</center></th>
+						<th style="width:3%"><center>M</center></th>
+						<th style="width:15%"><center>OBSERVACI&Oacute;NES</center></th>
+						
+					</thead>
+						{% for condicion in condiciones  %}
+							{% if forloop.first %}
+							<tbody class="keeptogether">
+								<tr >
+							{% endif %}
 							{% if forloop.counter|primera_col %}
-								<td>{{accesorio.accesorio}}</td>
-								<td>{% if accesorio.existe %}X{% endif %}</td>
-								<td>{% if not accesorio.existe %}X{% endif %}</td>
-								<td>{{accesorio.observacion}}</td>
+								<td >{{condicion.parte}}</td>
+								<td >{% if condicion.fk_estado_vehiculo.codigo == 'B' %}X{% endif %}</td>
+								<td >{% if condicion.fk_estado_vehiculo.codigo == 'R' %}X{% endif %}</td>
+								<td >{% if condicion.fk_estado_vehiculo.codigo == 'M' %}X{% endif %}</td>
+								<td >{{condicion.observacion}}</td>
 							{% endif %}
 							{% if forloop.counter|segunda_col %}
-								<td>{{accesorio.accesorio}}</td>
-								<td>{% if accesorio.existe %}X{% endif %}</td>
-								<td>{% if not accesorio.existe %}X{% endif %}</td>
-								<td>{{accesorio.observacion}}</td>
+								<td >{{condicion.parte}}</td>
+								<td >{% if condicion.fk_estado_vehiculo.codigo == 'B' %}X{% endif %}</td>
+								<td >{% if condicion.fk_estado_vehiculo.codigo == 'R' %}X{% endif %}</td>
+								<td >{% if condicion.fk_estado_vehiculo.codigo == 'M' %}X{% endif %}</td>
+								<td >{{condicion.observacion}}</td>
 							{% endif %}
 							{% if forloop.counter|tercera_col %}
-								<td>{{accesorio.accesorio}}</td>
-								<td>{% if accesorio.existe %}X{% endif %}</td>
-								<td>{% if not accesorio.existe %}X{% endif %}</td>
-								<td>{{accesorio.observacion}}</td>
+								<td >{{condicion.parte}}</td>
+								<td >{% if condicion.fk_estado_vehiculo.codigo == 'B' %}X{% endif %}</td>
+								<td >{% if condicion.fk_estado_vehiculo.codigo == 'R' %}X{% endif %}</td>
+								<td >{% if condicion.fk_estado_vehiculo.codigo == 'M' %}X{% endif %}</td>
+								<td >{{condicion.observacion}}</td>
 							{% endif %}
 							{% if forloop.counter|divisibleby:3 %}
+								</tr>
+								</tbody>
+								{% if not forloop.last %}
+								<tbody class="keeptogether">
+								<tr >
+								{% endif %}
+							{% endif %}
+
+							{% if forloop.last %}
+								<!-- {% if not forloop.counter|divisibleby:3 %}
+									<td ></td>
+									<td ></td>
+									<td ></td>
+									<td ></td>
+									<td ></td>
+								{% endif %} -->
+								</tr>
+							</tbody>
+							{% endif %}
+						{% endfor %}
+				</table>
+			</div>
+		</div>
+
+
+		{# Mecanica del vehiculo #}
+		<div class="row keeptogether">
+			<div class="col-xs-12">
+				<table class="table table-bordered" style="margin-bottom:0;margin-top:0px;">
+					<thead>
+						<tr>
+		                	<td colspan="15" style="width:100%; background-color: white;"><center> MEC&Aacute;NICA DEL VEHI&Iacute;CULO </center></td>
+		            	</tr>
+						<th style="width:15%"><center>PARTES</center></th>
+						<th style="width:2%"><center>B</center></th>
+						<th style="width:2%"><center>R</center></th>
+						<th style="width:2%"><center>M</center></th>
+						<th style="width:9%"><center>OBSERVACI&Oacute;NES</center></th>
+						<th style="width:15%"><center>PARTES</center></th>
+						<th style="width:2%"><center>B</center></th>
+						<th style="width:2%"><center>R</center></th>
+						<th style="width:2%"><center>M</center></th>
+						<th style="width:9%"><center>OBSERVACI&Oacute;NES</center></th>
+						<th style="width:15%"><center>PARTES</center></th>
+						<th style="width:2%"><center>B</center></th>
+						<th style="width:2%"><center>R</center></th>
+						<th style="width:2%"><center>M</center></th>
+						<th style="width:9%"><center>OBSERVACI&Oacute;NES</center></th>
+						
+					</thead>
+					<tbody>
+						
+									
+						{% for mecanica in mecanicas  %}
+							{% if forloop.first %}
+								<tr class="keeptogether">
+							{% endif %}
+							{% if forloop.counter|primera_col %}
+								<td style="width:15%" >{{mecanica.parte}}</td>
+								<td style="width:2%" >{% if mecanica.fk_estado_vehiculo.codigo == 'B' %}X{% endif %}</td>
+								<td style="width:2%" >{% if mecanica.fk_estado_vehiculo.codigo == 'R' %}X{% endif %}</td>
+								<td style="width:2%" >{% if mecanica.fk_estado_vehiculo.codigo == 'M' %}X{% endif %}</td>
+								<td style="width:9%" >{{mecanica.observacion}}</td>
+							{% endif %}
+							{% if forloop.counter|segunda_col %}
+								<td style="width:15%">{{mecanica.parte}}</td>
+								<td style="width:2%">{% if mecanica.fk_estado_vehiculo.codigo == 'B' %}X{% endif %}</td>
+								<td style="width:2%">{% if mecanica.fk_estado_vehiculo.codigo == 'R' %}X{% endif %}</td>
+								<td style="width:2%">{% if mecanica.fk_estado_vehiculo.codigo == 'M' %}X{% endif %}</td>
+								<td style="width:9%">{{mecanica.observacion}}</td>
+							{% endif %}
+							{% if forloop.counter|tercera_col %}
+								<td style="width:15%">{{mecanica.parte}}</td>
+								<td style="width:2%">{% if mecanica.fk_estado_vehiculo.codigo == 'B' %}X{% endif %}</td>
+								<td style="width:2%">{% if mecanica.fk_estado_vehiculo.codigo == 'R' %}X{% endif %}</td>
+								<td style="width:2%">{% if mecanica.fk_estado_vehiculo.codigo == 'M' %}X{% endif %}</td>
+								<td style="width:9%">{{mecanica.observacion}}</td>
+							{% endif %}
+							{% if forloop.counter|divisibleby:3 %}
+								</tr>
+								<tr>
+							{% endif %}
+							{% if forloop.last %}
+								<!-- {% if not forloop.counter|divisibleby:3 %}
+									<td style="width:15%"></td>
+									<td style="width:2%"></td>
+									<td style="width:2%"></td>
+									<td style="width:2%"></td>
+									<td style="width:9%"></td>
+									<td style="width:15%"></td>
+									<td style="width:2%"></td>
+									<td style="width:2%"></td>
+									<td style="width:2%"></td>
+									<td style="width:9%"></td>
+								{% endif %} -->
 								</tr>
 							{% endif %}
 						{% endfor %}
 					</tbody>
 				</table>
+				</div>
+		</div>
+		
+		<br>
+		{# Accesorios del vehiculo #}
+		<div class="row keeptogether">
+				<div class="col-xs-12">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+			                	<td colspan="12" style="width:100%; background-color: white;"><center> ACCESORIOS DEL VEHI&Iacute;CULO </center></td>
+			            	</tr>
+							<th ><center>ACCESORIOS</center></th>
+							<th style="width:2%"><center>SI</center></th>
+							<th style="width:2%"><center>NO</center></th>
+							<th ><center>OBSERVACI&Oacute;NES</center></th>
+							<th ><center>ACCESORIOS</center></th>
+							<th style="width:2%"><center>SI</center></th>
+							<th style="width:2%"><center>NO</center></th>
+							<th ><center>OBSERVACI&Oacute;NES</center></th>
+							<th "><center>ACCESORIOS</center></th>
+							<th style="width:2%"><center>SI</center></th>
+							<th style="width:2%"><center>NO</center></th>
+							<th ><center>OBSERVACI&Oacute;NES</center></th>
+						</thead>
+						<tbody>
+							{% for accesorio in accesorios  %}
+								{% if forloop.first %}
+									<tr>
+								{% endif %}
+								{% if forloop.counter|primera_col %}
+									<td>{{accesorio.accesorio}}</td>
+									<td>{% if accesorio.existe %}X{% endif %}</td>
+									<td>{% if not accesorio.existe %}X{% endif %}</td>
+									<td>{{accesorio.observacion}}</td>
+								{% endif %}
+								{% if forloop.counter|segunda_col %}
+									<td>{{accesorio.accesorio}}</td>
+									<td>{% if accesorio.existe %}X{% endif %}</td>
+									<td>{% if not accesorio.existe %}X{% endif %}</td>
+									<td>{{accesorio.observacion}}</td>
+								{% endif %}
+								{% if forloop.counter|tercera_col %}
+									<td>{{accesorio.accesorio}}</td>
+									<td>{% if accesorio.existe %}X{% endif %}</td>
+									<td>{% if not accesorio.existe %}X{% endif %}</td>
+									<td>{{accesorio.observacion}}</td>
+								{% endif %}
+								{% if forloop.counter|divisibleby:3 %}
+									</tr>
+									<tr>
+								{% endif %}
+								{% if forloop.last %}
+									</tr>
+								{% endif %}
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+		</div>
+
+
+		{# Detalles y Documentos #}
+		<div class="row">
+
+			{# Detalles de datos #}
+			<div class="col-xs-6">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+		                	<td colspan="4" style="width:100%; background-color: white;"><center> DETALLES DE DATOS</center></td>
+		            	</tr>
+						<th style="width:6%"><center>CODIGO</center></th>
+						<th style="width:14%"><center>92. PIEZA</center></th>
+						<th style="width:14%"><center>93. TIPO DE DAÑO</center></th>
+						<th style="width:14%"><center>94. COSTO APROX.</center></th>
+					</thead>
+					<tbody>
+									
+						{% for detalle in detalles  %}
+						<tr>
+							<td>{{detalle.codigo}}</td>
+							<td>{{detalle.pieza}}</td>
+							<td>{{detalle.tipo_dano}}</td>
+							<td>{{detalle.costo_aproximado}}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
 			</div>
-	</div>
 
-	{# Detalles y Documentos #}
-	<div class="row">
+			{# Documentos Presentados para Inspección #}
+			<div class="col-xs-6">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+		                	<td colspan="3" style="width:100%; background-color: white;"><center> DOCUMENTOS PRESENTADOS PARA LA INSPECCI&Oacute;N</center></td>
+		            	</tr>
+						<th style="width:46%"><center>DOCUMENTO</center></th>
+						<th style="width:2%"><center>SI</center></th>
+						<th style="width:2%"><center>NO</center></th>
+					</thead>
+					<tbody>
+									
+						{% for documento in documentos  %}
+						<tr>
+								<td>{{documento.nombre}}</td>
+								<td>{% if documento.recibido %}X{% endif %}</td>
+								<td>{% if not documento.recibido %}X{% endif %}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
 
-		{# Detalles de datos #}
-		<div class="col-xs-6">
-			<center>
-			    <section>
-			        <div class="title">Detalles de datos</div>
-				</section>
-			</center>
-			<table class="table table-bordered">
-				<thead>
-				{# style="width:14%" #}
-					<th style="width:6%"><center>CODIGO</center></th>
-					<th style="width:14%"><center>92. PIEZA</center></th>
-					<th style="width:14%"><center>93. TIPO DE DAÑO</center></th>
-					<th style="width:14%"><center>94. COSTO APROX.</center></th>
-				</thead>
-				<tbody>
-								
-					{% for detalle in detalles  %}
-					<tr>
-						<td>{{detalle.codigo}}</td>
-						<td>{{detalle.pieza}}</td>
-						<td>{{detalle.tipo_dano}}</td>
-						<td>{{detalle.costo_aproximado}}</td>
-					</tr>
-					{% endfor %}
-				</tbody>
-			</table>
 		</div>
 
-		{# Documentos Presentados para Inspección #}
-		<div class="col-xs-6">
-			<center>
-			    <section>
-			        <div class="title">Documentos Presentados para Inspecci&oacute;n</div>
-				</section>
-			</center>
-			<table class="table table-bordered">
-				<thead>
-				{# style="width:14%" #}
-					<th style="width:46%"><center>DOCUMENTO</center></th>
-					<th style="width:2%"><center>SI</center></th>
-					<th style="width:2%"><center>NO</center></th>
-				</thead>
-				<tbody>
-								
-					{% for documento in documentos  %}
-					<tr>
-							<td>{{documento.nombre}}</td>
-							<td>{% if documento.recibido %}X{% endif %}</td>
-							<td>{% if not documento.recibido %}X{% endif %}</td>
-					</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-		</div>
 
-	</div>
+		{# Observaciones #}
+		<div class="row">
+				<div class="col-xs-12">
+					<label aling="left">Observaciones:</label>
+					<textarea class="form-control" rows="3">{{solicitud.observaciones|default_if_none:""}}</textarea>
+				</div>
+				
+			</div>
 
-	<div class="row">
+
+		{# Foot Table #}
+		<div class="row keeptogether">
 			<div class="col-xs-12">
-				<label aling="left">Observaciones:</label>
-				<textarea class="form-control" rows="3">{{solicitud.observaciones|default_if_none:""}}</textarea>
+				<table class="table table-bordered">
+								
+					<tr>
+				    	<td colspan="2" rowspan="5" style="width:50%" >
+
+				    		<img src="/static/img/car.jpg" alt="..." >
+
+				    	</td>
+				    	<td colspan="2" style="width:50%" >
+				    		<b>NOTA:</b> 
+							La inpseccion del vehículo descrito anteriormente, no implica aceptación del riesgo por par de Horizonte S.A. los riegos que asume la empresa correrán por cuenta de la misma, desde el momento en que el asegurado haya cancelado la prima convenida.
+						</td>
+					</tr>
+				  	<tr>
+				    	<td colspan="2">
+				    		<b>Yo, el inspector declaro que:</b>
+							<br>
+							No he omitido y/o simulado, ningún hecho o circunstancia en las respuesta, que puedan modificar las condiciones de riego y que los datos indicado fueron tomados del vehículo descrito en el presente formulario y en las fotografías respectivas.
+						</td>
+				  	</tr>
+				  	<tr>
+				    	<td colspan="2" rowspan="2">
+				    		<b>Yo, el Asegurado y/o Solicitante declaro que:</b>
+							<br>
+							a) En caso de fraude o declaración falsa por mi parte, la presente inspección es NULA, siendo de igual manera NULO el Contrato que la misma respalda, censando en cuyo caso toda responsabilidad de la empresa.
+
+							<br>
+							b) De igual manera certifico todos y cada uno de los SERIALES y NUMERACIONES Y CONDICIONES indicadas por el inspector, en el presente formulario, como los correspondientes a mi (el) vehículo.
+						</td>
+				  	</tr>
+				  	<tr>
+				  	</tr>
+				  	<tr>
+				    	<td align="center"><br><br>Firma Inspector de riesgos</td>
+				    	<td align="center"><br><br>Firma Asegurado o Solicitante</td>
+				  	</tr>
+				  	<tr>
+				    	<td colspan="2" rowspan="2">Sucursal, Agencia o Unidad de Asesoramiento: SERVICIOS GENERALES</td>
+				    	<td rowspan="2" align="center"><br><br>Firma Intermediario de Seguros</td>
+				    	<td rowspan="2">Fecha: <br><br>Codigo:</td>
+				  	</tr>
+				  	<tr>
+				  	</tr>
+				</table>
 			</div>
-			
 		</div>
-	
-</div>
-</div>
+	</div>
 </section>
