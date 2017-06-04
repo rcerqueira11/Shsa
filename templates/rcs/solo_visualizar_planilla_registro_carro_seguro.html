@@ -316,7 +316,7 @@
 					<table class="table table-bordered">
 						<thead>
 							<tr>
-			                	<td colspan="12" style="width:100%; background-color: white;"><center> ACCESORIOS DEL VEHI&Iacute;CULO </center></td>
+			                	<td colspan="12" style="width:100%; font-weight: bold; background-color: white;"><center> ACCESORIOS DEL VEHI&Iacute;CULO </center></td>
 			            	</tr>
 							<th ><center>ACCESORIOS</center></th>
 							<th style="width:2%"><center>SI</center></th>
@@ -376,7 +376,7 @@
 				<table class="table table-bordered">
 					<thead>
 						<tr>
-		                	<td colspan="4" style="width:100%; background-color: white;"><center> DETALLES DE DATOS</center></td>
+		                	<td colspan="4" style="width:100%; font-weight: bold; background-color: white;"><center> DETALLES DE DATOS</center></td>
 		            	</tr>
 						<th style="width:6%"><center>CODIGO</center></th>
 						<th style="width:14%"><center>92. PIEZA</center></th>
@@ -402,7 +402,7 @@
 				<table class="table table-bordered">
 					<thead>
 						<tr>
-		                	<td colspan="3" style="width:100%; background-color: white;"><center> DOCUMENTOS PRESENTADOS PARA LA INSPECCI&Oacute;N</center></td>
+		                	<td colspan="3" style="width:100%; font-weight: bold; background-color: white;"><center> DOCUMENTOS PRESENTADOS PARA LA INSPECCI&Oacute;N</center></td>
 		            	</tr>
 						<th style="width:46%"><center>DOCUMENTO</center></th>
 						<th style="width:2%"><center>SI</center></th>
@@ -426,13 +426,13 @@
 
 		{# Observaciones #}
 		<div class="row">
-				<div class="col-xs-12">
-					<label aling="left">Observaciones:</label>
-					<textarea class="form-control" rows="3">{{solicitud.observaciones|default_if_none:""}}</textarea>
-				</div>
-				
+			<div class="col-xs-12">
+				<label aling="left">Observaciones:</label>
+				<textarea class="form-control" rows="3">{{solicitud.observaciones|default_if_none:""}}</textarea>
 			</div>
+		</div>
 
+		<br>
 
 		{# Foot Table #}
 		<div class="row keeptogether">
@@ -476,7 +476,7 @@
 				  	<tr>
 				    	<td colspan="2" rowspan="2">Sucursal, Agencia o Unidad de Asesoramiento: SERVICIOS GENERALES</td>
 				    	<td rowspan="2" align="center"><br><br>Firma Intermediario de Seguros</td>
-				    	<td rowspan="2">Fecha: <br><br>Codigo:</td>
+				    	<td rowspan="2">Fecha: {% now  "d/m/Y" %} <br><br>Codigo:</td>
 				  	</tr>
 				  	<tr>
 				  	</tr>

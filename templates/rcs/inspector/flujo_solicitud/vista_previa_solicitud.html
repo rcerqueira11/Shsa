@@ -416,12 +416,13 @@
 		<div class="row">
 			<div class="col-xs-12">
 				<label aling="left">Observaciones:</label>
-				<textarea name="observaciones_solicitud" class="form-control" rows="3">{{solicitud.observaciones|default_if_none:""}}</textarea>
+				<textarea name="observaciones_solicitud" class="form-control" rows="3" placeholder="Click para agregar observaciones referentes a la solicitud">{{solicitud.observaciones|default_if_none:""}}</textarea>
 			</div>
 			
 		</div>
 
 	</form>
+	<br>
 
 	{# Foot Table #}
 			
