@@ -24,12 +24,10 @@
           <li><a href="{% url "bandeja_solicitudes" %}">Bandeja Solicitudes</a></li>
         
         {# {% endif %}  #}
-        {% if request|es_taquilla %}
             
           <li><a href="{% url "bandeja_tickets" %}">Tickets Creados</a></li>
           <li><a href="{% url "crear_solicitud" %}">Crear Solicitud</a></li>
         
-        {% endif %}
         {% if request|es_admin %}
 
           <li><a href="{% url "bandeja_titulares" %}">Bandeja Titurales</a></li>

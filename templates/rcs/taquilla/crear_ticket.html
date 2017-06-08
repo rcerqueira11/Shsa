@@ -35,7 +35,7 @@
 	 		<div class="col-xs-3">
 		 		<label>Placa del Vehiculo</label>
 				{% input_content form_data 'placa' as input %}
-				<input type="text" id="id_placa" class="form-control" name="placa" value="{{ input.value }}">
+				<input type="text" id="id_placa" class="form-control placa-mask" name="placa" value="{{ input.value }}">
 				<div class="error" id="placa_error">{{ input.error }}</div>
 
 	 		</div>	
@@ -72,7 +72,7 @@
 			<div class="col-xs-3">
 			<label>Tel&eacute;fono</label>
 				{% input_content form_data 'telefono_titular' as input %}
-				<input type="text" id="id_telefono_titular" class="form-control"  name="telefono_titular" value="{{ input.value }}" >
+				<input type="text" id="id_telefono_titular" class="form-control tlf-cel-mask"  name="telefono_titular" value="{{ input.value }}" >
 				<div class="error" id="telefono_titular_error">{{input.error}}</div>
 			</div>
 			

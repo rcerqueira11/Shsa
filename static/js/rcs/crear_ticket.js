@@ -48,6 +48,9 @@ $('#form_crear_ticket input[name=radio_titular]').on('change', function() {
     }
 });
 
+$(document).on('keypress','#id_placa',function(){
+	$("#id_placa").val($("#id_placa").val().toUpperCase())
+})
 
 
 function submit_form_crear_solicitud(){
