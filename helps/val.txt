@@ -10,3 +10,9 @@ eliminar solicitud
 if vehiculo no esta en otra solicitud aparte de esta eliminar vehiculo (placa)
 if titular no esta en otro vehiculo (mas de dos porque no he eliminado la sol todavia) eliminar titular
 if trajo no esta en otro solicitud (mas de dos porque no he eliminado la sol todavia)
+
+
+
+
+usuario.taq.tesis@gmail.com
+usuario.ins.tesis@gmail.com
