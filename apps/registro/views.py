@@ -202,10 +202,10 @@ class RegistroUsuario(View):
             request.POST['username'] = request.POST['username'].strip()
 
         if request.POST.get('nombre') != None:
-            request.POST['nombre'] = elimina_tildes(request.POST['nombre'].lower().strip())
+            request.POST['nombre'] = elimina_tildes(request.POST['nombre'].upper().strip())
 
         if request.POST.get('apellido') != None:
-            request.POST['apellido'] = elimina_tildes(request.POST['apellido'].lower().strip())
+            request.POST['apellido'] = elimina_tildes(request.POST['apellido'].upper().strip())
         
         if request.POST.get('cedula') != None:
             request.POST['cedula'] = request.POST['cedula'].strip()
