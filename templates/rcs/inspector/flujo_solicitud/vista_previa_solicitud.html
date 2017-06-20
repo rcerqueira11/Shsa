@@ -3,6 +3,7 @@
 {% load rcs_tags %}
 {% block extra_css %}
     <link href="/static/css/rcs/common_style.css"  rel="stylesheet" type="text/css"/>
+    <link href="/static/css/rcs/car_style.css"  rel="stylesheet" type="text/css"/>
 {% endblock extra_css %}
 
 {% block main_content %}
@@ -431,7 +432,9 @@
 		<tr>
 	    	<td colspan="2" rowspan="5" style="width:50%" >
 
-	    		<img src="/static/img/car.jpg" alt="..." style="width:100%;height: 100%;">
+	    		<!-- <img src="/static/img/vehiculo.svg" alt="..." style="width:100%;height: 100%;"> -->
+
+	    		{% include "rcs/svg.html" %}
 
 	    	</td>
 	    	<td colspan="2" style="width:50%" >
