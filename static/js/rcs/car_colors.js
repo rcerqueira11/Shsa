@@ -26,6 +26,15 @@ $(document).on('ready',function(){
 	color_part($("#CAUCH").val(), "rueda-delanteraderecha");   
 	color_part($("#CAUCH").val(), "rueda-traseraderecha");   
 	color_part($("#CAUCH").val(), "rueda-delanteraizquierda");   
+	color_part($("#PLAT").val(), "platina-izquierda");   
+	color_part($("#PLAT").val(), "platina-derecha");   
+	color_part($("#COMP_TRAS").val(), "manilla-trasera");   
+	color_part($("#VENT").val(), "ventana-trasera");   
+	color_part($("#VENT").val(), "ventana-derechafrente");   
+	color_part($("#VENT").val(), "ventana-izquierdafrente");   
+	color_part($("#VENT").val(), "ventana-derechatrasera");   
+	color_part($("#VENT").val(), "ventana-izquierdatrasera");   
+	// color_part($("#PLAT").val(), "ventana-trasera");   
 
 
 
