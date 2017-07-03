@@ -217,3 +217,9 @@ def hora_fecha_formato(x):
     return fecha
 
 
+@register.filter(name='normalize_id')
+def normalize_id(x):
+    id_normal = x[:len(x)-2]
+    return id_normal
+
+

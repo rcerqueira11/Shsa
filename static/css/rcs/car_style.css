@@ -1,14 +1,11 @@
-#focosdelanteros-derecho path{
+/*#focosdelanteros-derecho path{
     fill: red;
 }
 #focosdelanteros-izquierdo path{
-    fill: green;
+    fill: green ;
 }
 
-
-#capot path {
-	fill: green;
-}
+*/
 
 
  /*$('#capot path').css({ fill: "blue" })*/

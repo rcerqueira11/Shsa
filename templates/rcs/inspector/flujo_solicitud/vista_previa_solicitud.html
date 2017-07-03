@@ -202,25 +202,28 @@
 								
 					{% for condicion in condiciones  %}
 						{% if forloop.counter|primera_col %}
-						<td>{{condicion.parte}}</td>
+						<td>{{condicion.parte}} {{condicion.codigo|normalize_id}}</td>
 						<td>{% if condicion.fk_estado_vehiculo.codigo == 'B' %}X{% endif %}</td>
 						<td>{% if condicion.fk_estado_vehiculo.codigo == 'R' %}X{% endif %}</td>
 						<td>{% if condicion.fk_estado_vehiculo.codigo == 'M' %}X{% endif %}</td>
-						<td>{{condicion.observacion}}</td>
+						<td>{{condicion.observacion}}</td> 
+						<input type="text" id="{{condicion.codigo|normalize_id}}" value="{{condicion.fk_estado_vehiculo.codigo}}" hidden>
 					{% endif %}
 					{% if forloop.counter|segunda_col %}
-						<td>{{condicion.parte}}</td>
+						<td>{{condicion.parte}} {{condicion.codigo|normalize_id}}</td>
 						<td>{% if condicion.fk_estado_vehiculo.codigo == 'B' %}X{% endif %}</td>
 						<td>{% if condicion.fk_estado_vehiculo.codigo == 'R' %}X{% endif %}</td>
 						<td>{% if condicion.fk_estado_vehiculo.codigo == 'M' %}X{% endif %}</td>
 						<td>{{condicion.observacion}}</td>
+						<input type="text" id="{{condicion.codigo|normalize_id}}" value="{{condicion.fk_estado_vehiculo.codigo}}" hidden>
 					{% endif %}
 					{% if forloop.counter|tercera_col %}
-						<td>{{condicion.parte}}</td>
+						<td>{{condicion.parte}} {{condicion.codigo|normalize_id}}</td>
 						<td>{% if condicion.fk_estado_vehiculo.codigo == 'B' %}X{% endif %}</td>
 						<td>{% if condicion.fk_estado_vehiculo.codigo == 'R' %}X{% endif %}</td>
 						<td>{% if condicion.fk_estado_vehiculo.codigo == 'M' %}X{% endif %}</td>
 						<td>{{condicion.observacion}}</td>
+						<input type="text" id="{{condicion.codigo|normalize_id}}" value="{{condicion.fk_estado_vehiculo.codigo}}" hidden>
 					{% endif %}
 						{% if forloop.counter|divisibleby:3 %}
 							</tr>
@@ -491,5 +494,6 @@
 
 {% block extra_script %}
  	<script src="{{STATIC_URL}}js/rcs/completar_solictud.js"></script>
+ 	<script src="{{STATIC_URL}}js/rcs/car_colors.js"></script>
 
 {% endblock extra_script %}
