@@ -485,7 +485,7 @@ class SolicitudInspeccion(models.Model):
                     condiciones.append(Q(fk_vehiculo__placa__icontains=placa))
 
                 if cedula:
-                    condiciones.append(Q(fk_vehiculo__fk_titular_vechiculo__cedula__icontains=cedula))
+                    condiciones.append(Q(fk_titular_vechiculo__cedula__icontains=cedula))
 
                 if estado_sol:
                     condiciones.append(Q(fk_estado_solicitud__codigo=estado_sol))
@@ -499,7 +499,7 @@ class SolicitudInspeccion(models.Model):
                     condiciones.append(Q(fk_vehiculo__placa__icontains=placa))
 
                 if cedula:
-                    condiciones.append(Q(fk_vehiculo__fk_titular_vechiculo__cedula__icontains=cedula))
+                    condiciones.append(Q(fk_titular_vehiculo__cedula__icontains=cedula))
 
                 condiciones.append(Q(fk_estado_solicitud__codigo="PEND_INSP"))
                 condiciones.append(Q(fk_vehiculo__peso=None))
@@ -604,6 +604,14 @@ class SolicitudInspeccion(models.Model):
 
             if filter_code == "TICKETS_ABIERTOS":
                 en_rev = en_revision(d['id'])
+                if d['fk_estado_solicitud__codigo'] == 'PEND_INSP':
+                    d['fk_estado_solicitud__codigo'] = "ABIERTA"
+
+                if d['fk_estado_solicitud__codigo'] == 'PEND_GEST':
+                    d['fk_estado_solicitud__codigo'] = "POR GESTIONAR"
+
+                if d['fk_estado_solicitud__codigo'] == 'CERRADA':
+                    d['fk_estado_solicitud__codigo'] = "CERRADA"
                 d['options'] = []
 
                 d['options'].append({
