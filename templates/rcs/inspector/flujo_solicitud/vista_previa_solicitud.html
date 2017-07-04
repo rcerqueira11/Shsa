@@ -202,7 +202,7 @@
 								
 					{% for condicion in condiciones  %}
 						{% if forloop.counter|primera_col %}
-						<td>{{condicion.parte}} {{condicion.codigo|normalize_id}}</td>
+						<td>{{condicion.parte}}</td>
 						<td>{% if condicion.fk_estado_vehiculo.codigo == 'B' %}X{% endif %}</td>
 						<td>{% if condicion.fk_estado_vehiculo.codigo == 'R' %}X{% endif %}</td>
 						<td>{% if condicion.fk_estado_vehiculo.codigo == 'M' %}X{% endif %}</td>
@@ -210,7 +210,7 @@
 						<input type="text" id="{{condicion.codigo|normalize_id}}" value="{{condicion.fk_estado_vehiculo.codigo}}" hidden>
 					{% endif %}
 					{% if forloop.counter|segunda_col %}
-						<td>{{condicion.parte}} {{condicion.codigo|normalize_id}}</td>
+						<td>{{condicion.parte}}</td>
 						<td>{% if condicion.fk_estado_vehiculo.codigo == 'B' %}X{% endif %}</td>
 						<td>{% if condicion.fk_estado_vehiculo.codigo == 'R' %}X{% endif %}</td>
 						<td>{% if condicion.fk_estado_vehiculo.codigo == 'M' %}X{% endif %}</td>
@@ -218,7 +218,7 @@
 						<input type="text" id="{{condicion.codigo|normalize_id}}" value="{{condicion.fk_estado_vehiculo.codigo}}" hidden>
 					{% endif %}
 					{% if forloop.counter|tercera_col %}
-						<td>{{condicion.parte}} {{condicion.codigo|normalize_id}}</td>
+						<td>{{condicion.parte}}</td>
 						<td>{% if condicion.fk_estado_vehiculo.codigo == 'B' %}X{% endif %}</td>
 						<td>{% if condicion.fk_estado_vehiculo.codigo == 'R' %}X{% endif %}</td>
 						<td>{% if condicion.fk_estado_vehiculo.codigo == 'M' %}X{% endif %}</td>
