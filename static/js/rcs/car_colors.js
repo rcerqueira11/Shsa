@@ -34,6 +34,8 @@ $(document).on('ready',function(){
 	color_part($("#VENT").val(), "ventana-izquierdafrente");   
 	color_part($("#VENT").val(), "ventana-derechatrasera");   
 	color_part($("#VENT").val(), "ventana-izquierdatrasera");   
+	color_part($("#SOP_FOC_TRAS").val(), "focostraseros-izquierdo");   
+	color_part($("#SOP_FOC_TRAS").val(), "focostraseros-derecho");   
 	// color_part($("#PLAT").val(), "ventana-trasera");   
 
 
