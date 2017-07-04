@@ -29,4 +29,4 @@ echo "Cargando Fixtures de Administrador"
 python manage.py loaddata apps/administracion/fixtures/0*
 
 # 
-python manage.py loaddata helps/all_to_val.json
+# python manage.py loaddata helps/all_to_val.json

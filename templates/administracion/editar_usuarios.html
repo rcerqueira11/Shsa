@@ -67,9 +67,9 @@
 				<label>Apellido</label>	
 				{% input_content form_data 'apellido' as input %}
 				{% if input.value|check_input or input.error|check_input %}
-				<input type="text" name="apellido" placeholder="Arismendi" class="input-mask-n form-control input-lg" id="id_apellido" value="{{ input.value }}" required/>
+				<input type="text" name="apellido" placeholder="apellido" class="input-mask-n form-control input-lg" id="id_apellido" value="{{ input.value }}" required/>
 				{% else %}
-				<input type="text" name="apellido" placeholder="Arismendi" class="input-mask-n form-control input-lg" id="id_apellido" value="{{ usuario.apellido }}" required/>
+				<input type="text" name="apellido" placeholder="apellido" class="input-mask-n form-control input-lg" id="id_apellido" value="{{ usuario.apellido }}" required/>
 				{% endif %}
 				<div class="error" id="apellido_error" >{{input.error}}</div>
 			</div>
