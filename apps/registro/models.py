@@ -154,7 +154,7 @@ class Usuario(AbstractBaseUser):
 					'icon': 'fa fa-pencil-square-o white-icon',
 					'class': 'btn btn-info editar_boton',
 					'href': '/administracion/editar_usuario/?'+urllib.urlencode({"usuario_id":d['id']}),
-					'status': 'disabled' if tiene_sol_cerrada else '',
+					'status': '',
 					})
 				if Usuario.objects.get(id = secure_value_decode(str(d['id']))).is_active:
 					d['options'].append({

@@ -308,11 +308,16 @@ class EditarUsuario(View):
         id_usuario = secure_value_decode(data.GET['usuario_id'])
         usuario = Usuario.objects.get(id= id_usuario) 
         tipo_usuario = TipoUsuario.objects.all().exclude(codigo="ADM").order_by('nombre')
+        tiene_sol_cerrada = False
+        if usuario.fk_tipo_usuario.codigo =="INSP":
+            tiene_sol_cerrada = SolicitudInspeccion.objects.filter(fk_inspector=usuario.id,fk_estado_solicitud__codigo="CERRADA").exists()
+
         context = {
             'nombre': data.user.nombre if 'user' in data else "",
             'username': data.user.username if 'user' in data else "",
             'usuario': usuario,
             'tipos_de_usuario': tipo_usuario,
+            'tiene_sol_cerrada': tiene_sol_cerrada,
         }
         
         
@@ -452,7 +457,7 @@ class EliminarUsuario(View):
         else:
             if SolicitudInspeccion.objects.filter(Q(fk_inspector=usuario)).exists():
                 response={'results': 'inspec_pendiente_inspeccion',}
-                response['mensaje'] = "No se puede eliminar el usuario ya que tiene ha evaluado una solicitud anteriormente."
+                response['mensaje'] = "No se puede eliminar el usuario ya que ha evaluado una solicitud anteriormente."
             else:
                 with transaction.atomic():
                     usuario.delete()

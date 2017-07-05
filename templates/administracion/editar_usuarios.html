@@ -29,12 +29,17 @@
 	 		<div class="col-xs-3 ">
 	 			<!-- <div class="col-xs-4"> -->
 		        <label>Tipo de usuario</label>
-		        <select  data-placeholder="Seleccionar usuario"  class="form-control chosen-select" name="tipo_usuario" id='id_tipo_usuario' >
-		        {% for e in tipos_de_usuario %}
-		              <option value="{{ e.codigo }}" {% if usuario.fk_tipo_usuario.codigo == e.codigo %} 
-		              selected="true" {% endif %} >{{ e.nombre|title }}</option>
-		        {% endfor %}
-		        </select>
+				{% if tiene_sol_cerrada %}
+					<input type="text" placeholder="tipo de usuario" value = "{{usuario.fk_tipo_usuario.nombre|title}}" class="form-control input-lg" readonly/>			        
+					
+		        {% else  %}
+			        <select  data-placeholder="Seleccionar usuario"  class="form-control chosen-select" name="tipo_usuario" id='id_tipo_usuario' >
+			        {% for e in tipos_de_usuario %}
+			              <option value="{{ e.codigo }}" {% if usuario.fk_tipo_usuario.codigo == e.codigo %} 
+			              selected="true" {% endif %} >{{ e.nombre|title }}</option>
+			        {% endfor %}
+			        </select>
+		        {% endif %}
 	        </div>
 
  		</div>
@@ -54,48 +59,68 @@
 		<div class="row">
 			<div class="col-xs-6">
 				<label>Nombre</label>
-				{% input_content form_data 'nombre' as input %}
-				{% if input.value|check_input or input.error|check_input %}
-				<input type="text" name="nombre" placeholder="nombre" id="id_nombre" class="form-control input-lg" value="{{ input.value }}" required/>
+
+				{% if tiene_sol_cerrada %}
+				   <input type="text" placeholder="nombre" class="input-mask-n form-control input-lg" value="{{ usuario.nombre }}" readonly/>
 				{% else %}
-				<input type="text" name="nombre" placeholder="nombre" id="id_nombre" class="form-control input-lg" value="{{ usuario.nombre }}" required/>
+					{% input_content form_data 'nombre' as input %}
+					{% if input.value|check_input or input.error|check_input %}
+					<input type="text" name="nombre" placeholder="nombre" id="id_nombre" class="form-control input-lg" value="{{ input.value }}" required/>
+					{% else %}
+					<input type="text" name="nombre" placeholder="nombre" id="id_nombre" class="form-control input-lg" value="{{ usuario.nombre }}" required/>
+					{% endif %}
+					<div class="error" id="nombre_error" >{{input.error}}</div>
 				{% endif %}
-				<div class="error" id="nombre_error" >{{input.error}}</div>
 			</div>
 
 			<div class="col-xs-6">
 				<label>Apellido</label>	
-				{% input_content form_data 'apellido' as input %}
-				{% if input.value|check_input or input.error|check_input %}
-				<input type="text" name="apellido" placeholder="apellido" class="input-mask-n form-control input-lg" id="id_apellido" value="{{ input.value }}" required/>
+				{% if tiene_sol_cerrada %}
+				   <input type="text" placeholder="apellido" class="input-mask-n form-control input-lg" value="{{ usuario.apellido }}" readonly/>
 				{% else %}
-				<input type="text" name="apellido" placeholder="apellido" class="input-mask-n form-control input-lg" id="id_apellido" value="{{ usuario.apellido }}" required/>
+					
+					{% input_content form_data 'apellido' as input %}
+					{% if input.value|check_input or input.error|check_input %}
+					<input type="text" name="apellido" placeholder="apellido" class="input-mask-n form-control input-lg" id="id_apellido" value="{{ input.value }}" required/>
+					{% else %}
+					<input type="text" name="apellido" placeholder="apellido" class="input-mask-n form-control input-lg" id="id_apellido" value="{{ usuario.apellido }}" required/>
+					{% endif %}
+					<div class="error" id="apellido_error" >{{input.error}}</div>
 				{% endif %}
-				<div class="error" id="apellido_error" >{{input.error}}</div>
 			</div>
 		</div>
 		<br>
 		<div class="row">
 			<div class="col-xs-6">
 				<label>Correo</label>
-				{% input_content form_data 'correo_electronico' as input %}
-				{% if input.value|check_input or input.error|check_input %}
-				<input type="email" name="correo_electronico" placeholder="nombre@dominio.com" id="id_correo_electronico" class="form-control input-lg" placeholder="Nombre@Dominio.com" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off value="{{ input.value }}" required/>
+				{% if tiene_sol_cerrada %}
+				    <input type="email"  placeholder="nombre@dominio.com" class="form-control input-lg" placeholder="Nombre@Dominio.com" value="{{ usuario.correo_electronico }}" readonly/>
 				{% else %}
-				<input type="email" name="correo_electronico" placeholder="nombre@dominio.com" id="id_correo_electronico" class="form-control input-lg" placeholder="Nombre@Dominio.com" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off value="{{ usuario.correo_electronico }}" required/>
+					{% input_content form_data 'correo_electronico' as input %}
+					{% if input.value|check_input or input.error|check_input %}
+					<input type="email" name="correo_electronico" placeholder="nombre@dominio.com" id="id_correo_electronico" class="form-control input-lg" placeholder="Nombre@Dominio.com" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off value="{{ input.value }}" required/>
+					{% else %}
+					<input type="email" name="correo_electronico" placeholder="nombre@dominio.com" id="id_correo_electronico" class="form-control input-lg" placeholder="Nombre@Dominio.com" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off value="{{ usuario.correo_electronico }}" required/>
+					{% endif %}
+					<div class="error" id="correo_electronico_error" >{{input.error}}</div>
+					<!-- <div class="error" id="id-error-correo" ></div> -->
 				{% endif %}
-				<div class="error" id="correo_electronico_error" >{{input.error}}</div>
-				<!-- <div class="error" id="id-error-correo" ></div> -->
 			</div>
 			<div class="col-xs-6">
 				<label>Verificar Correo</label>
-				{% input_content form_data 'email2' as input %}
-				{% if input.value|check_input or input.error|check_input %}
-				<input type="email" name="email2" placeholder="nombre@dominio.com" id="id_correo2" class="form-control input-lg" onblur="confirmEmail()" placeholder="Nombre@Dominio.com" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off value="{{ input.value }}" required/>
+				{% if tiene_sol_cerrada %}
+				    <input type="email"  placeholder="nombre@dominio.com" class="form-control input-lg" placeholder="Nombre@Dominio.com" value="{{ usuario.correo_electronico }}" readonly/>
 				{% else %}
-				<input type="email" name="email2" placeholder="nombre@dominio.com" id="id_correo2" class="form-control input-lg" onblur="confirmEmail()" placeholder="Nombre@Dominio.com" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off value="{{ usuario.correo_electronico }}" required/>
+				    
+					{% input_content form_data 'email2' as input %}
+					{% if input.value|check_input or input.error|check_input %}
+					<input type="email" name="email2" placeholder="nombre@dominio.com" id="id_correo2" class="form-control input-lg" onblur="confirmEmail()" placeholder="Nombre@Dominio.com" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off value="{{ input.value }}" required/>
+					{% else %}
+					<input type="email" name="email2" placeholder="nombre@dominio.com" id="id_correo2" class="form-control input-lg" onblur="confirmEmail()" placeholder="Nombre@Dominio.com" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off value="{{ usuario.correo_electronico }}" required/>
+					{% endif %}
+
+					<div class="error" id="email2_error">{{input.error}}</div>
 				{% endif %}
-				<div class="error" id="email2_error">{{input.error}}</div>
 				<!-- <div class="error" id="id-error-confirm-email"></div> -->
 			</div>
 		</div>
