@@ -86,7 +86,7 @@ class Usuario(AbstractBaseUser):
 				if apellido:
 					condiciones.append(Q(apellido__icontains=apellido))
 				if correo:
-					condiciones.append(Q(correo_electronico__icontains=parentesco))
+					condiciones.append(Q(correo_electronico__icontains=correo))
 				if tipo_usuario:
 					condiciones.append(Q(fk_tipo_usuario__codigo=tipo_usuario))
 
