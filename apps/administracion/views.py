@@ -450,7 +450,7 @@ class EliminarUsuario(View):
         response = {}
         id_usuario = secure_value_decode(data['usuario_id'])
         usuario = Usuario.objects.get(id= id_usuario) 
-        if SolicitudInspeccion.objects.filter(Q(fk_inspector=usuario),Q(fk_estado_solicitud__codigo="CERRADA")).exists():
+        if SolicitudInspeccion.objects.filter(Q(fk_inspector=usuario),~Q(fk_estado_solicitud__codigo="CERRADA")).exists():
             response={'results': 'inspec_pendiente_inspeccion',}
             response['mensaje'] = "No se puede eliminar el usuario ya que tiene una solicitud pendiente por gestionar."
 
@@ -484,7 +484,7 @@ class InactivarUsuario(View):
         id_usuario = secure_value_decode(data['usuario_id'])
         usuario = Usuario.objects.get(id= id_usuario)
         if usuario.is_active:
-            if SolicitudInspeccion.objects.filter(Q(fk_inspector=usuario),Q(fk_estado_solicitud__codigo="CERRADA")).exists():
+            if SolicitudInspeccion.objects.filter(Q(fk_inspector=usuario),~Q(fk_estado_solicitud__codigo="CERRADA")).exists():
                 response={'results': 'inspec_pendiente_inspeccion',}
                 response['mensaje'] = "No se puede inactivar este usuario ya que tiene una solicitud pendiente por gestionar."
             else:
