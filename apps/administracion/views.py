@@ -324,7 +324,6 @@ class EditarUsuario(View):
         return context
 
     def reset_user(self,request,usuario_id):
-
         usuario = Usuario.objects.get(id=usuario_id)
         correo = usuario.correo_electronico
         clave_nueva = create_new_password()
@@ -349,6 +348,28 @@ class EditarUsuario(View):
         respuesta = {}
         respuesta['Result'] = 'success'
         return HttpResponse(json.dumps(respuesta), content_type = "application/json")
+
+    def send_modification_mail(self,request,usuario_id):
+        usuario = Usuario.objects.get(id=usuario_id)
+        correo = usuario.correo_electronico
+    
+        cambiando_password=False
+
+        correoTemplate = get_template('correo/usuario_modificado.html')
+        context_email = Context({
+                'usuario': usuario,
+                'cambio_clave' : cambiando_password,
+                'clave': '',
+            })
+        contenidoHtmlCorreo = correoTemplate.render(context_email)
+
+        email_enviado = enviar_correo(asunto="Actualización de datos de usuario",contenido=contenidoHtmlCorreo, correo=[correo] ,custom_filename='banner_correo.png')
+
+        if not email_enviado:
+            respuesta['Result'] = 'error'
+            respuesta['ERROR_CODE'] = 'NO_MAIL_SEND'
+            respuesta['mensaje'] = 'El correo no pudo ser enviado, favor intentar mas tarde.'
+            return HttpResponse(json.dumps(respuesta), content_type = "application/json")
 
     def validate(self, data):
         errors = {}
@@ -396,25 +417,27 @@ class EditarUsuario(View):
 
         if not errors:
             usuario = Usuario.objects.get(id=data['id_usuario'])
+            tiene_sol_cerrada = SolicitudInspeccion.objects.filter(fk_inspector=usuario.id,fk_estado_solicitud__codigo="CERRADA").exists()
             correo_nuevo = data['correo_electronico']
             nombre_nuevo = data['nombre']
             apellido_nuevo = data['apellido']
-            tipo_usuario_nuevo = TipoUsuario.objects.get(codigo=data['tipo_usuario'])
+            tipo_usuario_nuevo = TipoUsuario.objects.get(codigo=data['tipo_usuario']) if not tiene_sol_cerrada else usuario.fk_tipo_usuario
 
             corre_iguales = iguales_(correo_nuevo,usuario.correo_electronico)
             nombre_iguales = iguales_(nombre_nuevo,usuario.nombre)
             apellido_iguales = iguales_(apellido_nuevo, usuario.apellido)
             tipo_usuario_iguales = iguales_(data['tipo_usuario'],usuario.fk_tipo_usuario.codigo)
 
-
             if corre_iguales and nombre_iguales and apellido_iguales and tipo_usuario_iguales and (not 'reiniciar' in data ):
                 response={'results':'data_igual', }
                 response['mensaje'] = "No hay nada nuevo que guardar."
                 return HttpResponse(json.dumps(response), content_type = "application/json")
-            usuario.nombre = nombre_nuevo
-            usuario.apellido = apellido_nuevo
-            usuario.correo_electronico = correo_nuevo
-            usuario.fk_tipo_usuario = tipo_usuario_nuevo
+
+            if not tiene_sol_cerrada:
+                usuario.nombre = nombre_nuevo
+                usuario.apellido = apellido_nuevo
+                usuario.correo_electronico = correo_nuevo
+                usuario.fk_tipo_usuario = tipo_usuario_nuevo
 
             with transaction.atomic():
                 usuario.save()
@@ -422,6 +445,8 @@ class EditarUsuario(View):
                 if 'reiniciar' in data:
                     # pass
                     self.reset_user(request,usuario.id)
+                else:
+                    self.send_modification_mail(request,usuario.id)
 
             response={'results': 'success',}
             return HttpResponse(json.dumps(response), content_type = "application/json")
