@@ -436,6 +436,7 @@ class MotivoSolicitud(models.Model):
 
 
 class SolicitudInspeccion(models.Model):
+    numero_ticket = models.CharField(max_length=255, unique=True, null=True)
     fk_vehiculo = models.ForeignKey(Vehiculo)
     fk_titular_vehiculo = models.ForeignKey(TitularVehiculo)
     fk_trajo_vehiculo = models.ForeignKey(TrajoVehiculo, blank=True, null=True)
@@ -480,6 +481,7 @@ class SolicitudInspeccion(models.Model):
                 placa= param.get('placa', None)
                 cedula= param.get('cedula', None)
                 estado_sol= param.get('estado_sol', None)
+                numero_ticket= param.get('numero_ticket', None)
 
                 if placa:
                     condiciones.append(Q(fk_vehiculo__placa__icontains=placa))
@@ -489,17 +491,25 @@ class SolicitudInspeccion(models.Model):
 
                 if estado_sol:
                     condiciones.append(Q(fk_estado_solicitud__codigo=estado_sol))
+                
+                if numero_ticket:
+                    condiciones.append(Q(numero_ticket__icontains=numero_ticket))
+
 
             if filter_code == 'TICKETS_ABIERTOS':
                 placa= param.get('placa', None)
                 cedula= param.get('cedula', None)
                 estado_sol= param.get('estado_sol', None)
-
+                numero_ticket= param.get('numero_ticket', None)
+                
                 if placa:
                     condiciones.append(Q(fk_vehiculo__placa__icontains=placa))
 
                 if cedula:
                     condiciones.append(Q(fk_titular_vehiculo__cedula__icontains=cedula))
+
+                if numero_ticket:
+                    condiciones.append(Q(numero_ticket__icontains=numero_ticket))
 
                 condiciones.append(Q(fk_estado_solicitud__codigo="PEND_INSP"))
                 condiciones.append(Q(fk_vehiculo__peso=None))
@@ -531,7 +541,7 @@ class SolicitudInspeccion(models.Model):
 
         if filter_code == "TICKETS_ABIERTOS":
             # select['fecha_declaracion'] = "to_char(fecha_declaracion, 'DD/MM/YYYY')"
-            columns = ['id','fk_vehiculo__placa','fk_titular_vehiculo__cedula','fk_titular_vehiculo__nombre','fk_estado_solicitud__codigo']
+            columns = ['id','numero_ticket','fk_vehiculo__placa','fk_titular_vehiculo__cedula','fk_titular_vehiculo__nombre','fk_estado_solicitud__codigo']
 
             # se guardan las columnas a eliminar/agregar en el arreglo
             # 'columns'

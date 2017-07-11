@@ -22,7 +22,15 @@
 	 	
 	 	<div class="row">
 
-	 		<div class="col-xs-3 col-xs-offset-3">
+	 		<div class="col-xs-3">
+		 		<label>Numero de Ticket</label>
+				{% input_content form_data 'numero_ticket' as input %}
+				<input type="text" id="id_numero_ticket" class="form-control numeros" name="numero_ticket" value="{{ input.value }}">
+				<div class="error" id="numero_ticket_error">{{ input.error }}</div>
+
+	 		</div>	
+
+	 		<div class="col-xs-3">
 				<label>¿Titular Presente?</label>
 
 				{% input_content form_data 'radio_titular' as input %}

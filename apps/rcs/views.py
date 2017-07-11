@@ -419,7 +419,7 @@ class SolicitarInspeccion(View):
             titular_vehiculo = TitularVehiculo()
             trajo_vehiculo = TrajoVehiculo()
 
-
+            numero_ticket = data['numero_ticket']
             nombre_titular = data['nombre_titular']
             apellido_titular = data['apellido_titular']
             cedula_titular = data['cedula_titular']
@@ -467,6 +467,7 @@ class SolicitarInspeccion(View):
 
                 solicitud.fk_vehiculo = vehiculo
                 solicitud.fk_titular_vehiculo = titular_vehiculo
+                solicitud.numero_ticket = numero_ticket
                 solicitud.fk_motivo_solicitud = MotivoSolicitud.objects.get(codigo = motivo_visita) 
                 solicitud.save()
 

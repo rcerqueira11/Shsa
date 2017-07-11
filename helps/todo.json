@@ -3016,6 +3016,7 @@
     "model": "rcs.solicitudinspeccion",
     "pk": 1,
     "fields": {
+      "numero_ticket":"23",
       "fk_vehiculo": 1,
       "fk_titular_vehiculo": 1,
       "fk_inspector": 5,
@@ -3031,6 +3032,7 @@
     "model": "rcs.solicitudinspeccion",
     "pk": 4,
     "fields": {
+      "numero_ticket":"24",
       "fk_vehiculo": 3,
       "fk_titular_vehiculo": 3,
       "fk_inspector": null,
@@ -3046,6 +3048,7 @@
     "model": "rcs.solicitudinspeccion",
     "pk": 5,
     "fields": {
+      "numero_ticket":"25",
       "fk_vehiculo": 4,
       "fk_titular_vehiculo": 4,
       "fk_inspector": 5,
@@ -3061,6 +3064,7 @@
     "model": "rcs.solicitudinspeccion",
     "pk": 6,
     "fields": {
+      "numero_ticket":"26",
       "fk_vehiculo": 5,
       "fk_titular_vehiculo": 5,
       "fk_inspector": null,
