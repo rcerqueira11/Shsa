@@ -501,7 +501,7 @@ class SolicitudInspeccion(models.Model):
                 cedula= param.get('cedula', None)
                 estado_sol= param.get('estado_sol', None)
                 numero_ticket= param.get('numero_ticket', None)
-                
+
                 if placa:
                     condiciones.append(Q(fk_vehiculo__placa__icontains=placa))
 
@@ -530,7 +530,7 @@ class SolicitudInspeccion(models.Model):
         # adicionales de la consulta
         if filter_code == "SOL_INSP_INSP":
             # select['fecha_declaracion'] = "to_char(fecha_declaracion, 'DD/MM/YYYY')"
-            columns = ['id','fk_vehiculo__placa','fk_titular_vehiculo__cedula','fk_titular_vehiculo__nombre','fk_estado_solicitud__codigo','ruta',]
+            columns = ['id','numero_ticket','fk_vehiculo__placa','fk_titular_vehiculo__cedula','fk_titular_vehiculo__nombre','fk_estado_solicitud__codigo','ruta',]
 
             # se guardan las columnas a eliminar/agregar en el arreglo
             # 'columns'

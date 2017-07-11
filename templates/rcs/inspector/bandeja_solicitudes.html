@@ -23,13 +23,14 @@
 			<input type="hidden" id="filter_obj_id" name="filter_obj" value="SolicitudInspeccion" />
 			<div class="row">
 				<div class="col-xs-4">
+					<label>Numero Solicitud</label>
+          			<input id="numero_ticket_id" name="numero_ticket" type="text" class="form-control" />
+          		</div>
+				<div class="col-xs-4">
 					<label>Cedula</label>
           			<input id="cedula_id" name="cedula" type="text" class="form-control ci-mask" />
           		</div>
-				<div class="col-xs-4">
-					<label>Placa</label>
-          			<input id="placa_id" name="placa" type="text" class="form-control" />
-          		</div>
+				
           		<div class="col-xs-4">
 					<label>Estado Solicitud</label>
 					<select  data-placeholder="Seleccionar un estado"  class="form-control chosen-select" name="estado_sol" id='id_estado_sol' multiple>
@@ -41,7 +42,14 @@
 					</select>
 				</div>
 			</div>
+			<br>
+			<div class="row">
+				<div class="col-xs-4">
+					<label>Placa</label>
+          			<input id="placa_id" name="placa" type="text" class="form-control" />
+          		</div>
 
+			</div>
 			<div class="row">
 				<div class="col-xs-4 col-xs-push-8">
 					<button type="submit" class="btn btn-primary pull-right" style="padding: 5px  7px; margin-top: 35px;">Buscar <i class="fa fa-search"></i></button>
@@ -57,6 +65,7 @@
 
 	<table id="tabla-resultado" class="table table-bordered tablafija">
 		<thead>
+			<th><center>NRO. SOLICITUD</center></th>
 			<th><center>NRO. PLACA</center></th>
 			<th><center>CEDULA</center></th>
 			<th><center>NOMBRE</center></th>
