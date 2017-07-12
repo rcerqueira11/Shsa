@@ -44,7 +44,6 @@ def create_name(first, second):
 
 @register.assignment_tag(name='primera')
 def primera(cadena):
-    import pudb; pu.db
     cadena_ = cadena.split(" ")
 
     return cadena_[0]
