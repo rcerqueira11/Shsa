@@ -387,6 +387,11 @@ class SolicitarInspeccion(View):
             else:
                 if not value.strip():
                     errors[key] = 'El campo no debe estar vacío'
+
+            if 'numero_ticket' in key:
+                existe_numero = SolicitudInspeccion.objects.filter(numero_ticket = value).exists()
+                if existe_numero:
+                    errors[key] = 'Este numero ya lo posee otra solicitud, verifique e intente de nuevo.'                    
         return errors
 
     def get(self, request, *args, **kwargs):
@@ -469,6 +474,8 @@ class SolicitarInspeccion(View):
                 solicitud.fk_titular_vehiculo = titular_vehiculo
                 solicitud.numero_ticket = numero_ticket
                 solicitud.fk_motivo_solicitud = MotivoSolicitud.objects.get(codigo = motivo_visita) 
+                solicitud.save()
+                solicitud.codigo = str(solicitud.id)+str(solicitud.fk_vehiculo.placa)+str(solicitud.numero_ticket)
                 solicitud.save()
 
             respuesta={'results': 'success',}

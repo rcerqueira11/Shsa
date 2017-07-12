@@ -3025,6 +3025,7 @@
       "fk_estado_solicitud": 3,
       "fk_motivo_solicitud": 1,
       "observaciones": null,
+      "codigo":"10710293709723",
       "ruta": "240b-73e2-8cb5-7c51-5c55-ba25-88d0-92ba-4ed1-a905/07102937097/inspeccionplaca07102937097.pdf"
     }
   },
@@ -3041,6 +3042,7 @@
       "fk_estado_solicitud": 1,
       "fk_motivo_solicitud": 1,
       "observaciones": null,
+      "codigo":"4E14123224",
       "ruta": ""
     }
   },
@@ -3057,6 +3059,7 @@
       "fk_estado_solicitud": 2,
       "fk_motivo_solicitud": 1,
       "observaciones": null,
+      "codigo":"5RRECESA225",
       "ruta": "d67a-0396-ab81-9562-4b51-2ffe-0882-096a-bab3-a1d0/RRECESA2/inspeccionplacarrecesa2.pdf"
     }
   },
@@ -3073,6 +3076,7 @@
       "fk_estado_solicitud": 1,
       "fk_motivo_solicitud": 1,
       "observaciones": null,
+      "codigo":"6ASDAS9AS26",
       "ruta": ""
     }
   }

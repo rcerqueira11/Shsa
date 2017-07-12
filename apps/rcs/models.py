@@ -436,7 +436,7 @@ class MotivoSolicitud(models.Model):
 
 
 class SolicitudInspeccion(models.Model):
-    numero_ticket = models.CharField(max_length=255, unique=True, null=True)
+    numero_ticket = models.CharField(max_length=255, unique=True)
     fk_vehiculo = models.ForeignKey(Vehiculo)
     fk_titular_vehiculo = models.ForeignKey(TitularVehiculo)
     fk_trajo_vehiculo = models.ForeignKey(TrajoVehiculo, blank=True, null=True)
@@ -446,6 +446,7 @@ class SolicitudInspeccion(models.Model):
     fk_estado_solicitud = models.ForeignKey(EstadoSolicitud, default=1)
     fk_motivo_solicitud = models.ForeignKey(MotivoSolicitud)
     observaciones = models.TextField(blank=True,null=True)
+    codigo = models.CharField(max_length=255)
     ruta=ContentTypeRestrictedFileField(
         upload_to=get_file_path_solicitud,
         max_length=500,
