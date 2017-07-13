@@ -1,0 +1,228 @@
+ABARTH>
+ALFA ROMEO>
+ALFA ROMEO (FIAT)>
+ASTON MARTIN>
+AUDI>
+BENTLEY>
+BMW>
+BYD>
+CHEVROLET>
+CITROEN>
+DACIA>
+DFSK>
+DS>
+FERRARI>
+FERRARI (FCA)>
+FIAT>
+FIAT (FIAT)>
+FORD>
+HONDA>
+HYUNDAI>
+INFINITI>
+ISUZU>
+JAGUAR>
+JEEP>
+JEEP (FIAT)>
+KIA>
+LADA>
+LAMBORGHINI>
+LANCIA>
+LANCIA (FIAT)>
+LAND ROVER>
+LEXUS>
+MAHINDRA>
+MASERATI>
+MAZDA>
+MERCEDES>
+MINI>
+MITSUBISHI>
+MORGAN>
+NISSAN>
+OPEL>
+PEUGEOT>
+PORSCHE>
+RENAULT>
+ROLLS-ROYCE>
+SEAT>
+SKODA>
+SMART>
+SSANGYONG>
+SUBARU>
+SUZUKI>
+TATA>
+TESLA>
+TOYOTA>
+VOLKSWAGEN>
+VOLVO>
+
+
+
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('ABARTH', 'ABAR');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('ALFA ROMEO', 'ALFA');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('ALFA ROMEO (FIAT)', 'ALFA_FIAT');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('ASTON MARTIN', 'ASTO');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('AUDI', 'AUDI');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('BENTLEY', 'BENT');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('BMW', 'BMW');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('BYD', 'BYD');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('CHEVROLET', 'CHEV');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('CITROEN', 'CITR');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('DACIA', 'DACI');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('DFSK', 'DFSK');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('DS', 'DS');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('FERRARI', 'FERR');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('FERRARI (FCA)', 'FERR_FCA');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('FIAT', 'FIAT');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('FIAT (FIAT)', 'FIAT_FIAT');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('FORD', 'FORD');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('HONDA', 'HOND');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('HYUNDAI', 'HYUN');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('INFINITI', 'INFI');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('ISUZU', 'ISUZ');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('JAGUAR', 'JAGU');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('JEEP', 'JEEP');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('JEEP (FIAT)', 'JEEP_FIAT');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('KIA', 'KIA');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('LADA', 'LADA');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('LAMBORGHINI', 'LAMB');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('LANCIA', 'LANC');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('LANCIA (FIAT)', 'LANC_FIAT');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('LAND ROVER', 'LAND_ROVER');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('LEXUS', 'LEXU');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('MAHINDRA', 'MAHI');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('MASERATI', 'MASE');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('MAZDA', 'MAZD');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('MERCEDES', 'MERC');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('MINI', 'MINI');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('MITSUBISHI', 'MITS');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('MORGAN', 'MORG');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('NISSAN', 'NISS');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('OPEL', 'OPEL');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('PEUGEOT', 'PEUG');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('PORSCHE', 'PORS');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('RENAULT', 'RENA');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('ROLLS-ROYCE', 'ROLL');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('SEAT', 'SEAT');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('SKODA', 'SKOD');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('SMART', 'SMAR');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('SSANGYONG', 'SSAN');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('SUBARU', 'SUBA');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('SUZUKI', 'SUZU');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('TATA', 'TATA');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('TESLA', 'TESL');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('TOYOTA', 'TOYO');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('VOLKSWAGEN', 'VOLK');
+INSERT INTO rcs_marcavehiculo(nombre, codigo)
+    VALUES ('VOLVO', 'VOLV');
+
+ABAR>
+ALFA>
+ALFA_FIAT>
+ASTO>
+AUDI>
+BENT>
+BMW>
+BYD>
+CHEV>
+CITR>
+DACI>
+DFSK>
+DS>
+FERR>
+FERR_FCA>
+FIAT>
+FIAT_FIAT>
+FORD>
+HOND>
+HYUN>
+INFI>
+ISUZ>
+JAGU>
+JEEP>
+JEEP_FIAT>
+KIA>
+LADA>
+LAMB>
+LANC>
+LANC_FIAT>
+LAND_ROVER>
+LEXU>
+MAHI>
+MASE>
+MAZD>
+MERC>
+MINI>
+MITS>
+MORG>
+NISS>
+OPEL>
+PEUG>
+PORS>
+RENA>
+ROLL>
+SEAT>
+SKOD>
+SMAR>
+SSAN>
+SUBA>
+SUZU>
+TATA>
+TESL>
+TOYO>
+VOLK>
+VOLV>

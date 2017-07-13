@@ -274,11 +274,20 @@ class TitularVehiculo(models.Model):
 
         return (columns, datos_filtrados)
 
+
+class Parentesco(models.Model):
+    nombre = models.CharField(max_length=255)
+    codigo = models.CharField(max_length=255, unique=True )
+
+    def __unicode__(self):
+        return self.nombre + " " + self.codigo
+
 class TrajoVehiculo(models.Model):
     nombre = models.CharField(max_length=255)
     apellido = models.CharField(max_length=255)
     cedula = models.CharField(max_length=255, unique=True)
     parentesco = models.CharField(max_length=255, blank=True)
+    # parentesco = models.ForeignKey(Parentesco)
     
     def __unicode__(self):
         return self.nombre + " " + self.apellido
@@ -319,6 +328,7 @@ class TrajoVehiculo(models.Model):
                     condiciones.append(Q(apellido__icontains=apellido))
                 if parentesco:
                     condiciones.append(Q(parentesco__icontains=parentesco))
+                    # condiciones.append(Q(fk_parentesco__codigo=parentesco))
 
         
         # NOTA: dependiendo del 'filter_code' se define las condiciones
@@ -398,6 +408,20 @@ class TrajoVehiculo(models.Model):
         # que se renderiza el resultado almacenado en el segundo valor
 
         return (columns, datos_filtrados)
+
+class MarcaVehiculo(models.Model):
+    nombre = models.CharField(max_length=255)
+    codigo = models.CharField(max_length=255, unique=True )
+
+    def __unicode__(self):
+        return self.nombre + " " + self.codigo
+
+class ModeloVehiculo(models.Model):
+    nombre = models.CharField(max_length=255)
+    codigo = models.CharField(max_length=255, unique=True )
+
+    def __unicode__(self):
+        return self.nombre + " " + self.codigo
 
 
 class Vehiculo(models.Model):
