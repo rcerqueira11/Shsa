@@ -419,6 +419,7 @@ class MarcaVehiculo(models.Model):
 class ModeloVehiculo(models.Model):
     nombre = models.CharField(max_length=255)
     codigo = models.CharField(max_length=255, unique=True )
+    fk_marca_vehiculo = models.ForeignKey(MarcaVehiculo)
 
     def __unicode__(self):
         return self.nombre + " " + self.codigo

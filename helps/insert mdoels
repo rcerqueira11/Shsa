@@ -1,0 +1,34 @@
+<option value="/124-Spider">124 Spider
+<option value="/500-">500
+<option value="/500">500C
+
+
+INSERT INTO rcs_modelovehiculo(nombre, codigo, fk_marca_vehiculo_id)
+    VALUES ( '124 Spider', '124-Spider', 1);
+INSERT INTO rcs_modelovehiculo(nombre, codigo, fk_marca_vehiculo_id)
+    VALUES ( '500', '500', 1);
+INSERT INTO rcs_modelovehiculo(nombre, codigo, fk_marca_vehiculo_id)
+    VALUES ( '500C', '500C', 1);
+
+
+'<option value="/4C-">4C</option>
+<option value="/Giulia">Giulia</option>
+<option value="/Giulietta">Giulietta</option>
+<option value="/MiTo-">MiTo</option>
+<option value="/Stelvio">Stelvio</option>'
+
+http://www.eleconomista.es/ecomotor/clasificacion/coupe?tab=eE_buscador_tipos
+
+
+INSERT INTO rcs_modelovehiculo(nombre, codigo, fk_marca_vehiculo_id)
+    VALUES ( '4C', '4C', 2);
+INSERT INTO rcs_modelovehiculo(nombre, codigo, fk_marca_vehiculo_id)
+    VALUES ( 'Giulia', 'Giulia', 2);
+INSERT INTO rcs_modelovehiculo(nombre, codigo, fk_marca_vehiculo_id)
+    VALUES ( 'Giulietta', 'Giulietta', 2);
+INSERT INTO rcs_modelovehiculo(nombre, codigo, fk_marca_vehiculo_id)
+    VALUES ( 'MiTo', 'MiTo', 2);
+INSERT INTO rcs_modelovehiculo(nombre, codigo, fk_marca_vehiculo_id)
+    VALUES ( 'Stelvio', 'Stelvio', 2);
+
+    http://www.eleconomista.es/ecomotor/clasificacion/coupe?tab=eE_buscador_tipos
