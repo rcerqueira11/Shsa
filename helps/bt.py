@@ -17,5 +17,8 @@ def find_between_r( s, first, last ):
         return ""
 
 
-print find_between( s, '<option value="/' ,'</option>' )
+qwe = find_between( s, '<option value="/' ,'</option>' )
 print find_between_r( s, '<option value="/', '</option>' )
+
+asd = qwe.split('">')
+print asd
