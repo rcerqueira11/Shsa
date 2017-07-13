@@ -1,6 +1,9 @@
 cadena = '<option value="/4C-">4C</option>|<option value="/Giulia">Giulia</option>|<option value="/Giulietta">Giulietta</option>|<option value="/MiTo-">MiTo</option>|<option value="/Stelvio">Stelvio</option>'
 id = '2'
 
+def hasNumbers(inputString):
+    return any(char.isdigit() for char in inputString)
+
 def find_between( s, first, last ):
     try:
         start = s.index( first ) + len( first )
@@ -29,6 +32,11 @@ for option in options:
 	separacion = find_between( option, '<option value="/' ,'</option>' )
 	valores = separacion.split('">')
 	nombre = valores[1].capitalize()
+	if hasNumbers(valores[1]):
+		nombre = valores[1].upper()	
+	else:
+		nombre = valores[1].capitalize()
+	# nombre = valores[1].capitalize()
 	codigo = valores[0].upper().replace('-','')
 	results.append("INSERT INTO rcs_modelovehiculo(nombre, codigo, fk_marca_vehiculo_id) VALUES ( '" + nombre+ "', '"+codigo+"', "+id+");")
 
