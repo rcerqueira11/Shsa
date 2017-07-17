@@ -286,8 +286,8 @@ class TrajoVehiculo(models.Model):
     nombre = models.CharField(max_length=255)
     apellido = models.CharField(max_length=255)
     cedula = models.CharField(max_length=255, unique=True)
-    parentesco = models.CharField(max_length=255, blank=True)
-    # parentesco = models.ForeignKey(Parentesco)
+    # parentesco = models.CharField(max_length=255, blank=True)
+    parentesco = models.ForeignKey(Parentesco)
     
     def __unicode__(self):
         return self.nombre + " " + self.apellido
@@ -436,8 +436,10 @@ class Vehiculo(models.Model):
     serial_carroceria = models.CharField(max_length=255, null=True)
     serial_motor = models.CharField(max_length=255, null=True)
     valor_estimado = models.DecimalField(max_digits=21, decimal_places=2, null=True)
-    modelo = models.CharField(max_length=255, null=True)
-    marca = models.CharField(max_length=255, null=True)
+    # modelo = models.CharField(max_length=255, null=True)
+    # marca = models.CharField(max_length=255, null=True)
+    fk_marca = models.ForeignKey(ModeloVehiculo, null=True)
+    fk_modelo = models.ForeignKey(MarcaVehiculo, null=True)
     fk_inspector = models.ForeignKey(Usuario, null=True)
     fk_tipo_vehiculo = models.ForeignKey(TipoVehiculo, null=True)
     fk_tipo_manejo = models.ForeignKey(TipoManejo, null=True)

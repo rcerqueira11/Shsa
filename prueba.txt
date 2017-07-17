@@ -1,0 +1,34 @@
+	mcinsp
+	usuario.ins.tesis@gmail.com
+	!123123123C
+	Mercedes Carolina Arismendi
+
+	egtaqu
+	usuario.taq.tesis@gmail.com
+	123123123C
+	Emilio Gustavo Ramirez Rivas
+
+	recuperar contrase;a
+	cambiar correo
+
+	terminar sesion
+
+	serial carroceria
+	FFA99SO12J
+
+	Serial motor
+	S17W394W02231131
+
+	Modelo 
+	508
+
+	Marca
+	Peugeot 
+
+	peso 
+	1815kg	
+
+	valor 7.500.000
+
+	año 
+	2013
