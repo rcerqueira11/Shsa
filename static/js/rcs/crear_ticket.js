@@ -18,7 +18,7 @@ $('#modal-exito').on('shown.bs.modal', function (e) {
 	numero_solicitud = $("#id_numero_ticket").val()
     titulo = 'SOLICITUD DE INSPECCIÓN'
 	subtitulo = 'Creación de solicitud de inspección'
-	mensaje = 'Solicitud creada exitosamente. El numero de Solicitud es ' +numero_solicitud+'.'
+	mensaje = 'Solicitud creada exitosamente. <br> El numero de solicitud es: ' +numero_solicitud+'.'
 	fill_modal_exito(titulo,subtitulo,mensaje)
 	
 })
