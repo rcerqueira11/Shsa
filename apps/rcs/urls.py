@@ -105,4 +105,10 @@ urlpatterns = [
         views.PdfVista.as_view(),
         name="pdf_prueba"
     ),
+
+    url(
+        r'^obtener_modelos',
+        views.AJAXObtenerModelos.as_view(),
+        name="obtener_modelos"
+    ),
 ]

@@ -518,11 +518,18 @@ class GestionSolicitudAbierta(View):
         solicitud = SolicitudInspeccion.objects.get(id=id_sol)
         request.session['sol_id'] = id_sol
         vehiculo = Vehiculo.objects.get(id=solicitud.fk_vehiculo.id)
-        tipo_vehiculo = TipoVehiculo.objects.all()
         titular_vehiculo = solicitud.fk_titular_vehiculo
         # trajo_vehiculo = vehiculo.fk_trajo_vehiculo
         trajo_vehiculo = solicitud.fk_trajo_vehiculo
+        tipo_vehiculo = TipoVehiculo.objects.all()
         tipo_manejo = TipoManejo.objects.all()
+        marcas = MarcaVehiculo.objects.all()
+
+
+
+        if not vehiculo.fk_marca is None:
+            modelos = ModeloVehiculo.objects.filter(fk_marca_vehiculo__codigo = vehiculo.fk_marca.codigo)
+            
         context = {
             'vehiculo': vehiculo,
             'tipos_de_vehiculo': tipo_vehiculo,
@@ -533,6 +540,8 @@ class GestionSolicitudAbierta(View):
             'solicitud': solicitud,
             'nombre': data.user.nombre if 'user' in data else "",
             'username': data.user.username if 'user' in data else "",
+            'modelos' : modelos,
+            'marcas' : marcas,
         }
         
         return context
@@ -585,8 +594,8 @@ class GestionSolicitudAbierta(View):
                 vehiculo.serial_carroceria = data['serial_carroceria']
                 vehiculo.serial_motor = data['serial_motor']
                 vehiculo.valor_estimado = data['valor_estimado']
-                vehiculo.modelo = data['modelo']
-                vehiculo.marca = data['marca']
+                vehiculo.fk_modelo = ModeloVehiculo.objects.get(codigo = data['modelo'])
+                vehiculo.fk_marca = MarcaVehiculo.objects.get(codigo = data['marca'])
                 vehiculo.anho = data['anho']
 
                 vehiculo.fk_inspector = Usuario.objects.get(id=request.user.id)
@@ -1564,3 +1573,22 @@ class PdfVista(View):
                             
                                    )
         return response
+
+
+
+class AJAXObtenerModelos(View):
+    """
+    Vista obtener modelos de los carros
+    """
+    def get(self, request, *args, **kwargs):
+
+        marca_codigo = request.GET.get('marca_codigo', None)
+        modelos = ModeloVehiculo.objects.filter(fk_marca_vehiculo__codigo=marca_codigo)
+        respuesta = []
+        for m in modelos:
+            respuesta.append({
+                'id': m.codigo,
+                'nombre_modelo': m.nombre 
+            })
+
+        return HttpResponse(json.dumps(respuesta), content_type = "application/json")

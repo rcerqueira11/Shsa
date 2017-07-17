@@ -55,7 +55,7 @@
 				</div>
 				<div class="col-xs-4">
 				<label>Parentesco con el Titular</label>
-					<input type="text"  class="form-control" value="{{trajo_vehiculo.fk_parentesco.nombre|capitalize}}" readonly="true">
+					<input type="text"  class="form-control" value="{{trajo_vehiculo.fk_parentesco.nombre|capfirst}}" readonly="true">
 				</div>
 			</div>
 
@@ -89,6 +89,46 @@
 				<div class="col-xs-4">
 					<label>Placa</label>
 					<input type="text" class="form-control" value="{{vehiculo.placa}}" readonly="true">
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="col-xs-4">
+					{% input_content form_data 'marca' as input %}
+					<label>Marca</label>
+					<select  data-placeholder="Seleccionar un modelo"  class="form-control chosen-select" name="marca" id='id_marca' >
+					{% for e in marcas %}
+					      <option value="{{ e.codigo }}" {% if e.codigo == vehiculo.fk_marca.codigo %}
+					          selected					      
+					      {% endif %}>{{ e.nombre|title }}</option>
+					{% endfor %}
+					</select>
+					<div class="error">{{input.error}}</div>
+				</div>
+				<div class="col-xs-4">
+					{% input_content form_data 'modelo' as input %}
+					<label>Modelo</label>
+
+					<select  data-placeholder="Seleccionar un modelo"  class="form-control chosen-select" name="modelo" id='id_modelo' >
+					{% for e in modelos %}
+					      <option value="{{ e.codigo }}" {% if e.codigo == vehiculo.fk_modelo.codigo %}
+					          selected					      
+					      {% endif %}>{{ e.nombre|upper }}</option>
+					{% endfor %}
+					{{vehiculo.fk_modelo.codigo}}
+					</select>
+					<div class="error">{{input.error}}</div>
+				</div>
+				
+				<div class="col-xs-4">
+					{% input_content form_data 'anho' as input %}
+					<label>Año</label>
+					{% if input.value|check_input or input.error|check_input %}
+					<input type="text" name="anho" id="id_anho" class="form-control anho" value="{{input.value}}">
+					{% else %}
+					<input type="text" name="anho" id="id_anho" class="form-control anho" value="{{vehiculo.anho|default_if_none:""}}">
+					{% endif %}
+					<div class="error">{{input.error}}</div>
 				</div>
 			</div>
 			<br>
@@ -189,39 +229,7 @@
 					{% endif %}
 					<div class="error">{{input.error}}</div>
 				</div>
-				<div class="col-xs-4">
-					{% input_content form_data 'modelo' as input %}
-					<label>Modelo</label>
-					{% if input.value|check_input or input.error|check_input %}
-					<input type="text" name="modelo" id="id_modelo" class="form-control" value="{{input.value}}">
-					{% else %}
-					<input type="text" name="modelo" id="id_modelo" class="form-control" value="{{vehiculo.modelo|default_if_none:""}}">
-					{% endif %}
-					<div class="error">{{input.error}}</div>
-				</div>
-			</div>
-			<br>
-			<div class="row">
-				<div class="col-xs-4">
-					{% input_content form_data 'marca' as input %}
-					<label>Marca</label>
-					{% if input.value|check_input or input.error|check_input %}
-					<input type="text" name="marca" id="id_marca" class="form-control" value="{{input.value}}">
-					{% else %}
-					<input type="text" name="marca" id="id_marca" class="form-control" value="{{vehiculo.marca|default_if_none:""}}">
-					{% endif %}
-					<div class="error">{{input.error}}</div>
-				</div>
-				<div class="col-xs-4">
-					{% input_content form_data 'anho' as input %}
-					<label>Año</label>
-					{% if input.value|check_input or input.error|check_input %}
-					<input type="text" name="anho" id="id_anho" class="form-control anho" value="{{input.value}}">
-					{% else %}
-					<input type="text" name="anho" id="id_anho" class="form-control anho" value="{{vehiculo.anho|default_if_none:""}}">
-					{% endif %}
-					<div class="error">{{input.error}}</div>
-				</div>
+				
 			</div>
 			<br>
 			<div class="row">
@@ -242,5 +250,6 @@
 
 {% block extra_script %}
  	<!-- <script src="{{STATIC_URL}}js/registro/editar_usuario.js"></script> -->
+ 	<script src="{{STATIC_URL}}js/rcs/nueva_solicitud.js"></script>
 
 {% endblock extra_script %}

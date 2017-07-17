@@ -93,7 +93,7 @@
 	            
 	            <tr>
 	            	<td>
-	              		6. Parentesco con el titular: {{trajo_vehiculo.fk_parentesco.nombre|capitalize}}
+	              		6. Parentesco con el titular: {{trajo_vehiculo.fk_parentesco.nombre|capfirst}}
 	            	</td>	            
 	              </tr>
 	        </table>
@@ -109,10 +109,10 @@
         	<table class="table table-bordered" border="1" style="width:100%;margin-bottom:0;margin-top:0px;">
 	            <tr>
 		            <td  style="width: 15%">
-		              7. Marca: {{vehiculo.marca}}
+		              7. Marca: {{vehiculo.fk_marca.nombre|capfirst}}
 		            </td>
 		            <td style="width: 15%">
-		              8. Modelo: {{vehiculo.modelo}}
+		              8. Modelo: {{vehiculo.fk_modelo.nombre|capfirst}}
 		            </td>
 		            <td style="width: 15%">
 		              9. Cap. Puestos: {{vehiculo.cap_puestos}}
