@@ -112,9 +112,13 @@
 				</div>
 				<div class="col-xs-3">
 				<label>Parentesco con el Titular</label>
-					{% input_content form_data 'telefono_trajo_vehiculo' as input %}
-					<input type="text" id="id_parentesco_trajo" class="form-control" name="parentesco_trajo_vehiculo" value="{{ input.value }}">
+					{% input_content form_data 'parentesco_trajo_vehiculo' as input %}
+					<select  data-placeholder="Seleccionar un parentesco"  name="parentesco_trajo_vehiculo" id="id_parentesco_trajo"  class="form-control chosen-select" >
+					{% for e in parentescos %}
+					      <option value="{{ e.codigo }}" >{{ e.nombre|title }}</option>
+					{% endfor %}
 					<div class="error" id="parentesco_trajo_vehiculo_error">{{input.error}}</div>
+				</select>
 				</div>
 			</div>
 	    </div>

@@ -140,18 +140,18 @@ $("#id_cedula_trajo_vehiculo").on('focusout',function(){
 		        if(results.results == 'success'){
 					$("#id_nombre_trajo").val(results.nombre)
 					$("#id_apellido_trajo").val(results.apellido)
-					$("#id_parentesco_trajo").val(results.parentesco)
+					// $("#id_parentesco_trajo").val(results.parentesco)
 					$("#id_nombre_trajo").prop('readonly', true);
 					$("#id_apellido_trajo").prop('readonly', true);
-					$("#id_parentesco_trajo").prop('readonly', true);
+					// $("#id_parentesco_trajo").prop('readonly', true);
 	                
 	            }else{
 	            	$("#id_nombre_trajo").prop('readonly', false);
 					$("#id_apellido_trajo").prop('readonly', false);
-					$("#id_parentesco_trajo").prop('readonly', false);	
+					// $("#id_parentesco_trajo").prop('readonly', false);	
 					$("#id_nombre_trajo").val('')
 					$("#id_apellido_trajo").val('')
-					$("#id_parentesco_trajo").val('')
+					// $("#id_parentesco_trajo").val('')
 	            }
 	            
 	        },
@@ -220,18 +220,18 @@ function validar_cedula_onfocus_placa(){
 		        if(results.results == 'success'){
 					$("#id_nombre_trajo").val(results.nombre)
 					$("#id_apellido_trajo").val(results.apellido)
-					$("#id_parentesco_trajo").val(results.parentesco)
+					// $("#id_parentesco_trajo").val(results.parentesco)
 					$("#id_nombre_trajo").prop('readonly', true);
 					$("#id_apellido_trajo").prop('readonly', true);
-					$("#id_parentesco_trajo").prop('readonly', true);
+					// $("#id_parentesco_trajo").prop('readonly', true);
 	                
 	            }else{
 	            	$("#id_nombre_trajo").prop('readonly', false);
 					$("#id_apellido_trajo").prop('readonly', false);
-					$("#id_parentesco_trajo").prop('readonly', false);	
+					// $("#id_parentesco_trajo").prop('readonly', false);	
 					$("#id_nombre_trajo").val('')
 					$("#id_apellido_trajo").val('')
-					$("#id_parentesco_trajo").val('')
+					// $("#id_parentesco_trajo").val('')
 	            }
 	            
 	        },

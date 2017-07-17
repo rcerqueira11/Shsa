@@ -1,0 +1,1 @@
+[{"model": "rcs.parentesco", "pk": 1, "fields": {"nombre": "PADRE", "codigo": "PADR"}}, {"model": "rcs.parentesco", "pk": 2, "fields": {"nombre": "MADRE", "codigo": "MADR"}}, {"model": "rcs.parentesco", "pk": 3, "fields": {"nombre": "HIJO(A)", "codigo": "HIJ"}}]

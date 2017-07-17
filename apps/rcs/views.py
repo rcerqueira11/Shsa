@@ -113,7 +113,7 @@ def verificar_trajo_cedula(request):
         respuesta['results'] = 'success'
         respuesta['nombre'] = titular.nombre
         respuesta['apellido'] = titular.apellido
-        respuesta['parentesco'] = titular.parentesco
+        respuesta['parentesco'] = titular.fk_parentesco.codigo
     else:
         respuesta['results'] = 'success_no_existe'
     return HttpResponse(json.dumps(respuesta), content_type = "application/json")
@@ -357,11 +357,12 @@ class SolicitarInspeccion(View):
 
     def get_context(self, data):
         motivo = MotivoSolicitud.objects.all()
-         
+        parentescos = Parentesco.objects.all()
         context = {
             'motivos_de_visita': motivo,
             'nombre': data.user.nombre,
             'username': data.user.username,
+            'parentescos' : parentescos,
         }
         
         return context
@@ -413,7 +414,7 @@ class SolicitarInspeccion(View):
 
         data = request.POST
         response = {}
-
+        # import pudb; pu.db
         errors = self.validate(data)
 
         if not errors:
@@ -459,7 +460,7 @@ class SolicitarInspeccion(View):
                         trajo_vehiculo.nombre =  nombre_trajo_vehiculo
                         trajo_vehiculo.apellido = apellido_trajo_vehiculo
                         trajo_vehiculo.cedula = cedula_trajo_vehiculo
-                        trajo_vehiculo.parentesco = parentesco_trajo_vehiculo
+                        trajo_vehiculo.fk_parentesco = Parentesco.objects.get(codigo = parentesco_trajo_vehiculo)
                         trajo_vehiculo.save()
                     # vehiculo.fk_trajo_vehiculo = trajo_vehiculo
                     solicitud.fk_trajo_vehiculo = trajo_vehiculo
@@ -1449,7 +1450,7 @@ class EditarTicket(View):
                         trajo_vehiculo.nombre =  nombre_trajo_vehiculo
                         trajo_vehiculo.apellido = apellido_trajo_vehiculo
                         trajo_vehiculo.cedula = cedula_trajo_vehiculo
-                        trajo_vehiculo.parentesco = parentesco_trajo_vehiculo
+                        trajo_vehiculo.fk_parentesco = Parentesco.objects.get(codigo = parentesco_trajo_vehiculo)
                         trajo_vehiculo.save()
                     # vehiculo.fk_trajo_vehiculo = trajo_vehiculo
                     solicitud.fk_trajo_vehiculo = trajo_vehiculo
