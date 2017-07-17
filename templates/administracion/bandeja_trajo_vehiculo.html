@@ -32,7 +32,12 @@
           		<!-- </div> -->
 				<div class="col-xs-4">
 					<label>Parentesco</label>
-          			<input id="parentesco_id" name="parentesco" type="text" class="form-control" />
+          			<select  data-placeholder="Seleccionar un parentesco"  name="parentesco" id="id_parentesco_trajo"  class="form-control chosen-select" multiple>
+          				{# <option value="SEL" >Seleccione un parentesco...</option> #}
+						{% for e in parentescos %}
+						      <option value="{{ e.codigo }}" >{{ e.nombre|title }}</option>
+						{% endfor %}
+					</select>
           		</div>
 			</div>
 			<div class="row">

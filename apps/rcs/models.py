@@ -314,7 +314,9 @@ class TrajoVehiculo(models.Model):
                 cedula= param.get('cedula', None)
                 nombre= param.get('nombre', None)
                 apellido= param.get('apellido', None)
-                parentesco= param.get('parentesco', None)
+
+                parentesco= param.getlist('parentesco',None) if  param.getlist('parentesco',None) else  param.getlist('parentesco[]',None)
+
 
                 # if placa:
                     # condiciones.append(Q(fk_vehiculo__placa__icontains=placa))
@@ -327,7 +329,7 @@ class TrajoVehiculo(models.Model):
                 if apellido:
                     condiciones.append(Q(apellido__icontains=apellido))
                 if parentesco:
-                    condiciones.append(Q(parentesco__icontains=parentesco))
+                    condiciones.append(Q(fk_parentesco__codigo__in=parentesco))
                     # condiciones.append(Q(fk_parentesco__codigo=parentesco))
 
         
@@ -335,7 +337,7 @@ class TrajoVehiculo(models.Model):
         # adicionales de la consulta
         if filter_code == "TRAJO_VEHICULO":
             # select['fecha_declaracion'] = "to_char(fecha_declaracion, 'DD/MM/YYYY')"
-            columns = ['id','cedula','nombre','apellido','parentesco',]
+            columns = ['id','cedula','nombre','apellido','fk_parentesco',]
 
             # se guardan las columnas a eliminar/agregar en el arreglo
             # 'columns'
@@ -376,6 +378,7 @@ class TrajoVehiculo(models.Model):
             # NOTA: dependiendo del 'filter_code' se definen los botones de la
             # tabla en el template
             d['nombre'] = d['nombre'] +" "+ d['apellido']
+            d['fk_parentesco'] = Parentesco.objects.get(id = d['fk_parentesco']).nombre
             if filter_code == "TRAJO_VEHICULO":
 
                 d['options'] = []

@@ -73,8 +73,10 @@ class BandejaTrajoVehiculo(View):
 
     def get(self, request, *args, **kwargs):
         context = {}
+        parentescos = Parentesco.objects.all()
         context['nombre'] = request.user.nombre
         context['username'] = request.user.username
+        context['parentescos'] = parentescos
 
         return render(request, 'administracion/bandeja_trajo_vehiculo.html',context)
 
@@ -213,10 +215,12 @@ class EditarTrajoVehiculo(View):
     def get_context(self, data):
         id_trajo_vehiculo = secure_value_decode(data.GET['trajo_vehiculo_id'])
         trajo_vehiculo = TrajoVehiculo.objects.get(id= id_trajo_vehiculo) 
+        parentescos = Parentesco.objects.all()
         context = {
             'nombre': data.user.nombre if 'user' in data else "",
             'username': data.user.username if 'user' in data else "",
             'trajo_vehiculo': trajo_vehiculo,
+            'parentescos' : parentescos,
         }
         
         
@@ -268,8 +272,7 @@ class EditarTrajoVehiculo(View):
             cedula_nuevo = data['cedula_trajo_vehiculo']
             parentesco_nuevo = data['parentesco_trajo_vehiculo']
             trajo_vehiculo_editar =  TrajoVehiculo.objects.get(id= data['id_trajo_vehiculo'])
-
-            if (trajo_vehiculo_editar.nombre ==  nombre_nuevo) and (trajo_vehiculo_editar.apellido ==  apellido_nuevo) and (trajo_vehiculo_editar.cedula ==  cedula_nuevo) and (trajo_vehiculo_editar.parentesco ==  parentesco_nuevo):
+            if (trajo_vehiculo_editar.nombre ==  nombre_nuevo) and (trajo_vehiculo_editar.apellido ==  apellido_nuevo) and (trajo_vehiculo_editar.cedula ==  cedula_nuevo) and (trajo_vehiculo_editar.fk_parentesco.codigo ==  parentesco_nuevo):
                 response={'results':'data_igual', }
                 response['mensaje'] = "No hay nada nuevo que guardar."
                 return HttpResponse(json.dumps(response), content_type = "application/json")
@@ -278,7 +281,7 @@ class EditarTrajoVehiculo(View):
                 trajo_vehiculo_editar.nombre =  nombre_nuevo
                 trajo_vehiculo_editar.apellido =  apellido_nuevo
                 trajo_vehiculo_editar.cedula =  cedula_nuevo
-                trajo_vehiculo_editar.parentesco =  parentesco_nuevo
+                trajo_vehiculo_editar.fk_parentesco =  Parentesco.objects.get(codigo=parentesco_nuevo)
                 with transaction.atomic():
                     trajo_vehiculo_editar.save()
 

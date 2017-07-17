@@ -15,9 +15,10 @@ $(document).on("click",".confirmar_verificacion", function(){
 });
 
 $('#modal-exito').on('shown.bs.modal', function (e) {
+	numero_solicitud = $("#id_numero_ticket").val()
     titulo = 'SOLICITUD DE INSPECCIÓN'
 	subtitulo = 'Creación de solicitud de inspección'
-	mensaje = 'Solicitud de inspección creada exitosamente.'
+	mensaje = 'Solicitud creada exitosamente. El numero de Solicitud es ' +numero_solicitud+'.'
 	fill_modal_exito(titulo,subtitulo,mensaje)
 	
 })

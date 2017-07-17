@@ -528,8 +528,10 @@ class GestionSolicitudAbierta(View):
 
 
         if not vehiculo.fk_marca is None:
-            modelos = ModeloVehiculo.objects.filter(fk_marca_vehiculo__codigo = vehiculo.fk_marca.codigo)
-            
+            modelos = ModeloVehiculo.objects.filter(fk_marca_vehiculo__codigo = vehiculo.fk_marca.codigo).order_by('nombre')
+        else:
+            modelos = ModeloVehiculo.objects.filter(fk_marca_vehiculo__codigo = marcas.first().codigo).order_by('nombre')
+
         context = {
             'vehiculo': vehiculo,
             'tipos_de_vehiculo': tipo_vehiculo,
