@@ -1,5 +1,7 @@
-cadena = '<option value="/4C-">4C</option>|<option value="/Giulia">Giulia</option>|<option value="/Giulietta">Giulietta</option>|<option value="/MiTo-">MiTo</option>|<option value="/Stelvio">Stelvio</option>'
-id = '2'
+
+
+cadena = '"IN<option value="/Carens">Carens</option>|<option value="/Niro">Niro</option>|<option value="/Optima">Optima</option>|<option value="/Picanto">Picanto</option>|<option value="/Rio">Rio</option>|<option value="/Sorento">Sorento</option>|<option value="/Soul">Soul</option>|<option value="/Soul-EV">Soul EV</option>|<option value="/Sportage">Sportage</option>|<option value="/Venga">Venga</option>|<option value="/ceed">ceed</option>|<option value="/ceed-Sportswagon-">ceed Sportswagon</option>|<option value="/proceed-">pro_ceed</option>|<option value="/proceed-GT">pro_ceed GT</option>'
+id = '26'
 
 def hasNumbers(inputString):
     return any(char.isdigit() for char in inputString)
